@@ -31,6 +31,11 @@ public final class WandClient {
             if(e.getHand()==InteractionHand.MAIN_HAND)PacketDistributor.sendToServer(new WandNetwork.Action(mc.player.isShiftKeyDown()?2:1));
         }
     }
+    @SubscribeEvent public static void commands(net.neoforged.neoforge.client.event.RegisterClientCommandsEvent e){
+        e.getDispatcher().register(net.minecraft.commands.Commands.literal("kwvisuals")
+            .executes(ctx->{AaaEffects.diagnostics();return 1;})
+            .then(net.minecraft.commands.Commands.literal("test").executes(ctx->{AaaEffects.test();return 1;})));
+    }
     @SubscribeEvent public static void tick(ClientTickEvent.Post e) {
         visualBursts=0;
         AaaEffects.tick();

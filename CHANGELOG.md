@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1-alpha
+
+- Observe AAAParticles effect loading and report failures instead of silently ignoring failed spawns.
+- Add `/kwvisuals` client diagnostics and `/kwvisuals test` to test effects independently of the server.
+- Report missing effect resources, registration failures and unsupported native renderers.
+
 ## 0.6.0-alpha
 
 - Expand AAAParticles to casting, projectile flight, beams, waves and lingering effects across all 58 spells.
