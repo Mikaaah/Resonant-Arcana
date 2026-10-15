@@ -27,7 +27,25 @@ public enum Spell {
     FLAME_SHOCK_WAVE("Flame Shock Wave", Kind.PULSE, Theme.FIRE, 7, 9, 0, 130),
     BLOOD_EXPLODE("Blood Explode", Kind.BURST, Theme.BLOOD, 8, 4, 24, 120),
     BLOOD_STUN("Blood Stun", Kind.STUN, Theme.BLOOD, 2, 1, 24, 100),
-    BLOOD_BLOCK("Blood Ward", Kind.WARD, Theme.BLOOD, 0, 3, 0, 180);
+    BLOOD_BLOCK("Blood Ward", Kind.WARD, Theme.BLOOD, 0, 3, 0, 180),
+    SHADOW_BOLT("Shadow Bolt", Kind.BOLT, Theme.DARK, 5, 1.5, 36, 25),
+    SOUL_SEEKER("Soul Seeker", Kind.SEEKER, Theme.DARK, 6, 2, 36, 70),
+    DARK_WAVE("Dark Wave", Kind.WAVE, Theme.DARK, 5, 2.5, 28, 65),
+    NIGHTFALL("Nightfall", Kind.BURST, Theme.DARK, 7, 5, 28, 120),
+    SHADOW_CAGE("Shadow Cage", Kind.CHOKE, Theme.DARK, 2, 1, 24, 140),
+    SOUL_AURA("Soul Aura", Kind.AURA, Theme.DARK, 3, 8, 0, 160),
+    THUNDER_BOLT("Thunder Bolt", Kind.BOLT, Theme.THUNDER, 6, 1.5, 40, 30),
+    CHAIN_LIGHTNING("Chain Lightning", Kind.CHAIN, Theme.THUNDER, 5, 6, 28, 110),
+    THUNDER_WAVE("Thunder Wave", Kind.WAVE, Theme.THUNDER, 5, 2.5, 30, 65),
+    STORM_CALL("Storm Call", Kind.STORM, Theme.THUNDER, 4, 5, 28, 180),
+    THUNDER_PULSE("Thunder Pulse", Kind.PULSE, Theme.THUNDER, 7, 9, 0, 120),
+    STATIC_SHOCK("Static Shock", Kind.STUN, Theme.THUNDER, 3, 1, 28, 80),
+    GRAVITY_BOLT("Gravity Bolt", Kind.BOLT, Theme.GRAVITY, 5, 2, 32, 30),
+    GRAVITY_WELL("Gravity Well", Kind.WELL, Theme.GRAVITY, 3, 5, 28, 160),
+    FORCE_PUSH("Force Push", Kind.PUSH, Theme.GRAVITY, 2, 1, 24, 65),
+    FORCE_PULL("Force Pull", Kind.PULL, Theme.GRAVITY, 2, 1, 24, 65),
+    GRAVITY_CHOKE("Gravity Choke", Kind.CHOKE, Theme.GRAVITY, 2, 1, 24, 140),
+    SINGULARITY("Singularity", Kind.BURST, Theme.GRAVITY, 9, 5, 28, 160);
 
     public final String title;
     public final Kind kind;
@@ -39,9 +57,9 @@ public enum Spell {
         this.title=title; this.kind=kind; this.theme=theme; this.damage=damage;
         this.radius=radius; this.range=range; this.cooldown=cooldown;
     }
-    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD }
+    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA }
     public enum Theme {
-        MAGIC(0xB349F5), BLOOD(0xDC153B), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF);
+        MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8);
         public final int color;
         Theme(int color) {this.color=color;}
     }

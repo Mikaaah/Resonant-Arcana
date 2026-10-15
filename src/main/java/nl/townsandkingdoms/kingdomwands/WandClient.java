@@ -1,12 +1,10 @@
 package nl.townsandkingdoms.kingdomwands;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import it.unimi.dsi.fastutil.ints.IntList;
-import java.util.List;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.component.FireworkExplosion;
+import net.minecraft.core.particles.ParticleTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -43,8 +41,15 @@ public final class WandClient {
         var mc=Minecraft.getInstance();
         if(mc.level==null||mc.player==null||visualBursts>=8||mc.player.distanceToSqr(b.x(),b.y(),b.z())>96*96)return;
         visualBursts++;
-        mc.level.createFireworks(b.x(),b.y(),b.z(),0,0,0,List.of(new FireworkExplosion(
-            FireworkExplosion.Shape.SMALL_BALL,IntList.of(b.color()),IntList.of(0xFFFFFF),true,true)));
+        // Use coloured sparks directly: no automatic white fade or duplicate vanilla blast audio.
+        float r=((b.color()>>16)&255)/255f,g=((b.color()>>8)&255)/255f,blue=(b.color()&255)/255f;
+        int count=24*KingdomWands.PARTICLES.get();
+        for(int i=0;i<count;i++){
+            double y=1-2*(i+0.5)/count,radial=Math.sqrt(1-y*y),a=i*2.399963229728653;
+            double speed=0.12+(i%3)*0.035;
+            var spark=mc.particleEngine.createParticle(ParticleTypes.FIREWORK,b.x(),b.y(),b.z(),Math.cos(a)*radial*speed,y*speed,Math.sin(a)*radial*speed);
+            if(spark!=null){spark.setColor(r,g,blue);spark.setLifetime(20+i%12);}
+        }
     }
     @EventBusSubscriber(modid=KingdomWands.ID,value=Dist.CLIENT,bus=EventBusSubscriber.Bus.MOD)
     public static final class Registration {

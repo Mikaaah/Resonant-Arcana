@@ -55,6 +55,13 @@ public final class IntegrationChecks {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
             }finally{buffer.release();}
+            check(KingdomWands.ITEMS.getEntries().size()==6,"six registered wands");
+            for(var item:KingdomWands.ITEMS.getEntries()){
+                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();
+                for(int i=0;i<w.spells.size();i++){w.select(ws,i);check(w.selected(ws)==w.spells.get(i),item.getId()+" selection "+i);}
+            }
+            for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.impactId(theme),SpellAudio.sustainId(theme)))
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"sound exists: "+id);
             for(Spell spell:Spell.values()){
                 SpellEngine.clear();resetPlayer(player);
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.EMPIRE.toStack());
@@ -75,10 +82,27 @@ public final class IntegrationChecks {
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
                 if(arrow!=null)arrow.discard();zombie.discard();
             }
+            SpellEngine.clear();resetPlayer(player);Zombie chainFirst=spawn(level,0,81,6),chainSecond=spawn(level,3,81,6);
+            check(SpellEngine.cast(player,Spell.CHAIN_LIGHTNING),"chain casts at first target");
+            check(chainFirst.getHealth()<20&&chainSecond.getHealth()<20,"chain damages two distinct visible targets");chainFirst.discard();chainSecond.discard();
+            for(Spell force:List.of(Spell.FORCE_PUSH,Spell.FORCE_PULL)){
+                SpellEngine.clear();resetPlayer(player);Zombie z=spawn(level,0,81,6);
+                check(SpellEngine.cast(player,force),force+" casts");
+                check(force==Spell.FORCE_PUSH?z.getDeltaMovement().z>0:z.getDeltaMovement().z<0,force+" correct movement direction");z.discard();
+            }
+            SpellEngine.clear();resetPlayer(player);Zombie moving=spawn(level,0,81,6);
+            check(SpellEngine.cast(player,Spell.SOUL_SEEKER),"seeker acquires target");moving.setPos(2,81,6);
+            for(int t=0;t<60;t++)SpellEngine.tick();check(moving.getHealth()<20,"seeker follows target after sideways movement");moving.discard();
+            SpellEngine.clear();resetPlayer(player);Zombie centre=spawn(level,0,81,6),edge=spawn(level,3,81,6);
+            check(SpellEngine.cast(player,Spell.GRAVITY_WELL),"well casts");SpellEngine.tick();
+            check(edge.getDeltaMovement().x<0,"gravity well pulls nearby target inward");centre.discard();edge.discard();
             // A real obstruction must stop both entity targeting and travelling spells.
             SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
             for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
             check(!SpellEngine.cast(player,Spell.EMPIRE_SPARK),"targeted spell cannot select through solid wall");
+            check(!SpellEngine.cast(player,Spell.SOUL_SEEKER),"seeker cannot acquire through solid wall");
+            check(!SpellEngine.cast(player,Spell.CHAIN_LIGHTNING),"chain cannot start through solid wall");
+            check(!SpellEngine.cast(player,Spell.FORCE_PULL),"force pull cannot select through solid wall");
             check(SpellEngine.cast(player,Spell.SPARK),"projectile can cast toward wall");for(int t=0;t<40;t++)SpellEngine.tick();
             check(hidden.getHealth()==20,"solid wall blocks projectile damage");
             check(level.getBlockState(new BlockPos(0,82,3)).is(Blocks.STONE),"spell impact preserves solid blocks");

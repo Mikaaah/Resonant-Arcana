@@ -28,22 +28,27 @@ public final class KingdomWands {
         CONFUSE,STUN,CAPTURE,EMPIRE_COMET,FIRE_COMET,EMPIRE_PULSE,FIRE_PULSE,FIREBALL,IGNITE,LAUNCH,LEAP,LIGHTNING,SMITE));
     public static final DeferredItem<WandItem> BLOOD=ITEMS.register("blood_wand",()->new WandItem(BLOOD_WAVE,BLOOD_SPARK,BLOOD_EXPLODE,BLOOD_STUN,BLOOD_BLOCK));
     public static final DeferredItem<WandItem> CELCRIUS=ITEMS.register("celcrius_wand",()->new WandItem(FIRE_COMET,FIRE_TWISTER,FLAME_WAVE,FLAME_SHOCK_WAVE,FLAME_THROWER,FIREBALL));
+    public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem(SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA));
+    public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem(THUNDER_BOLT,CHAIN_LIGHTNING,THUNDER_WAVE,STORM_CALL,THUNDER_PULSE,STATIC_SHOCK));
+    public static final DeferredItem<WandItem> MEPHI=ITEMS.register("mephi_wand",()->new WandItem(GRAVITY_BOLT,GRAVITY_WELL,FORCE_PUSH,FORCE_PULL,GRAVITY_CHOKE,SINGULARITY));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
         TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Kingdom Wands"))
-            .icon(()->EMPIRE.toStack()).displayItems((params,out)->{out.accept(EMPIRE);out.accept(BLOOD);out.accept(CELCRIUS);}).build());
+            .icon(()->EMPIRE.toStack()).displayItems((params,out)->{ITEMS.getEntries().forEach(entry->out.accept(entry.get()));}).build());
     }
     public static final ModConfigSpec CONFIG;
     public static final ModConfigSpec.BooleanValue PVP,MOUSE_CONTROLS;
-    public static final ModConfigSpec.DoubleValue DAMAGE,COOLDOWNS;
-    public static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE;
+    public static final ModConfigSpec.DoubleValue DAMAGE,COOLDOWNS,SOUND_VOLUME;
+    public static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,VISUAL_BUDGET;
     static {
         var b=new ModConfigSpec.Builder();
         PVP=b.comment("Allow spells to affect other players. Server PvP and scoreboard teams are also respected.").define("allowPvp",true);
         MOUSE_CONTROLS=b.comment("Use classic left-click casting. Disable on both sides if another combat mod intercepts attack inputs; use the cast key instead.").define("classicMouseCasting",true);
         DAMAGE=b.defineInRange("damageMultiplier",1.0,0.0,10.0);
+        SOUND_VOLUME=b.comment("Spell sound volume multiplier; normal player sound settings still apply.").defineInRange("soundVolume",1.0,0.0,2.0);
         COOLDOWNS=b.defineInRange("cooldownMultiplier",1.0,0.1,10.0);
         PARTICLES=b.comment("Trail density, 1 to 3. Spell collision is independent of visuals.").defineInRange("particleDensity",2,1,3);
+        VISUAL_BUDGET=b.comment("Maximum detailed trail points per server tick, shared by active spells. Gameplay is independent of this visual budget.").defineInRange("maxParticlePointsPerTick",256,64,2048);
         MAX_ACTIVE=b.comment("Maximum active timed spells per server; additional casts fail without starting cooldown.").defineInRange("maxActiveSpells",128,8,512);
         CONFIG=b.build();
     }
@@ -57,7 +62,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.1.0-alpha: 3 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.2.0-alpha: 6 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);

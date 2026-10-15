@@ -1,8 +1,8 @@
-# Validation — 0.1.0-alpha
+# Validation — 0.2.0-alpha
 
 ## Result
 
-Dedicated-server integration: **PASS — 131 checks, all 26 distinct spells**.
+Dedicated-server integration: **PASS — 287 checks, all 44 distinct spells**.
 See `validation/server-integration.json` for the actual report.
 
 Environment: Minecraft 1.21.1, NeoForge 21.1.219, Java 21.0.12.1,
@@ -23,15 +23,23 @@ No original Bukkit plugin was loaded.
 - Missing wand, invalid actions, spectator actions and same-tick repeated actions
   are rejected by the server entry point.
 - Eight concurrent spells clean up; a ninth active timed spell is rejected.
-- Status command executes.
+- Status command executes and reports six wands / 44 spells.
+- All six registered wands expose their intended spell selections.
+- All 21 themed cast/impact/sustain sound references exist in the 1.21.1 registry.
+- Chain Lightning damages two different visible entities.
+- Force Push and Force Pull set movement in opposite expected directions.
+- Soul Seeker tracks a target moved sideways after casting.
+- Gravity Well draws a nearby target inward on its first tick.
+- A wall rejects acquisition for Seeker, Chain Lightning and Force Pull.
 
 Fixtures use NeoForge FakePlayer and actual server entities/collision/damage,
 not a connected graphical client. Timed spell ticks are advanced directly for
 repeatability; this does not measure real-time multiplayer performance.
 
-The first run exposed Blood Explode bursting at the ray endpoint beyond an
-entity. The implementation was corrected to centre on the aimed entity, and
-all fixtures passed on rerun. Final source was compiled into the delivered JAR.
+An additional movement check exposed the initial damage knockback overcoming
+Gravity Well's first pull. The well now sets inward horizontal movement while
+retaining damped vertical motion; the movement check and all spell checks pass.
+Final source was compiled into the delivered JAR.
 
 ## Not verified
 
@@ -44,13 +52,18 @@ all fixtures passed on rerun. Final source was compiled into the delivered JAR.
 ## Suggested client test
 
 1. Install on both client and server, or a standalone singleplayer instance.
-2. Take all three wands from the creative tab; confirm vanilla-textured items.
+2. Take all six wands from the creative tab; confirm vanilla-textured items.
 3. Test left-click, right-click and sneak-right-click; rebind G/V if occupied.
 4. Test sparks, waves and comets on mobs and against a wall.
-5. Test firework impacts, pulses, fire twister, capture and the blood ward.
-6. Check that normal blocks and items still behave normally after switching away.
-7. Add Epic Fight, test its modes and use the alternate cast key if it captures clicks.
-8. Verify pack-specific claims/PvP rules before using on the public server.
+5. Test coloured spark impacts, crimson blood effects, pulses, fire twister, capture and the blood ward.
+6. Test Dark homing/cage/aura, Thunder chain/storm, and Mephi gravity/push/pull.
+7. Check that normal blocks and items still behave normally after switching away.
+8. Add Epic Fight, test its modes and use the alternate cast key if it captures clicks.
+9. Verify pack-specific claims/PvP rules before using on the public server.
+
+Check cast, travel/sustain and impact audio with the **Players** sound category
+enabled. Adjust `soundVolume` in the common config to taste. AAAParticles is not
+used by this release, and coexistence in the full pack is not tested here.
 
 ## Build notes
 
