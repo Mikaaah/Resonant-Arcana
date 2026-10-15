@@ -55,18 +55,20 @@ public final class IntegrationChecks {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
             }finally{buffer.release();}
-            check(KingdomWands.ITEMS.getEntries().size()==6,"six registered wands");
+            check(KingdomWands.ITEMS.getEntries().size()==7,"seven registered wands");
             for(var item:KingdomWands.ITEMS.getEntries()){
                 WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();
                 for(int i=0;i<w.spells.size();i++){w.select(ws,i);check(w.selected(ws)==w.spells.get(i),item.getId()+" selection "+i);}
             }
             for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.impactId(theme),SpellAudio.sustainId(theme)))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"sound exists: "+id);
+            for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_BOOM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"special soul sound exists: "+id);
             for(Spell spell:Spell.values()){
                 SpellEngine.clear();resetPlayer(player);
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.EMPIRE.toStack());
                 Zombie zombie=spawn(level,0,81,6);Arrow arrow=null;
-                if(spell==Spell.BLOOD_BLOCK){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
+                if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
                 check(SpellEngine.cast(player,spell),spell.name()+" starts");
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
                 for(int t=0;t<100;t++)SpellEngine.tick();
@@ -96,6 +98,21 @@ public final class IntegrationChecks {
             SpellEngine.clear();resetPlayer(player);Zombie centre=spawn(level,0,81,6),edge=spawn(level,3,81,6);
             check(SpellEngine.cast(player,Spell.GRAVITY_WELL),"well casts");SpellEngine.tick();
             check(edge.getDeltaMovement().x<0,"gravity well pulls nearby target inward");centre.discard();edge.discard();
+            SpellEngine.clear();resetPlayer(player);Zombie sonicFront=spawn(level,0,81,5),sonicBack=spawn(level,0,81,9);
+            check(SpellEngine.cast(player,Spell.SONIC_BOOM),"sonic beam begins charge");
+            for(int t=0;t<11;t++)SpellEngine.tick();
+            check(sonicFront.getHealth()==20&&sonicBack.getHealth()==20,"sonic beam does no damage during charge");
+            SpellEngine.tick();check(sonicFront.getHealth()<20&&sonicBack.getHealth()<20,"sonic beam pierces two visible targets on release");
+            check(SpellEngine.activeCount()==0,"sonic charge task ends on release");sonicFront.discard();sonicBack.discard();
+            SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie drain=spawn(level,0,81,6);
+            check(SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon casts on living target");
+            check(drain.getHealth()<20&&player.getHealth()>10&&player.getHealth()<=12,"siphon heals at most one heart after real damage");drain.discard();
+            SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie invulnerable=spawn(level,0,81,6);invulnerable.setInvulnerable(true);
+            check(SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon may attempt invulnerable target");
+            check(invulnerable.getHealth()==20&&player.getHealth()==10,"blocked damage gives no siphon healing");invulnerable.discard();
+            SpellEngine.clear();resetPlayer(player);Zombie prisoner=spawn(level,0,81,6);
+            check(SpellEngine.cast(player,Spell.SOUL_PRISON),"soul prison casts");SpellEngine.tick();
+            check(prisoner.hasEffect(MobEffects.DARKNESS)&&prisoner.hasEffect(MobEffects.MOVEMENT_SLOWDOWN),"soul prison applies darkness and restraint");prisoner.discard();
             // A real obstruction must stop both entity targeting and travelling spells.
             SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
             for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
@@ -105,6 +122,9 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FORCE_PULL),"force pull cannot select through solid wall");
             check(SpellEngine.cast(player,Spell.SPARK),"projectile can cast toward wall");for(int t=0;t<40;t++)SpellEngine.tick();
             check(hidden.getHealth()==20,"solid wall blocks projectile damage");
+            SpellEngine.clear();check(SpellEngine.cast(player,Spell.SONIC_BOOM),"sonic beam may charge toward a wall");
+            for(int t=0;t<20;t++)SpellEngine.tick();check(hidden.getHealth()==20,"solid wall stops sonic beam damage");
+            check(!SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon cannot acquire through wall");
             check(level.getBlockState(new BlockPos(0,82,3)).is(Blocks.STONE),"spell impact preserves solid blocks");
             for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());hidden.discard();
             var team=level.getScoreboard().addPlayerTeam("wand_test_allies");team.setAllowFriendlyFire(false);

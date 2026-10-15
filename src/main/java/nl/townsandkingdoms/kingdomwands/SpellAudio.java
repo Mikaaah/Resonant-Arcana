@@ -14,22 +14,28 @@ final class SpellAudio {
     static String castId(Spell.Theme theme){return switch(theme){
         case BLOOD->"entity.evoker.cast_spell";case FIRE->"item.firecharge.use";
         case THUNDER->"entity.breeze.shoot";case DARK->"entity.illusioner.cast_spell";
-        case GRAVITY->"block.beacon.power_select";default->"block.enchantment_table.use";
+        case SOUL->"entity.warden.tendril_clicks";case GRAVITY->"block.beacon.power_select";default->"block.enchantment_table.use";
     };}
     static String impactId(Spell.Theme theme){return switch(theme){
         case BLOOD->"block.slime_block.break";case FIRE->"entity.generic.explode";
         case THUNDER->"entity.lightning_bolt.impact";case DARK->"entity.wither.hurt";
-        case GRAVITY->"block.respawn_anchor.deplete";default->"block.amethyst_block.resonate";
+        case SOUL->"block.amethyst_block.break";case GRAVITY->"block.respawn_anchor.deplete";default->"block.amethyst_block.resonate";
     };}
     static String sustainId(Spell.Theme theme){return switch(theme){
         case BLOOD->"block.bubble_column.whirlpool_inside";case FIRE->"block.fire.ambient";
         case THUNDER->"block.conduit.ambient.short";case DARK->"block.sculk_shrieker.shriek";
-        case GRAVITY->"block.beacon.ambient";default->"block.amethyst_block.chime";
+        case SOUL->"entity.warden.heartbeat";case GRAVITY->"block.beacon.ambient";default->"block.amethyst_block.chime";
     };}
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace(id));}
     static float volume(float base){return (float)(base*KingdomWands.SOUND_VOLUME.get());}
-    static void cast(ServerPlayer player,Spell.Theme theme){
-        SoundEvent sound=event(castId(theme));float v=volume(1.0f);
+    static String spellCastId(Spell spell){return switch(spell){
+        case SONIC_BOOM->"entity.warden.sonic_charge";
+        case SHRIEKING_PULSE->"entity.warden.roar";
+        case SOUL_PRISON->"block.sculk_shrieker.shriek";
+        default->castId(spell.theme);
+    };}
+    static void cast(ServerPlayer player,Spell spell){
+        SoundEvent sound=event(spellCastId(spell));float v=volume(1.0f);
         if(v<=0)return;
         player.playNotifySound(sound,SoundSource.PLAYERS,v,0.9f);
         Vec3 p=player.position();player.serverLevel().playSound(player,p.x,p.y,p.z,sound,SoundSource.PLAYERS,v,0.9f);

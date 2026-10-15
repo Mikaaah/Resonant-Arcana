@@ -48,7 +48,10 @@ public final class WandClient {
             double y=1-2*(i+0.5)/count,radial=Math.sqrt(1-y*y),a=i*2.399963229728653;
             double speed=0.12+(i%3)*0.035;
             var spark=mc.particleEngine.createParticle(ParticleTypes.FIREWORK,b.x(),b.y(),b.z(),Math.cos(a)*radial*speed,y*speed,Math.sin(a)*radial*speed);
-            if(spark!=null){spark.setColor(r,g,blue);spark.setLifetime(20+i%12);}
+            if(spark!=null){
+                if(b.color()==Spell.Theme.SOUL.color&&i%3==0)spark.setColor(0.66f,0.43f,0.94f);else spark.setColor(r,g,blue);
+                spark.setLifetime(20+i%12);
+            }
         }
     }
     @EventBusSubscriber(modid=KingdomWands.ID,value=Dist.CLIENT,bus=EventBusSubscriber.Bus.MOD)

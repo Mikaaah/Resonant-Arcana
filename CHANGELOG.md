@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0-alpha
+
+- Added the Soul Wand using the vanilla echo shard texture: seven wands and 52 distinct spells total.
+- Added Echo Bolt, Sculk Wave, Sonic Boom, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova and Echo Ward.
+- Sonic Boom charges before releasing a piercing, wall-clipped beam. Soul Siphon heals only after actual health damage, up to one heart.
+- Added sculk wisps, charge pops, shriek ripples, amethyst fragments and teal/violet firework sparks.
+- Added warden charge, sonic boom, roar, heartbeat and tendril sounds plus crystal impacts.
+- Preserved the previous six wands and their spell order; no new dependencies.
+
 ## 0.2.0-alpha
 
 - Added Dark, Thunder and Mephi wands: 18 new spells, 44 distinct spells total.

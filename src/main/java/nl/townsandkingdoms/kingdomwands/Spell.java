@@ -45,7 +45,15 @@ public enum Spell {
     FORCE_PUSH("Force Push", Kind.PUSH, Theme.GRAVITY, 2, 1, 24, 65),
     FORCE_PULL("Force Pull", Kind.PULL, Theme.GRAVITY, 2, 1, 24, 65),
     GRAVITY_CHOKE("Gravity Choke", Kind.CHOKE, Theme.GRAVITY, 2, 1, 24, 140),
-    SINGULARITY("Singularity", Kind.BURST, Theme.GRAVITY, 9, 5, 28, 160);
+    SINGULARITY("Singularity", Kind.BURST, Theme.GRAVITY, 9, 5, 28, 160),
+    ECHO_BOLT("Echo Bolt", Kind.BOLT, Theme.SOUL, 5, 1.5, 36, 25),
+    SCULK_WAVE("Sculk Wave", Kind.WAVE, Theme.SOUL, 5, 2.5, 28, 65),
+    SONIC_BOOM("Sonic Boom", Kind.SONIC, Theme.SOUL, 8, 0.8, 28, 120),
+    SOUL_SIPHON("Soul Siphon", Kind.SIPHON, Theme.SOUL, 5, 1, 24, 100),
+    SOUL_PRISON("Soul Prison", Kind.CHOKE, Theme.SOUL, 2, 1, 24, 140),
+    SHRIEKING_PULSE("Shrieking Pulse", Kind.PULSE, Theme.SOUL, 6, 9, 0, 130),
+    AMETHYST_NOVA("Amethyst Nova", Kind.BURST, Theme.SOUL, 8, 4.5, 28, 120),
+    ECHO_WARD("Echo Ward", Kind.WARD, Theme.SOUL, 0, 3, 0, 180);
 
     public final String title;
     public final Kind kind;
@@ -57,9 +65,9 @@ public enum Spell {
         this.title=title; this.kind=kind; this.theme=theme; this.damage=damage;
         this.radius=radius; this.range=range; this.cooldown=cooldown;
     }
-    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA }
+    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON }
     public enum Theme {
-        MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8);
+        MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8), SOUL(0x24D7CB);
         public final int color;
         Theme(int color) {this.color=color;}
     }

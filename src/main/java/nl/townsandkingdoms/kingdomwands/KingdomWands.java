@@ -31,6 +31,7 @@ public final class KingdomWands {
     public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem(SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA));
     public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem(THUNDER_BOLT,CHAIN_LIGHTNING,THUNDER_WAVE,STORM_CALL,THUNDER_PULSE,STATIC_SHOCK));
     public static final DeferredItem<WandItem> MEPHI=ITEMS.register("mephi_wand",()->new WandItem(GRAVITY_BOLT,GRAVITY_WELL,FORCE_PUSH,FORCE_PULL,GRAVITY_CHOKE,SINGULARITY));
+    public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem(ECHO_BOLT,SCULK_WAVE,SONIC_BOOM,SOUL_SIPHON,SOUL_PRISON,SHRIEKING_PULSE,AMETHYST_NOVA,ECHO_WARD));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
         TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Kingdom Wands"))
@@ -62,7 +63,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.2.0-alpha: 6 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.3.0-alpha: 7 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);

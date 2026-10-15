@@ -1,14 +1,14 @@
 # Kingdom Wands — NeoForge 1.21.1
 
-[Download the current alpha JAR](downloads/kingdom-wands-0.2.0-alpha-neoforge-1.21.1.jar?raw=true) · [Validation](VALIDATION.md)
+[Download the current alpha JAR](downloads/kingdom-wands-0.3.0-alpha-neoforge-1.21.1.jar?raw=true) · [Validation](VALIDATION.md)
 
-**0.2.0-alpha — expanded independent recreation, not a complete Bukkit plugin port.**
+**0.3.0-alpha — expanded independent recreation, not a complete Bukkit plugin port.**
 
 Kingdoms-style combat magic, using vanilla item textures, coloured trails, rings,
 waves and client-side firework bursts. Inspired by the supplied KingdomWands
 7.5 / ExtensiveMagicWands 1.4.1 plugins and the EmpireWandPlus project.
 
-## Upgrade from 0.1.0-alpha
+## Upgrade from 0.1.0-alpha or 0.2.0-alpha
 
 Remove the old Kingdom Wands JAR and install this version on **both client and
 server**. Keep the existing common config; the new sound setting is added with
@@ -17,7 +17,7 @@ its default. Existing wand item IDs and spell selections are retained.
 ## Install
 
 - Minecraft **1.21.1**, Java **21**, NeoForge **21.1.219 or later in the 21.1 series**.
-- Put `kingdom-wands-0.2.0-alpha-neoforge-1.21.1.jar` in `mods` on **client and server**.
+- Put `kingdom-wands-0.3.0-alpha-neoforge-1.21.1.jar` in `mods` on **client and server**.
 - No Bukkit/Paper server, original plugin, Iron's Spells, or other dependency is required.
 - Use a test instance for this alpha. No terrain generation changes are made.
 
@@ -32,6 +32,7 @@ Use the **Kingdom Wands** creative tab, `/give @s kingdomwands:empire_wand`, or:
 /kingdomwands give dark_wand
 /kingdomwands give thunder_wand
 /kingdomwands give mephi_wand
+/kingdomwands give soul_wand
 /kingdomwands status
 ```
 
@@ -76,7 +77,27 @@ Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse and Stati
 The Mephi Wand has **6 selections**:
 Gravity Bolt, Gravity Well, Force Push, Force Pull, Gravity Choke and Singularity.
 
-There are **44 distinct spells** across six wands. The original three wands retain
+The Soul Wand uses the **echo shard** texture and has **8 selections**:
+Echo Bolt, Sculk Wave, Sonic Boom, Soul Siphon, Soul Prison, Shrieking Pulse,
+Amethyst Nova and Echo Ward.
+
+| Soul spell | Effect |
+| --- | --- |
+| Echo Bolt | Fast teal projectile with a sculk trail and crystal impact |
+| Sculk Wave | Wide travelling sculk arc, hitting each enemy once |
+| Sonic Boom | 0.6-second charge, then a piercing beam along your current aim; stops at solid walls |
+| Soul Siphon | Damages an aimed living target and restores up to one heart, based on actual health damage dealt |
+| Soul Prison | Three-second damaging restraint with darkness |
+| Shrieking Pulse | Warden roar and expanding shock ring around the caster |
+| Amethyst Nova | Aimed area burst with crystal fragments, sculk and teal/violet sparks |
+| Echo Ward | Four-second ward redirecting incoming non-allied projectiles |
+
+The Soul Wand has a distinct teal/deep-blue palette with violet amethyst accents,
+sculk soul wisps, charge pops, shriek ripples and coloured firework sparks.
+Audio uses warden tendrils/heartbeat, a sonic charge and boom, a roar, a sculk
+shriek and amethyst impacts. All use the existing volume controls and effect budgets.
+
+There are **52 distinct spells** across seven wands. The original six wands retain
 all their previous spell orders and saved selection indices.
 
 Blood effects use dark crimson dust transitions, falling red block fragments,
