@@ -124,6 +124,7 @@ final class AaaEffects {
         int assets=0,registered=0;
         var manager=Minecraft.getInstance().getResourceManager();
         for(var shape:SpellVisuals.Shape.values())for(var theme:Spell.Theme.values()){
+            if(!SpellVisuals.packaged(shape,theme))continue;
             String path=shape.name().toLowerCase(Locale.ROOT)+"_"+theme.name().toLowerCase(Locale.ROOT);
             if(manager.getResource(ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,"effeks/"+path+".efkefc")).isPresent())assets++;
         }
@@ -132,7 +133,7 @@ final class AaaEffects {
             for(var entry:collection)if(entry instanceof Map.Entry<?,?> e&&e.getKey() instanceof ResourceLocation id&&id.getNamespace().equals(KingdomWands.ID))registered++;
             say("Native renderer supported="+!(Boolean)unsupported.invoke(null));
         }catch(ReflectiveOperationException|LinkageError|RuntimeException error){lastError=error.toString();}
-        say("Effect files="+assets+"/136 | registered="+registered+"/136 | packets="+received+" | requested="+requested+" | created="+played+" | failures="+failed);
+        say("Effect files="+assets+"/"+SpellVisuals.assetCount()+" | registered="+registered+"/"+SpellVisuals.assetCount()+" | packets="+received+" | requested="+requested+" | created="+played+" | failures="+failed);
         say("Last error: "+lastError);
         KingdomWands.LOG.info("Wand visual diagnostics: client={}, AAA={}, enabled={}, API={}, files={}, registered={}, packets={}, requested={}, created={}, failures={}, lastError={}",kw,aaa,KingdomWands.AAA_PARTICLES.get(),available,assets,registered,received,requested,played,failed,lastError);
     }

@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.6.2-alpha'
+version = '0.7.0-alpha'
 group = 'nl.townsandkingdoms.kingdomwands'
 base.archivesName = 'kingdom-wands'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -30,7 +30,7 @@ tasks.register('verifyEffects') {
     inputs.dir(effects)
     doLast {
         def assets = fileTree(effects).matching { include '*.efkefc' }.files
-        if (assets.size() != 136) throw new GradleException("Expected 136 wand effects; found ${assets.size()}")
+        if (assets.size() != 140) throw new GradleException("Expected 140 wand effects; found ${assets.size()}")
         assets.each { asset ->
             def buffer = java.nio.ByteBuffer.wrap(asset.bytes).order(java.nio.ByteOrder.LITTLE_ENDIAN)
             if (buffer.remaining() < 8 || buffer.getInt() != 0x454b4645) throw new GradleException("Invalid effect container: ${asset.name}")
@@ -63,7 +63,7 @@ tasks.register('verifyEffects') {
             }
             if (!found) throw new GradleException("Native effect chunk missing: ${asset.name}")
         }
-        logger.lifecycle('Verified all 136 effects use packaged Minecraft texture paths.')
+        logger.lifecycle('Verified all 140 effects use packaged Minecraft texture paths.')
     }
 }
 tasks.named('check') { dependsOn 'verifyEffects' }

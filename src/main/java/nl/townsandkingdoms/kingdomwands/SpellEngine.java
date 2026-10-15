@@ -86,6 +86,7 @@ public final class SpellEngine {
             case TWISTER -> {cast.pos=target!=null?target.position():aim;cast.duration=40;}
             case CHANNEL -> cast.duration=30;
             case SONIC -> cast.duration=14;
+            case CANNON -> cast.duration=80;
             case MARK -> {cast.pos=target.position();cast.duration=40;}
             case SUSPEND -> {cast.anchor=target.position();cast.pos=target.position();cast.duration=40;}
             case VOLLEY -> cast.duration=44;
@@ -116,7 +117,7 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
+        if(c.spell.kind!=Spell.Kind.CANNON&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
         switch(c.spell.kind){
             case BOLT,COMET,WAVE,SEEKER -> {
                 if(c.spell.kind==Spell.Kind.SEEKER){
@@ -228,6 +229,7 @@ public final class SpellEngine {
                 if(c.age%2==0)for(int i=0;i<3;i++)ring(c.level,c.pos.add(0,i*0.65,0),c.spell.radius*(1-i*0.22),c.spell.theme,c.age*0.35+i);
                 if(c.age%10==1){c.hit.clear();area(c,c.pos,c.spell.radius,true);}
             }
+            case CANNON -> {return cannon(c);}
             case SONIC -> {
                 c.pos=c.caster.getEyePosition();
                 Vec3 dir=c.caster.getLookAngle().normalize();
@@ -263,6 +265,68 @@ public final class SpellEngine {
             default -> {return false;}
         }
         return true;
+    }
+    /** Charge follows the caster; the released projectile keeps its direction. */
+    private static boolean cannon(Cast c){
+        if(c.impactAge>0){
+            if(c.age-c.impactAge==4){SpellAudio.cannon(c.caster,c.pos,"tail");return false;}
+            return true;
+        }
+        if(c.age<=40){
+            if(!(c.caster.getMainHandItem().getItem() instanceof WandItem))return false;
+            c.travel=c.caster.getLookAngle().normalize();
+            c.pos=clipLoaded(c.level,c.caster.getEyePosition(),c.travel,1.25,c.caster);
+            double progress=c.age/40.0;
+            if(c.age<40){
+                if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.CHARGE,c.pos,c.pos.add(c.travel),0.6+progress*0.9);
+                // Directional count-zero packets pull real vanilla void motes towards the muzzle.
+                for(int i=0;i<4;i++){
+                    double angle=c.age*0.57+i*Math.PI/2,r=2.8-progress*1.2;
+                    Vec3 offset=new Vec3(Math.cos(angle)*r,Math.sin(angle*1.7)*r*0.65,Math.sin(angle)*r);
+                    Vec3 p=c.pos.add(offset),v=offset.scale(-0.12);
+                    c.level.sendParticles(ParticleTypes.REVERSE_PORTAL,p.x,p.y,p.z,0,v.x,v.y,v.z,1);
+                    if(i==0)trail(c.level,p,c.spell.theme,0.025);
+                }
+                if(c.age%8==0)SpellAudio.cannonCharge(c.caster,c.pos,(float)progress);
+                return true;
+            }
+            SpellAudio.cannon(c.caster,c.pos,"release");
+            c.level.sendParticles(ParticleTypes.SONIC_BOOM,c.pos.x,c.pos.y,c.pos.z,1,0,0,0,0);
+        }
+        Vec3 start=c.pos;
+        Vec3 end=clipLoaded(c.level,start,c.travel,Math.min(2,c.spell.range-c.distance),c.caster);
+        boolean blocked=end.distanceToSqr(start)<3.999;
+        LivingEntity victim=target(c.caster,start,end,1.1);
+        if(victim!=null){
+            // Clip the expanded hitbox on the reachable segment, never move through the wall to its centre.
+            end=victim.getBoundingBox().inflate(1.1).clip(start,end).orElse(start);
+        }
+        c.distance+=start.distanceTo(end);c.pos=end;
+        SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,end,end.add(c.travel),1.8);
+        for(int i=0;i<3;i++){
+            Vec3 p=start.lerp(end,i/3.0);trail(c.level,p,c.spell.theme,0.18);
+        }
+        c.level.sendParticles(ParticleTypes.SONIC_BOOM,end.x,end.y,end.z,1,0,0,0,0);
+        if(blocked||victim!=null||c.distance>=c.spell.range-0.01){
+            // An impact just outside the surface keeps sight checks on the projectile's side of a wall.
+            Vec3 impact=end.subtract(c.travel.scale(0.05));
+            c.pos=impact;area(c,impact,c.spell.radius,true);
+            if(victim!=null&&visible(c,impact,victim.getBoundingBox().getCenter()))hit(c,victim,impact,true);
+            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,impact,impact,6.5);
+            cannonSparks(c,impact,3.2f);
+            for(int i=0;i<3;i++)ring(c.level,impact.add(0,i*0.45,0),2+i*1.6,c.spell.theme,i);
+            c.level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,impact.x,impact.y,impact.z,48,1.8,1.8,1.8,0.1);
+            c.level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK,Blocks.AMETHYST_BLOCK.defaultBlockState()),impact.x,impact.y,impact.z,48,1.3,1.3,1.3,0.3);
+            c.level.sendParticles(new ShriekParticleOption(0),impact.x,impact.y,impact.z,1,0,0,0,0);
+            SpellAudio.cannon(c.caster,impact,"impact");c.impactAge=c.age;
+        }else if(c.distance+0.001>=c.nextBurst){
+            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.TRAIL_BURST,end,end,1.5);
+            cannonSparks(c,end,0.9f);SpellAudio.cannon(c.caster,end,"burst");c.nextBurst+=4;
+        }
+        return true;
+    }
+    private static void cannonSparks(Cast c,Vec3 pos,float scale){
+        PacketDistributor.sendToPlayersNear(c.level,null,pos.x,pos.y,pos.z,96,new WandNetwork.Burst(pos.x,pos.y,pos.z,c.spell.theme.color,scale));
     }
     private static void beam(Cast c,Vec3 start,Vec3 dir,boolean sonic){
         Vec3 end=clipLoaded(c.level,start,dir,c.spell.range,c.caster);double length=start.distanceTo(end);
@@ -327,7 +391,7 @@ public final class SpellEngine {
             case STUN->{effect(victim,MobEffects.MOVEMENT_SLOWDOWN,60,5);effect(victim,MobEffects.WEAKNESS,60,1);}
             case PUSH,PULL->{Vec3 d=victim.position().subtract(c.caster.position()).multiply(1,0,1).normalize().scale(c.spell.kind==Spell.Kind.PULL?-0.9:1.3);victim.setDeltaMovement(d.add(0,0.25,0));victim.hurtMarked=true;}
             case LAUNCH->{victim.setDeltaMovement(victim.getDeltaMovement().add(0,1.1,0));victim.hurtMarked=true;}
-            case COMET,PULSE,BURST,TWISTER,SMITE->{Vec3 delta=victim.position().subtract(from).multiply(1,0,1).normalize().scale(0.65);victim.push(delta.x,0.3,delta.z);victim.hurtMarked=true;}
+            case CANNON,COMET,PULSE,BURST,TWISTER,SMITE->{Vec3 delta=victim.position().subtract(from).multiply(1,0,1).normalize().scale(0.65);victim.push(delta.x,0.3,delta.z);victim.hurtMarked=true;}
             default->{}
         }
     }
@@ -362,6 +426,7 @@ public final class SpellEngine {
         for(int i=0;i<count;i++){double a=i*Math.PI*2/count+offset;trail(level,center.add(Math.cos(a)*radius,0,Math.sin(a)*radius),theme,0.015);}
     }
     private static void impactFeedback(Cast c,Vec3 pos){
+        if(c.spell.kind==Spell.Kind.CANNON)return;
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
         SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
@@ -412,7 +477,7 @@ public final class SpellEngine {
     }
     private static final class Cast {
         final UUID owner;final ServerLevel level;final Spell spell;final Vec3 dir;final LivingEntity target;final Set<UUID> hit=new HashSet<>();final List<VolleyBolt> bolts=new ArrayList<>();
-        final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration;long lastImpactTick=-1000;
+        final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;
         }

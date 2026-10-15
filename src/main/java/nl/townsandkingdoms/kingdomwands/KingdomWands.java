@@ -29,7 +29,7 @@ public final class KingdomWands {
     public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem("dark_wand",SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA));
     public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem("thunder_wand",THUNDER_BOLT,CHAIN_LIGHTNING,THUNDER_WAVE,STORM_CALL,THUNDER_PULSE,STATIC_SHOCK,LIGHTNING,SMITE));
     public static final DeferredItem<WandItem> MEPHI=ITEMS.register("mephi_wand",()->new WandItem("mephi_wand",GRAVITY_BOLT,GRAVITY_WELL,FORCE_PUSH,FORCE_PULL,GRAVITY_CHOKE,SINGULARITY));
-    public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem("soul_wand",ECHO_BOLT,SCULK_WAVE,SONIC_BOOM,SOUL_SIPHON,SOUL_PRISON,SHRIEKING_PULSE,AMETHYST_NOVA,ECHO_WARD));
+    public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem("soul_wand",ECHO_BOLT,SCULK_WAVE,SONIC_BOOM,SOUL_SIPHON,SOUL_PRISON,SHRIEKING_PULSE,AMETHYST_NOVA,ECHO_WARD,SOUL_CANNON));
     public static final DeferredItem<WandItem> VENOM=ITEMS.register("venom_wand",()->new WandItem("venom_wand",POISON_SPARK,POISON_WAVE,VENOM_BOLT,MIASMA_FIELD,WITHERING_HEX));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
@@ -66,7 +66,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.6.2-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.7.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);

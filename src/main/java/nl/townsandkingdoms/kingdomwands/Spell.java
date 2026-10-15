@@ -59,7 +59,8 @@ public enum Spell {
     EMBER_VEIL("Ember Veil", Kind.AURA, Theme.FIRE, 2, 5, 0, 150),
     VENOM_BOLT("Venom Bolt", Kind.BOLT, Theme.POISON, 3, 1.5, 32, 35),
     MIASMA_FIELD("Miasma Field", Kind.FIELD, Theme.POISON, 2, 4, 24, 150),
-    WITHERING_HEX("Withering Hex", Kind.TARGET, Theme.POISON, 3, 1, 24, 110);
+    WITHERING_HEX("Withering Hex", Kind.TARGET, Theme.POISON, 3, 1, 24, 110),
+    SOUL_CANNON("Soul Cannon", Kind.CANNON, Theme.SOUL, 16, 5, 48, 280);
 
     public final String title;
     public final Kind kind;
@@ -99,6 +100,7 @@ public enum Spell {
             case PULL->"Pull the target towards you.";
             case CHOKE->"Restrain and damage your target briefly.";
             case AURA->"A damaging aura that moves with you.";
+            case CANNON->"Charge for two seconds, then launch a massive echo blast. Switch away to cancel charging.";
             case SONIC->"Charge for 0.6 seconds, then fire a piercing sonic beam.";
             case SIPHON->"Drain health damage into healing, up to one heart.";
             case VOLLEY->"Fire three staggered arcane projectiles.";
@@ -113,7 +115,7 @@ public enum Spell {
         case CAPTURE,CHOKE,SUSPEND->"shared_restraint";case STUN->"shared_stun";
         default->name();
     };}
-    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON, MARK, SUSPEND, VOLLEY, LANCE, FIELD }
+    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON, MARK, SUSPEND, VOLLEY, LANCE, FIELD, CANNON }
     public enum Theme {
         MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8), SOUL(0x24D7CB);
         public final int color;

@@ -6,16 +6,23 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 /** Bounded visual messages; never used for collision, damage or target selection. */
 final class SpellVisuals {
-    enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE }
-    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE }
+    enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE, TRAIL_BURST }
+    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT }
     private static int details, accents;
     private SpellVisuals() {}
     static void tick() { details=0; accents=0; }
 
     static Shape shape(Spell spell, Stage stage) {
+        if(spell==Spell.SOUL_CANNON)return switch(stage){
+            case CAST,CHARGE -> Shape.CANNON_CHARGE;
+            case FLIGHT,LINK -> Shape.CANNON_HEAD;
+            case TRAIL_BURST -> Shape.CANNON_BURST;
+            case IMPACT -> Shape.CANNON_IMPACT;
+            default -> Shape.CHARGE;
+        };
         return switch(stage) {
             case CAST -> Shape.CAST;
-            case HIT -> Shape.CHARGE;
+            case HIT,TRAIL_BURST -> Shape.CHARGE;
             case IMPACT -> switch(spell.kind) {
                 case BURST,SMITE,COMET -> Shape.NOVA;
                 default -> Shape.IMPACT;
@@ -44,6 +51,13 @@ final class SpellVisuals {
         };
     }
 
+    static boolean packaged(Shape shape,Spell.Theme theme){
+        return !shape.name().startsWith("CANNON_")||theme==Spell.Theme.SOUL;
+    }
+    static int assetCount(){
+        int count=0;for(var shape:Shape.values())for(var theme:Spell.Theme.values())if(packaged(shape,theme))count++;
+        return count;
+    }
     static void send(ServerLevel level, Spell spell, Stage stage, Vec3 pos, Vec3 end, double size) {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
         if(detail ? details++>=64 : accents++>=32)return;

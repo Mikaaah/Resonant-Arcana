@@ -15,9 +15,10 @@ public final class WandNetwork {
         @Override public Type<Action> type(){return TYPE;}
     }
     /** Pure visual burst: the server never spawns damaging rocket entities. */
-    public record Burst(double x,double y,double z,int color) implements CustomPacketPayload {
+    public record Burst(double x,double y,double z,int color,float scale) implements CustomPacketPayload {
+        public Burst(double x,double y,double z,int color){this(x,y,z,color,1);}
         public static final Type<Burst> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,"burst"));
-        public static final StreamCodec<RegistryFriendlyByteBuf,Burst> CODEC=StreamCodec.of((b,m)->{b.writeDouble(m.x);b.writeDouble(m.y);b.writeDouble(m.z);b.writeInt(m.color);},b->new Burst(b.readDouble(),b.readDouble(),b.readDouble(),b.readInt()));
+        public static final StreamCodec<RegistryFriendlyByteBuf,Burst> CODEC=StreamCodec.of((b,m)->{b.writeDouble(m.x);b.writeDouble(m.y);b.writeDouble(m.z);b.writeInt(m.color);b.writeFloat(m.scale);},b->new Burst(b.readDouble(),b.readDouble(),b.readDouble(),b.readInt(),b.readFloat()));
         @Override public Type<Burst> type(){return TYPE;}
     }
     /** One finite native effect; endpoints orient beams and travelling spells. */
@@ -37,7 +38,7 @@ public final class WandNetwork {
         }
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("2");
+        var r=e.registrar("3");
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer player)SpellEngine.action(player,msg.action);
         }));

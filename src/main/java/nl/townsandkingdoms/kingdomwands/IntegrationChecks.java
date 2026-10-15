@@ -99,6 +99,7 @@ public final class IntegrationChecks {
             SpellVisuals.tick();SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
             check(visuals.size()==97,"visual budgets recover on the next tick");
             for(var shape:SpellVisuals.Shape.values())for(var theme:Spell.Theme.values()){
+            if(!SpellVisuals.packaged(shape,theme))continue;
                 String asset="/assets/kingdomwands/effeks/"+shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc";
                 try(var input=IntegrationChecks.class.getResourceAsStream(asset)){
                     check(input!=null&&new String(input.readNBytes(4),java.nio.charset.StandardCharsets.US_ASCII).equals("EFKE"),"native effect packaged: "+shape+"/"+theme);
@@ -124,7 +125,7 @@ public final class IntegrationChecks {
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case BOLT,COMET,WAVE,SEEKER,VOLLEY -> SpellVisuals.Stage.FLIGHT;
+                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON -> SpellVisuals.Stage.FLIGHT;
                     case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE -> SpellVisuals.Stage.STRIKE;
                     case BURST -> SpellVisuals.Stage.IMPACT;
@@ -229,6 +230,7 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
+            cannonChecks(level);
             audioChecks(level);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());KingdomWands.LOG.error("Wand integration failed",error);}
@@ -237,6 +239,48 @@ public final class IntegrationChecks {
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){KingdomWands.LOG.error("Could not write report",e);}
             KingdomWands.LOG.info("KINGDOM_WANDS_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
         }
+    }
+    private static void cannonChecks(ServerLevel level){
+        var player=new AudioPlayer(level,new GameProfile(UUID.fromString("ab438590-0c2e-4559-819e-31116824450f"),"CannonTest"));
+        player.setGameMode(GameType.SURVIVAL);resetPlayer(player);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.SOUL.toStack());
+        SpellEngine.clear();visuals.clear();Zombie victim=spawn(level,0,81,20);
+        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon begins charge");
+        for(int t=0;t<39;t++)SpellEngine.tick();
+        check(victim.getHealth()==20,"cannon cannot damage during two second charge");
+        check(visuals.stream().noneMatch(v->v.stage()==SpellVisuals.Stage.FLIGHT.ordinal()),"cannon has no flight before release");
+        check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.CHARGE.ordinal()).count()==13,"cannon sends bounded inward charge cues");
+        SpellEngine.tick();check(victim.getHealth()==20,"cannon travels instead of instantly hitting distant target");
+        player.setYRot(90);for(int t=0;t<30;t++)SpellEngine.tick();
+        check(victim.getHealth()==4,"cannon deals sixteen damage once and keeps released direction");
+        var mini=visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.TRAIL_BURST.ordinal()).toList();
+        check(mini.size()==4,"cannon produces four separate mini bursts before twenty block target");
+        for(int i=1;i<mini.size();i++)check(Math.abs(mini.get(i).z()-mini.get(i-1).z()-4)<0.01,"cannon mini bursts are spaced four blocks apart");
+        check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).count()==1,"cannon has one final detonation");
+        check(SpellEngine.activeCount()==0,"cannon ends after short impact sound tail");
+        for(String id:List.of("entity.warden.sonic_charge","block.respawn_anchor.charge","entity.warden.heartbeat","entity.warden.sonic_boom","entity.warden.roar","entity.firework_rocket.blast","entity.generic.explode","entity.firework_rocket.twinkle_far","block.amethyst_block.resonate"))
+            check(player.heard.contains("minecraft:"+id),"cannon delivers audio layer: "+id);
+        victim.discard();SpellEngine.clear();resetPlayer(player);visuals.clear();
+        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon cancellation begins");
+        for(int t=0;t<12;t++)SpellEngine.tick();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);SpellEngine.tick();
+        check(SpellEngine.activeCount()==0&&visuals.stream().noneMatch(v->v.stage()==SpellVisuals.Stage.FLIGHT.ordinal()),"putting wand away cancels cannon before firing");
+        SpellEngine.clear();resetPlayer(player);visuals.clear();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.SOUL.toStack());
+        level.getChunk(0,3);
+        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon can fire into empty sky");
+        for(int t=0;t<80;t++)SpellEngine.tick();
+        var impact=visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).toList();
+        check(impact.size()==1&&Math.abs(impact.getFirst().z()-48.95)<0.01,"cannon detonates once at maximum range");
+        check(SpellEngine.activeCount()==0,"empty cannon flight cannot leave a task behind");
+        SpellEngine.clear();resetPlayer(player);visuals.clear();Zombie hidden=spawn(level,0,81,6);
+        for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());
+        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon can charge towards a wall");
+        for(int t=0;t<80;t++)SpellEngine.tick();
+        check(hidden.getHealth()==20,"cannon splash cannot damage through a solid wall");
+        check(level.getBlockState(new BlockPos(0,82,4)).is(Blocks.STONE),"cannon leaves terrain intact");
+        check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).count()==1,"wall stops cannon with a single impact");
+        for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.AIR.defaultBlockState());
+        hidden.discard();SpellEngine.clear();
     }
     private static void audioChecks(ServerLevel level){
         boolean oldFeedback=KingdomWands.CASTER_IMPACTS.get();double oldVolume=KingdomWands.SOUND_VOLUME.get(),oldImpact=KingdomWands.IMPACT_VOLUME.get();

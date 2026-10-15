@@ -17,7 +17,7 @@ PALETTES = {
     'thunder': (0x52BFFF, 0xD8F6FF), 'dark': (0x7033B8, 0xBD74EE),
     'gravity': (0xCF58E8, 0xF6A5FF), 'soul': (0x24D7CB, 0xAA70EF),
 }
-SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge'.split()
+SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact'.split()
 
 
 def element(parent, name, text=None):
@@ -142,7 +142,48 @@ def author(shape, theme):
                    size=(.11 if shards else .18, .33 if shards else .18, .18),
                    rotation=(0, 0, seed.randrange(360)), spin=(0, 0, 5),
                    texture='shard' if shards else ('flame' if theme=='fire' else 'star'))
-    if shape in ('impact', 'nova'):
+    if shape=='cannon_charge':
+        # Dark centre, counter-rotating seals and three dimensional inward streams.
+        sprite('Void heart',0x090413,life=24,size=(1.0,1.0,1.0),texture='smoke',blend=1,alpha=240)
+        sprite('Condensed soul core',accent,life=21,size=(.38,.38,.38),growth=(.015,.015,.015),texture='star')
+        for radius,spin in ((.65,9),(1.0,-6)):
+            ring(children,c,radius=radius,life=24,spin=spin,vertical=True)
+        for i in range(42):
+            a=i*2.39996; y=1-2*(i+.5)/42; r=math.sqrt(1-y*y); radius=1.5+(i%4)*.3
+            pos=(math.cos(a)*r*radius,y*radius,math.sin(a)*r*radius)
+            sprite('Absorbed void fragment',0x713ABE if i%3 else c,life=24,pos=pos,
+                   velocity=tuple(-v/22 for v in pos),size=(.10,.24,.1),texture='shard',spin=(0,0,12))
+    elif shape=='cannon_head':
+        sprite('Echo pressure bloom',c,life=12,size=(2.2,2.2,2.2),alpha=145)
+        sprite('White hot soul core',0xCBFFF4,life=10,size=(.85,.85,.85),texture='star')
+        for i in range(4):
+            n=ring(children,accent if i%2 else c,radius=1-i*.12,life=14,spin=8 if i%2 else -8,vertical=True)
+            # Ring quads face forward along local +Z.
+            loc=n.find('LocationValues/PVA/Location/Z')
+            for key in ('Center','Max','Min'):loc.find(key).text=str(-i*.5)
+        for i in range(32):
+            a=i*.8;r=.6+(i%3)*.1
+            sprite('Helical echo wake',accent if i%4==0 else c,life=15,
+                   pos=(math.cos(a)*r,math.sin(a)*r,-i*.075),velocity=(0,0,-.025),
+                   size=(.16,.32,.16),texture='shard',spin=(0,0,8))
+    elif shape in ('cannon_burst','cannon_impact'):
+        big=shape=='cannon_impact'
+        sprite('Echo detonation',c,life=24,size=(1.5,1.5,1.5),growth=(.06,.06,.06),alpha=160)
+        sprite('Detonation flash',0xDFFFF9,life=8,size=(2,2,2),texture='star')
+        for i in range(3 if big else 1):
+            ring(children,accent if i==1 else c,radius=.65+i*.15,life=32 if big else 20,spin=3-i*3)
+        if big:
+            for roll in (0,60,120):
+                sprite('Expanding echo halo',c,life=30,size=(1.5,1.5,1),growth=(.045,.045,0),
+                       rotation=(0,roll,roll),texture='sigil',billboard=2,alpha=180)
+            sprite('Receding void cloud',0x251040,life=36,size=(1.3,1.3,1.3),growth=(.03,.03,.03),texture='smoke',blend=1,alpha=140)
+        count=66 if big else 26
+        for i in range(count):
+            a=i*2.39996;y=1-2*(i+.5)/count;r=math.sqrt(1-y*y);v=.045 if big else .065
+            sprite('Soul firework shard',accent if i%3==0 else c,life=36 if big else 24,
+                   velocity=(math.cos(a)*r*v,y*v,math.sin(a)*r*v),size=(.045,.13,.045) if big else (.10,.22,.1),
+                   texture='shard' if i%3 else 'star',spin=(0,0,9))
+    elif shape in ('impact', 'nova'):
         r = .8 if shape=='nova' else .65
         sprite('Impact bloom', life=22, size=(1.8, 1.8, 1.8), growth=(.045, .045, .045), alpha=190)
         sprite('Bright flash', accent, life=9, size=(2.6, 2.6, 2.6), texture='star')
@@ -253,10 +294,11 @@ def main():
         return theme
     completed={theme:0 for theme in args.theme}
     with ThreadPoolExecutor(max_workers=max(1,min(8,args.jobs))) as pool:
-        tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape]
+        tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape if not shape.startswith('cannon_') or theme=='soul']
         for task in as_completed(tasks):
             theme=task.result();completed[theme]+=1
-            if completed[theme]==len(args.shape):print(f'{theme}: {len(args.shape)} effects exported',flush=True)
+            expected=sum(not shape.startswith('cannon_') or theme=='soul' for shape in args.shape)
+            if completed[theme]==expected:print(f'{theme}: {expected} effects exported',flush=True)
 
 
 if __name__=='__main__':main()

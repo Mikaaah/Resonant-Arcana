@@ -42,7 +42,7 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace(id));}
     static float volume(float base){return (float)(base*KingdomWands.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
-        case SONIC_BOOM->"entity.warden.sonic_charge";
+        case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
         case SHRIEKING_PULSE->"entity.warden.roar";
         case SOUL_PRISON->"block.sculk_shrieker.shriek";
         default->castId(spell.theme);
@@ -58,6 +58,31 @@ final class SpellAudio {
         String primary=spell.kind==Spell.Kind.SONIC?"entity.warden.sonic_boom":impactId(spell.theme);
         cue(player,pos,primary,1.6f*gain,spell.theme==Spell.Theme.BLOOD?0.7f:0.85f,direct);
         cue(player,pos,impactAccentId(spell.theme),1.05f*gain,0.8f,direct);
+    }
+    static void cannonCharge(ServerPlayer player,Vec3 pos,float progress){
+        cue(player,pos,"block.respawn_anchor.charge",0.8f+progress*0.6f,0.55f+progress*0.9f,true);
+        cue(player,pos,"entity.warden.heartbeat",1.0f,0.7f+progress*0.5f,true);
+    }
+    static void cannon(ServerPlayer player,Vec3 pos,String phase){
+        float gain=KingdomWands.IMPACT_VOLUME.get().floatValue();
+        boolean direct=KingdomWands.CASTER_IMPACTS.get();
+        switch(phase){
+            case "release" -> {
+                cue(player,pos,"entity.warden.sonic_boom",2.4f*gain,0.65f,true);
+                cue(player,pos,"entity.warden.roar",1.5f*gain,0.8f,true);
+            }
+            case "burst" -> cue(player,pos,"entity.firework_rocket.blast",0.85f*gain,0.75f,direct);
+            case "impact" -> {
+                cue(player,pos,"entity.generic.explode",2.6f*gain,0.6f,direct);
+                cue(player,pos,"entity.warden.sonic_boom",2.2f*gain,0.5f,direct);
+                cue(player,pos,"block.amethyst_block.break",1.6f*gain,0.65f,direct);
+            }
+            case "tail" -> {
+                cue(player,pos,"entity.firework_rocket.twinkle_far",1.2f*gain,0.6f,direct);
+                cue(player,pos,"block.amethyst_block.resonate",1.4f*gain,0.6f,direct);
+            }
+            default -> throw new IllegalArgumentException(phase);
+        }
     }
     private static void cue(ServerPlayer player,Vec3 pos,String id,float base,float pitch,boolean direct){
         float gain=volume(base);if(gain<=0)return;

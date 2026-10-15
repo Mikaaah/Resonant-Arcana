@@ -45,15 +45,15 @@ public final class WandClient {
     }
     public static void burst(WandNetwork.Burst b) {
         var mc=Minecraft.getInstance();
-        if(mc.level==null||mc.player==null||visualBursts>=8||mc.player.distanceToSqr(b.x(),b.y(),b.z())>96*96)return;
+        if(!Float.isFinite(b.scale())||b.scale()<0.1f||b.scale()>4||mc.level==null||mc.player==null||visualBursts>=8||mc.player.distanceToSqr(b.x(),b.y(),b.z())>96*96)return;
         visualBursts++;
         if(b.color()==Spell.Theme.BLOOD.color)return;
         // Use coloured sparks directly: no automatic white fade or duplicate vanilla blast audio.
         float r=((b.color()>>16)&255)/255f,g=((b.color()>>8)&255)/255f,blue=(b.color()&255)/255f;
-        int count=24*KingdomWands.PARTICLES.get();
+        int count=Math.min(144,(int)(24*KingdomWands.PARTICLES.get()*Math.max(1,b.scale())));
         for(int i=0;i<count;i++){
             double y=1-2*(i+0.5)/count,radial=Math.sqrt(1-y*y),a=i*2.399963229728653;
-            double speed=0.12+(i%3)*0.035;
+            double speed=(0.12+(i%3)*0.035)*b.scale();
             var spark=mc.particleEngine.createParticle(ParticleTypes.FIREWORK,b.x(),b.y(),b.z(),Math.cos(a)*radial*speed,y*speed,Math.sin(a)*radial*speed);
             if(spark!=null){
                 if(b.color()==Spell.Theme.SOUL.color&&i%3==0)spark.setColor(0.66f,0.43f,0.94f);else spark.setColor(r,g,blue);

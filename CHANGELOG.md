@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0-alpha
+
+- Add Soul Cannon to the Soul Wand: absorb void energy, then fire a massive travelling echo blast.
+- Add small soul firework bursts along its path, a large sculk/crystal impact and layered charge, release and impact sounds.
+- Add four dedicated AAAParticles effects, with vanilla particles when the optional mod is absent.
+- Charge for two seconds; 48-block range, 16 base damage, five-block impact radius and 14-second base cooldown.
+- Update both client and server; the particle packet protocol has changed.
+
 ## 0.6.2-alpha
 
 - Fix AAAParticles effects failing to load because exported textures referenced the build machine’s directories.

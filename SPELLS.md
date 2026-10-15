@@ -89,7 +89,7 @@ Gravity, displacement and suspension.
 | Suspension | Lift a target briefly, followed by a gentle descent. | 7s |
 | Singularity | An area burst centred on your aim. | 8s |
 
-## Soul Wand — 8 spells
+## Soul Wand — 9 spells
 
 Sculk resonance, sonic attacks and echo magic.
 
@@ -103,6 +103,7 @@ Sculk resonance, sonic attacks and echo magic.
 | Shrieking Pulse | An expanding shock ring around you. | 6.5s |
 | Amethyst Nova | Aimed sculk/crystal area burst with teal and violet sparks. | 6s |
 | Echo Ward | Redirect incoming enemy projectiles for four seconds. | 9s |
+| Soul Cannon | Two-second charge, then a travelling echo blast with spaced firework bursts and a five-block area impact. 48-block range; 16 base damage. | 14s |
 
 ## Venom Wand — 5 spells
 

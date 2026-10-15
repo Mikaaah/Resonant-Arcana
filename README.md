@@ -1,8 +1,14 @@
 # Kingdom Wands
 
-Eight magic wands and 58 spells for Minecraft 1.21.1 on NeoForge. Each wand has its own spell list, particle effects and casting sounds.
+Eight magic wands and 59 spells for Minecraft 1.21.1 on NeoForge. Each wand has its own spell list, particle effects and casting sounds.
 
-[Download 0.6.2-alpha](downloads/kingdom-wands-0.6.2-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
+[Download 0.7.0-alpha](downloads/kingdom-wands-0.7.0-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
+
+## Soul Cannon
+
+Select **Soul Cannon** on the Soul Wand. A two-second void charge releases a huge travelling echo blast, with small soul firework bursts every four blocks and a large sculk/crystal impact. It has a 48-block range, deals 16 base damage within a five-block impact radius and has a 14-second base cooldown. Aim during the charge; the released shot keeps its direction. Put the wand away to cancel charging.
+
+With **AAAParticles**, the spell uses dedicated void absorption, echo-head, firework and detonation effects. Vanilla sonic, sculk and coloured firework particles remain available without it. Update both client and server to this version.
 
 ## Wands
 
@@ -14,7 +20,7 @@ Eight magic wands and 58 spells for Minecraft 1.21.1 on NeoForge. Each wand has 
 | Dark | 6 | Shadows, curses and weakness |
 | Thunder | 8 | Lightning, chain attacks and storms |
 | Mephi | 6 | Gravity, displacement and suspension |
-| Soul | 8 | Sculk, sonic attacks and echo magic |
+| Soul | 9 | Sculk, sonic attacks and echo magic |
 | Venom | 5 | Poison, wither and lingering clouds |
 
 ## Installation
@@ -68,7 +74,7 @@ to once every eight ticks per cast to keep repeated and area hits controlled.
 
 ## Compatibility
 
-Effects use vanilla Minecraft particles and sounds. With **AAAParticles 2.2.3 or later in the 2.x series** installed on the client, all 58 spells gain casting sigils, bright projectile cores and wakes, travelling crescents, energy beams, drain streams, lightning, large impact bursts and animated area effects. Wards surround the caster; cages surround their target; fields and pulses follow their gameplay radius. Soul effects mix cyan and amethyst, fire uses embers, blood uses crimson fragments, and venom leaves green mist. This is an experimental visual integration; AAAParticles is optional and is not bundled. Set `aaaParticles = false` locally to disable it. Clients and servers must both use 0.6.2-alpha because the visual protocol has changed.
+Effects use vanilla Minecraft particles and sounds. With **AAAParticles 2.2.3 or later in the 2.x series** installed on the client, all 59 spells gain casting sigils, bright projectile cores and wakes, travelling crescents, energy beams, drain streams, lightning, large impact bursts and animated area effects. Wards surround the caster; cages surround their target; fields and pulses follow their gameplay radius. Soul effects mix cyan and amethyst, fire uses embers, blood uses crimson fragments, and venom leaves green mist. This is an experimental visual integration; AAAParticles is optional and is not bundled. Set `aaaParticles = false` locally to disable it. Clients and servers must both use 0.7.0-alpha because the visual protocol has changed.
 
 Spells respect server PvP settings, scoreboard friendly fire and the caster's own tameable pets. They do not edit terrain. Claim-protection integrations and dedicated Epic Fight support are not included; use the alternate cast key if another combat mod captures left-click.
 
