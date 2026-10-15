@@ -3,7 +3,7 @@ from pathlib import Path
 import re,json,math,random
 from PIL import Image,ImageDraw,ImageFilter
 ROOT=Path(__file__).resolve().parents[1]
-PALETTES={'MAGIC':'#c570ff','BLOOD':'#ee365d','POISON':'#87e745','FIRE':'#ff8b32','THUNDER':'#7de8ff','DARK':'#9b6be8','GRAVITY':'#ed8aff','SOUL':'#48e9d9'}
+PALETTES={'MAGIC':'#c570ff','BLOOD':'#ee365d','POISON':'#87e745','FIRE':'#ff8b32','THUNDER':'#7de8ff','DARK':'#9b6be8','GRAVITY':'#ed8aff','SOUL':'#48e9d9','HOLY':'#ffe5a1','ICE':'#a6e7ff'}
 
 def main():
     source=(ROOT/'src/main/java/nl/townsandkingdoms/kingdomwands/Spell.java').read_text()
@@ -14,7 +14,21 @@ def main():
         ident={'EMPIRE_SPARK':'arcane_strike','EMPIRE_COMET':'astral_comet','EMPIRE_PULSE':'arcane_repulse'}.get(name,name.lower())
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind=='METEOR':
+        if kind=='SONIC':
+            d.ellipse((12,49,34,79),fill=white)
+            for i in range(3):d.arc((20+i*16,14-i*2,72+i*16,114+i*2),285,75,fill=c,width=7)
+        elif kind=='HEAL':
+            d.polygon([(52,17),(77,17),(77,51),(110,51),(110,77),(77,77),(77,111),(52,111),(52,77),(18,77),(18,51),(52,51)],fill=c)
+            line([(64,30),(64,98)],5,white)
+        elif kind=='FANGS':
+            for x in (28,64,100):d.polygon([(x-12,103),(x,22),(x+11,103)],fill=c)
+        elif kind=='FROSTFRONT':
+            for a in range(6):
+                v=a*math.pi/3;line([(64,64),(64+math.cos(v)*48,64+math.sin(v)*48)],8)
+        elif kind=='DOOM':
+            d.ellipse((25,25,103,103),fill='#08040f',outline=c,width=9)
+            d.arc((8,31,120,97),12,340,fill=white,width=5)
+        elif kind=='METEOR':
             d.ellipse((24,55,79,110),fill=c);d.ellipse((37,68,65,96),fill=white)
             for x in (42,64,85):line([(x,63),(x+22,16)],9)
         elif kind=='RAIL':

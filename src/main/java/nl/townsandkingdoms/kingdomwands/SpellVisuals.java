@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /** Bounded visual messages; never used for collision, damage or target selection. */
 final class SpellVisuals {
     enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE, TRAIL_BURST }
-    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT, PYRE_CHARGE, PYRE_FALL, PYRE_IMPACT, TEMPEST_CHARGE, TEMPEST_BEAM, TEMPEST_IMPACT, HORIZON_CHARGE, HORIZON_WELL, HORIZON_IMPACT }
+    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT, PYRE_CHARGE, PYRE_FALL, PYRE_IMPACT, TEMPEST_CHARGE, TEMPEST_BEAM, TEMPEST_IMPACT, HORIZON_CHARGE, HORIZON_WELL, HORIZON_IMPACT, SCREAM_FRONT, SCREAM_IMPACT, DOOM_CHARGE, DOOM_WELL, DOOM_IMPACT, SANCTUARY_CHARGE, SANCTUARY_FIELD, SANCTUARY_BLOOM, GLACIER_CHARGE, GLACIER_FRONT, GLACIER_IMPACT, FANG_CHARGE, FANG_ROW, FANG_IMPACT }
     private static int details, accents;
     private SpellVisuals() {}
     static void tick() { details=0; accents=0; SpellParticles.tick(); }
@@ -31,6 +31,21 @@ final class SpellVisuals {
         if(spell==Spell.EVENT_HORIZON)return switch(stage){
             case CAST,CHARGE -> Shape.HORIZON_CHARGE;case AREA -> Shape.HORIZON_WELL;
             case HIT,IMPACT -> Shape.HORIZON_IMPACT;default -> Shape.DRAIN;
+        };
+        if(spell==Spell.SONIC_BOOM)return switch(stage){
+            case FLIGHT -> Shape.SCREAM_FRONT;case IMPACT -> Shape.SCREAM_IMPACT;default -> Shape.CHARGE;
+        };
+        if(spell==Spell.DOOM)return switch(stage){
+            case CAST,CHARGE -> Shape.DOOM_CHARGE;case AREA -> Shape.DOOM_WELL;default -> Shape.DOOM_IMPACT;
+        };
+        if(spell==Spell.SANCTUARY)return switch(stage){
+            case CAST,CHARGE -> Shape.SANCTUARY_CHARGE;case AREA -> Shape.SANCTUARY_FIELD;default -> Shape.SANCTUARY_BLOOM;
+        };
+        if(spell==Spell.GLACIAL_RUPTURE)return switch(stage){
+            case CAST,CHARGE -> Shape.GLACIER_CHARGE;case FLIGHT -> Shape.GLACIER_FRONT;default -> Shape.GLACIER_IMPACT;
+        };
+        if(spell==Spell.EVOKERS_EDICT)return switch(stage){
+            case CAST,CHARGE -> Shape.FANG_CHARGE;case AREA -> Shape.FANG_ROW;default -> Shape.FANG_IMPACT;
         };
         return switch(stage) {
             case CAST -> Shape.CAST;
@@ -64,6 +79,12 @@ final class SpellVisuals {
     }
 
     static boolean packaged(Shape shape,Spell.Theme theme){
+        if(shape.name().startsWith("SCREAM_"))return theme==Spell.Theme.SOUL;
+        if(shape.name().startsWith("DOOM_"))return theme==Spell.Theme.DARK;
+        if(shape.name().startsWith("SANCTUARY_"))return theme==Spell.Theme.HOLY;
+        if(shape.name().startsWith("GLACIER_"))return theme==Spell.Theme.ICE;
+        if(theme==Spell.Theme.HOLY||theme==Spell.Theme.ICE)return false;
+        if(shape.name().startsWith("FANG_"))return theme==Spell.Theme.MAGIC;
         if(shape.name().startsWith("PYRE_"))return theme==Spell.Theme.FIRE;
         if(shape.name().startsWith("TEMPEST_"))return theme==Spell.Theme.THUNDER;
         if(shape.name().startsWith("HORIZON_"))return theme==Spell.Theme.GRAVITY;

@@ -84,9 +84,9 @@ final class IronsIntegrationChecks {
         var regen=player.getAttribute(AttributeRegistry.MANA_REGEN);double previousRegen=regen.getBaseValue();regen.setBaseValue(0);
         level.addNewPlayer(player);
         try{
-            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){
+            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_BOOM)){
                 SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
-                player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);
+                player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);player.setHealth(selected==Spell.SANCTUARY?5:20);
                 var wand=KingdomWands.ITEMS.getEntries().stream().map(e->(WandItem)e.get()).filter(w->w.spells.contains(selected)).findFirst().orElseThrow();
                 ItemStack stack=wand.getDefaultInstance();wand.select(stack,wand.spells.indexOf(selected));
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);Zombie victim=target(level,6);
@@ -96,15 +96,16 @@ final class IronsIntegrationChecks {
                 for(int t=0;t<registered.getEffectiveCastTime(1,player);t++){
                     manager.tick(level);SpellEngine.tick();
                     check.accept(victim.getHealth()==20,"no damage before native charge completes: "+selected);
+                    if(selected==Spell.SANCTUARY)check.accept(player.getHealth()==5,"no healing before native charge completes");
                 }
                 check.accept(data.getMana()==100,"native windup does not charge mana early: "+selected);
                 manager.tick(level);SpellEngine.tick();
                 check.accept(data.getMana()==100-registered.getManaCost(1),"wand spends native mana exactly once: "+selected);
                 for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
-                check.accept(victim.getHealth()<20,"charged wand releases its gameplay: "+selected);
+                check.accept(selected==Spell.SANCTUARY?player.getHealth()>5&&victim.getHealth()==20:victim.getHealth()<20,"charged wand releases its gameplay: "+selected);
                 check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"charged wand and effect clean up: "+selected);victim.discard();
             }
-            for(Spell selected:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){
+            for(Spell selected:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_BOOM)){
                 SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
                 var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
                 Zombie untouched=target(level,6);
@@ -128,7 +129,7 @@ final class IronsIntegrationChecks {
             for(Spell selected:Spell.values()){
                 var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
                 check.accept(registered.getCastTime(1)==selected.castTicks(),"spell cast tier is applied: "+selected);
-                check.accept(registered.getSpellPower(registered.getMaxLevel(),player)>registered.getSpellPower(1,player),"spell tiers increase power: "+selected);
+                check.accept(registered.getMaxLevel()==1||registered.getSpellPower(registered.getMaxLevel(),player)>registered.getSpellPower(1,player),"spell tiers increase power: "+selected);
             }
             check.accept(Spell.SPARK.castTicks()==0&&Spell.LEAP.castTicks()==0,"basic bolts and movement stay responsive");
             check.accept(Spell.SOUL_CANNON.damage==16&&Spell.SOUL_CANNON.range==48&&Spell.SOUL_CANNON.castTicks()==40,"Soul Cannon base behavior is preserved");

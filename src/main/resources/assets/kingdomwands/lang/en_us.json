@@ -55,7 +55,7 @@
   "spell.kingdomwands.singularity": "Singularity",
   "spell.kingdomwands.echo_bolt": "Echo Bolt",
   "spell.kingdomwands.sculk_wave": "Sculk Wave",
-  "spell.kingdomwands.sonic_boom": "Sonic Boom",
+  "spell.kingdomwands.sonic_boom": "Sonic Scream",
   "spell.kingdomwands.soul_siphon": "Soul Siphon",
   "spell.kingdomwands.soul_prison": "Soul Prison",
   "spell.kingdomwands.shrieking_pulse": "Shrieking Pulse",
@@ -73,5 +73,11 @@
   "subtitles.kingdomwands.impact": "Spell strikes",
   "spell.kingdomwands.solar_cataclysm": "Solar Cataclysm",
   "spell.kingdomwands.tempest_spear": "Tempest Spear",
-  "spell.kingdomwands.event_horizon": "Event Horizon"
+  "spell.kingdomwands.event_horizon": "Event Horizon",
+  "item.kingdomwands.holy_wand": "Holy Wand",
+  "item.kingdomwands.frost_wand": "Frost Wand",
+  "spell.kingdomwands.doom": "DOOM",
+  "spell.kingdomwands.sanctuary": "Sanctuary",
+  "spell.kingdomwands.glacial_rupture": "Glacial Rupture",
+  "spell.kingdomwands.evokers_edict": "Evoker's Edict"
 }

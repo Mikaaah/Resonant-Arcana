@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.0-alpha — Scream, sanctuary and DOOM
+
+- Replace Sonic Boom with Sonic Scream: a one-second windup, wide 12-block cone, Enderman scream and layered sonic pressure fronts. Keep the existing saved spell ID.
+- Add DOOM: a Legendary Ender spell with a growing black hole, inward pull, core devouring and a final collapse. Each enemy takes at most one 72-damage hit.
+- Add Sanctuary to the Holy school, with area healing and cleansing for the caster, scoreboard teammates and owned pets.
+- Add Glacial Rupture to the Ice school, with advancing ice spires and chilling.
+- Add Evoker’s Edict to Evocation, with three staggered rows of spectral fangs.
+- Add Holy and Frost wands. All nine native Iron’s schools now have spells in the addon.
+- Add original icons, native Iron’s particles and dedicated AAAParticles sequences. Update both client and server.
+
 ## 0.10.0-alpha — Heavy magic
 
 - Add Solar Cataclysm: a three-second charge, target warning and descending meteor with a 32-damage area impact.

@@ -17,6 +17,8 @@ final class SpellParticles {
     static Vec3 chargeOffset(Spell.Theme theme,double a,double progress){
         double r=1.8-progress;
         return switch(theme){
+            case HOLY -> new Vec3(Math.cos(a)*r*.7,-.8+progress,Math.sin(a)*r*.7);
+            case ICE -> new Vec3(Math.cos(a)*r,-.6,Math.sin(a)*r);
             case FIRE -> new Vec3(Math.cos(a)*r,-1.2+progress,Math.sin(a)*r*.45);
             case BLOOD -> new Vec3(Math.sin(a)*.8,1.3-progress*1.5,Math.cos(a)*.35);
             case POISON -> new Vec3(Math.cos(a)*r*.7,-.7,Math.sin(a)*r*.7);
@@ -28,6 +30,8 @@ final class SpellParticles {
         };
     }
     static ParticleOptions particle(Spell.Theme theme){return switch(theme){
+        case HOLY -> ParticleRegistry.CLEANSE_PARTICLE.get();
+        case ICE -> ParticleRegistry.SNOWFLAKE_PARTICLE.get();
         case FIRE -> ParticleRegistry.EMBER_PARTICLE.get();
         case BLOOD -> ParticleRegistry.BLOOD_PARTICLE.get();
         case POISON -> ParticleRegistry.ACID_BUBBLE_PARTICLE.get();
@@ -51,6 +55,8 @@ final class SpellParticles {
             Vec3 p=link?pos.lerp(end,t):pos;
             Vec3 v;
             switch(spell.theme){
+                case HOLY -> {p=p.add(Math.cos(a)*r,t*.8,Math.sin(a)*r);v=new Vec3(0,.06,0);}
+                case ICE -> {p=p.add(Math.cos(a)*r,.3,Math.sin(a)*r);v=new Vec3(Math.cos(a)*.05,-.02,Math.sin(a)*.05);}
                 case FIRE -> {p=p.add(Math.cos(a)*r,-.2,Math.sin(a)*r);v=new Vec3(Math.cos(a)*.025,.07+t*.09,Math.sin(a)*.025);}
                 case BLOOD -> {p=p.add(Math.cos(a)*r,.25,Math.sin(a)*r);v=new Vec3(Math.cos(a)*.08,.03+t*.06,Math.sin(a)*.08);}
                 case POISON -> {p=p.add(Math.cos(a)*r,.15+t*.35,Math.sin(a)*r);v=new Vec3(0,.012,0);}

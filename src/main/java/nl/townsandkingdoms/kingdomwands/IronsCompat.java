@@ -44,6 +44,7 @@ final class IronsCompat {
     }
     static ResourceLocation id(Spell spell){return ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,spell.bookId());}
     static ResourceLocation school(Spell.Theme theme){return switch(theme){
+        case HOLY->SchoolRegistry.HOLY_RESOURCE;case ICE->SchoolRegistry.ICE_RESOURCE;
         case FIRE->SchoolRegistry.FIRE_RESOURCE;
         case BLOOD->SchoolRegistry.BLOOD_RESOURCE;
         case POISON->SchoolRegistry.NATURE_RESOURCE;
@@ -60,7 +61,7 @@ final class IronsCompat {
             baseManaCost=spell.manaCost();
             manaCostPerLevel=Math.max(2,Math.min(10,baseManaCost/5));baseSpellPower=100;spellPowerPerLevel=25;
             castTime=spell.castTicks();
-            defaults=new DefaultConfig().setMinRarity((spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
+            defaults=new DefaultConfig().setMinRarity(spell==Spell.DOOM?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
                 .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(true).build();
         }
         @Override public ResourceLocation getSpellResource(){return id(spell);}
@@ -73,14 +74,14 @@ final class IronsCompat {
         @Override public Optional<net.minecraft.sounds.SoundEvent> getCastFinishSound(){return Optional.empty();}
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
-            case STORM,SMITE,TWISTER,METEOR->SpellAnimations.CHARGE_RAISED_HAND;
-            case BURST,WELL,FIELD,MARK,COLLAPSE->SpellAnimations.CHARGE_WAVY_ANIMATION;
-            case WARD,AURA->SpellAnimations.PREPARE_CROSS_ARMS;
+            case STORM,SMITE,TWISTER,METEOR,FROSTFRONT->SpellAnimations.CHARGE_RAISED_HAND;
+            case BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
+            case WARD,AURA,HEAL->SpellAnimations.PREPARE_CROSS_ARMS;
             default->castTime>0?SpellAnimations.ANIMATION_LONG_CAST:SpellAnimations.ANIMATION_INSTANT_CAST;
         };}
         @Override public AnimationHolder getCastFinishAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL->SpellAnimations.ONE_HANDED_RAY_SHOOT;
-            case STORM,SMITE,TWISTER,METEOR->SpellAnimations.ANIMATION_LONG_CAST_FINISH;
+            case STORM,SMITE,TWISTER,METEOR,FROSTFRONT->SpellAnimations.ANIMATION_LONG_CAST_FINISH;
             default->SpellAnimations.ANIMATION_INSTANT_CAST;
         };}
         @Override public void onClientPreCast(Level level,int spellLevel,LivingEntity entity,net.minecraft.world.InteractionHand hand,MagicData data){
@@ -108,6 +109,7 @@ final class IronsCompat {
         @Override public List<MutableComponent> getUniqueInfo(int spellLevel,LivingEntity entity){
             var info=new ArrayList<MutableComponent>();
             info.add(Component.literal(spell.description()));
+            if(spell.kind==Spell.Kind.HEAL)info.add(Component.literal(String.format(Locale.ROOT,"Healing: up to %.1f health",12*getSpellPower(spellLevel,entity)/100f)));
             if(spell.damage>0)info.add(Component.literal(String.format(Locale.ROOT,"Base damage: %.1f",spell.damage*getSpellPower(spellLevel,entity)/100f)));
             if(castTime>0)info.add(Component.literal(String.format(Locale.ROOT,"Windup: %.2fs",getEffectiveCastTime(spellLevel,entity)/20.0)));
             if(spell.range>0)info.add(Component.literal("Range: "+(int)spell.range+" blocks"));

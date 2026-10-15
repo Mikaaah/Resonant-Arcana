@@ -16,8 +16,9 @@ PALETTES = {
     'poison': (0x68DB39, 0xCEE95D), 'fire': (0xFF6515, 0xFFD35C),
     'thunder': (0x52BFFF, 0xD8F6FF), 'dark': (0x7033B8, 0xBD74EE),
     'gravity': (0xCF58E8, 0xF6A5FF), 'soul': (0x24D7CB, 0xAA70EF),
+    'holy': (0xFFE5A1, 0xFFFBEA), 'ice': (0x81D9FF, 0xE4FAFF),
 }
-SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact pyre_charge pyre_fall pyre_impact tempest_charge tempest_beam tempest_impact horizon_charge horizon_well horizon_impact'.split()
+SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact pyre_charge pyre_fall pyre_impact tempest_charge tempest_beam tempest_impact horizon_charge horizon_well horizon_impact scream_front scream_impact doom_charge doom_well doom_impact sanctuary_charge sanctuary_field sanctuary_bloom glacier_charge glacier_front glacier_impact fang_charge fang_row fang_impact'.split()
 
 
 def element(parent, name, text=None):
@@ -69,10 +70,12 @@ def textures():
                 pixels.append((255, 255, 255, int(min(1, a)*255)))
         im.putdata(pixels)
         im.save(folder / f'{kind}.png')
-    for kind in ('sigil', 'arc', 'bolt', 'shard'):
+    for kind in ('sigil', 'arc', 'bolt', 'shard', 'halo'):
         im = Image.new('RGBA', (256, 256)); d = ImageDraw.Draw(im)
         white = (255, 255, 255, 255)
-        if kind == 'sigil':
+        if kind == 'halo':
+            d.ellipse((16,16,240,240),outline=white,width=5)
+        elif kind == 'sigil':
             for radius in (72, 94, 112):
                 d.ellipse((128-radius, 128-radius, 128+radius, 128+radius), outline=white, width=2)
             for i in range(12):
@@ -201,7 +204,71 @@ def author(shape, theme):
                 if i%9==0:sprite('Swept arcane ribbon',c,life=15,pos=(0,0,z),size=(1.25,1.25,1),
                                  rotation=(0,0,i*40),spin=(0,0,8),texture='arc',billboard=2)
         if theme=='gravity':sprite('Light eating core',0x100518,life=22,size=(.7,.7,.7),texture='smoke',blend=1,alpha=245)
-    if shape.startswith('pyre_'):
+    if shape.startswith('scream_'):
+        for i in range(4):
+            sprite('Sonic pressure crescent',0xCFFFF9 if i%2 else c,life=20,
+                   pos=(0,0,-i*.08),size=(1.9-i*.15,1.9-i*.15,1),growth=(.025,.025,0),
+                   rotation=(0,0,i*85),texture='arc',billboard=2,alpha=210)
+        for i in range(26):
+            a=i*math.tau/26
+            sprite('Shattered scream fragment',accent if i%4==0 else c,life=22,
+                   pos=(math.cos(a)*.8,math.sin(a)*.8,0),velocity=(math.cos(a)*.025,math.sin(a)*.025,.01),
+                   size=(.045,.17,.045),texture='shard',spin=(0,0,8))
+    elif shape.startswith('doom_'):
+        charge=shape=='doom_charge';impact=shape=='doom_impact'
+        sprite('Opaque void sphere',0x030105,life=32,size=(1.9,1.9,1.9),growth=(-.04,-.04,-.04) if impact else (0,0,0),texture='glow',blend=1,alpha=255)
+        sprite('Black hole photon rim',0xF4E7FF,life=30,size=(1.94,1.94,1),texture='halo',alpha=240)
+        if not charge:
+            for i in range(2):
+                sprite('Accretion disc',0xCB9FEE if i else 0xFFDFBD,life=30,size=(2.8,1.0,1),
+                       rotation=(60,i*30,12),spin=(0,0,5 if i else -4),texture='halo',billboard=2,alpha=200)
+        for i in range(48 if not charge else 24):
+            a=i*2.39996;y=1-2*(i+.5)/(48 if not charge else 24);r=math.sqrt(max(0,1-y*y))
+            pos=(math.cos(a)*r*1.4,y*1.4,math.sin(a)*r*1.4)
+            sprite('Devoured light stream',0xD7C0FF if i%3 else 0xFFD8B0,life=28,pos=pos,
+                   velocity=tuple(v*(.055 if impact else -.028) for v in pos),size=(.035,.16,.035),texture='shard')
+        if impact:sprite('Collapse flash',0xEFDCFF,life=9,size=(2.4,2.4,2.4),texture='star')
+    elif shape.startswith('sanctuary_'):
+        field=shape=='sanctuary_field'
+        for i in range(28):
+            a=i*2.39996;r=.2+(i%5)*.15
+            sprite('Ascending blessing',accent if i%3 else c,life=30,
+                   pos=(math.cos(a)*r,0 if field else -.4,math.sin(a)*r),velocity=(0,.035+(i%4)*.008,0),
+                   size=(.09,.5 if field else .35,.09),texture='shard',spin=(0,0,3))
+        for side in (-1,1):
+            for i in range(6):
+                sprite('Golden feather sweep',accent,life=26,pos=(side*(.2+i*.13),.4-i*.07,0),
+                       velocity=(side*.012,.018,0),size=(.14,.6,.14),rotation=(0,0,side*(20+i*8)),texture='shard')
+        sprite('Warm healing bloom',c,life=28,size=(1.4,.6,1.4),texture='glow',alpha=150)
+        for i in range(8):
+            a=i*math.tau/8
+            sprite('Radiant healing star',0xFFF8D5,life=24,pos=(math.cos(a)*.6,.15,math.sin(a)*.6),
+                   velocity=(0,.025,0),size=(.22,.22,.22),texture='star')
+    elif shape.startswith('glacier_'):
+        front=shape=='glacier_front';impact=shape=='glacier_impact'
+        for i in range(9 if front else 15):
+            x=(i-4)*.24 if front else math.cos(i*2.4)*.6;z=math.sin(i*2.4)*.2
+            sprite('Erupting ice spire',accent if i%3==0 else c,life=28,pos=(x,-.1,z),
+                   velocity=(0,.018,0),size=(.18,.7+(i%3)*.25,.18),growth=(0,.028,0),
+                   rotation=(0,0,x*-8),texture='shard',billboard=1,blend=1,alpha=245)
+        for i in range(16):
+            a=i*2.4
+            sprite('Chipped ice fragment',accent,life=25,pos=(math.cos(a)*.4,.3,math.sin(a)*.4),
+                   velocity=(math.cos(a)*.04,.012,math.sin(a)*.04),size=(.035,.12,.035),texture='shard')
+        sprite('Cold ground mist',c,life=30,pos=(0,-.15,0),size=(2,.3,1.2),texture='smoke',alpha=90,blend=1)
+    elif shape.startswith('fang_'):
+        row=shape=='fang_row'
+        for pair in range(3 if row else 2):
+            for side in (-1,1):
+                sprite('Spectral evoker fang',0xE5E7CD,life=24,pos=(side*(.12+pair*.14),.2,pair*.22),
+                       velocity=(0,.025,0),size=(.22,1.0+pair*.18,.22),growth=(0,.025,0),
+                       rotation=(0,0,side*-16),texture='shard',billboard=2,blend=1,alpha=250)
+        for i in range(18):
+            a=i*2.4
+            sprite('Evocation soul splinter',0x6FCEB0,life=22,pos=(math.cos(a)*.6,.05,math.sin(a)*.6),
+                   velocity=(0,.025,0),size=(.04,.2,.04),texture='shard')
+        sprite('Fang emergence shadow',0x17231F,life=26,pos=(0,-.1,0),size=(1.6,.4,1.2),texture='smoke',blend=1,alpha=190)
+    elif shape.startswith('pyre_'):
         charge=shape=='pyre_charge';fall=shape=='pyre_fall'
         sprite('Solar heart',0xFFF2AA,life=16,size=(.8,.8,.8) if fall else (.35,.35,.35),texture='star')
         for i in range(38 if not charge else 24):
@@ -373,7 +440,10 @@ def main():
         shutil.copy2(exported,ASSETS/exported.name)
         return theme
     def packaged(shape,theme):
-        return (not shape.startswith('cannon_') or theme=='soul') and (not shape.startswith('pyre_') or theme=='fire') and (not shape.startswith('tempest_') or theme=='thunder') and (not shape.startswith('horizon_') or theme=='gravity')
+        dedicated={'cannon_':'soul','pyre_':'fire','tempest_':'thunder','horizon_':'gravity','scream_':'soul','doom_':'dark','sanctuary_':'holy','glacier_':'ice','fang_':'magic'}
+        for prefix,school in dedicated.items():
+            if shape.startswith(prefix):return theme==school
+        return theme not in ('holy','ice')
     completed={theme:0 for theme in args.theme}
     with ThreadPoolExecutor(max_workers=max(1,min(8,args.jobs))) as pool:
         tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape if packaged(shape,theme)]

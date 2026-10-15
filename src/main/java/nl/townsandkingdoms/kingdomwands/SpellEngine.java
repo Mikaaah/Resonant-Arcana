@@ -59,7 +59,7 @@ public final class SpellEngine {
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
-        Vec3 center=clipLoaded(player.serverLevel(),eye,dir,2,player).add(0,-0.18,0);
+        Vec3 center=clipLoaded(player.serverLevel(),eye,dir,spell==Spell.DOOM?3:2,player).add(0,spell==Spell.DOOM?1.8:-0.18,0);
         if(elapsed%3==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,center,center.add(dir),0.45+progress);
         for(int i=0;i<3;i++){
             double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=spell==Spell.SOUL_CANNON?new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7)):SpellParticles.chargeOffset(spell.theme,angle,progress);
@@ -109,6 +109,14 @@ public final class SpellEngine {
                 lightning(cast,loc);area(cast,loc,spell.radius,true);
             }
             case CHAIN -> {timed=false;chain(cast,target);}
+            case HEAL -> {timed=false;sanctuary(cast);}
+            case FROSTFRONT,FANGS -> {
+                cast.pos=player.position().add(0,.2,0);
+                cast.travel=new Vec3(direction.x,0,direction.z).normalize();
+                if(cast.travel.lengthSqr()<.01)cast.travel=Vec3.directionFromRotation(0,player.getYRot());
+                cast.duration=24;
+            }
+            case DOOM -> {cast.pos=target!=null?target.getBoundingBox().getCenter():aim.subtract(direction.scale(.08));cast.duration=96;}
             case METEOR -> {
                 cast.anchor=target!=null?target.getBoundingBox().getCenter():aim.subtract(direction.scale(.08));
                 // Start on the reachable side of the ceiling; no chunks or blocks are changed.
@@ -124,7 +132,7 @@ public final class SpellEngine {
             case WARD -> cast.duration=80;
             case TWISTER -> {cast.pos=target!=null?target.position():aim;cast.duration=40;}
             case CHANNEL -> cast.duration=30;
-            case SONIC -> cast.duration=14;
+            case SONIC -> cast.duration=30;
             case CANNON -> cast.duration=80;
             case MARK -> {cast.pos=target.position();cast.duration=40;}
             case SUSPEND -> {cast.anchor=target.position();cast.pos=target.position();cast.duration=40;}
@@ -132,7 +140,7 @@ public final class SpellEngine {
             case LANCE -> {timed=false;beam(cast,start,direction,false);}
             default -> cast.duration=(int)Math.ceil(spell.range/(spell.kind==Spell.Kind.COMET?0.9:1.1))+2;
         }
-        if(book!=null&&book.prepared())cast.age=spell.kind==Spell.Kind.CANNON?39:spell.kind==Spell.Kind.SONIC?11:0;
+        if(book!=null&&book.prepared())cast.age=spell.kind==Spell.Kind.CANNON?39:spell.kind==Spell.Kind.SONIC?19:0;
         if(timed)ACTIVE.add(cast);
         int cooldown=book!=null?book.cooldown():Math.max(1,(int)Math.ceil(spell.cooldown*KingdomWands.COOLDOWNS.get()));
         // Iron's owns individual spell cooldowns; keep only cross-spell recovery groups here.
@@ -158,8 +166,50 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(c.spell.kind!=Spell.Kind.CANNON&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
+        if(c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
         switch(c.spell.kind){
+            case DOOM -> {
+                double radius=Math.min(c.spell.radius,2+c.age*.25);
+                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,radius);
+                if(c.age%20==1)SpellAudio.world(c.level,c.pos,"entity.warden.heartbeat",1,.55f);
+                for(var victim:near(c.caster,c.pos,radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
+                    Vec3 pull=c.pos.subtract(victim.getBoundingBox().getCenter());
+                    victim.setDeltaMovement(pull.normalize().scale(Math.min(.5,pull.length()*.13)));victim.hurtMarked=true;
+                    if(c.age>=40&&pull.length()<1.8)hit(c,victim,c.pos,true);
+                }
+                if(c.age==90){
+                    area(c,c.pos,c.spell.radius,true);
+                    SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.pos,c.pos,12);
+                    impactFeedback(c,c.pos);return false;
+                }
+            }
+            case FROSTFRONT -> {
+                double distance=c.age*1.5,width=Math.min(c.spell.radius,distance/3);
+                Vec3 requested=c.pos.add(c.travel.scale(distance));Vec3 end=clipLoaded(c.level,c.pos,c.travel,Math.min(distance,c.spell.range),c.caster);
+                if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,end,end.add(c.travel),Math.max(1,width));
+                for(var victim:near(c.caster,c.pos,c.spell.range)){
+                    Vec3 delta=victim.getBoundingBox().getCenter().subtract(c.pos);double along=delta.dot(c.travel);
+                    double across=delta.subtract(c.travel.scale(along)).horizontalDistance();
+                    if(Math.abs(along-distance)<=2&&across<=width+1&&Math.abs(delta.y)<4&&visible(c,c.pos,victim.getBoundingBox().getCenter())){
+                        hit(c,victim,end,true);effect(victim,MobEffects.MOVEMENT_SLOWDOWN,80,2);victim.setTicksFrozen(Math.max(160,victim.getTicksFrozen()));
+                    }
+                }
+                if(distance>=c.spell.range||end.distanceTo(requested)>.2){burst(c,end);return false;}
+            }
+            case FANGS -> {
+                if(c.age%3!=1)return true;
+                double distance=2+(c.age-1)/3*3;
+                Vec3 main=clipLoaded(c.level,c.pos,c.travel,Math.min(distance,c.spell.range),c.caster);
+                Vec3 side=c.travel.cross(new Vec3(0,1,0)).normalize();
+                for(int lane=-1;lane<=1;lane++){
+                    Vec3 end=main.add(side.scale(lane*1.7));
+                    if(!c.level.hasChunkAt(BlockPos.containing(end))||!visible(c,c.pos,end))continue;
+                    SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,end,end.add(c.travel),1.3);
+                    area(c,end,c.spell.radius,true);
+                }
+                if(c.age%6==1)SpellAudio.world(c.level,main,"entity.evoker_fangs.attack",1,.7f);
+                if(distance>=c.spell.range||main.distanceTo(c.pos)<distance-.2)return false;
+            }
             case METEOR -> {
                 if(c.age<=12){
                     if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.anchor,c.anchor,c.spell.radius);
@@ -307,14 +357,23 @@ public final class SpellEngine {
             }
             case CANNON -> {return cannon(c);}
             case SONIC -> {
-                c.pos=c.caster.getEyePosition();
-                Vec3 dir=c.caster.getLookAngle().normalize();
-                if(c.age<12){
-                    if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.CHARGE,c.pos.add(dir.scale(0.9)),c.pos.add(dir.scale(1.9)),0.35+c.age*0.04);
-                    if(c.age%3==0)ring(c.level,c.pos.add(dir.scale(0.9)),0.15+c.age*0.018,c.spell.theme,c.age*0.4);
+                if(c.age<=20){c.pos=c.caster.getEyePosition();c.travel=c.caster.getLookAngle().normalize();}
+                if(c.age<20){
+                    if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.CHARGE,c.pos.add(c.travel.scale(1.5)),c.pos.add(c.travel.scale(2.5)),.4+c.age*.025);
                     return true;
                 }
-                beam(c,c.pos,dir,true);return false;
+                if(c.age==20)SpellAudio.scream(c.caster,c.pos);
+                double radius=(c.age-19)*1.5;
+                Vec3 front=c.pos.add(c.travel.scale(radius));
+                SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,front,front.add(c.travel),radius*.95);
+                for(var victim:near(c.caster,c.pos,c.spell.range)){
+                    Vec3 delta=victim.getBoundingBox().getCenter().subtract(c.pos);double length=delta.length();
+                    if(length<=c.spell.range&&Math.abs(length-radius)<2&&delta.normalize().dot(c.travel)>=.342&&visible(c,c.pos,victim.getBoundingBox().getCenter())){
+                        hit(c,victim,c.pos,true);Vec3 push=delta.normalize().scale(.8);victim.push(push.x,.2,push.z);victim.hurtMarked=true;
+                    }
+                }
+                c.level.sendParticles(ParticleTypes.SONIC_BOOM,front.x,front.y,front.z,1,0,0,0,0);
+                if(radius>=c.spell.range){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,front,front.add(c.travel),5);return false;}
             }
 
             case CHANNEL -> {
@@ -415,6 +474,23 @@ public final class SpellEngine {
 
         burst(c,end);
     }
+    private static boolean healingAlly(ServerPlayer caster,LivingEntity entity){
+        if(!entity.isAlive()||entity.isSpectator())return false;
+        if(entity==caster)return true;
+        if(entity instanceof TamableAnimal pet)return caster.getUUID().equals(pet.getOwnerUUID());
+        return entity instanceof net.minecraft.world.entity.player.Player&&caster.getTeam()!=null&&caster.getTeam()==entity.getTeam();
+    }
+    private static void sanctuary(Cast c){
+        Vec3 center=c.caster.position().add(0,.5,0);float amount=12*(c.book==null?1:c.book.power());
+        var allies=c.level.getEntitiesOfClass(LivingEntity.class,new AABB(center,center).inflate(c.spell.radius),e->healingAlly(c.caster,e));
+        if(!allies.contains(c.caster))allies.add(c.caster);
+        for(var ally:allies)if(ally.getBoundingBox().getCenter().distanceToSqr(center)<c.spell.radius*c.spell.radius&&visible(c,c.caster.getEyePosition(),ally.getBoundingBox().getCenter())){
+            ally.heal(amount);
+            for(var debuff:List.of(MobEffects.POISON,MobEffects.WITHER,MobEffects.BLINDNESS,MobEffects.DARKNESS))ally.removeEffect(debuff);
+            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,ally.getBoundingBox().getCenter(),ally.getBoundingBox().getCenter(),1.4);
+        }
+        SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,center,center,c.spell.radius);SpellAudio.impact(c.caster,center,c.spell);
+    }
     private static void area(Cast c,Vec3 pos,double radius,boolean once){
         for(LivingEntity entity:near(c.caster,pos,radius))if(visible(c,pos,entity.getBoundingBox().getCenter()))hit(c,entity,pos,once);
     }
@@ -505,7 +581,7 @@ public final class SpellEngine {
         if(c.spell.kind==Spell.Kind.CANNON)return;
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
-        if(c.spell.kind!=Spell.Kind.METEOR&&c.spell.kind!=Spell.Kind.RAIL&&c.spell.kind!=Spell.Kind.COLLAPSE)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
+        if(c.spell.kind!=Spell.Kind.METEOR&&c.spell.kind!=Spell.Kind.RAIL&&c.spell.kind!=Spell.Kind.COLLAPSE&&c.spell.kind!=Spell.Kind.DOOM)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
         c.lastImpactTick=ticks;SpellAudio.impact(c.caster,pos,c.spell);
     }
     private static void burst(Cast c,Vec3 pos){

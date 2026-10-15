@@ -56,7 +56,7 @@ final class AaaEffects {
         var spell=Spell.values()[message.spell()];var stage=SpellVisuals.Stage.values()[message.stage()];
         var shape=SpellVisuals.shape(spell,stage);
         float size=message.size(),sx=size,sy=size,sz=size;
-        boolean directional=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE||stage==SpellVisuals.Stage.CAST||stage==SpellVisuals.Stage.FLIGHT||stage==SpellVisuals.Stage.CHARGE;
+        boolean directional=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE||stage==SpellVisuals.Stage.CAST||stage==SpellVisuals.Stage.FLIGHT||stage==SpellVisuals.Stage.CHARGE||shape==SpellVisuals.Shape.FANG_ROW||shape==SpellVisuals.Shape.SCREAM_IMPACT;
         if(stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE){
             if(lengthSquared<0.01)return;
             sx=sy=shape==SpellVisuals.Shape.TEMPEST_BEAM?1.5f*size:shape==SpellVisuals.Shape.FLAME?0.8f:shape==SpellVisuals.Shape.LIGHTNING?0.7f:0.45f;
@@ -65,7 +65,7 @@ final class AaaEffects {
             // Flight messages start at the visible head; their endpoint carries its direction.
             sy=shape==SpellVisuals.Shape.WAVE?0.9f:size;
         } else if(stage==SpellVisuals.Stage.AREA){
-            sy=switch(shape){case PULSE -> 0.7f;case CAGE,CURSE -> 1.0f;case VORTEX -> Math.min(4,size);default -> Math.min(2.5f,size);};
+            sy=switch(shape){case PULSE -> 0.7f;case CAGE,CURSE -> 1.0f;case FANG_ROW -> 1.8f;case SANCTUARY_FIELD -> 1.2f;case DOOM_WELL -> size;case VORTEX -> Math.min(4,size);default -> Math.min(2.5f,size);};
         }
         try {
             var id=ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,shape.name().toLowerCase(Locale.ROOT)+"_"+spell.theme.name().toLowerCase(Locale.ROOT));

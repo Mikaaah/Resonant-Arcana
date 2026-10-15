@@ -47,7 +47,7 @@ public enum Spell {
     SINGULARITY("Singularity", Kind.BURST, Theme.GRAVITY, 18, 6, 28, 180),
     ECHO_BOLT("Echo Bolt", Kind.BOLT, Theme.SOUL, 5, 1.5, 36, 25),
     SCULK_WAVE("Sculk Wave", Kind.WAVE, Theme.SOUL, 5, 2.5, 28, 65),
-    SONIC_BOOM("Sonic Boom", Kind.SONIC, Theme.SOUL, 8, 0.8, 28, 120),
+    SONIC_BOOM("Sonic Scream", Kind.SONIC, Theme.SOUL, 14, 12, 12, 160),
     SOUL_SIPHON("Soul Siphon", Kind.SIPHON, Theme.SOUL, 5, 1, 24, 100),
     SOUL_PRISON("Soul Prison", Kind.CHOKE, Theme.SOUL, 2, 1, 24, 140),
     SHRIEKING_PULSE("Shrieking Pulse", Kind.PULSE, Theme.SOUL, 9, 9, 0, 150),
@@ -63,7 +63,11 @@ public enum Spell {
     SOUL_CANNON("Soul Cannon", Kind.CANNON, Theme.SOUL, 16, 5, 48, 280),
     SOLAR_CATACLYSM("Solar Cataclysm", Kind.METEOR, Theme.FIRE, 32, 6, 40, 400),
     TEMPEST_SPEAR("Tempest Spear", Kind.RAIL, Theme.THUNDER, 30, 1.1, 56, 360),
-    EVENT_HORIZON("Event Horizon", Kind.COLLAPSE, Theme.GRAVITY, 36, 7, 32, 480);
+    EVENT_HORIZON("Event Horizon", Kind.COLLAPSE, Theme.GRAVITY, 36, 7, 32, 480),
+    DOOM("DOOM", Kind.DOOM, Theme.DARK, 72, 12, 32, 1200),
+    SANCTUARY("Sanctuary", Kind.HEAL, Theme.HOLY, 0, 8, 0, 360),
+    GLACIAL_RUPTURE("Glacial Rupture", Kind.FROSTFRONT, Theme.ICE, 28, 6, 18, 360),
+    EVOKERS_EDICT("Evoker's Edict", Kind.FANGS, Theme.MAGIC, 26, 1.6, 24, 320);
 
     public final String title;
     public final Kind kind;
@@ -77,8 +81,9 @@ public enum Spell {
     }
     /** Base windup in ticks. Movement and basic bolts remain immediate. */
     public int castTicks(){return switch(this){
+        case DOOM->80;case SANCTUARY,GLACIAL_RUPTURE->50;case EVOKERS_EDICT->48;
         case SOLAR_CATACLYSM->60;case TEMPEST_SPEAR->50;case EVENT_HORIZON->64;
-        case SOUL_CANNON->40;case SONIC_BOOM->12;
+        case SOUL_CANNON->40;case SONIC_BOOM->20;
         case SINGULARITY,STORM_CALL->32;case SMITE->28;case FIRE_TWISTER,GRAVITY_WELL->25;
         case AMETHYST_NOVA->24;case EMPIRE_COMET,FIRE_COMET,BLOOD_EXPLODE,NIGHTFALL->20;
         case SHRIEKING_PULSE,FLAME_SHOCK_WAVE->16;case MIASMA_FIELD->15;
@@ -91,8 +96,9 @@ public enum Spell {
             case WARD,AURA->10;default->8;
         };
     };}
-    public int levelCap(){return castTicks()>=20?3:5;}
+    public int levelCap(){return this==DOOM?1:castTicks()>=20?3:5;}
     public int manaCost(){return switch(this){
+        case DOOM->100;case SANCTUARY,EVOKERS_EDICT->80;case GLACIAL_RUPTURE->85;case SONIC_BOOM->55;
         case SOLAR_CATACLYSM->90;case TEMPEST_SPEAR->85;case EVENT_HORIZON->100;
         case SOUL_CANNON->90;case SMITE->65;case STORM_CALL,SINGULARITY->70;
         case AMETHYST_NOVA->55;case EMPIRE_COMET,FIRE_COMET->45;case GRAVITY_WELL->55;
@@ -103,6 +109,10 @@ public enum Spell {
         default->name().toLowerCase(java.util.Locale.ROOT);
     };}
     public String description(){return switch(this){
+        case DOOM->"Grow a vast black hole. It drags visible enemies inward, devours its core, then collapses. One damaging hit per enemy.";
+        case SANCTUARY->"Restore up to 12 health to yourself, nearby teammates and your pets; cleanse poison, wither, blindness and darkness.";
+        case GLACIAL_RUPTURE->"Send a broad glacial front forwards, damaging and chilling each visible enemy once.";
+        case EVOKERS_EDICT->"Send three staggered rows of spectral fangs along your aim. Each enemy takes one full hit.";
         case SOLAR_CATACLYSM->"Charge for three seconds, mark your aim, then drop a blazing meteor. Ceilings limit its drop.";
         case TEMPEST_SPEAR->"Charge for 2.5 seconds, then fire a piercing storm lance. Solid cover stops the beam.";
         case EVENT_HORIZON->"Charge for 3.2 seconds, then pull visible enemies inward for 1.5 seconds before a crushing detonation.";
@@ -134,24 +144,24 @@ public enum Spell {
             case CHOKE->"Restrain and damage your target briefly.";
             case AURA->"A damaging aura that moves with you.";
             case CANNON->"Charge for two seconds, then launch a massive echo blast. Switch away to cancel charging.";
-            case SONIC->"Charge for 0.6 seconds, then fire a piercing sonic beam.";
+            case SONIC->"Charge for one second, then unleash a deafening, wide sonic scream over 12 blocks. Cover blocks the blast.";
             case SIPHON->"Drain health damage into healing, up to one heart.";
             case VOLLEY->"Fire three staggered arcane projectiles.";
             case LANCE->"An instant piercing line through visible enemies.";
             case FIELD->"Leave a poisonous cloud for nearly five seconds.";
-            case METEOR,RAIL,COLLAPSE->"A charged heavy spell.";
+            case METEOR,RAIL,COLLAPSE,DOOM,HEAL,FROSTFRONT,FANGS->"A charged heavy spell.";
             case MARK,SUSPEND->"Control an aimed living target.";
         };
     };}
     /** Shared recovery for equivalent healing, ward and restraint abilities across wands. */
     public String cooldownKey(){return switch(kind){
-        case SIPHON->"shared_siphon";case WARD->"shared_ward";
+        case HEAL->"shared_heal";case SIPHON->"shared_siphon";case WARD->"shared_ward";
         case CAPTURE,CHOKE,SUSPEND->"shared_restraint";case STUN->"shared_stun";
         default->name();
     };}
-    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON, MARK, SUSPEND, VOLLEY, LANCE, FIELD, CANNON, METEOR, RAIL, COLLAPSE }
+    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON, MARK, SUSPEND, VOLLEY, LANCE, FIELD, CANNON, METEOR, RAIL, COLLAPSE, DOOM, HEAL, FROSTFRONT, FANGS }
     public enum Theme {
-        MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8), SOUL(0x24D7CB);
+        MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8), SOUL(0x24D7CB), HOLY(0xFFE5A1), ICE(0xA6E7FF);
         public final int color;
         Theme(int color) {this.color=color;}
     }

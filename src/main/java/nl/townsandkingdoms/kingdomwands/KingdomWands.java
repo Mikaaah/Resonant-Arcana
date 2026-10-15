@@ -23,14 +23,16 @@ public final class KingdomWands {
     public static final String ID="kingdomwands";
     public static final org.slf4j.Logger LOG=LogUtils.getLogger();
     public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems(ID);
-    public static final DeferredItem<WandItem> EMPIRE=ITEMS.register("empire_wand",()->new WandItem("empire_wand",SPARK,EMPIRE_SPARK,CONFUSE,STUN,CAPTURE,EMPIRE_COMET,EMPIRE_PULSE,LAUNCH,LEAP,ARCANE_VOLLEY));
+    public static final DeferredItem<WandItem> EMPIRE=ITEMS.register("empire_wand",()->new WandItem("empire_wand",SPARK,EMPIRE_SPARK,CONFUSE,STUN,CAPTURE,EMPIRE_COMET,EMPIRE_PULSE,LAUNCH,LEAP,ARCANE_VOLLEY,EVOKERS_EDICT));
     public static final DeferredItem<WandItem> BLOOD=ITEMS.register("blood_wand",()->new WandItem("blood_wand",BLOOD_WAVE,BLOOD_SPARK,BLOOD_EXPLODE,BLOOD_STUN,BLOOD_BLOCK,SANGUINE_DRAIN,BLOOD_LANCE));
     public static final DeferredItem<WandItem> CELCRIUS=ITEMS.register("celcrius_wand",()->new WandItem("celcrius_wand",FIRE_COMET,FIRE_TWISTER,FLAME_WAVE,FLAME_SHOCK_WAVE,FLAME_THROWER,FIREBALL,IGNITE,EMBER_VEIL,SOLAR_CATACLYSM));
-    public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem("dark_wand",SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA));
+    public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem("dark_wand",SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA,DOOM));
     public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem("thunder_wand",THUNDER_BOLT,CHAIN_LIGHTNING,THUNDER_WAVE,STORM_CALL,THUNDER_PULSE,STATIC_SHOCK,LIGHTNING,SMITE,TEMPEST_SPEAR));
     public static final DeferredItem<WandItem> MEPHI=ITEMS.register("mephi_wand",()->new WandItem("mephi_wand",GRAVITY_BOLT,GRAVITY_WELL,FORCE_PUSH,FORCE_PULL,GRAVITY_CHOKE,SINGULARITY,EVENT_HORIZON));
     public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem("soul_wand",ECHO_BOLT,SCULK_WAVE,SONIC_BOOM,SOUL_SIPHON,SOUL_PRISON,SHRIEKING_PULSE,AMETHYST_NOVA,ECHO_WARD,SOUL_CANNON));
     public static final DeferredItem<WandItem> VENOM=ITEMS.register("venom_wand",()->new WandItem("venom_wand",POISON_SPARK,POISON_WAVE,VENOM_BOLT,MIASMA_FIELD,WITHERING_HEX));
+    public static final DeferredItem<WandItem> HOLY=ITEMS.register("holy_wand",()->new WandItem("holy_wand",SANCTUARY));
+    public static final DeferredItem<WandItem> FROST=ITEMS.register("frost_wand",()->new WandItem("frost_wand",GLACIAL_RUPTURE));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
         TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Resonant Arcana"))
@@ -68,7 +70,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("resonantarcana");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.10.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.11.0-alpha: 10 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         for(var alias:java.util.Map.of("arcane_wand",EMPIRE,"cinder_wand",CELCRIUS,"rift_wand",MEPHI).entrySet())

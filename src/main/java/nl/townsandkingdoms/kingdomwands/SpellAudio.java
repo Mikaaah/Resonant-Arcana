@@ -12,13 +12,16 @@ import net.minecraft.world.phys.Vec3;
 final class SpellAudio {
     private SpellAudio() {}
     static String castId(Spell.Theme theme){return irons(switch(theme){
+        case HOLY->"cast.generic.holy";case ICE->"cast.generic.ice";
         case MAGIC->"magic_arrow_release";case BLOOD->"cast.generic.blood";case POISON->"spell.acid_orb.cast";
         case FIRE->"cast.fireball";case THUNDER->"lightning_lance_cast";case DARK->"spell.shadow_slash.cast";
         case GRAVITY->"spell.gust.cast";case SOUL->"spell.eldritch_blast.cast";
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
-        case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
+        case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_BOOM->"entity.enderman.stare";
+        case DOOM->"entity.ender_dragon.growl";case SANCTUARY->irons("cast.generic.holy");
+        case GLACIAL_RUPTURE->irons("spell.frostwave.prepare");case EVOKERS_EDICT->"entity.evoker.prepare_attack";
         case SOLAR_CATACLYSM->irons("spell.fire_bomb.charge");
         case TEMPEST_SPEAR->irons("spell.thunderstorm.prepare");case EVENT_HORIZON->irons("spell.black_hole.charge");
         case SMITE->irons("spell.divine_smite.windup");case STORM_CALL->irons("spell.thunderstorm.prepare");
@@ -26,29 +29,34 @@ final class SpellAudio {
         case FIRE_COMET->irons("spell.fire_bomb.charge");case EMPIRE_COMET,ARCANE_VOLLEY->irons("spell.summon_swords.charge");
         case SOUL_PRISON,CAPTURE,GRAVITY_CHOKE->irons("spell.arcane_shackle.charge");
         default->irons(switch(spell.theme){
+            case HOLY->"cast.generic.holy";case ICE->"spell.frostwave.prepare";
             case MAGIC->"magic_arrow_charge";case BLOOD->"heartstop_cast";case POISON->"spell.acid_orb.charge";
             case FIRE->"spell.heat_surge.prepare";case THUNDER->"spell.shockwave.prepare";
             case DARK->"cast.raise_dead.start";case GRAVITY->"spell.gust.charge";case SOUL->"cast.generic.eldritch_prepare";
         });
     };}
     static String castAccentId(Spell.Theme theme){return switch(theme){
+        case HOLY->"block.beacon.activate";case ICE->"block.glass.break";
         case BLOOD->"entity.player.attack.strong";case POISON->"block.brewing_stand.brew";
         case FIRE->"item.firecharge.use";case THUNDER->"entity.lightning_bolt.impact";
         case DARK->"entity.illusioner.cast_spell";case SOUL->"block.amethyst_block.resonate";
         case GRAVITY->"entity.breeze.wind_burst";case MAGIC->"block.amethyst_block.chime";
     };}
     static String impactId(Spell.Theme theme){return irons(switch(theme){
+        case HOLY->"cast.generic.holy";case ICE->"ice_impact";
         case MAGIC->"entity.generic.arcane_impact";case BLOOD->"entity.blood_needle.impact";
         case POISON->"entity.acid_orb.impact";case FIRE->"entity.generic.fire_impact";
         case THUNDER->"entity.lightning_strike.strike";case DARK,GRAVITY->"force_impact";
         case SOUL->"entity.echoing_strike.echoing_strike";
     });}
     static String impactAccentId(Spell.Theme theme){return switch(theme){
+        case HOLY->"block.amethyst_block.resonate";case ICE->"block.glass.break";
         case BLOOD,POISON->"block.slime_block.break";case FIRE->"item.firecharge.use";
         case THUNDER->"entity.firework_rocket.blast";case DARK->"entity.evoker_fangs.attack";
         case SOUL,MAGIC->"block.amethyst_block.break";case GRAVITY->"block.respawn_anchor.deplete";
     };}
     static String sustainId(Spell.Theme theme){return switch(theme){
+        case HOLY->"block.amethyst_block.chime";case ICE->"block.powder_snow.step";
         case BLOOD->"block.bubble_column.whirlpool_inside";case POISON->"block.bubble_column.upwards_inside";case FIRE->"block.fire.ambient";
         case THUNDER->"block.conduit.ambient.short";case DARK->"block.portal.ambient";
         case SOUL->"entity.warden.heartbeat";case GRAVITY->"block.beacon.ambient";case MAGIC->"block.amethyst_block.chime";
@@ -56,7 +64,9 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*KingdomWands.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
-        case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
+        case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_BOOM->"entity.enderman.scream";
+        case DOOM->irons("spell.black_hole.cast");case SANCTUARY->irons("cast.generic.holy");
+        case GLACIAL_RUPTURE->irons("cast.generic.ice");case EVOKERS_EDICT->"entity.evoker.cast_spell";
         case SOLAR_CATACLYSM->irons("spell.fire_bomb.cast");
         case TEMPEST_SPEAR->irons("lightning_lance_cast");case EVENT_HORIZON->irons("spell.black_hole.cast");
         case SMITE->irons("spell.divine_smite.cast");case SINGULARITY->irons("spell.black_hole.cast");
@@ -73,7 +83,7 @@ final class SpellAudio {
         default->1.0f;
     };}
     static void charge(ServerPlayer player,Spell spell){
-        if(spell==Spell.SOUL_CANNON||spell==Spell.SONIC_BOOM){cast(player,spell);return;}
+        if(spell==Spell.SOUL_CANNON){cast(player,spell);return;}
         cue(player,player.position(),chargeId(spell),1.15f,1.0f,true);
         cue(player,player.position(),castAccentId(spell.theme),0.45f,0.85f,true);
     }
@@ -87,7 +97,11 @@ final class SpellAudio {
         boolean direct=KingdomWands.CASTER_IMPACTS.get();
         String primary=spell.kind==Spell.Kind.SONIC?"entity.warden.sonic_boom":impactId(spell.theme);
         cue(player,pos,primary,1.6f*gain,spell.theme==Spell.Theme.BLOOD?0.7f:0.85f,direct);
-        cue(player,pos,(spell.kind==Spell.Kind.METEOR||spell.kind==Spell.Kind.COLLAPSE)?"entity.generic.explode":impactAccentId(spell.theme),1.05f*gain,0.8f,direct);
+        cue(player,pos,(spell.kind==Spell.Kind.METEOR||spell.kind==Spell.Kind.COLLAPSE||spell.kind==Spell.Kind.DOOM)?"entity.generic.explode":impactAccentId(spell.theme),1.05f*gain,0.8f,direct);
+    }
+    static void scream(ServerPlayer player,Vec3 pos){
+        cue(player,pos,"entity.enderman.scream",2.0f,.7f,true);
+        cue(player,pos,"entity.warden.sonic_boom",1.8f,.65f,true);
     }
     static void cannonCharge(ServerPlayer player,Vec3 pos,float progress){
         cue(player,pos,"block.respawn_anchor.charge",0.8f+progress*0.6f,0.55f+progress*0.9f,true);

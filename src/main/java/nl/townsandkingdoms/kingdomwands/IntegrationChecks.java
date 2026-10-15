@@ -67,7 +67,7 @@ public final class IntegrationChecks {
                 check(!new WandNetwork.Visual(0,0,0,0,0,500,0,0,1).valid(),"unbounded beam rejected");
                 check(!new WandNetwork.Visual(0,0,0,0,0,0,0,0,Float.POSITIVE_INFINITY).valid(),"nonfinite effect size rejected");
             }finally{buffer.release();}
-            check(KingdomWands.ITEMS.getEntries().size()==8,"eight registered wands");
+            check(KingdomWands.ITEMS.getEntries().size()==10,"ten registered wands");
             var catalog=EnumSet.noneOf(Spell.class);
             for(var item:KingdomWands.ITEMS.getEntries()){
                 WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();
@@ -115,12 +115,14 @@ public final class IntegrationChecks {
             for(Spell spell:Spell.values()){
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.EMPIRE.toStack());
+                if(spell.kind==Spell.Kind.HEAL)player.setHealth(5);
                 Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
                 if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
                 check(SpellEngine.cast(player,spell),spell.name()+" starts");
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
                 for(int t=0;t<100;t++)SpellEngine.tick();
                 boolean observed=switch(spell.kind){
+                    case HEAL->player.getHealth()>5&&zombie.getHealth()==20;
                     case LEAP->player.getDeltaMovement().y>0;
                     case WARD->arrow.getDeltaMovement().z>0;
                     case CONFUSE->zombie.hasEffect(MobEffects.BLINDNESS);
@@ -132,8 +134,8 @@ public final class IntegrationChecks {
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR -> SpellVisuals.Stage.FLIGHT;
-                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE -> SpellVisuals.Stage.AREA;
+                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT -> SpellVisuals.Stage.FLIGHT;
+                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE -> SpellVisuals.Stage.STRIKE;
                     case BURST -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -156,12 +158,13 @@ public final class IntegrationChecks {
             SpellEngine.clear();resetPlayer(player);Zombie centre=spawn(level,0,81,6),edge=spawn(level,3,81,6);
             check(SpellEngine.cast(player,Spell.GRAVITY_WELL),"well casts");SpellEngine.tick();
             check(edge.getDeltaMovement().x<0,"gravity well pulls nearby target inward");centre.discard();edge.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie sonicFront=spawn(level,0,81,5),sonicBack=spawn(level,0,81,9);
-            check(SpellEngine.cast(player,Spell.SONIC_BOOM),"sonic beam begins charge");
-            for(int t=0;t<11;t++)SpellEngine.tick();
-            check(sonicFront.getHealth()==20&&sonicBack.getHealth()==20,"sonic beam does no damage during charge");
-            SpellEngine.tick();check(sonicFront.getHealth()<20&&sonicBack.getHealth()<20,"sonic beam pierces two visible targets on release");
-            check(SpellEngine.activeCount()==0,"sonic charge task ends on release");sonicFront.discard();sonicBack.discard();
+            SpellEngine.clear();resetPlayer(player);Zombie sonicFront=spawn(level,0,81,5),sonicBack=spawn(level,0,81,9),sonicFlank=spawn(level,6,81,3),sonicBehind=spawn(level,0,81,-5),sonicFar=spawn(level,0,81,16);
+            check(SpellEngine.cast(player,Spell.SONIC_BOOM),"sonic scream begins charge");
+            for(int t=0;t<19;t++)SpellEngine.tick();
+            check(sonicFront.getHealth()==20&&sonicBack.getHealth()==20,"sonic scream does no damage during charge");
+            for(int t=0;t<8;t++)SpellEngine.tick();check(sonicFront.getHealth()==6&&sonicBack.getHealth()==6&&sonicFlank.getHealth()==6,"sonic scream fills a wide forward cone and hits once");
+            check(sonicBehind.getHealth()==20&&sonicFar.getHealth()==20,"sonic scream excludes rear and distant targets");
+            check(SpellEngine.activeCount()==0,"sonic charge task ends on release");sonicFront.discard();sonicBack.discard();sonicFlank.discard();sonicBehind.discard();sonicFar.discard();
             SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie drain=spawn(level,0,81,6);
             check(SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon casts on living target");
             check(drain.getHealth()<20&&player.getHealth()>10&&player.getHealth()<=12,"siphon heals at most one heart after real damage");drain.discard();
@@ -241,6 +244,7 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
+            schoolChecks(level,player);
             heavyChecks(level,player);
             cannonChecks(level);
             audioChecks(level);
@@ -252,6 +256,40 @@ public final class IntegrationChecks {
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){KingdomWands.LOG.error("Could not write report",e);}
             KingdomWands.LOG.info("KINGDOM_WANDS_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
         }
+    }
+    private static void schoolChecks(ServerLevel level,FakePlayer player){
+        check(Arrays.stream(Spell.Theme.values()).map(IronsCompat::school).distinct().count()==9,"all nine native Iron schools are represented");
+        check(Spell.SONIC_BOOM.bookId().equals("sonic_boom")&&Spell.SONIC_BOOM.title.equals("Sonic Scream"),"renamed scream retains its saved spell ID");
+        for(Spell spell:List.of(Spell.DOOM,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT)){
+            SpellEngine.clear();resetPlayer(player);
+            Zombie a=spawn(level,0,81,6),b=spawn(level,0,81,10);
+            for(var z:List.of(a,b)){z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);}
+            check(SpellEngine.cast(player,spell),spell+" school test begins");
+            if(spell==Spell.DOOM){
+                for(int t=0;t<39;t++)SpellEngine.tick();
+                check(a.getHealth()==100&&b.getHealth()==100,"DOOM grows before it starts devouring");
+                check(b.getDeltaMovement().z<0,"DOOM drags a visible outer target inward");
+                SpellEngine.tick();check(a.getHealth()==28&&b.getHealth()==100,"DOOM devours its core before the outer collapse");
+            }
+            for(int t=0;t<100;t++)SpellEngine.tick();
+            check(Math.abs(a.getHealth()-(100-spell.damage))<.01&&Math.abs(b.getHealth()-(100-spell.damage))<.01,spell+" gives each target one full hit");
+            if(spell==Spell.GLACIAL_RUPTURE)check(a.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)&&a.getTicksFrozen()>=160,"ice front chills its targets");
+            check(SpellEngine.activeCount()==0,spell+" school task expires");a.discard();b.discard();
+            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
+            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
+            check(SpellEngine.cast(player,spell),spell+" casts at cover");for(int t=0;t<100;t++)SpellEngine.tick();
+            check(hidden.getHealth()==20,spell+" respects solid cover");hidden.discard();
+            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
+        }
+        SpellEngine.clear();resetPlayer(player);player.setHealth(5);
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.POISON,100,0));
+        var pet=new net.minecraft.world.entity.animal.Wolf(EntityType.WOLF,level);pet.setOwnerUUID(player.getUUID());pet.setPos(2,81,0);pet.setHealth(4);level.addFreshEntity(pet);
+        Zombie enemy=spawn(level,0,81,6);enemy.setHealth(5);
+        check(SpellEngine.cast(player,Spell.SANCTUARY),"sanctuary casts");
+        check(player.getHealth()==17&&!player.hasEffect(MobEffects.POISON),"sanctuary heals and cleanses its caster");
+        check(pet.getHealth()>4,"sanctuary restores an owned pet");check(enemy.getHealth()==5,"sanctuary does not heal hostile mobs");pet.discard();enemy.discard();
+        SpellEngine.clear();resetPlayer(player);player.setHealth(19);SpellEngine.cast(player,Spell.SANCTUARY);
+        check(player.getHealth()==player.getMaxHealth(),"sanctuary does not overheal");
     }
     private static void heavyChecks(ServerLevel level,FakePlayer player){
         for(Spell spell:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){

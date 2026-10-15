@@ -2,7 +2,7 @@
 
 Base values at level I, before equipment, cast-speed modifiers and configuration. Damage is per hit or pulse. Fields and storms pulse up to five times; Cinder Vortex pulses four times. Related healing, ward, stun and restraint spells share recovery.
 
-Most spells have five levels; spells with a base windup of at least one second have three. Each level above I adds 25% base spell power. Wands cast at level I; spellbooks support higher levels.
+Most spells have five levels; spells with a base windup of at least one second have three. DOOM has one Legendary level. Each level above I adds 25% base spell power. Wands cast at level I; spellbooks support higher levels.
 
 ## Arcane Wand
 
@@ -18,6 +18,7 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Launch | 0s | 2 | 1 | 24 | 3.5s |
 | Leap | 0s | 0 | 0 | 0 | 4s |
 | Arcane Volley | 0.5s | 3 | 1 | 32 | 4.5s |
+| Evoker’s Edict | 2.4s | 26 | 1.6 per fang | 24 | 16s |
 
 ## Blood Wand
 
@@ -55,6 +56,7 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Nightfall | 1s | 12 | 6 | 28 | 7s |
 | Dread Mark | 0.5s | 14 | 3.5 | 24 | 8s |
 | Umbral Veil | 0.5s | 3 | 8 | 0 | 8s |
+| DOOM | 4s | 72 | 12 | 32 | 60s |
 
 ## Thunder Wand
 
@@ -88,7 +90,7 @@ Most spells have five levels; spells with a base windup of at least one second h
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Echo Bolt | 0s | 5 | 1.5 | 36 | 1.25s |
 | Sculk Wave | 0.35s | 5 | 2.5 | 28 | 3.25s |
-| Sonic Boom | 0.6s | 8 | 0.8 | 28 | 6s |
+| Sonic Scream | 1s | 14 | 140° cone | 12 | 8s |
 | Soul Siphon | 0.7s | 5 | 1 | 24 | 5s |
 | Soul Prison | 0.6s | 2 | 1 | 24 | 7s |
 | Shrieking Pulse | 0.8s | 9 | 9 | 0 | 7.5s |
@@ -107,3 +109,21 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Withering Hex | 0.25s | 3 | 1 | 24 | 5.5s |
 
 Solar Cataclysm has a 0.6-second target warning before its descent. Event Horizon pulls for 1.5 seconds after casting and then deals its damage once. Tempest Spear strikes once through visible enemies; its afterimages deal no extra damage. These three spells cost 90, 100 and 85 base mana respectively, begin at Epic rarity and cannot damage through solid cover.
+
+## Holy Wand
+
+| Spell | Windup | Healing I | Radius | Base cooldown |
+| --- | ---: | ---: | ---: | ---: |
+| Sanctuary | 2.5s | Up to 12 health | 8 | 18s |
+
+Sanctuary restores the caster, nearby scoreboard teammates and owned pets with line of sight. It cleanses poison, wither, blindness and darkness, leaves hostile mobs unharmed and cannot overheal. Base mana cost: 80.
+
+## Frost Wand
+
+| Spell | Windup | Damage I | Half-width | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Glacial Rupture | 2.5s | 28 | Up to 6 | 18 | 18s |
+
+Glacial Rupture hits each enemy once and chills it. Base mana cost: 85.
+
+DOOM grows after its four-second cast, starts devouring its core after two seconds, and collapses after 4.5 seconds. Each enemy takes one damaging hit at most, including the final collapse. It costs 100 base mana and has one Legendary level. Evoker’s Edict costs 80 base mana and sends three rows whose overlapping hits do not multiply the damage. Sonic Scream uses the original `sonic_boom` saved ID and costs 55 base mana.
