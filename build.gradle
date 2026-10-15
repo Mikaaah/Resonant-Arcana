@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.9.0-alpha'
+version = '0.10.0-alpha'
 group = 'nl.townsandkingdoms.kingdomwands'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -30,7 +30,7 @@ tasks.register('verifyEffects') {
     inputs.dir(effects)
     doLast {
         def assets = fileTree(effects).matching { include '*.efkefc' }.files
-        if (assets.size() != 140) throw new GradleException("Expected 140 wand effects; found ${assets.size()}")
+        if (assets.size() != 149) throw new GradleException("Expected 149 wand effects; found ${assets.size()}")
         assets.each { asset ->
             def buffer = java.nio.ByteBuffer.wrap(asset.bytes).order(java.nio.ByteOrder.LITTLE_ENDIAN)
             if (buffer.remaining() < 8 || buffer.getInt() != 0x454b4645) throw new GradleException("Invalid effect container: ${asset.name}")
@@ -55,7 +55,7 @@ tasks.register('verifyEffects') {
                         nativeData.get(encoded)
                         String path = new String(encoded, 'UTF-16LE').replace('\u0000', '')
                         if (!(path ==~ /textures\/[a-z0-9_]+\.png/)) throw new GradleException("Nonportable texture path in ${asset.name}: ${path}")
-                        if ((asset.name.startsWith('cast_') || asset.name.startsWith('charge_') || asset.name.startsWith('cannon_charge_')) && path == 'textures/sigil.png') {
+                        if ((asset.name.startsWith('cast_') || asset.name.startsWith('charge_') || asset.name.contains('_charge_')) && path == 'textures/sigil.png') {
                         throw new GradleException("Camera-facing casting effect must not contain a sigil: ${asset.name}")
                     }
                     def texture = new File(effects, path)
@@ -66,7 +66,7 @@ tasks.register('verifyEffects') {
             }
             if (!found) throw new GradleException("Native effect chunk missing: ${asset.name}")
         }
-        logger.lifecycle('Verified all 140 effects use packaged Minecraft texture paths.')
+        logger.lifecycle('Verified all 149 effects use packaged Minecraft texture paths.')
     }
 }
 tasks.named('check') { dependsOn 'verifyEffects' }

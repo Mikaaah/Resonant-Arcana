@@ -59,7 +59,7 @@ final class AaaEffects {
         boolean directional=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE||stage==SpellVisuals.Stage.CAST||stage==SpellVisuals.Stage.FLIGHT||stage==SpellVisuals.Stage.CHARGE;
         if(stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE){
             if(lengthSquared<0.01)return;
-            sx=sy=shape==SpellVisuals.Shape.FLAME?0.8f:shape==SpellVisuals.Shape.LIGHTNING?0.7f:0.45f;
+            sx=sy=shape==SpellVisuals.Shape.TEMPEST_BEAM?1.5f*size:shape==SpellVisuals.Shape.FLAME?0.8f:shape==SpellVisuals.Shape.LIGHTNING?0.7f:0.45f;
             sz=(float)Math.sqrt(lengthSquared);
         } else if(stage==SpellVisuals.Stage.FLIGHT){
             // Flight messages start at the visible head; their endpoint carries its direction.

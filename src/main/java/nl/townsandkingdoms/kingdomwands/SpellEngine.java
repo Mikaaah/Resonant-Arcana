@@ -62,7 +62,7 @@ public final class SpellEngine {
         Vec3 center=clipLoaded(player.serverLevel(),eye,dir,2,player).add(0,-0.18,0);
         if(elapsed%3==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,center,center.add(dir),0.45+progress);
         for(int i=0;i<3;i++){
-            double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7));
+            double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=spell==Spell.SOUL_CANNON?new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7)):SpellParticles.chargeOffset(spell.theme,angle,progress);
             Vec3 pos=center.add(offset),velocity=offset.scale(-.12);
             if(spell.theme==Spell.Theme.SOUL||spell.theme==Spell.Theme.DARK||spell.theme==Spell.Theme.GRAVITY)
                 player.serverLevel().sendParticles(ParticleTypes.REVERSE_PORTAL,pos.x,pos.y,pos.z,0,velocity.x,velocity.y,velocity.z,1);
@@ -109,6 +109,13 @@ public final class SpellEngine {
                 lightning(cast,loc);area(cast,loc,spell.radius,true);
             }
             case CHAIN -> {timed=false;chain(cast,target);}
+            case METEOR -> {
+                cast.anchor=target!=null?target.getBoundingBox().getCenter():aim.subtract(direction.scale(.08));
+                // Start on the reachable side of the ceiling; no chunks or blocks are changed.
+                cast.pos=clipLoaded(level,cast.anchor,new Vec3(0,1,0),16,player).add(0,-.08,0);cast.duration=40;
+            }
+            case RAIL -> {cast.duration=16;cast.pos=start;}
+            case COLLAPSE -> {cast.pos=target!=null?target.getBoundingBox().getCenter():aim.subtract(direction.scale(.08));cast.duration=36;}
             case STORM, WELL, FIELD -> {cast.pos=target!=null?target.position():aim;cast.duration=96;}
             case AURA -> {cast.pos=player.position();cast.duration=60;}
             case LEAP -> {SpellVisuals.send(level,spell,SpellVisuals.Stage.LINK,start.subtract(direction.scale(3)),start,1);timed=false;player.setDeltaMovement(direction.scale(1.15).add(0,0.4,0));player.hurtMarked=true;trail(level,start,spell.theme,0.25);}
@@ -153,6 +160,41 @@ public final class SpellEngine {
         // Sustained cues are bounded to one per cast per second.
         if(c.spell.kind!=Spell.Kind.CANNON&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
         switch(c.spell.kind){
+            case METEOR -> {
+                if(c.age<=12){
+                    if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.anchor,c.anchor,c.spell.radius);
+                    return true;
+                }
+                Vec3 to=c.anchor.subtract(c.pos);double remaining=to.length();
+                Vec3 requested=remaining<=2?c.anchor:c.pos.add(to.normalize().scale(2));
+                if(!c.level.hasChunkAt(BlockPos.containing(requested)))return false;
+                var collision=c.level.clip(new ClipContext(c.pos,requested,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,c.caster));
+                Vec3 next=collision.getLocation();
+                boolean blocked=collision.getType()!=HitResult.Type.MISS;
+                boolean stop=remaining<=2||blocked;
+                SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,next,next.add(0,-1,0),2.2);
+                c.pos=next;
+                if(stop){if(blocked)c.pos=c.pos.add(0,.05,0);area(c,c.pos,c.spell.radius,true);burst(c,c.pos);return false;}
+            }
+            case RAIL -> {
+                if(c.age==1){
+                    c.anchor=clipLoaded(c.level,c.pos,c.dir,c.spell.range,c.caster);
+                    beam(c,c.pos,c.dir,false);
+                }else if(c.age==5||c.age==10){
+                    SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,c.pos,c.anchor,c.age==5?.7:.35);
+                }
+            }
+            case COLLAPSE -> {
+                if(c.age<=30){
+                    if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius*(1-c.age/45.0));
+                    for(var victim:near(c.caster,c.pos,c.spell.radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
+                        Vec3 pull=c.pos.subtract(victim.getBoundingBox().getCenter());
+                        victim.setDeltaMovement(pull.normalize().scale(Math.min(.32,pull.length()*.12)));victim.hurtMarked=true;
+                    }
+                    return true;
+                }
+                area(c,c.pos,c.spell.radius,true);burst(c,c.pos);return false;
+            }
             case BOLT,COMET,WAVE,SEEKER -> {
                 if(c.spell.kind==Spell.Kind.SEEKER){
                     if(c.target==null||!c.target.isAlive()||c.target.level()!=c.level||!allowed(c.caster,c.target))return false;
@@ -439,8 +481,8 @@ public final class SpellEngine {
         int color=theme.color;Vector3f rgb=new Vector3f(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f);
         if(theme==Spell.Theme.BLOOD){
             level.sendParticles(new DustColorTransitionOptions(rgb,new Vector3f(0.19f,0.005f,0.025f),1.25f),pos.x,pos.y,pos.z,KingdomWands.PARTICLES.get(),spread,spread,spread,0);
-            // Falling red fragments instead of bright white sparks; vanilla assets only.
-            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK,Blocks.REDSTONE_BLOCK.defaultBlockState()),pos.x,pos.y,pos.z,1,spread,spread,spread,0.015);
+            // Real blood droplets from Iron's, rather than redstone block debris.
+            level.sendParticles(SpellParticles.particle(Spell.Theme.BLOOD),pos.x,pos.y,pos.z,1,spread,spread,spread,0.015);
         } else if(theme==Spell.Theme.SOUL){
             level.sendParticles(new DustColorTransitionOptions(rgb,new Vector3f(0.025f,0.12f,0.17f),1.15f),pos.x,pos.y,pos.z,KingdomWands.PARTICLES.get(),spread,spread,spread,0);
             level.sendParticles(ParticleTypes.SCULK_SOUL,pos.x,pos.y,pos.z,1,spread,spread,spread,0.012);
@@ -463,16 +505,16 @@ public final class SpellEngine {
         if(c.spell.kind==Spell.Kind.CANNON)return;
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
-        SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
+        if(c.spell.kind!=Spell.Kind.METEOR&&c.spell.kind!=Spell.Kind.RAIL&&c.spell.kind!=Spell.Kind.COLLAPSE)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
         c.lastImpactTick=ticks;SpellAudio.impact(c.caster,pos,c.spell);
     }
     private static void burst(Cast c,Vec3 pos){
         ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
         SpellVisuals.send(level,c.spell,SpellVisuals.Stage.IMPACT,pos,pos,Math.clamp(c.spell.radius,1.2,5));
-        PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
+        if(theme==Spell.Theme.SOUL)PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
         for(int i=0;i<12;i++){double a=i*Math.PI/6;trail(level,pos.add(Math.cos(a)*0.4,0.25,Math.sin(a)*0.4),theme,0.12);}
-        ring(level,pos,1.25,theme,0);
-        if(theme==Spell.Theme.BLOOD)level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK,Blocks.REDSTONE_BLOCK.defaultBlockState()),pos.x,pos.y,pos.z,24,0.3,0.3,0.3,0.18);
+        if(theme==Spell.Theme.SOUL)ring(level,pos,1.25,theme,0);
+        if(theme==Spell.Theme.BLOOD)level.sendParticles(SpellParticles.particle(Spell.Theme.BLOOD),pos.x,pos.y,pos.z,24,0.3,0.3,0.3,0.18);
         if(theme==Spell.Theme.SOUL){
             level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK,Blocks.AMETHYST_BLOCK.defaultBlockState()),pos.x,pos.y,pos.z,20,0.25,0.25,0.25,0.15);
             level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,pos.x,pos.y,pos.z,8,0.3,0.3,0.3,0.025);

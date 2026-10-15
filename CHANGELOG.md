@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.0-alpha — Heavy magic
+
+- Add Solar Cataclysm: a three-second charge, target warning and descending meteor with a 32-damage area impact.
+- Add Tempest Spear: a 2.5-second charge followed by a 30-damage piercing lightning lance and fading afterimages.
+- Add Event Horizon: a 3.2-second charge, inward pull and delayed 36-damage collapse.
+- Add all three to their wands, scroll crafting and Iron’s spellbooks, with original icons, three levels and Epic minimum rarity.
+- Retouch core casting, projectile, wave, field and impact effects with different geometry and movement for each school. Add dedicated AAAParticles sequences for the new heavy spells.
+- Add native Iron’s particles throughout the spell effects; distinguish blood membranes and soul crystal wards. Remove the shared firework burst from non-soul impacts.
+- Preserve Soul Cannon’s existing behavior and effects. Update both client and server.
+
 ## 0.9.0-alpha — Cast and release
 
 - Make Iron’s Spells ’n Spellbooks the required casting backend. Existing wands now use native mana, charge bars, cooldowns and animations.

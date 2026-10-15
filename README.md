@@ -1,14 +1,14 @@
 # Resonant Arcana
 
-Eight magic wands and 59 spells for Minecraft 1.21.1 on NeoForge. Each wand has its own spell list, particle effects and casting sounds.
+Eight magic wands and 62 spells for Minecraft 1.21.1 on NeoForge. Each wand has its own spell list, particle effects and casting sounds.
 
-[Download 0.9.0-alpha](downloads/resonant-arcana-0.9.0-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
+[Download 0.10.0-alpha](downloads/resonant-arcana-0.10.0-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## Casting and progression
 
 **Iron’s Spells ’n Spellbooks is now required.** Wands and spellbooks use the same native casting system: mana, cooldowns, charge bars, interruption, school attributes and player animations. Existing wands remain usable as level-I casting implements while higher-level scrolls can be inscribed into spellbooks.
 
-Basic bolts and movement spells remain instant. Waves and control spells have short windups; comets, storms and large area spells take about one to two seconds to prepare. Charges gather themed particles before the release, with no camera-facing sigil. Cycling a wand cancels its charge; holding the cast button does not restart it. Mana is spent when the spell completes.
+Basic bolts and movement spells remain instant. Waves and control spells have short windups; comets, storms and large area spells take about one to two seconds to prepare. The new heavy spells take 2.5–3.2 seconds. Charges gather themed particles before the release, with no camera-facing sigil. Cycling a wand cancels its charge; holding the cast button does not restart it. Mana is spent when the spell completes.
 
 Most spells have **five levels**; heavy spells have **three**. Each level above I adds 25% base spell power and increases mana cost, on top of Iron’s school and gear scaling. Cast-speed and cooldown modifiers remain effective.
 
@@ -20,6 +20,11 @@ Most spells have **five levels**; heavy spells have **three**. Each level above 
 | Singularity | 1.6s | 18 damage, 6-block impact radius |
 | Storm Call | 1.6s | Up to five 5-damage pulses over 4.8 seconds |
 | Soul Cannon | 2s | Existing 16-damage travelling cannon and impact sequence |
+| Solar Cataclysm | 3s | 32 damage, 6-block radius; warning followed by a descending meteor |
+| Tempest Spear | 2.5s | 30 damage; piercing lightning lance reaching 56 blocks |
+| Event Horizon | 3.2s | Pull for 1.5 seconds, then 36 damage in a 7-block radius |
+
+Solar Cataclysm costs 90 base mana, Tempest Spear 85, and Event Horizon 100; their base cooldowns are 20, 18 and 24 seconds. These three spells begin at Epic rarity and have three levels. Damage and timing above are level-I values before equipment and configuration. The meteor begins beneath a solid ceiling; it never passes through that ceiling. All three respect solid cover and leave terrain intact.
 
 Find scrolls in the Resonant Arcana creative tab or use Iron’s scroll forge and inscription table. Existing Iron’s spellbooks accept these spells; this version adds no custom spellbooks. Set `enableWandCasting = false` to allow casting through spellbooks exclusively.
 
@@ -37,10 +42,10 @@ With **AAAParticles**, the spell uses dedicated void absorption, echo-head, fire
 | --- | ---: | --- |
 | Arcane | 10 | Arcane attacks, movement and utility |
 | Blood | 7 | Blood magic, piercing attacks and life drain |
-| Cinder | 8 | Fire, flamethrowers and area damage |
+| Cinder | 9 | Fire, flamethrowers and area damage |
 | Dark | 6 | Shadows, curses and weakness |
-| Thunder | 8 | Lightning, chain attacks and storms |
-| Rift | 6 | Gravity, displacement and suspension |
+| Thunder | 9 | Lightning, chain attacks and storms |
+| Rift | 7 | Gravity, displacement and suspension |
 | Soul | 9 | Sculk, sonic attacks and echo magic |
 | Venom | 5 | Poison, wither and lingering clouds |
 
@@ -96,7 +101,11 @@ to once every eight ticks per cast to keep repeated and area hits controlled.
 
 ## Compatibility
 
-Casting, windup and impact audio use Iron’s sound events with selected vanilla accents. The synthesized vacuum-like sounds from 0.8 are removed. Soul Cannon retains its warden/firework/crystal sound sequence. No Iron’s audio files are copied into this mod. With **AAAParticles 2.2.3 or later in the 2.x series** installed on the client, all 59 spells gain directional casting sweeps, bright projectile cores and flowing wakes, travelling crescents, energy beams, drain streams, lightning, large impact bursts and animated area effects. Wards surround the caster; cages surround their target; fields and pulses follow their gameplay radius. Soul effects mix cyan and amethyst, fire uses embers, blood uses crimson fragments, and venom leaves green mist. This is an experimental visual integration; AAAParticles is optional and is not bundled. Set `aaaParticles = false` locally to disable it. Clients and servers must both use 0.9.0-alpha because the visual protocol has changed.
+Casting, windup and impact audio use Iron’s sound events with selected vanilla accents. Soul Cannon retains its warden/firework/crystal sound sequence. No Iron’s audio files are copied into this mod. Iron’s particles now supplement every school even without AAAParticles: blood splashes, fire embers, acid bubbles, electricity, ender fragments, soul fire and arcane wisps. Their paths and timing differ by school.
+
+With **AAAParticles 2.2.3 or later in the 2.x series**, the main casting, projectile, wave, field and impact effects use different school geometry: rising flame tongues, falling blood ribbons, low venom billows, forked lightning, shadow veils, inward rift debris, echo crystals and orbiting arcane diamonds. Blood Ward uses membranes; Echo Ward and Soul Prison use crystal formations. The three new heavy spells have dedicated charge, attack and impact effects. Soul Cannon keeps its existing assets. Generic firework bursts are reserved for soul magic.
+
+AAAParticles is optional and is not bundled. Set `aaaParticles = false` locally to disable it. Update both client and server to **0.10.0-alpha**.
 
 Spells respect server PvP settings, scoreboard friendly fire and the caster's own tameable pets. They do not edit terrain. Claim-protection integrations and dedicated Epic Fight support are not included; use the alternate cast key if another combat mod captures left-click.
 
@@ -111,4 +120,5 @@ If the extra effects are missing, run `/kwvisuals` for client diagnostics or `/k
 With Java 21 installed, run `./gradlew build` on Linux/macOS or `gradlew.bat build` on Windows. Output is written to `build/libs/`. The build uses Iron’s public API as a compile-only dependency. For an offline build, supply a local JAR with `-PironsSpellbooksJar=/path/to/irons_spellbooks-1.21.1-3.16.3.jar`; it is never included in the output. Original effects and spell icons can be rebuilt using the scripts in `tools/`.
 
 ## Credits and license
+
 By Towns & Kingdoms. [MIT license](LICENSE).

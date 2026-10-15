@@ -60,7 +60,10 @@ public enum Spell {
     VENOM_BOLT("Venom Bolt", Kind.BOLT, Theme.POISON, 3, 1.5, 32, 35),
     MIASMA_FIELD("Miasma Field", Kind.FIELD, Theme.POISON, 3, 4.5, 24, 180),
     WITHERING_HEX("Withering Hex", Kind.TARGET, Theme.POISON, 3, 1, 24, 110),
-    SOUL_CANNON("Soul Cannon", Kind.CANNON, Theme.SOUL, 16, 5, 48, 280);
+    SOUL_CANNON("Soul Cannon", Kind.CANNON, Theme.SOUL, 16, 5, 48, 280),
+    SOLAR_CATACLYSM("Solar Cataclysm", Kind.METEOR, Theme.FIRE, 32, 6, 40, 400),
+    TEMPEST_SPEAR("Tempest Spear", Kind.RAIL, Theme.THUNDER, 30, 1.1, 56, 360),
+    EVENT_HORIZON("Event Horizon", Kind.COLLAPSE, Theme.GRAVITY, 36, 7, 32, 480);
 
     public final String title;
     public final Kind kind;
@@ -74,6 +77,7 @@ public enum Spell {
     }
     /** Base windup in ticks. Movement and basic bolts remain immediate. */
     public int castTicks(){return switch(this){
+        case SOLAR_CATACLYSM->60;case TEMPEST_SPEAR->50;case EVENT_HORIZON->64;
         case SOUL_CANNON->40;case SONIC_BOOM->12;
         case SINGULARITY,STORM_CALL->32;case SMITE->28;case FIRE_TWISTER,GRAVITY_WELL->25;
         case AMETHYST_NOVA->24;case EMPIRE_COMET,FIRE_COMET,BLOOD_EXPLODE,NIGHTFALL->20;
@@ -89,6 +93,7 @@ public enum Spell {
     };}
     public int levelCap(){return castTicks()>=20?3:5;}
     public int manaCost(){return switch(this){
+        case SOLAR_CATACLYSM->90;case TEMPEST_SPEAR->85;case EVENT_HORIZON->100;
         case SOUL_CANNON->90;case SMITE->65;case STORM_CALL,SINGULARITY->70;
         case AMETHYST_NOVA->55;case EMPIRE_COMET,FIRE_COMET->45;case GRAVITY_WELL->55;
         case MIASMA_FIELD->50;default->Math.max(12,Math.min(65,8+(int)(damage*2)+cooldown/10));
@@ -98,6 +103,9 @@ public enum Spell {
         default->name().toLowerCase(java.util.Locale.ROOT);
     };}
     public String description(){return switch(this){
+        case SOLAR_CATACLYSM->"Charge for three seconds, mark your aim, then drop a blazing meteor. Ceilings limit its drop.";
+        case TEMPEST_SPEAR->"Charge for 2.5 seconds, then fire a piercing storm lance. Solid cover stops the beam.";
+        case EVENT_HORIZON->"Charge for 3.2 seconds, then pull visible enemies inward for 1.5 seconds before a crushing detonation.";
         case SHADOW_CAGE->"Curse a target; detonate after two seconds. Cover breaks the curse.";
         case GRAVITY_CHOKE->"Lift a target briefly, followed by a gentle descent.";
         case WITHERING_HEX->"Inflict poison and wither on an aimed target.";
@@ -131,6 +139,7 @@ public enum Spell {
             case VOLLEY->"Fire three staggered arcane projectiles.";
             case LANCE->"An instant piercing line through visible enemies.";
             case FIELD->"Leave a poisonous cloud for nearly five seconds.";
+            case METEOR,RAIL,COLLAPSE->"A charged heavy spell.";
             case MARK,SUSPEND->"Control an aimed living target.";
         };
     };}
@@ -140,7 +149,7 @@ public enum Spell {
         case CAPTURE,CHOKE,SUSPEND->"shared_restraint";case STUN->"shared_stun";
         default->name();
     };}
-    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON, MARK, SUSPEND, VOLLEY, LANCE, FIELD, CANNON }
+    public enum Kind { BOLT, TARGET, WAVE, CONFUSE, STUN, CAPTURE, COMET, PULSE, LAUNCH, LEAP, LIGHTNING, SMITE, TWISTER, CHANNEL, BURST, WARD, SEEKER, CHAIN, STORM, WELL, PUSH, PULL, CHOKE, AURA, SONIC, SIPHON, MARK, SUSPEND, VOLLEY, LANCE, FIELD, CANNON, METEOR, RAIL, COLLAPSE }
     public enum Theme {
         MAGIC(0xB349F5), BLOOD(0xA10F28), POISON(0x68DB39), FIRE(0xFF821A), THUNDER(0x7BDFFF), DARK(0x632DB5), GRAVITY(0xCF58E8), SOUL(0x24D7CB);
         public final int color;

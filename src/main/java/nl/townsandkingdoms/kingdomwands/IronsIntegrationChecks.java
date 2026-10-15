@@ -84,7 +84,7 @@ final class IronsIntegrationChecks {
         var regen=player.getAttribute(AttributeRegistry.MANA_REGEN);double previousRegen=regen.getBaseValue();regen.setBaseValue(0);
         level.addNewPlayer(player);
         try{
-            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE)){
+            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){
                 SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
                 player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);
                 var wand=KingdomWands.ITEMS.getEntries().stream().map(e->(WandItem)e.get()).filter(w->w.spells.contains(selected)).findFirst().orElseThrow();
@@ -103,6 +103,16 @@ final class IronsIntegrationChecks {
                 for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
                 check.accept(victim.getHealth()<20,"charged wand releases its gameplay: "+selected);
                 check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"charged wand and effect clean up: "+selected);victim.discard();
+            }
+            for(Spell selected:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){
+                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+                var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
+                Zombie untouched=target(level,6);
+                check.accept(registered.attemptInitiateCast(ItemStack.EMPTY,1,level,player,CastSource.SPELLBOOK,false,"test"),"heavy spellbook windup begins: "+selected);
+                for(int t=0;t<20;t++){manager.tick(level);SpellEngine.tick();}
+                IronsCompat.cancel(player);
+                for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
+                check.accept(untouched.getHealth()==20&&data.getMana()==100&&SpellEngine.activeCount()==0,"cancelled heavy spell has no residual damage or mana cost: "+selected);untouched.discard();
             }
             SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
             ItemStack stack=KingdomWands.CELCRIUS.toStack();KingdomWands.CELCRIUS.get().select(stack,0);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);

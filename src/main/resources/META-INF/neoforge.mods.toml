@@ -3,10 +3,10 @@ loaderVersion="[4,)"
 license="MIT"
 [[mods]]
 modId="kingdomwands"
-version="0.9.0-alpha"
+version="0.10.0-alpha"
 displayName="Resonant Arcana"
 authors="Towns & Kingdoms"
-description='''Expressive elemental magic with eight wands, 59 spells, layered audio, optional AAAParticles effects. An Iron's Spells 'n Spellbooks addon. Experimental alpha.'''
+description='''Expressive elemental magic with eight wands, 62 spells, layered audio, optional AAAParticles effects. An Iron's Spells 'n Spellbooks addon. Experimental alpha.'''
 [[dependencies.kingdomwands]]
 modId="neoforge"
 type="required"

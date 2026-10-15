@@ -14,7 +14,17 @@ def main():
         ident={'EMPIRE_SPARK':'arcane_strike','EMPIRE_COMET':'astral_comet','EMPIRE_PULSE':'arcane_repulse'}.get(name,name.lower())
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind in ('BOLT','COMET','SEEKER','VOLLEY','CANNON','LANCE','SONIC','CHANNEL','SIPHON'):
+        if kind=='METEOR':
+            d.ellipse((24,55,79,110),fill=c);d.ellipse((37,68,65,96),fill=white)
+            for x in (42,64,85):line([(x,63),(x+22,16)],9)
+        elif kind=='RAIL':
+            line([(16,111),(109,18)],13);line([(16,111),(109,18)],4,white)
+            for x,y in ((42,84),(71,55)):line([(x-16,y-15),(x+14,y+15)],5)
+        elif kind=='COLLAPSE':
+            d.ellipse((31,31,97,97),fill='#12091c',outline=c,width=7)
+            for a in (0,2.1,4.2):
+                line([(64+math.cos(a)*52,64+math.sin(a)*52),(64+math.cos(a+.8)*33,64+math.sin(a+.8)*33)],8)
+        elif kind in ('BOLT','COMET','SEEKER','VOLLEY','CANNON','LANCE','SONIC','CHANNEL','SIPHON'):
             for i in range(3 if kind in ('VOLLEY','CANNON') else 2):
                 off=(i-1)*18
                 line([(17,104+off),(54,78+off),(103,29+off)],9 if kind=='CANNON' else 6)

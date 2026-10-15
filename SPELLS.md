@@ -43,6 +43,7 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Fireball | 0s | 6 | 2 | 40 | 2.5s |
 | Ignite | 0.25s | 2 | 1 | 24 | 2.5s |
 | Ember Veil | 0.5s | 2 | 5 | 0 | 7.5s |
+| Solar Cataclysm | 3s | 32 | 6 | 40 | 20s |
 
 ## Dark Wand
 
@@ -67,6 +68,7 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Static Shock | 0.4s | 3 | 1 | 28 | 4s |
 | Lightning | 0.4s | 7 | 2 | 32 | 5s |
 | Smite | 1.4s | 18 | 5 | 32 | 10s |
+| Tempest Spear | 2.5s | 30 | 1.1 | 56 | 18s |
 
 ## Rift Wand
 
@@ -78,6 +80,7 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Force Pull | 0s | 2 | 1 | 24 | 3.25s |
 | Suspension | 0.6s | 2 | 1 | 24 | 7s |
 | Singularity | 1.6s | 18 | 6 | 28 | 9s |
+| Event Horizon | 3.2s | 36 | 7 | 32 | 24s |
 
 ## Soul Wand
 
@@ -102,3 +105,5 @@ Most spells have five levels; spells with a base windup of at least one second h
 | Venom Bolt | 0s | 3 | 1.5 | 32 | 1.75s |
 | Miasma Field | 0.75s | 3 | 4.5 | 24 | 9s |
 | Withering Hex | 0.25s | 3 | 1 | 24 | 5.5s |
+
+Solar Cataclysm has a 0.6-second target warning before its descent. Event Horizon pulls for 1.5 seconds after casting and then deals its damage once. Tempest Spear strikes once through visible enemies; its afterimages deal no extra damage. These three spells cost 90, 100 and 85 base mana respectively, begin at Epic rarity and cannot damage through solid cover.

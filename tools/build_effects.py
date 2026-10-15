@@ -17,7 +17,7 @@ PALETTES = {
     'thunder': (0x52BFFF, 0xD8F6FF), 'dark': (0x7033B8, 0xBD74EE),
     'gravity': (0xCF58E8, 0xF6A5FF), 'soul': (0x24D7CB, 0xAA70EF),
 }
-SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact'.split()
+SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact pyre_charge pyre_fall pyre_impact tempest_charge tempest_beam tempest_impact horizon_charge horizon_well horizon_impact'.split()
 
 
 def element(parent, name, text=None):
@@ -142,7 +142,119 @@ def author(shape, theme):
                    size=(.11 if shards else .18, .33 if shards else .18, .18),
                    rotation=(0, 0, seed.randrange(360)), spin=(0, 0, 5),
                    texture='shard' if shards else ('flame' if theme=='fire' else 'star'))
-    if shape=='cannon_charge':
+    def school_profile():
+        # Schools use different silhouettes and motion; shape still describes delivery.
+        charge=shape=='charge'; impact=shape in ('impact','nova','pulse'); field=shape=='field'
+        travelling=shape in ('orb','comet'); wave=shape=='wave'
+        count=28 if impact else 18
+        for i in range(count):
+            t=i/max(1,count-1);a=t*math.tau
+            r=.25+t*.45
+            x,y,z=math.cos(a)*r,math.sin(a)*r,0
+            if travelling:z=-t*(2.7 if shape=='comet' else 1.5)
+            if wave:x=(t-.5)*2.3;y=.2*math.cos(t*math.pi*2);z=-abs(t-.5)*.4
+            if field:x=math.cos(a)*r;y=.1;z=math.sin(a)*r
+            vel=(-x*.045,-y*.045,-.015) if charge else (x*.055,.025,z*.025)
+            if theme=='fire':
+                sprite('Rising flame tongue',accent if i%3==0 else c,life=22 if impact else 14,
+                       pos=(x,y-.3,z),velocity=(x*.03,.07+t*.045,-.05 if travelling else .015),
+                       size=(.23,.65 if impact else .4,.23),growth=(.006,.015,.006),texture='flame')
+                if i%4==0:sprite('Ash veil',0x5B3427,life=26,pos=(x,.2,z),velocity=(0,.04,0),
+                                 size=(.65,.65,.65),texture='smoke',blend=1,alpha=115)
+            elif theme=='blood':
+                sprite('Falling crimson ribbon',accent if i%5==0 else c,life=24 if impact else 16,
+                       pos=(x*seed.uniform(.65,1.3),y*seed.uniform(.3,1.2),z),velocity=(vel[0],-.045-t*.025,vel[2]),size=(.08+seed.random()*.08,.22+seed.random()*.3,.13),
+                       rotation=(0,0,x*35),texture='flame',blend=1,alpha=240)
+                if impact or field:
+                    sprite('Blood splash',0x610B24,life=28,pos=(x*.8,-.3,z if field else math.sin(a)*r),
+                           size=(.5,.3,.5),growth=(.008,0,.008),texture='smoke',blend=1,alpha=180)
+            elif theme=='poison':
+                sprite('Low toxic billow',c,life=28,pos=(x,y*.25-.2,z),velocity=(vel[0]*.25,.008,vel[2]*.25),
+                       size=(.65,.48,.65),growth=(.008,.008,.008),texture='smoke',blend=1,alpha=105)
+                if i%2==0:sprite('Rising acid bubble',accent,life=22,pos=(x,y*.2,z),velocity=(0,.035,0),
+                                 size=(.10,.10,.10),texture='glow',alpha=200)
+            elif theme=='thunder':
+                sprite('Forked electric splinter',0xDFFFFF if i%2 else c,life=8+(i%3)*2,
+                       pos=(x*1.25,y*1.25,z),velocity=vel,size=(.42,1.05,.42),
+                       rotation=(0,0,(i%5)*47-90),texture='bolt',billboard=2)
+                if i%5==0:sprite('Lightning core flash',accent,life=7,pos=(x*.3,y*.3,z),size=(.4,.4,.4),texture='star')
+            elif theme=='dark':
+                sprite('Trailing shadow veil',0x251136,life=26,pos=(x,y,z),velocity=(vel[0]*.3,.015,-.035),
+                       size=(.7,.45,.7),growth=(.01,.008,.01),texture='smoke',blend=1,alpha=190)
+                if i%4==0:sprite('Phantom claw',accent,life=16,pos=(x,y,z),velocity=vel,
+                                 size=(.45,.75,1),rotation=(0,0,i*40),texture='arc',billboard=2,alpha=190)
+            elif theme=='gravity':
+                # Inward debris on tilted planes, rather than outgoing fireworks.
+                pos=(x,y,z if travelling else math.sin(a*2)*.35)
+                sprite('Infalling rift shard',accent if i%3==0 else c,life=22,pos=pos,
+                       velocity=tuple(-v*.055 for v in pos),size=(.08,.28,.08),texture='shard',spin=(0,0,12))
+                if i%9==0:sprite('Tilted accretion crescent',c,life=20,size=(1.6,1.6,1),
+                                 rotation=(55,i*31,20),spin=(0,0,7),texture='arc',billboard=2)
+            elif theme=='soul':
+                sprite('Resonant crystal fragment',accent if i%4==0 else c,life=20,pos=(x,y,z),velocity=vel,
+                       size=(.08,.3,.08),rotation=(0,0,i*31),spin=(0,0,6),texture='shard')
+                if i%8==0:sprite('Echo crescent',c,life=18,pos=(0,0,-i*.025),size=(1.5,1.5,1),
+                                 growth=(.018,.018,0),rotation=(0,0,i*20),texture='arc',billboard=2,alpha=160)
+            else:
+                sprite('Orbiting arcane diamond',accent if i%3==0 else c,life=18,pos=(x,y,z),velocity=vel,
+                       size=(.16,.22,.16),rotation=(0,0,45),spin=(0,0,4),texture='shard')
+                if i%9==0:sprite('Swept arcane ribbon',c,life=15,pos=(0,0,z),size=(1.25,1.25,1),
+                                 rotation=(0,0,i*40),spin=(0,0,8),texture='arc',billboard=2)
+        if theme=='gravity':sprite('Light eating core',0x100518,life=22,size=(.7,.7,.7),texture='smoke',blend=1,alpha=245)
+    if shape.startswith('pyre_'):
+        charge=shape=='pyre_charge';fall=shape=='pyre_fall'
+        sprite('Solar heart',0xFFF2AA,life=16,size=(.8,.8,.8) if fall else (.35,.35,.35),texture='star')
+        for i in range(38 if not charge else 24):
+            a=i*2.39996;r=.15+(i%7)*.11
+            pos=(math.cos(a)*r,math.sin(a)*r,-(i%9)*.22) if fall else (math.cos(a)*r,-.7+(i%6)*.12,math.sin(a)*r)
+            sprite('Meteor fire tongue',accent if i%3 else c,life=24 if not charge else 18,pos=pos,
+                   velocity=(math.cos(a)*.03,.065 if not fall else 0,-.12 if fall else math.sin(a)*.03),
+                   size=(.28,.8 if not fall else .45,.28),growth=(.006,.012,.006),texture='flame')
+            if i%5==0:sprite('Rolling ash plume',0x543A32,life=34,pos=pos,velocity=(0,.055,0),
+                             size=(.75,.75,.75),growth=(.025,.025,.025),texture='smoke',blend=1,alpha=160)
+        if shape=='pyre_impact':
+            for i in range(10):
+                a=i*math.tau/10
+                sprite('Ground fire fan',c,life=28,pos=(math.cos(a)*.2,-.2,math.sin(a)*.2),
+                       velocity=(math.cos(a)*.08,.025,math.sin(a)*.08),size=(.25,.7,.25),texture='flame')
+    elif shape.startswith('tempest_'):
+        beam=shape=='tempest_beam';charge=shape=='tempest_charge'
+        for i in range(28):
+            a=i*2.39996;t=i/27
+            pos=(math.sin(a)*(.4 if charge else .7),math.cos(a)*(.4 if charge else .7),t if beam else -.3)
+            sprite('Splitting storm branch',accent if i%3 else c,life=10 if beam else 15,pos=pos,
+                   velocity=(0,0,-.03 if charge else 0 if beam else .03),size=(.45,1.15,.45),
+                   rotation=(90 if beam else 0,i%3*60,i*53),texture='bolt',billboard=2)
+        if beam:
+            for i in range(18):
+                sprite('Continuous storm plasma',0xB7F7FF,life=16,pos=(0,0,i/17),size=(.3,.3,.3),texture='glow',alpha=230)
+            for roll in (0,90):sprite('White storm spine',0xE8FFFF,life=14,pos=(0,0,.5),size=(.32,1,1),
+                                      rotation=(90,roll,0),texture='glow',billboard=2)
+        else:sprite('Condensed thunder spark',accent,life=12,size=(.65,.65,.65),texture='star')
+    elif shape.startswith('horizon_'):
+        impact=shape=='horizon_impact';charge=shape=='horizon_charge'
+        sprite('Event horizon core',0x090311,life=30,size=(1.15,1.15,1.15),growth=(-.025,-.025,-.025) if impact else (0,0,0),texture='smoke',blend=1,alpha=250)
+        for i in range(1 if impact else 2 if charge else 3):
+            sprite('Tilted accretion plane',accent if i==1 else c,life=26,size=(1.9,1.9,1),
+                   rotation=(65,i*60,15),spin=(0,0,10-i*7),texture='arc',billboard=2,alpha=200)
+        for i in range(36):
+            a=i*2.39996;y=1-2*(i+.5)/36;r=math.sqrt(1-y*y)
+            pos=(math.cos(a)*r,y,math.sin(a)*r)
+            sprite('Crushed spatial fragment',accent if i%4==0 else c,life=28,pos=pos,
+                   velocity=tuple(v*(.055 if impact else -.035) for v in pos),
+                   size=(.07,.3,.07),rotation=(0,0,i*37),spin=(0,0,10),texture='shard')
+    elif shape=='drain':
+        # Local +Z points from the drained target to the caster. Gravity Pull uses
+        # the reversed link, so its motes flow toward local zero instead.
+        for i in range(24):
+            t=i/23;a=i*2.39996
+            z=.25+t*.7 if theme=='gravity' else t*.72
+            sprite('Siphoned fragment',accent if i%4==0 else c,life=18,
+                   pos=(math.cos(a)*.18,math.sin(a)*.18,z),velocity=(0,0,-.012 if theme=='gravity' else .012),
+                   size=(.1,.25,.1),texture='flame' if theme=='blood' else 'shard',spin=(0,0,5))
+    elif shape in ('cast','charge','orb','comet','wave','impact','nova','pulse','field'):
+        school_profile()
+    elif shape=='cannon_charge':
         # Dark centre, counter-rotating seals and three dimensional inward streams.
         sprite('Void heart',0x090413,life=24,size=(1.0,1.0,1.0),texture='smoke',blend=1,alpha=240)
         sprite('Condensed soul core',accent,life=21,size=(.38,.38,.38),growth=(.015,.015,.015),texture='star')
@@ -185,52 +297,8 @@ def author(shape, theme):
             sprite('Soul firework shard',accent if i%3==0 else c,life=36 if big else 24,
                    velocity=(math.cos(a)*r*v,y*v,math.sin(a)*r*v),size=(.045,.13,.045) if big else (.10,.22,.1),
                    texture='shard' if i%3 else 'star',spin=(0,0,9))
-    elif shape in ('impact', 'nova'):
-        r = .8 if shape=='nova' else .65
-        sprite('Impact bloom', life=22, size=(1.8, 1.8, 1.8), growth=(.045, .045, .045), alpha=190)
-        sprite('Bright flash', accent, life=9, size=(2.6, 2.6, 2.6), texture='star')
-        for i in range(3):
-            sprite('Sweeping impact pressure',accent if i==1 else c,life=24,size=(1.6+i*.2,1.6+i*.2,1),
-                   growth=(.05,.05,0),rotation=(70,i*60,i*120),spin=(0,0,(i-1)*4),texture='arc',billboard=2,alpha=210)
-        motes(30 if shape=='nova' else 18, radius=.3, life=28, outward=.045, shards=theme in ('soul', 'blood'))
-        if theme in ('poison', 'dark', 'blood'):
-            for i in range(6): sprite('Lingering coloured mist', life=28, pos=(math.cos(i)*.6, .2, math.sin(i)*.6), size=(1.1, 1.1, 1.1), growth=(.02,.02,.02), texture='smoke', alpha=125, blend=1)
-    elif shape in ('cast', 'charge'):
-        # A compact directional hand sweep, not a full sigil in the camera.
-        charging=shape=='charge'
-        for i in range(3):
-            sprite('Swept energy crescent',accent if i==1 else c,life=12,
-                   pos=((i-1)*.12,-.16,-i*.12),velocity=(.025,0,.07),
-                   size=(1.0-i*.12,.75-i*.08,1),growth=(.025,.016,0),
-                   rotation=(0,0,-35+i*28),spin=(0,0,7),texture='arc',billboard=2,alpha=200)
-        sprite('Hand spark',accent,life=8,size=(.36,.36,.36),velocity=(0,0,.06),texture='star')
-        for i in range(18):
-            a=i*2.39996;r=.15+(i%4)*.12
-            pos=(math.cos(a)*r,math.sin(a)*r,-.6-i*.025) if not charging else (math.cos(a)*r,math.sin(a)*r,.2)
-            sprite('Flowing casting wisp',accent if i%4==0 else c,life=15,pos=pos,
-                   velocity=(-pos[0]*.03,-pos[1]*.03,.08 if not charging else -.015),
-                   size=(.09,.25,.09),texture='shard' if theme=='soul' else 'star',spin=(0,0,10))
-    elif shape in ('orb', 'comet'):
-        big = shape=='comet'
-        sprite('Projectile aura', life=11, size=(2.4 if big else 1.6,)*3, alpha=180)
-        sprite('Projectile core', accent, life=10, size=(1.1 if big else .7,)*3, texture='flame' if theme=='fire' else 'star')
-        for i in range(20 if big else 14):
-            a = i*2.39996
-            sprite('Spiralling wake', accent if i%3==0 else c, life=13, pos=(math.sin(a)*.32, math.cos(a)*.32, -i*.14),
-                   velocity=(math.cos(a)*.025,math.sin(a)*.025,-.085), size=(.17,.34,.17), texture='shard' if theme in ('soul','blood') else 'glow')
-        if big:
-            for i in range(3):sprite('Comet pressure crescent',accent if i==1 else c,life=12,pos=(0,0,-i*.45),
-                                    size=(1.7-i*.2,1.7-i*.2,1),rotation=(0,0,i*120),spin=(0,0,11),texture='arc',billboard=2)
-    elif shape=='wave':
-        for i in range(3):
-            sprite('Sweeping crescent', accent if i==1 else c, life=11, pos=(0, 0, -i*.18), size=(2.6-i*.16, 2.6-i*.16, 1), texture='arc', billboard=2)
-        motes(16, radius=.8, life=12, outward=.01, shards=theme=='soul')
-    elif shape in ('pulse', 'field', 'vortex', 'ward', 'cage', 'curse'):
-        if shape=='pulse':
-            ring(children,c,radius=1,life=9,spin=3)
-            ring(children,accent,radius=.88,y=.15,life=9,spin=-4)
-            motes(18,radius=.95,life=9,outward=.005)
-        elif shape=='vortex':
+    elif shape in ('vortex', 'ward', 'cage', 'curse'):
+        if shape=='vortex':
             for i in range(5):
                 r = .25+i*.17 if theme=='fire' else 1-i*.15
                 ring(children, accent if i%2 else c, radius=r, y=i*.23, life=15, spin=(9 if theme=='fire' else -9)+i, alpha=200)
@@ -240,44 +308,41 @@ def author(shape, theme):
                        velocity=(-math.sin(a)*.025,.008,math.cos(a)*.025), size=(.12,.22,.12),texture='flame' if theme=='fire' else 'star')
             if theme=='gravity':
                 sprite('Gravity core',0x10051D,life=15,pos=(0,.1,0),size=(1.2,1.2,1.2),alpha=230,blend=1)
+        elif shape=='ward' and theme in ('blood','soul'):
+            for i in range(24):
+                a=i*2.39996;y=1-2*(i+.5)/24;r=math.sqrt(1-y*y)
+                sprite('Blood membrane' if theme=='blood' else 'Orbiting echo crystal',accent if i%5==0 else c,
+                       life=18,pos=(math.cos(a)*r,y,math.sin(a)*r),
+                       size=(.4,.65,.4) if theme=='blood' else (.09,.4,.09),
+                       rotation=(0,0,i*37),spin=(0,0,3),texture='flame' if theme=='blood' else 'shard',
+                       blend=1 if theme=='blood' else 2,alpha=180 if theme=='blood' else 240)
         elif shape=='ward':
             for i, rot in enumerate(((90,0,0),(0,0,0),(0,90,0))):
                 sprite('Crossing shield sigil',accent if i==1 else c,life=12,size=(2.25,2.25,1),rotation=rot,spin=(0,0,4 if i%2 else -4),texture='sigil',billboard=2,alpha=170)
             motes(18,radius=.92,life=12,outward=0,shards=theme=='soul')
+        elif shape in ('cage','curse') and theme=='soul':
+            for i in range(16):
+                a=i*math.tau/8;y=-.65 if i<8 else .65
+                sprite('Sculk crystal restraint',accent if i%3==0 else c,life=18,
+                       pos=(math.cos(a)*.7,y,math.sin(a)*.7),size=(.14,.85,.14),texture='shard',spin=(0,0,2))
         elif shape in ('cage','curse'):
             for y in (-.8,.8):ring(children,c,radius=.9,y=y,life=15,spin=5 if y>0 else -5)
             for i in range(8):
                 a=i*math.tau/8
                 sprite('Restraint pillar',accent if i%3==0 else c,life=15,pos=(math.cos(a)*.8,0,math.sin(a)*.8),size=(.11,2.0,1),texture='bolt' if shape=='curse' else 'glow',billboard=1,alpha=220)
             motes(12,radius=.8,life=15,outward=0,shards=theme=='soul')
-        else:
-            ring(children,c,radius=1,life=15,spin=2,alpha=210)
-            ring(children,accent,radius=.65,y=.05,life=15,spin=-4,alpha=170)
-            for i in range(10):
-                a=i*2.4; r=seed.uniform(.2,.85)
-                sprite('Drifting field mist',life=16,pos=(math.cos(a)*r,seed.uniform(.1,.6),math.sin(a)*r),velocity=(0,.008,0),size=(.5,.45,.5),growth=(.004,.004,.004),texture='smoke',alpha=100,blend=1)
-            motes(16,radius=.8,life=15,outward=0)
-            if theme=='thunder':
-                for i in range(8):
-                    a=i*math.tau/8
-                    sprite('Storm cloud',0x7988A8,life=16,pos=(math.cos(a)*.55,2.8,math.sin(a)*.55),size=(.95,.55,.95),texture='smoke',alpha=150,blend=1)
-                for i in range(4):
-                    a=i*math.tau/4
-                    sprite('Storm flicker',accent,life=12,pos=(math.cos(a)*.4,2.5,math.sin(a)*.4),size=(.12,.7,.12),texture='bolt')
-    elif shape in ('beam','lightning','flame','drain'):
+    elif shape in ('beam','lightning','flame'):
         if shape in ('beam','lightning'):
             # Crossed quads occupy local +Z from 0 to 1; runtime stretches only Z.
             for roll in (0,90):
                 sprite('Energy filament',accent,life=13,size=(.65,1,1),pos=(0,0,.5),rotation=(90,roll,0),texture='bolt' if shape=='lightning' else 'glow',billboard=2)
         for i in range(25):
-            t=i/24*(.65 if shape=='drain' else 1); a=i*2.4; spread=.18 if shape=='beam' else .35
+            t=i/24; a=i*2.4; spread=.18 if shape=='beam' else .35
             px=math.cos(a)*spread; py=math.sin(a)*spread
             sprite('Flowing energy',accent if i%4==0 else c,life=17 if shape=='flame' else 13,
-                   pos=(px,py,t),velocity=(0,0,.035 if shape=='drain' else .02),
+                   pos=(px,py,t),velocity=(0,0,.02),
                    size=(.75,.9,.7) if shape=='flame' else (.32,.32,.32),
                    texture='flame' if shape=='flame' else 'star' if shape=='lightning' else 'glow',alpha=220)
-            if shape=='drain' and i%3==0:
-                sprite('Drained soul fragment',accent,life=14,pos=(px,py,t),velocity=(0,0,.02),size=(.18,.38,.18),texture='shard')
     else:
         raise ValueError(shape)
     element(project,'ToolVersion','1.80');element(project,'Version',3)
@@ -307,12 +372,14 @@ def main():
         if not exported.exists() or exported.read_bytes()[:4]!=b'EFKE':raise RuntimeError(f'Export failed: {exported}')
         shutil.copy2(exported,ASSETS/exported.name)
         return theme
+    def packaged(shape,theme):
+        return (not shape.startswith('cannon_') or theme=='soul') and (not shape.startswith('pyre_') or theme=='fire') and (not shape.startswith('tempest_') or theme=='thunder') and (not shape.startswith('horizon_') or theme=='gravity')
     completed={theme:0 for theme in args.theme}
     with ThreadPoolExecutor(max_workers=max(1,min(8,args.jobs))) as pool:
-        tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape if not shape.startswith('cannon_') or theme=='soul']
+        tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape if packaged(shape,theme)]
         for task in as_completed(tasks):
             theme=task.result();completed[theme]+=1
-            expected=sum(not shape.startswith('cannon_') or theme=='soul' for shape in args.shape)
+            expected=sum(packaged(shape,theme) for shape in args.shape)
             if completed[theme]==expected:print(f'{theme}: {expected} effects exported',flush=True)
 
 

@@ -19,6 +19,8 @@ final class SpellAudio {
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
         case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
+        case SOLAR_CATACLYSM->irons("spell.fire_bomb.charge");
+        case TEMPEST_SPEAR->irons("spell.thunderstorm.prepare");case EVENT_HORIZON->irons("spell.black_hole.charge");
         case SMITE->irons("spell.divine_smite.windup");case STORM_CALL->irons("spell.thunderstorm.prepare");
         case SINGULARITY->irons("spell.black_hole.charge");case GRAVITY_WELL->irons("spell.gravity_fissure.charge");
         case FIRE_COMET->irons("spell.fire_bomb.charge");case EMPIRE_COMET,ARCANE_VOLLEY->irons("spell.summon_swords.charge");
@@ -55,6 +57,8 @@ final class SpellAudio {
     static float volume(float base){return (float)(base*KingdomWands.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
         case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
+        case SOLAR_CATACLYSM->irons("spell.fire_bomb.cast");
+        case TEMPEST_SPEAR->irons("lightning_lance_cast");case EVENT_HORIZON->irons("spell.black_hole.cast");
         case SMITE->irons("spell.divine_smite.cast");case SINGULARITY->irons("spell.black_hole.cast");
         case FIRE_COMET->irons("spell.fire_bomb.cast");case EMPIRE_COMET,ARCANE_VOLLEY->irons("spell.summon_swords.cast");
         case FLAME_SHOCK_WAVE->irons("spell.flaming_strike.cast");case THUNDER_PULSE->irons("spell.shockwave.cast");
@@ -63,7 +67,7 @@ final class SpellAudio {
         default->castId(spell.theme);
     };}
     private static float castPitch(Spell spell){return switch(spell.kind){
-        case COMET,CANNON,BURST,SMITE,WELL->0.7f;
+        case COMET,CANNON,BURST,SMITE,WELL,METEOR,RAIL,COLLAPSE->0.7f;
         case BOLT,VOLLEY,WAVE,LANCE->1.15f;
         case SIPHON,CAPTURE,CHOKE,SUSPEND->0.85f;
         default->1.0f;
@@ -78,12 +82,12 @@ final class SpellAudio {
         cue(player,player.position(),castAccentId(spell.theme),0.85f,castPitch(spell)+0.12f,true);
     }
     static void impact(ServerPlayer player,Vec3 pos,Spell spell){
-        float weight=switch(spell.kind){case COMET,BURST,PULSE,SMITE,SONIC,MARK->1.15f;default->1.0f;};
+        float weight=switch(spell.kind){case COMET,BURST,PULSE,SMITE,SONIC,MARK,METEOR,RAIL,COLLAPSE->1.15f;default->1.0f;};
         float gain=(float)(weight*KingdomWands.IMPACT_VOLUME.get());
         boolean direct=KingdomWands.CASTER_IMPACTS.get();
         String primary=spell.kind==Spell.Kind.SONIC?"entity.warden.sonic_boom":impactId(spell.theme);
         cue(player,pos,primary,1.6f*gain,spell.theme==Spell.Theme.BLOOD?0.7f:0.85f,direct);
-        cue(player,pos,impactAccentId(spell.theme),1.05f*gain,0.8f,direct);
+        cue(player,pos,(spell.kind==Spell.Kind.METEOR||spell.kind==Spell.Kind.COLLAPSE)?"entity.generic.explode":impactAccentId(spell.theme),1.05f*gain,0.8f,direct);
     }
     static void cannonCharge(ServerPlayer player,Vec3 pos,float progress){
         cue(player,pos,"block.respawn_anchor.charge",0.8f+progress*0.6f,0.55f+progress*0.9f,true);

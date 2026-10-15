@@ -70,5 +70,8 @@
   "spell.kingdomwands.withering_hex": "Withering Hex",
   "spell.kingdomwands.soul_cannon": "Soul Cannon",
   "subtitles.kingdomwands.cast": "Magic rushes",
-  "subtitles.kingdomwands.impact": "Spell strikes"
+  "subtitles.kingdomwands.impact": "Spell strikes",
+  "spell.kingdomwands.solar_cataclysm": "Solar Cataclysm",
+  "spell.kingdomwands.tempest_spear": "Tempest Spear",
+  "spell.kingdomwands.event_horizon": "Event Horizon"
 }

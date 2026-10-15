@@ -60,7 +60,7 @@ final class IronsCompat {
             baseManaCost=spell.manaCost();
             manaCostPerLevel=Math.max(2,Math.min(10,baseManaCost/5));baseSpellPower=100;spellPowerPerLevel=25;
             castTime=spell.castTicks();
-            defaults=new DefaultConfig().setMinRarity(spell.kind==Spell.Kind.CANNON?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
+            defaults=new DefaultConfig().setMinRarity((spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
                 .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(true).build();
         }
         @Override public ResourceLocation getSpellResource(){return id(spell);}
@@ -72,15 +72,15 @@ final class IronsCompat {
         @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
         @Override public Optional<net.minecraft.sounds.SoundEvent> getCastFinishSound(){return Optional.empty();}
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
-            case CANNON,SONIC,CHANNEL,LANCE->SpellAnimations.ONE_HANDED_RAY_CHARGE;
-            case STORM,SMITE,TWISTER->SpellAnimations.CHARGE_RAISED_HAND;
-            case BURST,WELL,FIELD,MARK->SpellAnimations.CHARGE_WAVY_ANIMATION;
+            case CANNON,SONIC,CHANNEL,LANCE,RAIL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
+            case STORM,SMITE,TWISTER,METEOR->SpellAnimations.CHARGE_RAISED_HAND;
+            case BURST,WELL,FIELD,MARK,COLLAPSE->SpellAnimations.CHARGE_WAVY_ANIMATION;
             case WARD,AURA->SpellAnimations.PREPARE_CROSS_ARMS;
             default->castTime>0?SpellAnimations.ANIMATION_LONG_CAST:SpellAnimations.ANIMATION_INSTANT_CAST;
         };}
         @Override public AnimationHolder getCastFinishAnimation(){return switch(spell.kind){
-            case CANNON,SONIC,CHANNEL,LANCE->SpellAnimations.ONE_HANDED_RAY_SHOOT;
-            case STORM,SMITE,TWISTER->SpellAnimations.ANIMATION_LONG_CAST_FINISH;
+            case CANNON,SONIC,CHANNEL,LANCE,RAIL->SpellAnimations.ONE_HANDED_RAY_SHOOT;
+            case STORM,SMITE,TWISTER,METEOR->SpellAnimations.ANIMATION_LONG_CAST_FINISH;
             default->SpellAnimations.ANIMATION_INSTANT_CAST;
         };}
         @Override public void onClientPreCast(Level level,int spellLevel,LivingEntity entity,net.minecraft.world.InteractionHand hand,MagicData data){

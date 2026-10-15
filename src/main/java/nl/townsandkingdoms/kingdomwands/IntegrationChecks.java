@@ -132,8 +132,8 @@ public final class IntegrationChecks {
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON -> SpellVisuals.Stage.FLIGHT;
-                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD -> SpellVisuals.Stage.AREA;
+                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR -> SpellVisuals.Stage.FLIGHT;
+                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE -> SpellVisuals.Stage.STRIKE;
                     case BURST -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -241,6 +241,7 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
+            heavyChecks(level,player);
             cannonChecks(level);
             audioChecks(level);
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
@@ -251,6 +252,37 @@ public final class IntegrationChecks {
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){KingdomWands.LOG.error("Could not write report",e);}
             KingdomWands.LOG.info("KINGDOM_WANDS_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
         }
+    }
+    private static void heavyChecks(ServerLevel level,FakePlayer player){
+        for(Spell spell:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){
+            SpellEngine.clear();resetPlayer(player);visuals.clear();
+            Zombie a=spawn(level,0,81,6),b=spawn(level,0,81,10);
+            for(var z:List.of(a,b)){
+                z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);
+            }
+            check(SpellEngine.cast(player,spell),spell+" heavy test starts");
+            if(spell.kind==Spell.Kind.COLLAPSE){
+                for(int t=0;t<30;t++)SpellEngine.tick();
+                check(a.getHealth()==100&&b.getHealth()==100,"collapse gathers without premature damage");
+                check(b.getDeltaMovement().z<0,"collapse pulls a visible enemy toward its centre");
+            }else if(spell.kind==Spell.Kind.METEOR){
+                for(int t=0;t<12;t++)SpellEngine.tick();
+                check(a.getHealth()==100,"meteor warning does not deal early damage");
+            }
+            for(int t=0;t<100;t++)SpellEngine.tick();
+            check(Math.abs(a.getHealth()-(100-spell.damage))<.01,spell+" deals one full base hit");
+            check(Math.abs(b.getHealth()-(100-spell.damage))<.01,spell+" hits a second visible enemy");
+            check(SpellEngine.activeCount()==0,spell+" heavy task expires");a.discard();b.discard();
+            // Full cover blocks all three attacks, including the final area detonation.
+            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
+            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
+            check(SpellEngine.cast(player,spell),spell+" may cast at solid cover");
+            for(int t=0;t<100;t++)SpellEngine.tick();
+            check(hidden.getHealth()==20,spell+" cannot damage through cover");
+            check(level.getBlockState(new BlockPos(0,82,3)).is(Blocks.STONE),spell+" leaves terrain intact");hidden.discard();
+            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
+        }
+        for(var theme:Spell.Theme.values())check(net.minecraft.core.registries.BuiltInRegistries.PARTICLE_TYPE.containsValue(SpellParticles.particle(theme).getType()),"Iron particle is registered: "+theme);
     }
     private static void cannonChecks(ServerLevel level){
         var player=new AudioPlayer(level,new GameProfile(UUID.fromString("ab438590-0c2e-4559-819e-31116824450f"),"CannonTest"));

@@ -7,10 +7,10 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /** Bounded visual messages; never used for collision, damage or target selection. */
 final class SpellVisuals {
     enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE, TRAIL_BURST }
-    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT }
+    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT, PYRE_CHARGE, PYRE_FALL, PYRE_IMPACT, TEMPEST_CHARGE, TEMPEST_BEAM, TEMPEST_IMPACT, HORIZON_CHARGE, HORIZON_WELL, HORIZON_IMPACT }
     private static int details, accents;
     private SpellVisuals() {}
-    static void tick() { details=0; accents=0; }
+    static void tick() { details=0; accents=0; SpellParticles.tick(); }
 
     static Shape shape(Spell spell, Stage stage) {
         if(spell==Spell.SOUL_CANNON)return switch(stage){
@@ -19,6 +19,18 @@ final class SpellVisuals {
             case TRAIL_BURST -> Shape.CANNON_BURST;
             case IMPACT -> Shape.CANNON_IMPACT;
             default -> Shape.CHARGE;
+        };
+        if(spell==Spell.SOLAR_CATACLYSM)return switch(stage){
+            case CAST,CHARGE -> Shape.PYRE_CHARGE;case FLIGHT -> Shape.PYRE_FALL;
+            case HIT,IMPACT -> Shape.PYRE_IMPACT;default -> Shape.FIELD;
+        };
+        if(spell==Spell.TEMPEST_SPEAR)return switch(stage){
+            case CAST,CHARGE -> Shape.TEMPEST_CHARGE;case LINK,STRIKE -> Shape.TEMPEST_BEAM;
+            case HIT,IMPACT -> Shape.TEMPEST_IMPACT;default -> Shape.LIGHTNING;
+        };
+        if(spell==Spell.EVENT_HORIZON)return switch(stage){
+            case CAST,CHARGE -> Shape.HORIZON_CHARGE;case AREA -> Shape.HORIZON_WELL;
+            case HIT,IMPACT -> Shape.HORIZON_IMPACT;default -> Shape.DRAIN;
         };
         return switch(stage) {
             case CAST -> Shape.CAST;
@@ -52,6 +64,9 @@ final class SpellVisuals {
     }
 
     static boolean packaged(Shape shape,Spell.Theme theme){
+        if(shape.name().startsWith("PYRE_"))return theme==Spell.Theme.FIRE;
+        if(shape.name().startsWith("TEMPEST_"))return theme==Spell.Theme.THUNDER;
+        if(shape.name().startsWith("HORIZON_"))return theme==Spell.Theme.GRAVITY;
         return !shape.name().startsWith("CANNON_")||theme==Spell.Theme.SOUL;
     }
     static int assetCount(){
@@ -61,6 +76,7 @@ final class SpellVisuals {
     static void send(ServerLevel level, Spell spell, Stage stage, Vec3 pos, Vec3 end, double size) {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
         if(detail ? details++>=64 : accents++>=32)return;
+        SpellParticles.emit(level,spell,stage,pos,end,size);
         var message=new WandNetwork.Visual(spell.ordinal(),stage.ordinal(),pos.x,pos.y,pos.z,end.x,end.y,end.z,(float)Math.clamp(size,0.1,16));
         if(IntegrationChecks.enabled())IntegrationChecks.visual(message);
         // Long beams are sent around their midpoint so both ends can be seen by observers.
