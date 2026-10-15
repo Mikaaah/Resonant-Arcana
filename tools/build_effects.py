@@ -1,5 +1,6 @@
 """Author the wand effects and export them with Effekseer 1.80.7 (Pillow required)."""
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import math
 from pathlib import Path
 import random
@@ -230,6 +231,7 @@ def author(shape, theme):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--jobs',type=int,default=1,help='Independent headless export workers (1 to 8)')
     parser.add_argument('--editor',type=Path,required=True,help='Effekseer 1.80.7 executable (Tool/bin/Effekseer on Linux)')
     parser.add_argument('--work',type=Path,default=ROOT/'build/effekseer')
     parser.add_argument('--theme',choices=list(PALETTES),nargs='+',default=list(PALETTES))
@@ -238,15 +240,23 @@ def main():
     ASSETS.mkdir(parents=True,exist_ok=True);textures()
     shutil.copytree(ASSETS/'textures',work/'textures',dirs_exist_ok=True)
     editor=args.editor.resolve()
-    for theme in args.theme:
-        for shape in args.shape:
-            project=author(shape,theme);ET.indent(project,space='  ')
-            source=work/f'{shape}_{theme}.efkproj';project.write(source,encoding='utf-8',xml_declaration=True)
-            dest=ASSETS/f'{shape}_{theme}.efkefc'
-            dest.unlink(missing_ok=True)
-            subprocess.run([str(editor),'-cui','-in',str(source),'-o',str(dest)],cwd=editor.parent,check=True,stdout=subprocess.DEVNULL)
-            if not dest.exists() or dest.read_bytes()[:4]!=b'EFKE':raise RuntimeError(f'Export failed: {dest}')
-        print(f'{theme}: {len(args.shape)} effects exported',flush=True)
+    def export(theme, shape):
+        project=author(shape,theme);ET.indent(project,space='  ')
+        source=work/f'{shape}_{theme}.efkproj';project.write(source,encoding='utf-8',xml_declaration=True)
+        # Effekseer rebases texture paths relative to its output file. Export beside
+        # the project, then copy the finished asset into Minecraft's resource tree.
+        exported=work/f'{shape}_{theme}.efkefc'
+        exported.unlink(missing_ok=True)
+        subprocess.run([str(editor),'-cui','-in',str(source),'-o',str(exported)],cwd=editor.parent,check=True,stdout=subprocess.DEVNULL)
+        if not exported.exists() or exported.read_bytes()[:4]!=b'EFKE':raise RuntimeError(f'Export failed: {exported}')
+        shutil.copy2(exported,ASSETS/exported.name)
+        return theme
+    completed={theme:0 for theme in args.theme}
+    with ThreadPoolExecutor(max_workers=max(1,min(8,args.jobs))) as pool:
+        tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape]
+        for task in as_completed(tasks):
+            theme=task.result();completed[theme]+=1
+            if completed[theme]==len(args.shape):print(f'{theme}: {len(args.shape)} effects exported',flush=True)
 
 
 if __name__=='__main__':main()

@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.6.1-alpha'
+version = '0.6.2-alpha'
 group = 'nl.townsandkingdoms.kingdomwands'
 base.archivesName = 'kingdom-wands'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -23,3 +23,47 @@ neoForge {
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 21 }
 tasks.named('jar') { from('LICENSE') }
+
+// Validate the paths consumed by Minecraft, rather than resolving them on the build machine.
+tasks.register('verifyEffects') {
+    def effects = file('src/main/resources/assets/kingdomwands/effeks')
+    inputs.dir(effects)
+    doLast {
+        def assets = fileTree(effects).matching { include '*.efkefc' }.files
+        if (assets.size() != 136) throw new GradleException("Expected 136 wand effects; found ${assets.size()}")
+        assets.each { asset ->
+            def buffer = java.nio.ByteBuffer.wrap(asset.bytes).order(java.nio.ByteOrder.LITTLE_ENDIAN)
+            if (buffer.remaining() < 8 || buffer.getInt() != 0x454b4645) throw new GradleException("Invalid effect container: ${asset.name}")
+            buffer.getInt()
+            boolean found = false
+            while (buffer.remaining() >= 8) {
+                int type = buffer.getInt(), length = buffer.getInt()
+                if (length < 0 || length > buffer.remaining()) throw new GradleException("Invalid chunk: ${asset.name}")
+                int end = buffer.position() + length
+                if (type == 0x5f4e4942) {
+                    found = true
+                    def nativeData = buffer.slice().order(java.nio.ByteOrder.LITTLE_ENDIAN)
+                    nativeData.limit(length)
+                    if (nativeData.remaining() < 12 || nativeData.getInt() != 0x45464b53) throw new GradleException("Invalid native effect: ${asset.name}")
+                    nativeData.getInt()
+                    int count = nativeData.getInt()
+                    if (count < 1 || count > 8) throw new GradleException("Unexpected texture table: ${asset.name}")
+                    count.times {
+                        int chars = nativeData.getInt()
+                        if (chars < 2 || chars > 1024 || chars * 2 > nativeData.remaining()) throw new GradleException("Invalid texture path: ${asset.name}")
+                        byte[] encoded = new byte[chars * 2]
+                        nativeData.get(encoded)
+                        String path = new String(encoded, 'UTF-16LE').replace('\u0000', '')
+                        if (!(path ==~ /textures\/[a-z0-9_]+\.png/)) throw new GradleException("Nonportable texture path in ${asset.name}: ${path}")
+                        def texture = new File(effects, path)
+                        if (!texture.isFile()) throw new GradleException("Missing texture in ${asset.name}: ${path}")
+                    }
+                }
+                buffer.position(end)
+            }
+            if (!found) throw new GradleException("Native effect chunk missing: ${asset.name}")
+        }
+        logger.lifecycle('Verified all 136 effects use packaged Minecraft texture paths.')
+    }
+}
+tasks.named('check') { dependsOn 'verifyEffects' }

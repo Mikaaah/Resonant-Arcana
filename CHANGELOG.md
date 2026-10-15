@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.2-alpha
+
+- Fix AAAParticles effects failing to load because exported textures referenced the build machine’s directories.
+- Re-export all 136 effects with portable paths to textures packaged in the mod.
+- Check every native texture reference during the build; reject external paths and missing textures.
+
 ## 0.6.1-alpha
 
 - Observe AAAParticles effect loading and report failures instead of silently ignoring failed spawns.

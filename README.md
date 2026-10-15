@@ -2,7 +2,7 @@
 
 Eight magic wands and 58 spells for Minecraft 1.21.1 on NeoForge. Each wand has its own spell list, particle effects and casting sounds.
 
-[Download 0.6.1-alpha](downloads/kingdom-wands-0.6.1-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
+[Download 0.6.2-alpha](downloads/kingdom-wands-0.6.2-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
 
 ## Wands
 
@@ -68,7 +68,7 @@ to once every eight ticks per cast to keep repeated and area hits controlled.
 
 ## Compatibility
 
-Effects use vanilla Minecraft particles and sounds. With **AAAParticles 2.2.3 or later in the 2.x series** installed on the client, all 58 spells gain casting sigils, bright projectile cores and wakes, travelling crescents, energy beams, drain streams, lightning, large impact bursts and animated area effects. Wards surround the caster; cages surround their target; fields and pulses follow their gameplay radius. Soul effects mix cyan and amethyst, fire uses embers, blood uses crimson fragments, and venom leaves green mist. This is an experimental visual integration; AAAParticles is optional and is not bundled. Set `aaaParticles = false` locally to disable it. Clients and servers must both use 0.6.1-alpha because the visual protocol has changed.
+Effects use vanilla Minecraft particles and sounds. With **AAAParticles 2.2.3 or later in the 2.x series** installed on the client, all 58 spells gain casting sigils, bright projectile cores and wakes, travelling crescents, energy beams, drain streams, lightning, large impact bursts and animated area effects. Wards surround the caster; cages surround their target; fields and pulses follow their gameplay radius. Soul effects mix cyan and amethyst, fire uses embers, blood uses crimson fragments, and venom leaves green mist. This is an experimental visual integration; AAAParticles is optional and is not bundled. Set `aaaParticles = false` locally to disable it. Clients and servers must both use 0.6.2-alpha because the visual protocol has changed.
 
 Spells respect server PvP settings, scoreboard friendly fire and the caster's own tameable pets. They do not edit terrain. Claim-protection integrations and dedicated Epic Fight support are not included; use the alternate cast key if another combat mod captures left-click.
 
