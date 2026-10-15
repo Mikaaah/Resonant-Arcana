@@ -23,15 +23,14 @@ public final class KingdomWands {
     public static final String ID="kingdomwands";
     public static final org.slf4j.Logger LOG=LogUtils.getLogger();
     public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems(ID);
-    public static final DeferredItem<WandItem> EMPIRE=ITEMS.register("empire_wand",()->new WandItem(
-        SPARK,EMPIRE_SPARK,BLOOD_SPARK,POISON_SPARK,BLOOD_WAVE,POISON_WAVE,FLAME_WAVE,
-        CONFUSE,STUN,CAPTURE,EMPIRE_COMET,FIRE_COMET,EMPIRE_PULSE,FIRE_PULSE,FIREBALL,IGNITE,LAUNCH,LEAP,LIGHTNING,SMITE));
-    public static final DeferredItem<WandItem> BLOOD=ITEMS.register("blood_wand",()->new WandItem(BLOOD_WAVE,BLOOD_SPARK,BLOOD_EXPLODE,BLOOD_STUN,BLOOD_BLOCK));
-    public static final DeferredItem<WandItem> CELCRIUS=ITEMS.register("celcrius_wand",()->new WandItem(FIRE_COMET,FIRE_TWISTER,FLAME_WAVE,FLAME_SHOCK_WAVE,FLAME_THROWER,FIREBALL));
-    public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem(SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA));
-    public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem(THUNDER_BOLT,CHAIN_LIGHTNING,THUNDER_WAVE,STORM_CALL,THUNDER_PULSE,STATIC_SHOCK));
-    public static final DeferredItem<WandItem> MEPHI=ITEMS.register("mephi_wand",()->new WandItem(GRAVITY_BOLT,GRAVITY_WELL,FORCE_PUSH,FORCE_PULL,GRAVITY_CHOKE,SINGULARITY));
-    public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem(ECHO_BOLT,SCULK_WAVE,SONIC_BOOM,SOUL_SIPHON,SOUL_PRISON,SHRIEKING_PULSE,AMETHYST_NOVA,ECHO_WARD));
+    public static final DeferredItem<WandItem> EMPIRE=ITEMS.register("empire_wand",()->new WandItem("empire_wand",SPARK,EMPIRE_SPARK,CONFUSE,STUN,CAPTURE,EMPIRE_COMET,EMPIRE_PULSE,LAUNCH,LEAP,ARCANE_VOLLEY));
+    public static final DeferredItem<WandItem> BLOOD=ITEMS.register("blood_wand",()->new WandItem("blood_wand",BLOOD_WAVE,BLOOD_SPARK,BLOOD_EXPLODE,BLOOD_STUN,BLOOD_BLOCK,SANGUINE_DRAIN,BLOOD_LANCE));
+    public static final DeferredItem<WandItem> CELCRIUS=ITEMS.register("celcrius_wand",()->new WandItem("celcrius_wand",FIRE_COMET,FIRE_TWISTER,FLAME_WAVE,FLAME_SHOCK_WAVE,FLAME_THROWER,FIREBALL,IGNITE,EMBER_VEIL));
+    public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem("dark_wand",SHADOW_BOLT,SOUL_SEEKER,DARK_WAVE,NIGHTFALL,SHADOW_CAGE,SOUL_AURA));
+    public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem("thunder_wand",THUNDER_BOLT,CHAIN_LIGHTNING,THUNDER_WAVE,STORM_CALL,THUNDER_PULSE,STATIC_SHOCK,LIGHTNING,SMITE));
+    public static final DeferredItem<WandItem> MEPHI=ITEMS.register("mephi_wand",()->new WandItem("mephi_wand",GRAVITY_BOLT,GRAVITY_WELL,FORCE_PUSH,FORCE_PULL,GRAVITY_CHOKE,SINGULARITY));
+    public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem("soul_wand",ECHO_BOLT,SCULK_WAVE,SONIC_BOOM,SOUL_SIPHON,SOUL_PRISON,SHRIEKING_PULSE,AMETHYST_NOVA,ECHO_WARD));
+    public static final DeferredItem<WandItem> VENOM=ITEMS.register("venom_wand",()->new WandItem("venom_wand",POISON_SPARK,POISON_WAVE,VENOM_BOLT,MIASMA_FIELD,WITHERING_HEX));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
         TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Kingdom Wands"))
@@ -63,7 +62,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.3.0-alpha: 7 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.4.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);

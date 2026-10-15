@@ -3,10 +3,10 @@ loaderVersion="[4,)"
 license="MIT"
 [[mods]]
 modId="kingdomwands"
-version="0.3.0-alpha"
+version="0.4.0-alpha"
 displayName="Kingdom Wands"
 authors="Towns & Kingdoms"
-description='''An independent recreation of Kingdoms-style magic wands, inspired by EmpireWandPlus and ExtensiveMagicWands. Seven wands, 52 colourful spells and configurable combat. Experimental alpha.'''
+description='''An independent recreation of Kingdoms-style magic wands, inspired by EmpireWandPlus and ExtensiveMagicWands. Eight wands, 58 colourful spells and configurable combat. Experimental alpha.'''
 [[dependencies.kingdomwands]]
 modId="neoforge"
 type="required"

@@ -17,14 +17,26 @@ import net.minecraft.server.level.ServerPlayer;
 
 public final class WandItem extends Item {
     public final List<Spell> spells;
-    public WandItem(Spell... spells) { super(new Properties().stacksTo(1)); this.spells=List.of(spells); }
-    public int selection(ItemStack stack) {
-        return Math.floorMod(stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getInt("kingdomwands_spell"),spells.size());
+    private final List<String> legacy;
+    public WandItem(String id,Spell... spells) {
+        super(new Properties().stacksTo(1));this.spells=List.of(spells);
+        this.legacy=WandLayouts.LEGACY.getOrDefault(id,this.spells.stream().map(Enum::name).toList());
     }
+    public int selection(ItemStack stack) {
+        CompoundTag tag=stack.getOrDefault(DataComponents.CUSTOM_DATA,CustomData.EMPTY).copyTag();
+        String id=tag.getString("kingdomwands_spell_id");
+        if(id.isEmpty())id=legacy.get(Math.floorMod(tag.getInt("kingdomwands_spell"),legacy.size()));
+        for(int i=0;i<spells.size();i++)if(spells.get(i).name().equals(id))return i;
+        // A spell moved off this wand starts at its first valid spell, never an unrelated numeric slot.
+        return 0;
+    }
+
     public Spell selected(ItemStack stack) { return spells.get(selection(stack)); }
     public void select(ItemStack stack,int index) {
         CompoundTag tag=stack.getOrDefault(DataComponents.CUSTOM_DATA,CustomData.EMPTY).copyTag();
-        tag.putInt("kingdomwands_spell",Math.floorMod(index,spells.size())); stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
+        int selected=Math.floorMod(index,spells.size());
+        tag.putInt("kingdomwands_spell",selected);tag.putString("kingdomwands_spell_id",spells.get(selected).name());
+        stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
     }
     public void cycle(ServerPlayer player, ItemStack stack,int step) {
         select(stack,selection(stack)+step);
@@ -42,6 +54,7 @@ public final class WandItem extends Item {
     @Override public void appendHoverText(ItemStack stack,TooltipContext context,List<Component> lines,TooltipFlag flags) {
         Spell spell=selected(stack);
         lines.add(Component.literal(spell.title+"  ["+(selection(stack)+1)+"/"+spells.size()+"]").withStyle(ChatFormatting.LIGHT_PURPLE));
+        lines.add(Component.literal(spell.description()).withStyle(style->style.withColor(spell.theme.color)));
         lines.add(Component.literal("Left-click: cast | Right-click: next spell").withStyle(ChatFormatting.GRAY));
         lines.add(Component.literal("Sneak + right-click: previous spell").withStyle(ChatFormatting.GRAY));
         lines.add(Component.literal("Alternate cast key: set in Controls").withStyle(ChatFormatting.DARK_GRAY));

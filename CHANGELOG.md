@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.0-alpha
+
+- Reviewed every spell; reorganized into eight themed wands and 58 distinct spells.
+- Empire focuses on arcane utility; elemental spells move to Blood, Celcrius, Thunder and the new Venom Wand.
+- Added Arcane Volley, Sanguine Drain, Blood Lance, Ember Veil, Venom Bolt, Miasma Field and Withering Hex.
+- Reworked Shadow Cage into delayed Dread Mark and Gravity Choke into lifting Suspension. Renamed Dark's Soul Seeker/Aura to Shadow Seeker/Dread Aura.
+- Removed redundant Fire Pulse; Flame Shock Wave retains the fire pulse role.
+- Added shared recovery for healing, wards, stuns and restraints; existing copies share cooldowns as before.
+- Added stable spell selection IDs and migration for older numeric selections. Moved/removed Empire selections start at Spark.
+- Added selected-spell effect descriptions, poison audio/spores, and an ender-eye texture for Mephi.
+- Fixed Flamethrower hitbox damage through thin walls with explicit line-of-sight checks.
+- Full decisions and spell lists: SPELL_REVIEW.md.
+
+
 ## 0.3.0-alpha
 
 - Added the Soul Wand using the vanilla echo shard texture: seven wands and 52 distinct spells total.

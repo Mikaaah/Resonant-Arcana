@@ -1,84 +1,73 @@
-# Validation — 0.3.0-alpha
+# Validation — 0.4.0-alpha
 
-## Result
-
-Dedicated-server integration: **PASS — 347 checks, all 52 distinct spells**.
-See `validation/server-integration.json` for the actual report.
+Dedicated-server integration: **PASS — 575 checks, all 58 distinct spells**.
+See `validation/server-integration.json` for the report and `SPELL_REVIEW.md`
+for the complete catalogue and design decisions.
 
 Environment: Minecraft 1.21.1, NeoForge 21.1.219, Java 21.0.12.1,
 Linux dedicated server, isolated flat test world, this mod only.
-No original Bukkit plugin was loaded.
 
 ## Coverage
 
-- Registry initialization and server startup without loading client-only classes.
-- Every spell can start, rejects immediate cooldown repeats, produces an
-  expected gameplay effect against test entities (or movement/ward effect),
-  and expires without leaving timed tasks.
-- Action and visual packet codecs round-trip with the actual Minecraft buffer.
-- Selection wraps, retains unrelated custom data, and survives ItemStack save/load.
-- A solid wall blocks targeted selection and projectile damage.
-- Spell impact leaves the wall unchanged.
-- Scoreboard allies with friendly fire disabled cannot be targeted.
-- Missing wand, invalid actions, spectator actions and same-tick repeated actions
-  are rejected by the server entry point.
-- Eight concurrent spells clean up; a ninth active timed spell is rejected.
-- Status command executes and reports seven wands / 52 spells.
-- All seven registered wands expose their intended spell selections.
-- All themed and Soul-specific sound references exist in the 1.21.1 registry.
-- Chain Lightning damages two different visible entities.
-- Force Push and Force Pull set movement in opposite expected directions.
-- Soul Seeker tracks a target moved sideways after casting.
-- Gravity Well draws a nearby target inward on its first tick.
-- A wall rejects acquisition for Seeker, Chain Lightning and Force Pull.
-- Soul sonic beam does not damage during its charge; it pierces two visible
-  targets when released and leaves no active task.
-- A solid wall stops sonic beam damage and Soul Siphon target acquisition.
-- Soul Siphon heals up to one heart after successful health damage and does
-  not heal from an invulnerable target.
-- Soul Prison applies darkness and slowness.
-- Both Blood Ward and Echo Ward redirect an incoming arrow.
+- Eight wand registries initialize and the server loads without client-only classes.
+- Every catalogue spell is available on exactly one wand; selections round-trip.
+- All 57 numeric selection slots from the previous seven wands migrate using
+  their original layouts, retaining unrelated custom data. A retained spell
+  keeps its selection; a moved/removed selection falls back to the first spell.
+- Stable spell IDs take priority over stale numeric indices.
+- Item serialization, selection wrapping and both network packet codecs work.
+- All 58 spells start, reject immediate cooldown repeats, produce their expected
+  gameplay effect and expire without leaving timed tasks.
+- Themed and Soul-specific sound IDs resolve in the actual sound registry.
+- Arcane Volley fires three projectiles that can each hit a fresh target.
+- Blood Lance and Sonic Boom each pierce two visible targets; walls stop damage.
+- Sonic Boom deals no damage during its charge and ends its task on release.
+- Dread Mark waits before damaging; taking cover interrupts the pending curse.
+- Suspension lifts the target and applies slow falling for descent.
+- Miasma applies poison to a susceptible living target; Withering Hex applies wither.
+- Ember Veil affects an enemy inside its intended range and leaves a distant one unharmed.
+- Both siphons heal only after actual health damage, up to one heart. An
+  invulnerable target gives no healing. Switching siphons cannot bypass recovery.
+- Blood Ward and Echo Ward redirect incoming arrows and share recovery.
+- Soul Prison applies darkness and slowness. Gravity Well pulls inward.
+- Chain Lightning jumps to two different visible targets. Shadow Seeker
+  follows a target moved sideways after the cast. Force Push/Pull move in the expected directions.
+- Wall checks cover targeted selection, travelling bolts, homing acquisition,
+  chain acquisition, force targeting, siphons, curses, beams and Flamethrower.
+- Impacts preserve blocks. Scoreboard friendly fire is respected.
+- Missing wand, invalid action, spectator and same-tick repeated actions are rejected.
+- Eight concurrent timed spells clean up; a ninth is rejected. Status command executes.
 
-Fixtures use NeoForge FakePlayer and actual server entities/collision/damage,
-not a connected graphical client. Timed spell ticks are advanced directly for
-repeatability; this does not measure real-time multiplayer performance.
-
-An additional movement check exposed the initial damage knockback overcoming
-Gravity Well's first pull. The well now sets inward horizontal movement while
-retaining damped vertical motion; the movement check and all spell checks pass.
-Final source was compiled into the delivered JAR.
+Fixtures use NeoForge FakePlayer, actual server entities and collision/damage.
+Timed spell ticks are advanced directly for repeatability. They do not measure
+real-time multiplayer performance or guarantee final combat balance.
 
 ## Not verified
 
-- Actual client rendering, firework appearance, sounds or mouse/keyboard inputs.
-- Remote client/server packet delivery (codec tests are not a connected client).
-- Epic Fight, WOM, Nightfall, shaders, FTB Teams/Chunks, claims or a complete pack.
-- PvP between connected players, every projectile type, or performance under load.
-- Exact visual/balance equivalence with either original plugin.
+- Graphical rendering, particle appearance, audio balance and mouse/keyboard input.
+- Remote client/server delivery; codec checks do not represent a connected client.
+- Epic Fight, shaders, AAAParticles, FTB Teams/Chunks, claims or the full modpack.
+- Connected-player PvP, every projectile type and server load under many players.
+- Exact behavior or visual equivalence with the original Bukkit plugins.
 
-## Suggested client test
+## Client test
 
-1. Install on both client and server, or a standalone singleplayer instance.
-2. Take all seven wands from the creative tab; confirm vanilla-textured items.
-3. Test left-click, right-click and sneak-right-click; rebind G/V if occupied.
-4. Test sparks, waves and comets on mobs and against a wall.
-5. Test coloured spark impacts, crimson blood effects, pulses, fire twister, capture and the blood ward.
-6. Test Dark homing/cage/aura, Thunder chain/storm, and Mephi gravity/push/pull.
-7. Test all eight Soul spells, particularly charge/release audio, teal/violet
-   sparks, sculk/amethyst impacts, healing and Echo Ward.
-8. Check that normal blocks and items still behave normally after switching away.
-9. Add Epic Fight, test its modes and use the alternate cast key if it captures clicks.
-10. Verify pack-specific claims/PvP rules before using on the public server.
+Replace the old JAR on both client and server. Take all eight wands from the
+creative tab. Check spell names, descriptions and G/V or mouse controls. Try
+old saved wands: a retained spell should stay selected; moved Empire spells
+start at Spark. Check cast/sustain/impact audio with the **Players** slider enabled.
 
-Check cast, travel/sustain and impact audio with the **Players** sound category
-enabled. Adjust `soundVolume` in the common config to taste. AAAParticles is not
-used by this release, and coexistence in the full pack is not tested here.
+Prioritize Volley, delayed Dread Mark/cover, Suspension/landing, Blood Lance,
+siphon switching, Ember Veil radius, Venom status effects, and the complete
+Soul lineup. Check performance and combat feel in the full pack before release.
 
-## Build notes
+## Build
 
-`build` compiles the client and server code and packages resources. The integrated
-server fixture is a separate explicit developer run, not part of ordinary build.
-The build environment reused existing matching Minecraft/NeoForge development
-artifacts and skipped their regeneration and client-asset downloads; mod sources
-were compiled freshly. The distributed source uses the standard Gradle/ModDev
-build without environment-specific toolchain paths.
+The mod source was freshly compiled and packaged with Gradle/ModDev. This build
+reused matching Minecraft/NeoForge development artifacts and skipped their
+regeneration and graphical asset downloads. The distributed source uses the
+standard Java 21 Gradle build without environment-specific paths.
+
+The explicit developer fixture runs with
+`./gradlew runServer -Dkingdomwands.integrationTest=true` and creates an arena
+before stopping the isolated test server. It is disabled during normal gameplay.
