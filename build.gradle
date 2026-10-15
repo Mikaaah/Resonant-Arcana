@@ -1,0 +1,25 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+version = '0.1.0-alpha'
+group = 'nl.townsandkingdoms.kingdomwands'
+base.archivesName = 'kingdom-wands'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.withSourcesJar()
+neoForge {
+    version = '21.1.219'
+    runs {
+        server {
+            server()
+            programArgument '--nogui'
+            jvmArgument '-Xmx2G'
+            gameDirectory = file('run')
+            systemProperty 'kingdomwands.integrationTest', System.getProperty('kingdomwands.integrationTest', 'false')
+        }
+        client { client(); gameDirectory = file('run-client') }
+    }
+    mods { kingdomwands { sourceSet sourceSets.main } }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 21 }
+tasks.named('jar') { from('LICENSE') }

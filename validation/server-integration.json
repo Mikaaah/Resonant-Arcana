@@ -1,0 +1,270 @@
+{
+  "success": true,
+  "checksPassed": 131,
+  "checks": [
+    "previous selection wraps",
+    "selection preserves unrelated custom data",
+    "selected spell survives item serialization",
+    "action packet codec round trip",
+    "burst packet codec round trip",
+    "SPARK starts",
+    "SPARK cooldown rejects immediate repeat",
+    "SPARK has expected gameplay effect",
+    "SPARK timed tasks expire",
+    "EMPIRE_SPARK starts",
+    "EMPIRE_SPARK cooldown rejects immediate repeat",
+    "EMPIRE_SPARK has expected gameplay effect",
+    "EMPIRE_SPARK timed tasks expire",
+    "BLOOD_SPARK starts",
+    "BLOOD_SPARK cooldown rejects immediate repeat",
+    "BLOOD_SPARK has expected gameplay effect",
+    "BLOOD_SPARK timed tasks expire",
+    "POISON_SPARK starts",
+    "POISON_SPARK cooldown rejects immediate repeat",
+    "POISON_SPARK has expected gameplay effect",
+    "POISON_SPARK timed tasks expire",
+    "BLOOD_WAVE starts",
+    "BLOOD_WAVE cooldown rejects immediate repeat",
+    "BLOOD_WAVE has expected gameplay effect",
+    "BLOOD_WAVE timed tasks expire",
+    "POISON_WAVE starts",
+    "POISON_WAVE cooldown rejects immediate repeat",
+    "POISON_WAVE has expected gameplay effect",
+    "POISON_WAVE timed tasks expire",
+    "FLAME_WAVE starts",
+    "FLAME_WAVE cooldown rejects immediate repeat",
+    "FLAME_WAVE has expected gameplay effect",
+    "FLAME_WAVE timed tasks expire",
+    "CONFUSE starts",
+    "CONFUSE cooldown rejects immediate repeat",
+    "CONFUSE has expected gameplay effect",
+    "CONFUSE timed tasks expire",
+    "STUN starts",
+    "STUN cooldown rejects immediate repeat",
+    "STUN has expected gameplay effect",
+    "STUN timed tasks expire",
+    "CAPTURE starts",
+    "CAPTURE cooldown rejects immediate repeat",
+    "CAPTURE has expected gameplay effect",
+    "CAPTURE timed tasks expire",
+    "EMPIRE_COMET starts",
+    "EMPIRE_COMET cooldown rejects immediate repeat",
+    "EMPIRE_COMET has expected gameplay effect",
+    "EMPIRE_COMET timed tasks expire",
+    "FIRE_COMET starts",
+    "FIRE_COMET cooldown rejects immediate repeat",
+    "FIRE_COMET has expected gameplay effect",
+    "FIRE_COMET timed tasks expire",
+    "EMPIRE_PULSE starts",
+    "EMPIRE_PULSE cooldown rejects immediate repeat",
+    "EMPIRE_PULSE has expected gameplay effect",
+    "EMPIRE_PULSE timed tasks expire",
+    "FIRE_PULSE starts",
+    "FIRE_PULSE cooldown rejects immediate repeat",
+    "FIRE_PULSE has expected gameplay effect",
+    "FIRE_PULSE timed tasks expire",
+    "FIREBALL starts",
+    "FIREBALL cooldown rejects immediate repeat",
+    "FIREBALL has expected gameplay effect",
+    "FIREBALL timed tasks expire",
+    "IGNITE starts",
+    "IGNITE cooldown rejects immediate repeat",
+    "IGNITE has expected gameplay effect",
+    "IGNITE timed tasks expire",
+    "LAUNCH starts",
+    "LAUNCH cooldown rejects immediate repeat",
+    "LAUNCH has expected gameplay effect",
+    "LAUNCH timed tasks expire",
+    "LEAP starts",
+    "LEAP cooldown rejects immediate repeat",
+    "LEAP has expected gameplay effect",
+    "LEAP timed tasks expire",
+    "LIGHTNING starts",
+    "LIGHTNING cooldown rejects immediate repeat",
+    "LIGHTNING has expected gameplay effect",
+    "LIGHTNING timed tasks expire",
+    "SMITE starts",
+    "SMITE cooldown rejects immediate repeat",
+    "SMITE has expected gameplay effect",
+    "SMITE timed tasks expire",
+    "FIRE_TWISTER starts",
+    "FIRE_TWISTER cooldown rejects immediate repeat",
+    "FIRE_TWISTER has expected gameplay effect",
+    "FIRE_TWISTER timed tasks expire",
+    "FLAME_THROWER starts",
+    "FLAME_THROWER cooldown rejects immediate repeat",
+    "FLAME_THROWER has expected gameplay effect",
+    "FLAME_THROWER timed tasks expire",
+    "FLAME_SHOCK_WAVE starts",
+    "FLAME_SHOCK_WAVE cooldown rejects immediate repeat",
+    "FLAME_SHOCK_WAVE has expected gameplay effect",
+    "FLAME_SHOCK_WAVE timed tasks expire",
+    "BLOOD_EXPLODE starts",
+    "BLOOD_EXPLODE cooldown rejects immediate repeat",
+    "BLOOD_EXPLODE has expected gameplay effect",
+    "BLOOD_EXPLODE timed tasks expire",
+    "BLOOD_STUN starts",
+    "BLOOD_STUN cooldown rejects immediate repeat",
+    "BLOOD_STUN has expected gameplay effect",
+    "BLOOD_STUN timed tasks expire",
+    "BLOOD_BLOCK starts",
+    "BLOOD_BLOCK cooldown rejects immediate repeat",
+    "BLOOD_BLOCK has expected gameplay effect",
+    "BLOOD_BLOCK timed tasks expire",
+    "targeted spell cannot select through solid wall",
+    "projectile can cast toward wall",
+    "solid wall blocks projectile damage",
+    "spell impact preserves solid blocks",
+    "scoreboard friendly fire is respected",
+    "allied target is rejected",
+    "unarmed action packet is rejected",
+    "invalid action packet is rejected",
+    "valid held wand action casts",
+    "multiple actions in one tick are rate limited",
+    "spectator casting is rejected",
+    "concurrent cast SPARK",
+    "concurrent cast BLOOD_WAVE",
+    "concurrent cast POISON_WAVE",
+    "concurrent cast FLAME_WAVE",
+    "concurrent cast EMPIRE_COMET",
+    "concurrent cast FIRE_COMET",
+    "concurrent cast FIREBALL",
+    "concurrent cast EMPIRE_PULSE",
+    "per-player active spell limit is enforced",
+    "concurrent tasks clean up",
+    "status command executes"
+  ],
+  "spells": [
+    {
+      "targetHealth": 17.0,
+      "spell": "SPARK",
+      "observed": true
+    },
+    {
+      "targetHealth": 15.0,
+      "spell": "EMPIRE_SPARK",
+      "observed": true
+    },
+    {
+      "targetHealth": 15.0,
+      "spell": "BLOOD_SPARK",
+      "observed": true
+    },
+    {
+      "targetHealth": 18.0,
+      "spell": "POISON_SPARK",
+      "observed": true
+    },
+    {
+      "targetHealth": 15.0,
+      "spell": "BLOOD_WAVE",
+      "observed": true
+    },
+    {
+      "targetHealth": 18.0,
+      "spell": "POISON_WAVE",
+      "observed": true
+    },
+    {
+      "targetHealth": 15.0,
+      "spell": "FLAME_WAVE",
+      "observed": true
+    },
+    {
+      "targetHealth": 20.0,
+      "spell": "CONFUSE",
+      "observed": true
+    },
+    {
+      "targetHealth": 19.0,
+      "spell": "STUN",
+      "observed": true
+    },
+    {
+      "targetHealth": 20.0,
+      "spell": "CAPTURE",
+      "observed": true
+    },
+    {
+      "targetHealth": 12.0,
+      "spell": "EMPIRE_COMET",
+      "observed": true
+    },
+    {
+      "targetHealth": 12.0,
+      "spell": "FIRE_COMET",
+      "observed": true
+    },
+    {
+      "targetHealth": 14.0,
+      "spell": "EMPIRE_PULSE",
+      "observed": true
+    },
+    {
+      "targetHealth": 14.0,
+      "spell": "FIRE_PULSE",
+      "observed": true
+    },
+    {
+      "targetHealth": 14.0,
+      "spell": "FIREBALL",
+      "observed": true
+    },
+    {
+      "targetHealth": 18.0,
+      "spell": "IGNITE",
+      "observed": true
+    },
+    {
+      "targetHealth": 18.0,
+      "spell": "LAUNCH",
+      "observed": true
+    },
+    {
+      "targetHealth": 20.0,
+      "spell": "LEAP",
+      "observed": true
+    },
+    {
+      "targetHealth": 13.0,
+      "spell": "LIGHTNING",
+      "observed": true
+    },
+    {
+      "targetHealth": 10.0,
+      "spell": "SMITE",
+      "observed": true
+    },
+    {
+      "targetHealth": 13.0,
+      "spell": "FIRE_TWISTER",
+      "observed": true
+    },
+    {
+      "targetHealth": 18.0,
+      "spell": "FLAME_THROWER",
+      "observed": true
+    },
+    {
+      "targetHealth": 13.0,
+      "spell": "FLAME_SHOCK_WAVE",
+      "observed": true
+    },
+    {
+      "targetHealth": 12.0,
+      "spell": "BLOOD_EXPLODE",
+      "observed": true
+    },
+    {
+      "targetHealth": 18.0,
+      "spell": "BLOOD_STUN",
+      "observed": true
+    },
+    {
+      "targetHealth": 20.0,
+      "spell": "BLOOD_BLOCK",
+      "observed": true
+    }
+  ],
+  "clientRenderingTested": false
+}

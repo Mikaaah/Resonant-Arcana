@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="kingdomwands"
+version="0.1.0-alpha"
+displayName="Kingdom Wands"
+authors="Towns & Kingdoms"
+description='''An independent first recreation of Kingdoms-style magic wands, inspired by EmpireWandPlus and ExtensiveMagicWands. Three wands, colourful spells and configurable combat. Experimental alpha.'''
+[[dependencies.kingdomwands]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.219,21.2)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.kingdomwands]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+ordering="NONE"
+side="BOTH"
