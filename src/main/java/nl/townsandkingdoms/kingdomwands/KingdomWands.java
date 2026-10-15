@@ -22,6 +22,11 @@ import net.minecraft.commands.Commands;
 public final class KingdomWands {
     public static final String ID="kingdomwands";
     public static final org.slf4j.Logger LOG=LogUtils.getLogger();
+    public static final DeferredRegister<net.minecraft.sounds.SoundEvent> SOUNDS=DeferredRegister.create(Registries.SOUND_EVENT,ID);
+    static {for(var theme:Spell.Theme.values())for(String phase:java.util.List.of("cast_","impact_")){
+        String name=phase+theme.name().toLowerCase(java.util.Locale.ROOT);
+        SOUNDS.register(name,()->net.minecraft.sounds.SoundEvent.createVariableRangeEvent(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(ID,name)));
+    }}
     public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems(ID);
     public static final DeferredItem<WandItem> EMPIRE=ITEMS.register("empire_wand",()->new WandItem("empire_wand",SPARK,EMPIRE_SPARK,CONFUSE,STUN,CAPTURE,EMPIRE_COMET,EMPIRE_PULSE,LAUNCH,LEAP,ARCANE_VOLLEY));
     public static final DeferredItem<WandItem> BLOOD=ITEMS.register("blood_wand",()->new WandItem("blood_wand",BLOOD_WAVE,BLOOD_SPARK,BLOOD_EXPLODE,BLOOD_STUN,BLOOD_BLOCK,SANGUINE_DRAIN,BLOOD_LANCE));
@@ -33,15 +38,16 @@ public final class KingdomWands {
     public static final DeferredItem<WandItem> VENOM=ITEMS.register("venom_wand",()->new WandItem("venom_wand",POISON_SPARK,POISON_WAVE,VENOM_BOLT,MIASMA_FIELD,WITHERING_HEX));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
-        TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Kingdom Wands"))
-            .icon(()->EMPIRE.toStack()).displayItems((params,out)->{ITEMS.getEntries().forEach(entry->out.accept(entry.get()));}).build());
+        TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Resonant Arcana"))
+            .icon(()->EMPIRE.toStack()).displayItems((params,out)->{ITEMS.getEntries().forEach(entry->out.accept(entry.get()));if(net.neoforged.fml.ModList.get().isLoaded("irons_spellbooks"))for(var spell:Spell.values())out.accept(IronsCompat.scroll(spell));}).build());
     }
     public static final ModConfigSpec CONFIG;
-    public static final ModConfigSpec.BooleanValue PVP,MOUSE_CONTROLS,CASTER_IMPACTS,AAA_PARTICLES;
+    public static final ModConfigSpec.BooleanValue WAND_CASTING,PVP,MOUSE_CONTROLS,CASTER_IMPACTS,AAA_PARTICLES;
     public static final ModConfigSpec.DoubleValue DAMAGE,COOLDOWNS,SOUND_VOLUME,IMPACT_VOLUME;
     public static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,VISUAL_BUDGET,AAA_BUDGET;
     static {
         var b=new ModConfigSpec.Builder();
+        WAND_CASTING=b.comment("Allow direct casting with wands. Disable to use Iron spellbooks as the only casting route.").define("enableWandCasting",true);
         PVP=b.comment("Allow spells to affect other players. Server PvP and scoreboard teams are also respected.").define("allowPvp",true);
         MOUSE_CONTROLS=b.comment("Use classic left-click casting. Disable on both sides if another combat mod intercepts attack inputs; use the cast key instead.").define("classicMouseCasting",true);
         DAMAGE=b.defineInRange("damageMultiplier",1.0,0.0,10.0);
@@ -57,7 +63,8 @@ public final class KingdomWands {
         CONFIG=b.build();
     }
     public KingdomWands(IEventBus bus,ModContainer container) {
-        ITEMS.register(bus);TABS.register(bus);container.registerConfig(ModConfig.Type.COMMON,CONFIG);
+        if(net.neoforged.fml.ModList.get().isLoaded("irons_spellbooks"))IronsCompat.register(bus);
+        SOUNDS.register(bus);ITEMS.register(bus);TABS.register(bus);container.registerConfig(ModConfig.Type.COMMON,CONFIG);
         bus.addListener(WandNetwork::register);
         NeoForge.EVENT_BUS.addListener((ServerTickEvent.Post e)->SpellEngine.tick());
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e)->SpellEngine.clear());
@@ -65,10 +72,13 @@ public final class KingdomWands {
         NeoForge.EVENT_BUS.addListener(IntegrationChecks::start);
     }
     private static void commands(RegisterCommandsEvent event) {
-        var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.7.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        var root=Commands.literal("resonantarcana");
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.8.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
+        for(var alias:java.util.Map.of("arcane_wand",EMPIRE,"cinder_wand",CELCRIUS,"rift_wand",MEPHI).entrySet())
+            give.then(Commands.literal(alias.getKey()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=alias.getValue().get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);
+        event.getDispatcher().register(Commands.literal("kingdomwands").redirect(event.getDispatcher().getRoot().getChild("resonantarcana")));
     }
 }

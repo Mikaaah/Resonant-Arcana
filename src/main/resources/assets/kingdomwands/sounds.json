@@ -1,0 +1,146 @@
+{
+  "cast_magic": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_magic",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_magic": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_magic",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_blood": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_blood",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_blood": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_blood",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_poison": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_poison",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_poison": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_poison",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_fire": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_fire",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_fire": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_fire",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_thunder": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_thunder",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_thunder": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_thunder",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_dark": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_dark",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_dark": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_dark",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_gravity": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_gravity",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_gravity": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_gravity",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "cast_soul": {
+    "subtitle": "subtitles.kingdomwands.cast",
+    "sounds": [
+      {
+        "name": "kingdomwands:cast_soul",
+        "attenuation_distance": 16
+      }
+    ]
+  },
+  "impact_soul": {
+    "subtitle": "subtitles.kingdomwands.impact",
+    "sounds": [
+      {
+        "name": "kingdomwands:impact_soul",
+        "attenuation_distance": 24
+      }
+    ]
+  }
+}

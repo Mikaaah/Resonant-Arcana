@@ -88,9 +88,9 @@ public final class IntegrationChecks {
             var identityStack=wand.getDefaultInstance();identityStack.set(DataComponents.CUSTOM_DATA,CustomData.of(identityTag));
             check(wand.selected(identityStack)==Spell.EMPIRE_PULSE,"stable spell ID takes priority over stale numeric slot");
             for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.castAccentId(theme),SpellAudio.impactId(theme),SpellAudio.impactAccentId(theme),SpellAudio.sustainId(theme)))
-                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"sound exists: "+id);
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"sound exists: "+id);
             for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_BOOM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
-                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"special soul sound exists: "+id);
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"special soul sound exists: "+id);
             visuals.clear();SpellVisuals.tick();
             for(int i=0;i<100;i++)SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.FLIGHT,new Vec3(0,82,0),new Vec3(0,82,1),1);
             check(visuals.size()==64,"detail visual traffic capped at 64 per tick");
@@ -232,6 +232,7 @@ public final class IntegrationChecks {
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
             cannonChecks(level);
             audioChecks(level);
+            if(net.neoforged.fml.ModList.get().isLoaded("irons_spellbooks"))IronsIntegrationChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());KingdomWands.LOG.error("Wand integration failed",error);}
         finally{
@@ -293,7 +294,7 @@ public final class IntegrationChecks {
             check(casts==2,"cast emits two distinct sound layers to its caster");
             for(int t=0;t<32;t++)SpellEngine.tick();
             check(distant.getHealth()<20,"audio test projectile reaches distant target");
-            check(player.heard.subList(casts,player.heard.size()).contains("minecraft:"+SpellAudio.impactId(Spell.Theme.MAGIC)),"caster receives impact cue beyond normal sound range");
+            check(player.heard.subList(casts,player.heard.size()).contains(SpellAudio.impactId(Spell.Theme.MAGIC)),"caster receives impact cue beyond normal sound range");
             check(player.heard.size()==casts+2,"direct hit and burst do not double-play impact audio");distant.discard();
             SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.CASTER_IMPACTS.set(false);
             Zombie positional=spawn(level,0,81,24);check(SpellEngine.cast(player,Spell.SPARK),"positional-only audio test casts");casts=player.heard.size();

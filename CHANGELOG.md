@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.8.0-alpha — Resonant Arcana
+
+- Rebrand Kingdom Wands as Resonant Arcana. Rename Empire, Celcrius and Mephi wands to Arcane, Cinder and Rift, with related spell names updated.
+- Replace camera-facing casting sigils with compact sweeps, wisps and sparks. Keep world-space ward and trap effects.
+- Add faster projectile wakes, flowing beams and impact crescents, plus 16 original whoosh and impact sounds.
+- Register all 59 spells with Iron’s Spells ’n Spellbooks when installed, with scrolls, icons, mana costs, school scaling, animations and cooldowns.
+- Support Iron’s charge bar for Soul Cannon and Sonic Boom without doubling their charge time.
+- Add `enableWandCasting` for modpacks that prefer spellbook-only casting.
+- Preserve saved wands, spell selections and configuration. Remove the previous Kingdom Wands JAR before updating both client and server.
+
 ## 0.7.0-alpha
 
 - Add Soul Cannon to the Soul Wand: absorb void energy, then fire a massive travelling echo blast.

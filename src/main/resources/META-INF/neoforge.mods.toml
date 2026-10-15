@@ -3,10 +3,10 @@ loaderVersion="[4,)"
 license="MIT"
 [[mods]]
 modId="kingdomwands"
-version="0.7.0-alpha"
-displayName="Kingdom Wands"
+version="0.8.0-alpha"
+displayName="Resonant Arcana"
 authors="Towns & Kingdoms"
-description='''An independent recreation of Kingdoms-style magic wands, inspired by EmpireWandPlus and ExtensiveMagicWands. Eight wands, 59 colourful spells and configurable combat. Experimental alpha.'''
+description='''Expressive elemental magic with eight wands, 59 spells, layered audio, optional AAAParticles effects and Iron's Spells 'n Spellbooks integration. Experimental alpha.'''
 [[dependencies.kingdomwands]]
 modId="neoforge"
 type="required"
@@ -18,4 +18,11 @@ modId="minecraft"
 type="required"
 versionRange="[1.21.1,1.21.2)"
 ordering="NONE"
+side="BOTH"
+
+[[dependencies.kingdomwands]]
+modId="irons_spellbooks"
+type="optional"
+versionRange="[1.21.1-3.16.3,1.21.1-3.17)"
+ordering="AFTER"
 side="BOTH"

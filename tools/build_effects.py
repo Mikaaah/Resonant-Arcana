@@ -147,7 +147,8 @@ def author(shape, theme):
         sprite('Void heart',0x090413,life=24,size=(1.0,1.0,1.0),texture='smoke',blend=1,alpha=240)
         sprite('Condensed soul core',accent,life=21,size=(.38,.38,.38),growth=(.015,.015,.015),texture='star')
         for radius,spin in ((.65,9),(1.0,-6)):
-            ring(children,c,radius=radius,life=24,spin=spin,vertical=True)
+            sprite('Collapsing void crescent',c,life=24,size=(radius*2,radius*2,1),growth=(-.015,-.015,0),
+                   rotation=(0,0,radius*130),spin=(0,0,spin),texture='arc',billboard=2)
         for i in range(42):
             a=i*2.39996; y=1-2*(i+.5)/42; r=math.sqrt(1-y*y); radius=1.5+(i%4)*.3
             pos=(math.cos(a)*r*radius,y*radius,math.sin(a)*r*radius)
@@ -157,7 +158,8 @@ def author(shape, theme):
         sprite('Echo pressure bloom',c,life=12,size=(2.2,2.2,2.2),alpha=145)
         sprite('White hot soul core',0xCBFFF4,life=10,size=(.85,.85,.85),texture='star')
         for i in range(4):
-            n=ring(children,accent if i%2 else c,radius=1-i*.12,life=14,spin=8 if i%2 else -8,vertical=True)
+            n=sprite('Travelling echo crescent',accent if i%2 else c,life=14,size=(2-i*.22,2-i*.22,1),
+                     rotation=(0,0,i*90),spin=(0,0,8 if i%2 else -8),texture='arc',billboard=2)
             # Ring quads face forward along local +Z.
             loc=n.find('LocationValues/PVA/Location/Z')
             for key in ('Center','Max','Min'):loc.find(key).text=str(-i*.5)
@@ -188,24 +190,37 @@ def author(shape, theme):
         sprite('Impact bloom', life=22, size=(1.8, 1.8, 1.8), growth=(.045, .045, .045), alpha=190)
         sprite('Bright flash', accent, life=9, size=(2.6, 2.6, 2.6), texture='star')
         for i in range(3):
-            ring(children, accent if i==1 else c, radius=r+i*.2, y=i*.08, life=26, spin=(i-1)*3, alpha=210)
+            sprite('Sweeping impact pressure',accent if i==1 else c,life=24,size=(1.6+i*.2,1.6+i*.2,1),
+                   growth=(.05,.05,0),rotation=(70,i*60,i*120),spin=(0,0,(i-1)*4),texture='arc',billboard=2,alpha=210)
         motes(30 if shape=='nova' else 18, radius=.3, life=28, outward=.045, shards=theme in ('soul', 'blood'))
         if theme in ('poison', 'dark', 'blood'):
             for i in range(6): sprite('Lingering coloured mist', life=28, pos=(math.cos(i)*.6, .2, math.sin(i)*.6), size=(1.1, 1.1, 1.1), growth=(.02,.02,.02), texture='smoke', alpha=125, blend=1)
     elif shape in ('cast', 'charge'):
-        ring(children, c, radius=.65 if shape=='cast' else .4, life=15, spin=8, vertical=True)
-        sprite('Casting glow', life=12, size=(1.6, 1.6, 1.6), alpha=150)
-        sprite('Casting star', accent, life=10, size=(1.1, 1.1, 1.1), texture='star')
-        motes(10, radius=.5, life=15, outward=-.02, shards=theme=='soul')
+        # A compact directional hand sweep, not a full sigil in the camera.
+        charging=shape=='charge'
+        for i in range(3):
+            sprite('Swept energy crescent',accent if i==1 else c,life=12,
+                   pos=((i-1)*.12,-.16,-i*.12),velocity=(.025,0,.07),
+                   size=(1.0-i*.12,.75-i*.08,1),growth=(.025,.016,0),
+                   rotation=(0,0,-35+i*28),spin=(0,0,7),texture='arc',billboard=2,alpha=200)
+        sprite('Hand spark',accent,life=8,size=(.36,.36,.36),velocity=(0,0,.06),texture='star')
+        for i in range(18):
+            a=i*2.39996;r=.15+(i%4)*.12
+            pos=(math.cos(a)*r,math.sin(a)*r,-.6-i*.025) if not charging else (math.cos(a)*r,math.sin(a)*r,.2)
+            sprite('Flowing casting wisp',accent if i%4==0 else c,life=15,pos=pos,
+                   velocity=(-pos[0]*.03,-pos[1]*.03,.08 if not charging else -.015),
+                   size=(.09,.25,.09),texture='shard' if theme=='soul' else 'star',spin=(0,0,10))
     elif shape in ('orb', 'comet'):
         big = shape=='comet'
         sprite('Projectile aura', life=11, size=(2.4 if big else 1.6,)*3, alpha=180)
         sprite('Projectile core', accent, life=10, size=(1.1 if big else .7,)*3, texture='flame' if theme=='fire' else 'star')
-        for i in range(12 if big else 8):
+        for i in range(20 if big else 14):
             a = i*2.39996
             sprite('Spiralling wake', accent if i%3==0 else c, life=13, pos=(math.sin(a)*.32, math.cos(a)*.32, -i*.14),
-                   velocity=(math.cos(a)*.015,math.sin(a)*.015,-.025), size=(.24,.24,.24), texture='shard' if theme in ('soul','blood') else 'glow')
-        if big: ring(children, c, radius=.7, life=11, spin=14, vertical=True)
+                   velocity=(math.cos(a)*.025,math.sin(a)*.025,-.085), size=(.17,.34,.17), texture='shard' if theme in ('soul','blood') else 'glow')
+        if big:
+            for i in range(3):sprite('Comet pressure crescent',accent if i==1 else c,life=12,pos=(0,0,-i*.45),
+                                    size=(1.7-i*.2,1.7-i*.2,1),rotation=(0,0,i*120),spin=(0,0,11),texture='arc',billboard=2)
     elif shape=='wave':
         for i in range(3):
             sprite('Sweeping crescent', accent if i==1 else c, life=11, pos=(0, 0, -i*.18), size=(2.6-i*.16, 2.6-i*.16, 1), texture='arc', billboard=2)
@@ -258,7 +273,7 @@ def author(shape, theme):
             t=i/24*(.65 if shape=='drain' else 1); a=i*2.4; spread=.18 if shape=='beam' else .35
             px=math.cos(a)*spread; py=math.sin(a)*spread
             sprite('Flowing energy',accent if i%4==0 else c,life=17 if shape=='flame' else 13,
-                   pos=(px,py,t),velocity=(0,0,.025 if shape=='drain' else 0),
+                   pos=(px,py,t),velocity=(0,0,.035 if shape=='drain' else .02),
                    size=(.75,.9,.7) if shape=='flame' else (.32,.32,.32),
                    texture='flame' if shape=='flame' else 'star' if shape=='lightning' else 'glow',alpha=220)
             if shape=='drain' and i%3==0:

@@ -2,9 +2,9 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.7.0-alpha'
+version = '0.8.0-alpha'
 group = 'nl.townsandkingdoms.kingdomwands'
-base.archivesName = 'kingdom-wands'
+base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 java.withSourcesJar()
 neoForge {
@@ -55,7 +55,10 @@ tasks.register('verifyEffects') {
                         nativeData.get(encoded)
                         String path = new String(encoded, 'UTF-16LE').replace('\u0000', '')
                         if (!(path ==~ /textures\/[a-z0-9_]+\.png/)) throw new GradleException("Nonportable texture path in ${asset.name}: ${path}")
-                        def texture = new File(effects, path)
+                        if ((asset.name.startsWith('cast_') || asset.name.startsWith('charge_') || asset.name.startsWith('cannon_charge_')) && path == 'textures/sigil.png') {
+                        throw new GradleException("Camera-facing casting effect must not contain a sigil: ${asset.name}")
+                    }
+                    def texture = new File(effects, path)
                         if (!texture.isFile()) throw new GradleException("Missing texture in ${asset.name}: ${path}")
                     }
                 }
@@ -67,3 +70,13 @@ tasks.register('verifyEffects') {
     }
 }
 tasks.named('check') { dependsOn 'verifyEffects' }
+
+repositories { maven { url = 'https://code.redspace.io/releases' } }
+dependencies {
+    // A local copy may be supplied for offline development; the API is never bundled.
+    if (providers.gradleProperty('ironsSpellbooksJar').isPresent()) {
+        compileOnly files(providers.gradleProperty('ironsSpellbooksJar').get())
+    } else {
+        compileOnly('io.redspace:irons_spellbooks:1.21.1-3.16.3') { transitive = false }
+    }
+}

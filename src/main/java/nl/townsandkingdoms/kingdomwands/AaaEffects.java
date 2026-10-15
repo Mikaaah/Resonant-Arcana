@@ -113,7 +113,7 @@ final class AaaEffects {
     }
     private static void say(String message){
         var player=Minecraft.getInstance().player;
-        if(player!=null)player.displayClientMessage(Component.literal("[Kingdom Wands] "+message),false);
+        if(player!=null)player.displayClientMessage(Component.literal("[Resonant Arcana] "+message),false);
     }
     static void diagnostics(){
         var mods=ModList.get();
