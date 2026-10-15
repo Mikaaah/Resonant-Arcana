@@ -7,7 +7,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /** Bounded visual messages; never used for collision, damage or target selection. */
 final class SpellVisuals {
     enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE, TRAIL_BURST }
-    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT, PYRE_CHARGE, PYRE_FALL, PYRE_IMPACT, TEMPEST_CHARGE, TEMPEST_BEAM, TEMPEST_IMPACT, HORIZON_CHARGE, HORIZON_WELL, HORIZON_IMPACT, SCREAM_FRONT, SCREAM_IMPACT, DOOM_CHARGE, DOOM_WELL, DOOM_IMPACT, SANCTUARY_CHARGE, SANCTUARY_FIELD, SANCTUARY_BLOOM, GLACIER_CHARGE, GLACIER_FRONT, GLACIER_IMPACT, FANG_CHARGE, FANG_ROW, FANG_IMPACT }
+    enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT, PYRE_CHARGE, PYRE_FALL, PYRE_IMPACT, TEMPEST_CHARGE, TEMPEST_BEAM, TEMPEST_IMPACT, HORIZON_CHARGE, HORIZON_WELL, HORIZON_IMPACT, SCREAM_FRONT, SCREAM_IMPACT, DOOM_CHARGE, DOOM_WELL, DOOM_IMPACT, SANCTUARY_CHARGE, SANCTUARY_FIELD, SANCTUARY_BLOOM, GLACIER_CHARGE, GLACIER_FRONT, GLACIER_IMPACT, FANG_CHARGE, FANG_ROW, FANG_IMPACT, SLASH, ORBIT, TOTEM, RAIN, TRAP, SERPENT, BLESSING, DOMAIN, FUSION_CHARGE, FUSION_ORB, FUSION_IMPACT }
     private static int details, accents;
     private SpellVisuals() {}
     static void tick() { details=0; accents=0; SpellParticles.tick(); }
@@ -47,6 +47,10 @@ final class SpellVisuals {
         if(spell==Spell.EVOKERS_EDICT)return switch(stage){
             case CAST,CHARGE -> Shape.FANG_CHARGE;case AREA -> Shape.FANG_ROW;default -> Shape.FANG_IMPACT;
         };
+        if(spell==Spell.PRISMATIC_RUIN)return switch(stage){
+            case CAST,CHARGE -> Shape.FUSION_CHARGE;case FLIGHT -> Shape.FUSION_ORB;
+            default -> Shape.FUSION_IMPACT;
+        };
         return switch(stage) {
             case CAST -> Shape.CAST;
             case HIT,TRAIL_BURST -> Shape.CHARGE;
@@ -59,15 +63,23 @@ final class SpellVisuals {
             case FLIGHT -> switch(spell.kind) {
                 case COMET -> Shape.COMET;
                 case WAVE -> Shape.WAVE;
+                case SERPENT -> Shape.SERPENT;
                 default -> Shape.ORB;
             };
             case LINK -> switch(spell.kind) {
-                case SIPHON,PULL -> Shape.DRAIN;
-                case CHANNEL -> Shape.FLAME;
+                case SIPHON,PULL,TETHER -> Shape.DRAIN;
+                case CHANNEL,CONE_CHANNEL -> Shape.FLAME;
                 case CHAIN -> Shape.LIGHTNING;
                 default -> Shape.BEAM;
             };
             case AREA -> switch(spell.kind) {
+                case SWEEP -> Shape.SLASH;
+                case ORBIT -> Shape.ORBIT;
+                case TOTEM -> Shape.TOTEM;
+                case RAIN -> Shape.RAIN;
+                case TRAP -> Shape.TRAP;
+                case BUFF,CLEANSE,HYMN -> Shape.BLESSING;
+                case DOMAIN -> Shape.DOMAIN;
                 case PULSE -> Shape.PULSE;
                 case TWISTER,WELL -> Shape.VORTEX;
                 case WARD -> Shape.WARD;
@@ -78,25 +90,23 @@ final class SpellVisuals {
         };
     }
 
+    private static final java.util.Set<String> ASSETS=loadAssets();
+    private static java.util.Set<String> loadAssets(){
+        try(var input=SpellVisuals.class.getResourceAsStream("/assets/kingdomwands/effeks/manifest.json")){
+            if(input==null)throw new IllegalStateException("Missing effect manifest");
+            var json=com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(input,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            var result=new java.util.HashSet<String>();
+            for(var entry:json.getAsJsonArray("effects"))if(!result.add(entry.getAsString()))throw new IllegalStateException("Duplicate effect");
+            return java.util.Set.copyOf(result);
+        }catch(java.io.IOException ex){throw new java.io.UncheckedIOException(ex);}
+    }
     static boolean packaged(Shape shape,Spell.Theme theme){
-        if(shape.name().startsWith("SCREAM_"))return theme==Spell.Theme.SOUL;
-        if(shape.name().startsWith("DOOM_"))return theme==Spell.Theme.DARK;
-        if(shape.name().startsWith("SANCTUARY_"))return theme==Spell.Theme.HOLY;
-        if(shape.name().startsWith("GLACIER_"))return theme==Spell.Theme.ICE;
-        if(theme==Spell.Theme.HOLY||theme==Spell.Theme.ICE)return false;
-        if(shape.name().startsWith("FANG_"))return theme==Spell.Theme.MAGIC;
-        if(shape.name().startsWith("PYRE_"))return theme==Spell.Theme.FIRE;
-        if(shape.name().startsWith("TEMPEST_"))return theme==Spell.Theme.THUNDER;
-        if(shape.name().startsWith("HORIZON_"))return theme==Spell.Theme.GRAVITY;
-        return !shape.name().startsWith("CANNON_")||theme==Spell.Theme.SOUL;
+        return ASSETS.contains(shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc");
     }
-    static int assetCount(){
-        int count=0;for(var shape:Shape.values())for(var theme:Spell.Theme.values())if(packaged(shape,theme))count++;
-        return count;
-    }
+    static int assetCount(){return ASSETS.size();}
     static void send(ServerLevel level, Spell spell, Stage stage, Vec3 pos, Vec3 end, double size) {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
-        if(detail ? details++>=64 : accents++>=32)return;
+        if(detail ? details++>=ArcanaConfig.DETAIL_BUDGET.get() : accents++>=ArcanaConfig.ACCENT_BUDGET.get())return;
         SpellParticles.emit(level,spell,stage,pos,end,size);
         var message=new WandNetwork.Visual(spell.ordinal(),stage.ordinal(),pos.x,pos.y,pos.z,end.x,end.y,end.z,(float)Math.clamp(size,0.1,16));
         if(IntegrationChecks.enabled())IntegrationChecks.visual(message);

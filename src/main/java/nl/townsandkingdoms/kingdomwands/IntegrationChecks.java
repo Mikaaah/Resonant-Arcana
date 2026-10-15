@@ -57,6 +57,7 @@ public final class IntegrationChecks {
             RegistryFriendlyByteBuf buffer=new RegistryFriendlyByteBuf(Unpooled.buffer(),server.registryAccess());
             try {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
+                buffer.clear();var selection=new WandNetwork.Select(KingdomWands.EMPIRE.getId(),11);WandNetwork.Select.CODEC.encode(buffer,selection);check(WandNetwork.Select.CODEC.decode(buffer).equals(selection),"wand selection packet round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
                 buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_BOOM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
                 WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
@@ -70,7 +71,8 @@ public final class IntegrationChecks {
             check(KingdomWands.ITEMS.getEntries().size()==10,"ten registered wands");
             var catalog=EnumSet.noneOf(Spell.class);
             for(var item:KingdomWands.ITEMS.getEntries()){
-                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();
+                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();check(w.spells.size()==12,item.getId()+" has twelve spells");
+                check(server.getRecipeManager().byKey(item.getId()).isPresent(),item.getId()+" has a loaded survival recipe");
                 for(int i=0;i<w.spells.size();i++){
                     w.select(ws,i);check(w.selected(ws)==w.spells.get(i),item.getId()+" selection "+i);
                     check(catalog.add(w.spells.get(i)),w.spells.get(i)+" has exactly one wand home");
@@ -94,6 +96,7 @@ public final class IntegrationChecks {
             for(Spell spell:Spell.values()){
                 String id=SpellAudio.chargeId(spell);
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"charge sound exists: "+spell);
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(SpellAudio.spellCastId(spell))),"release sound exists: "+spell);
                 check(!SpellAudio.castId(spell.theme).startsWith("kingdomwands:"),"retired vacuum cast is not referenced: "+spell);
             }
             for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_BOOM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
@@ -115,14 +118,18 @@ public final class IntegrationChecks {
             for(Spell spell:Spell.values()){
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.EMPIRE.toStack());
-                if(spell.kind==Spell.Kind.HEAL)player.setHealth(5);
-                Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
+                if(spell.healing()>0)player.setHealth(5);
+                Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.ORBIT?3:spell.kind==Spell.Kind.SWEEP||spell.kind==Spell.Kind.GAZE?5:spell.kind==Spell.Kind.PULSE?Math.min(5,spell.radius-1):spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
                 if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
                 check(SpellEngine.cast(player,spell),spell.name()+" starts");
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
                 for(int t=0;t<100;t++)SpellEngine.tick();
                 boolean observed=switch(spell.kind){
-                    case HEAL->player.getHealth()>5&&zombie.getHealth()==20;
+                    case HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
+                    case CLEANSE->spell==Spell.TOXIC_MOLT?player.getHealth()>5:player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
+                    case BUFF->player.getAbsorptionAmount()>0||player.hasEffect(MobEffects.INVISIBILITY);
+                    case BLINK->player.hasEffect(MobEffects.SLOW_FALLING)&&visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.LINK.ordinal()&&v.endZ()>1);
+                    case DASH->player.getDeltaMovement().lengthSqr()>.1;
                     case LEAP->player.getDeltaMovement().y>0;
                     case WARD->arrow.getDeltaMovement().z>0;
                     case CONFUSE->zombie.hasEffect(MobEffects.BLINDNESS);
@@ -134,13 +141,17 @@ public final class IntegrationChecks {
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT -> SpellVisuals.Stage.FLIGHT;
-                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL -> SpellVisuals.Stage.AREA;
-                    case LIGHTNING,SMITE -> SpellVisuals.Stage.STRIKE;
-                    case BURST -> SpellVisuals.Stage.IMPACT;
+                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
+                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
+                    case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
+                    case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
                 };
                 check(visuals.stream().anyMatch(v->v.stage()==expectedStage.ordinal()),spell+" has "+expectedStage+" visuals");
+                for(var visual:visuals){
+                    var emitted=Spell.values()[visual.spell()];var shape=SpellVisuals.shape(emitted,SpellVisuals.Stage.values()[visual.stage()]);
+                    check(SpellVisuals.packaged(shape,emitted.theme),emitted+" emitted effect exists: "+shape);
+                }
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
                 if(arrow!=null)arrow.discard();zombie.discard();
             }
@@ -244,6 +255,7 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
+            expansionChecks(level,player);
             schoolChecks(level,player);
             heavyChecks(level,player);
             cannonChecks(level);
@@ -256,6 +268,55 @@ public final class IntegrationChecks {
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){KingdomWands.LOG.error("Could not write report",e);}
             KingdomWands.LOG.info("KINGDOM_WANDS_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
         }
+    }
+    private static void expansionChecks(ServerLevel level,FakePlayer player){
+        var wand=KingdomWands.FROST.get();var stack=wand.getDefaultInstance();
+        var tag=new CompoundTag();tag.putString("external","keep");stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
+        check(wand.level(stack,Spell.FROST_NEEDLE)==1,"unmodified wands start at level I");
+        wand.learn(stack,Spell.FROST_NEEDLE,5);wand.select(stack,wand.spells.indexOf(Spell.FROST_NEEDLE));
+        check(wand.level(stack)==5,"wand remembers selected spell level V");
+        check(stack.get(DataComponents.CUSTOM_DATA).copyTag().getString("external").equals("keep"),"level upgrades preserve unrelated item data");
+        var restored=ItemStack.parseOptional(level.registryAccess(),(CompoundTag)stack.save(level.registryAccess()));
+        check(wand.level(restored,Spell.FROST_NEEDLE)==5,"wand rank survives serialization");
+        boolean rejected=false;try{wand.learn(stack,Spell.SOUL_CANNON,5);}catch(IllegalArgumentException expected){rejected=true;}check(rejected&&wand.level(stack,Spell.FROST_NEEDLE)==5,"foreign spell cannot replace own rank");
+        SpellEngine.clear();resetPlayer(player);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+        var nativeSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.FROST_NEEDLE));
+        Zombie victim=spawn(level,0,81,6);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
+        SpellEngine.castFromSpellbook(player,Spell.FROST_NEEDLE,2,nativeSpell.getDamageSource(player),80,true);
+        for(int i=0;i<30;i++)SpellEngine.tick();
+        check(Math.abs(victim.getHealth()-12)<.01,"level V projectile deals twice level I direct damage (health="+victim.getHealth()+")");
+        check(victim.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)&&victim.getTicksFrozen()>0,"Frost attacks apply chill and freeze buildup");victim.discard();
+        SpellEngine.clear();resetPlayer(player);player.setHealth(5);
+        var healSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.MENDING_LIGHT));
+        check(SpellEngine.castFromSpellbook(player,Spell.MENDING_LIGHT,2,healSpell.getDamageSource(player),80,true),"level V remedy casts");
+        check(player.getHealth()==17,"level V remedy restores twelve health without equipment");
+        for(Spell execute:List.of(Spell.CRIMSON_HARVEST,Spell.SHATTER,Spell.MEMORY_FRACTURE)){
+            SpellEngine.clear();resetPlayer(player);victim=spawn(level,0,81,5);
+            if(execute==Spell.CRIMSON_HARVEST){victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);victim.setHealth(30);}
+            if(execute==Spell.SHATTER)victim.setTicksFrozen(150);
+            if(execute==Spell.MEMORY_FRACTURE)victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.DARKNESS,60));
+            float before=victim.getHealth();SpellEngine.cast(player,execute);
+            check(!victim.isAlive()||Math.abs(before-victim.getHealth()-execute.damage*1.5)<.01,execute+" gains its conditional fifty percent bonus");victim.discard();
+        }
+        SpellEngine.clear();resetPlayer(player);player.setHealth(5);victim=spawn(level,0,81,5);victim.setHealth(6);
+        SpellEngine.cast(player,Spell.CRIMSON_HARVEST);check(player.getHealth()==7,"crimson harvest restores two health after a killing hit");victim.discard();
+        SpellEngine.clear();resetPlayer(player);
+        var wardSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.DAWN_WARD));
+        SpellEngine.castFromSpellbook(player,Spell.DAWN_WARD,2,wardSpell.getDamageSource(player),240,true);
+        for(int t=0;t<159;t++)SpellEngine.tick();check(SpellEngine.activeCount()==1,"level V ward remains active for nearly eight seconds");
+        SpellEngine.tick();SpellEngine.tick();check(SpellEngine.activeCount()==0,"extended level V ward expires after eight seconds");
+        SpellEngine.clear();resetPlayer(player);player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.POISON,200));player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.WITHER,200));
+        check(SpellEngine.cast(player,Spell.TOXIC_MOLT),"toxic molt casts");
+        check(!player.hasEffect(MobEffects.POISON)&&!player.hasEffect(MobEffects.WITHER)&&player.hasEffect(MobEffects.MOVEMENT_SPEED),"toxic molt cleanses both toxins and adds mobility");
+        SpellEngine.clear();resetPlayer(player);player.setHealth(2);
+        check(!SpellEngine.canStart(player,Spell.SANGUINE_PACT),"blood pact cannot spend the caster's last heart");
+        SpellEngine.clear();resetPlayer(player);
+        for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(0,y,3),Blocks.STONE.defaultBlockState());
+        var destination=SpellActions.blinkDestination(player,Spell.ARCANE_STEP,8);
+        check(SpellEngine.cast(player,Spell.ARCANE_STEP),"blink finds a clear position before cover");
+        check(destination!=null&&destination.z>0&&destination.z<3&&level.noCollision(player,player.getBoundingBox().move(destination.subtract(player.position()))),"blink stops before walls with a collision-free destination");
+        for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(0,y,3),Blocks.AIR.defaultBlockState());
+        SpellEngine.clear();resetPlayer(player);
     }
     private static void schoolChecks(ServerLevel level,FakePlayer player){
         check(Arrays.stream(Spell.Theme.values()).map(IronsCompat::school).distinct().count()==9,"all nine native Iron schools are represented");
@@ -365,11 +426,11 @@ public final class IntegrationChecks {
         hidden.discard();SpellEngine.clear();
     }
     private static void audioChecks(ServerLevel level){
-        boolean oldFeedback=KingdomWands.CASTER_IMPACTS.get();double oldVolume=KingdomWands.SOUND_VOLUME.get(),oldImpact=KingdomWands.IMPACT_VOLUME.get();
+        boolean oldFeedback=ArcanaConfig.CASTER_IMPACTS.get();double oldVolume=ArcanaConfig.SOUND_VOLUME.get(),oldImpact=ArcanaConfig.IMPACT_VOLUME.get();
         var player=new AudioPlayer(level,new GameProfile(UUID.fromString("52182f8d-8d17-4310-b1e1-34954061e635"),"AudioTest"));
         player.setGameMode(GameType.SURVIVAL);
         try{
-            KingdomWands.SOUND_VOLUME.set(1.0);KingdomWands.IMPACT_VOLUME.set(1.0);KingdomWands.CASTER_IMPACTS.set(true);
+            ArcanaConfig.SOUND_VOLUME.set(1.0);ArcanaConfig.IMPACT_VOLUME.set(1.0);ArcanaConfig.CASTER_IMPACTS.set(true);
             SpellEngine.clear();resetPlayer(player);Zombie distant=spawn(level,0,81,24);
             check(SpellEngine.cast(player,Spell.SPARK),"audio test projectile casts");int casts=player.heard.size();
             check(casts==2,"cast emits two distinct sound layers to its caster");
@@ -377,23 +438,23 @@ public final class IntegrationChecks {
             check(distant.getHealth()<20,"audio test projectile reaches distant target");
             check(player.heard.subList(casts,player.heard.size()).contains(SpellAudio.impactId(Spell.Theme.MAGIC)),"caster receives impact cue beyond normal sound range");
             check(player.heard.size()==casts+2,"direct hit and burst do not double-play impact audio");distant.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.CASTER_IMPACTS.set(false);
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.CASTER_IMPACTS.set(false);
             Zombie positional=spawn(level,0,81,24);check(SpellEngine.cast(player,Spell.SPARK),"positional-only audio test casts");casts=player.heard.size();
             for(int t=0;t<32;t++)SpellEngine.tick();
             check(positional.getHealth()<20&&player.heard.size()==casts,"caster feedback option disables direct impact delivery");positional.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.CASTER_IMPACTS.set(true);KingdomWands.SOUND_VOLUME.set(0.0);
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.CASTER_IMPACTS.set(true);ArcanaConfig.SOUND_VOLUME.set(0.0);
             Zombie muted=spawn(level,0,81,6);check(SpellEngine.cast(player,Spell.SPARK),"muted audio test casts");for(int t=0;t<32;t++)SpellEngine.tick();
             check(muted.getHealth()<20&&player.heard.isEmpty(),"soundVolume zero mutes casts and impacts without changing damage");muted.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.SOUND_VOLUME.set(1.0);KingdomWands.IMPACT_VOLUME.set(0.0);
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.SOUND_VOLUME.set(1.0);ArcanaConfig.IMPACT_VOLUME.set(0.0);
             Zombie noImpact=spawn(level,0,81,6);check(SpellEngine.cast(player,Spell.SPARK),"impact-volume audio test casts");casts=player.heard.size();
             for(int t=0;t<32;t++)SpellEngine.tick();check(noImpact.getHealth()<20&&player.heard.size()==casts,"impactVolume zero preserves cast audio and mutes hits");noImpact.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.IMPACT_VOLUME.set(1.0);
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.IMPACT_VOLUME.set(1.0);
             Zombie a=spawn(level,0,81,3),b=spawn(level,2,81,4),c=spawn(level,-2,81,4);
             check(SpellEngine.cast(player,Spell.SOUL_AURA),"area audio test casts");casts=player.heard.size();SpellEngine.tick();
             check(a.getHealth()<20&&b.getHealth()<20&&c.getHealth()<20,"area audio test affects three targets");
             check(player.heard.size()==casts+2,"area hit audio is limited to one layered impact per cast");a.discard();b.discard();c.discard();
         }finally{
-            SpellEngine.clear();KingdomWands.CASTER_IMPACTS.set(oldFeedback);KingdomWands.SOUND_VOLUME.set(oldVolume);KingdomWands.IMPACT_VOLUME.set(oldImpact);
+            SpellEngine.clear();ArcanaConfig.CASTER_IMPACTS.set(oldFeedback);ArcanaConfig.SOUND_VOLUME.set(oldVolume);ArcanaConfig.IMPACT_VOLUME.set(oldImpact);
         }
     }
     /** Records the server's direct audio calls; a connected graphical client is still needed for listening tests. */

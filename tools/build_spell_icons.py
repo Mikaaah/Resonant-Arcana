@@ -6,15 +6,53 @@ ROOT=Path(__file__).resolve().parents[1]
 PALETTES={'MAGIC':'#c570ff','BLOOD':'#ee365d','POISON':'#87e745','FIRE':'#ff8b32','THUNDER':'#7de8ff','DARK':'#9b6be8','GRAVITY':'#ed8aff','SOUL':'#48e9d9','HOLY':'#ffe5a1','ICE':'#a6e7ff'}
 
 def main():
-    source=(ROOT/'src/main/java/nl/townsandkingdoms/kingdomwands/Spell.java').read_text()
-    spells=re.findall(r'^    (\w+)\("([^"]+)", Kind\.(\w+), Theme\.(\w+)',source,re.M)
+    catalogue=json.loads((ROOT/'src/main/resources/assets/kingdomwands/catalogue.json').read_text())
+    spells=[(name,entry['title'],entry['kind'],entry['theme']) for name,entry in catalogue['spells'].items()]
     folder=ROOT/'src/main/resources/assets/kingdomwands/textures/gui/spell_icons';folder.mkdir(parents=True,exist_ok=True)
     langfile=ROOT/'src/main/resources/assets/kingdomwands/lang/en_us.json';lang=json.loads(langfile.read_text())
     for index,(name,title,kind,theme) in enumerate(spells):
         ident={'EMPIRE_SPARK':'arcane_strike','EMPIRE_COMET':'astral_comet','EMPIRE_PULSE':'arcane_repulse'}.get(name,name.lower())
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind=='SONIC':
+        if kind in ('BLINK','DASH'):
+            for i in range(3):line([(18+i*23,94-i*14),(45+i*23,64-i*14),(31+i*23,43-i*14)],8)
+            line([(72,99),(108,63),(83,49)],5,white)
+        elif kind in ('SWEEP','EXECUTE'):
+            for i in range(3):d.arc((10+i*8,15+i*6,116-i*4,112-i*8),205,345,fill=white if i==0 else c,width=8-i)
+            line([(36,91),(89,28)],6)
+        elif kind=='SERPENT':
+            points=[(22+i*2.4,98-i*1.7+math.sin(i*.35)*12) for i in range(35)];line(points,12)
+            d.polygon([(94,20),(113,28),(94,42),(87,31)],fill=white)
+        elif kind=='FAN':
+            for off in (-28,0,28):line([(64,107),(64+off,25)],9);d.ellipse((58+off,19,70+off,31),fill=white)
+        elif kind=='RAIN':
+            for x,y in ((25,45),(55,24),(89,43),(46,86),(91,92)):line([(x+8,y-18),(x-5,y+16)],7)
+            d.arc((16,82,114,120),180,355,fill=white,width=5)
+        elif kind in ('BUFF','CLEANSE','REMEDY','HYMN'):
+            d.polygon([(64,15),(105,35),(98,82),(64,114),(30,82),(23,35)],outline=c,width=7)
+            line([(64,40),(64,85)],9,white);line([(43,62),(85,62)],9,white)
+        elif kind=='TOTEM':
+            line([(64,111),(64,37)],10);d.polygon([(64,13),(90,38),(64,63),(38,38)],fill=c)
+            d.ellipse((54,28,74,48),fill=white);d.arc((13,79,115,118),0,360,fill=c,width=5)
+        elif kind in ('PILLAR','PIERCING_ORB'):
+            if kind=='PIERCING_ORB':
+                for x,col in ((39,'#5b9bff'),(89,'#ff537e')):d.ellipse((x-20,44,x+20,84),fill=col)
+                d.ellipse((43,43,85,85),fill=white);d.arc((12,17,116,112),195,350,fill=c,width=8)
+            else:
+                for x in (45,64,83):line([(x,12),(x,101)],6,white if x==64 else c)
+                d.ellipse((22,91,107,114),outline=c,width=7)
+        elif kind in ('TETHER','RICOCHET'):
+            line([(20,99),(47,52),(80,75),(108,23)],8)
+            for x,y in ((20,99),(47,52),(80,75),(108,23)):d.ellipse((x-6,y-6,x+6,y+6),fill=white)
+        elif kind in ('ORBIT','DOMAIN','TRAP','GAZE','CONE_CHANNEL'):
+            if kind=='GAZE':
+                d.ellipse((17,43,111,88),outline=c,width=8);d.ellipse((52,47,76,83),fill=white)
+            elif kind=='CONE_CHANNEL':
+                for off in (-26,0,26):line([(20,105),(91+off*.4,31+off)],9)
+            else:
+                d.ellipse((17,30,111,98),outline=c,width=7)
+                for x,y in ((26,84),(68,32),(104,81)):d.polygon([(x,y-17),(x+9,y),(x,y+17),(x-9,y)],fill=white)
+        elif kind=='SONIC':
             d.ellipse((12,49,34,79),fill=white)
             for i in range(3):d.arc((20+i*16,14-i*2,72+i*16,114+i*2),285,75,fill=c,width=7)
         elif kind=='HEAL':
@@ -70,8 +108,9 @@ def main():
         glow=im.filter(ImageFilter.GaussianBlur(4));im=Image.alpha_composite(glow,im)
         im.resize((32,32),Image.Resampling.LANCZOS).save(folder/(ident+'.png'))
         lang['spell.kingdomwands.'+ident]=title
-    lang['subtitles.kingdomwands.cast']='Magic rushes'
-    lang['subtitles.kingdomwands.impact']='Spell strikes'
+    lang['key.kingdomwands.select']='Choose wand spell'
+    lang.pop('subtitles.kingdomwands.cast',None)
+    lang.pop('subtitles.kingdomwands.impact',None)
     langfile.write_text(json.dumps(lang,indent=2)+'\n');print('Generated',len(spells),'spell icons and translations.')
 
 if __name__=='__main__':main()

@@ -1,129 +1,2148 @@
-# Spells
+# Spell reference
 
-Base values at level I, before equipment, cast-speed modifiers and configuration. Damage is per hit or pulse. Fields and storms pulse up to five times; Cinder Vortex pulses four times. Related healing, ward, stun and restraint spells share recovery.
+**120 spells · 10 wands · 12 spells per wand.**
 
-Most spells have five levels; spells with a base windup of at least one second have three. DOOM has one Legendary level. Each level above I adds 25% base spell power. Wands cast at level I; spellbooks support higher levels.
+Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
+All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.
+
+Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.
+
+Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. No spell edits terrain or intentionally loads new chunks.
+
+## Wand index
+
+| Wand | School | Spell kit |
+| --- | --- | --- |
+| [Arcane Wand](#empire-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step |
+| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest |
+| [Cinder Wand](#celcrius-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath |
+| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom |
+| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet |
+| [Rift Wand](#mephi-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear |
+| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture |
+| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze |
+| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn |
+| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero |
+
+## Shared recovery
+
+Healing and cleansing spells share a recovery group. Blood Ward, Echo Ward and Dawn Ward share another; stuns, restraints and life drains each share their own group. Swapping wands or switching to a spellbook does not bypass the recovery already applied. Other cooldowns are per spell and player, rather than per item.
+
+## Secondary effects and level scaling
+
+- Fire hits ignite for three seconds. Nature hits poison for four seconds. Dark shadow hits apply Weakness I for three seconds; Nightfall also applies Darkness.
+- Frost hits apply Slowness I for two seconds and add 40 freezing ticks, capped at 240. Freeze buildup is not a guaranteed stun and can decay or be resisted normally. Absolute Zero additionally imposes Slowness IV and at least 160 freezing ticks.
+- Ward, restraint, tether, blessing, cleansing-speed and gaze durations scale with spell power, capped at twice their base duration. Resistance and Strength amplifiers remain fixed. Absorption scales with spell power, capped at 16 health, and refreshes rather than adding unlimited shields.
+- Blink range gains up to four blocks from spell power, reaching the extra four at level V without gear. The destination must be clear, loaded, and outside lava. Blinks follow the caster’s line of sight; they do not search for a safe floor, so aiming into open air still requires care.
+- Siphons restore 40% of health actually removed, capped at 2 health times spell power, before the healing multiplier. They provide no healing when damage is blocked. Projectile fans and volleys list damage per projectile; normal hit immunity prevents treating all overlapping projectiles as guaranteed combined damage.
+
+## Heavy cast timing
+
+Windup is the native Iron’s cast bar. Some spells also have a release phase: Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
+
+<a id="empire-wand"></a>
 ## Arcane Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Spark | 0s | 3 | 1 | 32 | 0.6s |
-| Arcane Strike | 0.25s | 5 | 2 | 24 | 1.75s |
-| Mind Haze | 0.4s | 0 | 1 | 24 | 5s |
-| Stun | 0.4s | 1 | 1 | 24 | 5s |
-| Arcane Bind | 0.6s | 0 | 1 | 24 | 8s |
-| Astral Comet | 1s | 14 | 4.5 | 48 | 6s |
-| Arcane Repulse | 0.5s | 8 | 7 | 0 | 6s |
-| Launch | 0s | 2 | 1 | 24 | 3.5s |
-| Leap | 0s | 0 | 0 | 0 | 4s |
-| Arcane Volley | 0.5s | 3 | 1 | 32 | 4.5s |
-| Evoker’s Edict | 2.4s | 26 | 1.6 per fang | 24 | 16s |
+**Evocation school.** Saved item ID: `kingdomwands:empire_wand`.
 
+### Spark
+
+A travelling projectile that stops at walls.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 0.6s · **Range:** 32 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 15 |
+| II | 3.75 | — | 18 |
+| III | 4.5 | — | 21 |
+| IV | 5.25 | — | 24 |
+| V | 6 | — | 27 |
+
+Spell ID: `kingdomwands:spark`. Inspect any rank in game with `/resonantarcana spell spark <level>`.
+
+### Arcane Strike
+
+Strike the living target you aim at.
+
+**Role:** Attack · **Cast:** 0.25s · **Cooldown:** 1.75s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 21 |
+| II | 6.25 | — | 25 |
+| III | 7.5 | — | 29 |
+| IV | 8.75 | — | 33 |
+| V | 10 | — | 37 |
+
+Spell ID: `kingdomwands:arcane_strike`. Inspect any rank in game with `/resonantarcana spell arcane_strike <level>`.
+
+### Mind Haze
+
+Briefly blind and disorient your target.
+
+**Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 18 |
+| II | — | — | 21 |
+| III | — | — | 24 |
+| IV | — | — | 27 |
+| V | — | — | 30 |
+
+Spell ID: `kingdomwands:confuse`. Inspect any rank in game with `/resonantarcana spell confuse <level>`.
+
+### Stun
+
+Slow and weaken your target.
+
+**Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 1 | — | 20 |
+| II | 1.25 | — | 24 |
+| III | 1.5 | — | 28 |
+| IV | 1.75 | — | 32 |
+| V | 2 | — | 36 |
+
+Spell ID: `kingdomwands:stun`. Inspect any rank in game with `/resonantarcana spell stun <level>`.
+
+### Arcane Bind
+
+Hold a target briefly; cover breaks the tether.
+
+**Role:** Control · **Cast:** 0.6s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 24 |
+| II | — | — | 28 |
+| III | — | — | 32 |
+| IV | — | — | 36 |
+| V | — | — | 40 |
+
+**Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
+
+Spell ID: `kingdomwands:capture`. Inspect any rank in game with `/resonantarcana spell capture <level>`.
+
+### Astral Comet
+
+A slow projectile with an area impact.
+
+**Role:** Attack · **Cast:** 1s · **Cooldown:** 6s · **Range:** 48 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 14 | — | 45 |
+| II | 17.5 | — | 54 |
+| III | 21 | — | 63 |
+| IV | 24.5 | — | 72 |
+| V | 28 | — | 81 |
+
+Spell ID: `kingdomwands:astral_comet`. Inspect any rank in game with `/resonantarcana spell astral_comet <level>`.
+
+### Arcane Repulse
+
+An expanding shock ring around you.
+
+**Role:** Attack · **Cast:** 0.5s · **Cooldown:** 6s · **Range:** 0 blocks · **Radius / width:** 7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 36 |
+| II | 10 | — | 43 |
+| III | 12 | — | 50 |
+| IV | 14 | — | 57 |
+| V | 16 | — | 64 |
+
+Spell ID: `kingdomwands:arcane_repulse`. Inspect any rank in game with `/resonantarcana spell arcane_repulse <level>`.
+
+### Launch
+
+Launch your target upwards.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 3.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 19 |
+| II | 2.5 | — | 22 |
+| III | 3 | — | 25 |
+| IV | 3.5 | — | 28 |
+| V | 4 | — | 31 |
+
+Spell ID: `kingdomwands:launch`. Inspect any rank in game with `/resonantarcana spell launch <level>`.
+
+### Leap
+
+Propel yourself forwards and upwards.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 4s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 16 |
+| II | — | — | 19 |
+| III | — | — | 22 |
+| IV | — | — | 25 |
+| V | — | — | 28 |
+
+Spell ID: `kingdomwands:leap`. Inspect any rank in game with `/resonantarcana spell leap <level>`.
+
+### Arcane Volley
+
+Fire three staggered arcane projectiles.
+
+**Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 32 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 23 |
+| II | 3.75 | — | 27 |
+| III | 4.5 | — | 31 |
+| IV | 5.25 | — | 35 |
+| V | 6 | — | 39 |
+
+**Delivery:** up to 3 projectiles; the table gives the value for each one.
+
+**Base active phase:** 2.2s.
+
+Spell ID: `kingdomwands:arcane_volley`. Inspect any rank in game with `/resonantarcana spell arcane_volley <level>`.
+
+### Evoker's Edict
+
+Send three staggered rows of spectral fangs along your aim. Each enemy takes one full hit.
+
+**Role:** Attack · **Cast:** 2.4s · **Cooldown:** 16s · **Range:** 24 blocks · **Radius / width:** 1.6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 26 | — | 80 |
+| II | 32.5 | — | 90 |
+| III | 39 | — | 100 |
+| IV | 45.5 | — | 110 |
+| V | 52 | — | 120 |
+
+Spell ID: `kingdomwands:evokers_edict`. Inspect any rank in game with `/resonantarcana spell evokers_edict <level>`.
+
+### Arcane Step
+
+Blink along your aim to a clear, loaded position. Range grows by 1 block per additional spell level, up to 12 blocks.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 5s · **Range:** 8 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 24 |
+| II | — | — | 28 |
+| III | — | — | 32 |
+| IV | — | — | 36 |
+| V | — | — | 40 |
+
+Spell ID: `kingdomwands:arcane_step`. Inspect any rank in game with `/resonantarcana spell arcane_step <level>`.
+
+<a id="blood-wand"></a>
 ## Blood Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Blood Wave | 0.35s | 5 | 1.8 | 28 | 3s |
-| Crimson Strike | 0.25s | 5 | 2 | 24 | 1.75s |
-| Crimson Rupture | 1s | 12 | 5 | 24 | 7s |
-| Hemorrhagic Shock | 0.4s | 2 | 1 | 24 | 5s |
-| Blood Ward | 0.5s | 0 | 3 | 0 | 9s |
-| Sanguine Drain | 0.7s | 5 | 1 | 24 | 5s |
-| Blood Lance | 0.5s | 9 | 0.6 | 24 | 4.5s |
+**Blood school.** Saved item ID: `kingdomwands:blood_wand`.
 
+### Blood Wave
+
+A wide travelling arc, hitting each enemy once.
+
+**Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 24 |
+| II | 6.25 | — | 28 |
+| III | 7.5 | — | 32 |
+| IV | 8.75 | — | 36 |
+| V | 10 | — | 40 |
+
+Spell ID: `kingdomwands:blood_wave`. Inspect any rank in game with `/resonantarcana spell blood_wave <level>`.
+
+### Crimson Strike
+
+Strike the living target you aim at.
+
+**Role:** Attack · **Cast:** 0.25s · **Cooldown:** 1.75s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 21 |
+| II | 6.25 | — | 25 |
+| III | 7.5 | — | 29 |
+| IV | 8.75 | — | 33 |
+| V | 10 | — | 37 |
+
+Spell ID: `kingdomwands:blood_spark`. Inspect any rank in game with `/resonantarcana spell blood_spark <level>`.
+
+### Crimson Rupture
+
+An area burst centred on your aim.
+
+**Role:** Attack · **Cast:** 1s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 46 |
+| II | 15 | — | 55 |
+| III | 18 | — | 64 |
+| IV | 21 | — | 73 |
+| V | 24 | — | 82 |
+
+Spell ID: `kingdomwands:blood_explode`. Inspect any rank in game with `/resonantarcana spell blood_explode <level>`.
+
+### Hemorrhagic Shock
+
+Slow and weaken your target.
+
+**Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 22 |
+| II | 2.5 | — | 26 |
+| III | 3 | — | 30 |
+| IV | 3.5 | — | 34 |
+| V | 4 | — | 38 |
+
+Spell ID: `kingdomwands:blood_stun`. Inspect any rank in game with `/resonantarcana spell blood_stun <level>`.
+
+### Blood Ward
+
+Deflect incoming hostile projectiles for 4 seconds at level I. Higher spell power extends the duration, up to 8 seconds.
+
+**Role:** Defense · **Cast:** 0.5s · **Cooldown:** 9s · **Range:** 0 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 26 |
+| II | — | — | 31 |
+| III | — | — | 36 |
+| IV | — | — | 41 |
+| V | — | — | 46 |
+
+**Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
+
+Spell ID: `kingdomwands:blood_block`. Inspect any rank in game with `/resonantarcana spell blood_block <level>`.
+
+### Sanguine Drain
+
+Damage a visible aimed target and restore 40% of health actually removed, capped at 2 health at level I. Healing scales with spell power.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 28 |
+| II | 6.25 | — | 33 |
+| III | 7.5 | — | 38 |
+| IV | 8.75 | — | 43 |
+| V | 10 | — | 48 |
+
+Spell ID: `kingdomwands:sanguine_drain`. Inspect any rank in game with `/resonantarcana spell sanguine_drain <level>`.
+
+### Blood Lance
+
+An instant piercing line through visible enemies.
+
+**Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 24 blocks · **Radius / width:** 0.6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 35 |
+| II | 11.25 | — | 42 |
+| III | 13.5 | — | 49 |
+| IV | 15.75 | — | 56 |
+| V | 18 | — | 63 |
+
+Spell ID: `kingdomwands:blood_lance`. Inspect any rank in game with `/resonantarcana spell blood_lance <level>`.
+
+### Blood Needles
+
+Release five divergent blood needles. Damage is per projectile; projectiles stop at solid cover.
+
+**Role:** Attack · **Cast:** 0.4s · **Cooldown:** 4s · **Range:** 28 blocks · **Radius / width:** 0.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 28 |
+| II | 5 | — | 33 |
+| III | 6 | — | 38 |
+| IV | 7 | — | 43 |
+| V | 8 | — | 48 |
+
+**Delivery:** up to 5 projectiles; the table gives the value for each one.
+
+Spell ID: `kingdomwands:blood_needles`. Inspect any rank in game with `/resonantarcana spell blood_needles <level>`.
+
+### Blood Reap
+
+Sweep a crimson crescent across a 120-degree forward arc. Each visible enemy is hit once.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 5.5s · **Range:** 6 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 34 |
+| II | 11.25 | — | 40 |
+| III | 13.5 | — | 46 |
+| IV | 15.75 | — | 52 |
+| V | 18 | — | 58 |
+
+Spell ID: `kingdomwands:blood_reap`. Inspect any rank in game with `/resonantarcana spell blood_reap <level>`.
+
+### Crimson Tether
+
+Tether an aimed enemy for 3 seconds, gently pulling it and dealing three damage pulses. Cover or moving out of range breaks the link.
+
+**Role:** Control · **Cast:** 0.8s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 42 |
+| II | 2.5 | — | 50 |
+| III | 3 | — | 58 |
+| IV | 3.5 | — | 66 |
+| V | 4 | — | 74 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
+
+Spell ID: `kingdomwands:crimson_tether`. Inspect any rank in game with `/resonantarcana spell crimson_tether <level>`.
+
+### Sanguine Pact
+
+Spend 2 health to gain 4 absorption health and Strength I for 6 seconds at level I. Requires more than 2 current health. Absorption and duration grow with spell power.
+
+**Role:** Defense · **Cast:** 0.7s · **Cooldown:** 12s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 40 |
+| II | — | — | 48 |
+| III | — | — | 56 |
+| IV | — | — | 64 |
+| V | — | — | 72 |
+
+**Base active phase:** 6s. Duration at levels I–V without gear: 6s, 7.5s, 9s, 10.5s, 12s.
+
+**Absorption at levels I–V:** 4, 5, 6, 7, 8 health.
+
+Spell ID: `kingdomwands:sanguine_pact`. Inspect any rank in game with `/resonantarcana spell sanguine_pact <level>`.
+
+### Crimson Harvest
+
+Strike an aimed enemy. Deal 50% more direct damage below 35% maximum health; a killing hit restores up to 2 health at level I.
+
+**Role:** Attack · **Cast:** 1.1s · **Cooldown:** 9s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 48 |
+| II | 15 | — | 57 |
+| III | 18 | — | 66 |
+| IV | 21 | — | 75 |
+| V | 24 | — | 84 |
+
+**Conditional direct damage at levels I–V:** 18, 22.5, 27, 31.5, 36.
+
+Spell ID: `kingdomwands:crimson_harvest`. Inspect any rank in game with `/resonantarcana spell crimson_harvest <level>`.
+
+<a id="celcrius-wand"></a>
 ## Cinder Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Fire Comet | 1s | 12 | 4.5 | 44 | 6s |
-| Cinder Vortex | 1.25s | 7 | 3 | 30 | 6s |
-| Flame Wave | 0.35s | 5 | 1.8 | 28 | 3s |
-| Cinder Surge | 0.8s | 9 | 9 | 0 | 7.5s |
-| Flamethrower | 0.4s | 2 | 1.4 | 12 | 5s |
-| Fireball | 0s | 6 | 2 | 40 | 2.5s |
-| Ignite | 0.25s | 2 | 1 | 24 | 2.5s |
-| Ember Veil | 0.5s | 2 | 5 | 0 | 7.5s |
-| Solar Cataclysm | 3s | 32 | 6 | 40 | 20s |
+**Fire school.** Saved item ID: `kingdomwands:celcrius_wand`.
 
+### Fire Comet
+
+A slow projectile with an area impact. Fire hits ignite for three seconds.
+
+**Role:** Attack · **Cast:** 1s · **Cooldown:** 6s · **Range:** 44 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 45 |
+| II | 15 | — | 54 |
+| III | 18 | — | 63 |
+| IV | 21 | — | 72 |
+| V | 24 | — | 81 |
+
+Spell ID: `kingdomwands:fire_comet`. Inspect any rank in game with `/resonantarcana spell fire_comet <level>`.
+
+### Cinder Vortex
+
+A stationary vortex dealing repeated area damage. Fire hits ignite for three seconds.
+
+**Role:** Sustain · **Cast:** 1.25s · **Cooldown:** 6s · **Range:** 30 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 7 | — | 34 |
+| II | 8.75 | — | 40 |
+| III | 10.5 | — | 46 |
+| IV | 12.25 | — | 52 |
+| V | 14 | — | 58 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 2s.
+
+Spell ID: `kingdomwands:fire_twister`. Inspect any rank in game with `/resonantarcana spell fire_twister <level>`.
+
+### Flame Wave
+
+A wide travelling arc, hitting each enemy once. Fire hits ignite for three seconds.
+
+**Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 24 |
+| II | 6.25 | — | 28 |
+| III | 7.5 | — | 32 |
+| IV | 8.75 | — | 36 |
+| V | 10 | — | 40 |
+
+Spell ID: `kingdomwands:flame_wave`. Inspect any rank in game with `/resonantarcana spell flame_wave <level>`.
+
+### Cinder Surge
+
+An expanding shock ring around you. Fire hits ignite for three seconds.
+
+**Role:** Attack · **Cast:** 0.8s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 41 |
+| II | 11.25 | — | 49 |
+| III | 13.5 | — | 57 |
+| IV | 15.75 | — | 65 |
+| V | 18 | — | 73 |
+
+Spell ID: `kingdomwands:flame_shock_wave`. Inspect any rank in game with `/resonantarcana spell flame_shock_wave <level>`.
+
+### Flamethrower
+
+A short stream following your current aim. Fire hits ignite for three seconds.
+
+**Role:** Sustain · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 12 blocks · **Radius / width:** 1.4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 22 |
+| II | 2.5 | — | 26 |
+| III | 3 | — | 30 |
+| IV | 3.5 | — | 34 |
+| V | 4 | — | 38 |
+
+**Delivery:** up to 6 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 1.5s.
+
+Spell ID: `kingdomwands:flame_thrower`. Inspect any rank in game with `/resonantarcana spell flame_thrower <level>`.
+
+### Fireball
+
+A travelling projectile that stops at walls. Fire hits ignite for three seconds.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 2.5s · **Range:** 40 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 25 |
+| II | 7.5 | — | 30 |
+| III | 9 | — | 35 |
+| IV | 10.5 | — | 40 |
+| V | 12 | — | 45 |
+
+Spell ID: `kingdomwands:fireball`. Inspect any rank in game with `/resonantarcana spell fireball <level>`.
+
+### Ignite
+
+Strike the living target you aim at. Fire hits ignite for three seconds.
+
+**Role:** Attack · **Cast:** 0.25s · **Cooldown:** 2.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 17 |
+| II | 2.5 | — | 20 |
+| III | 3 | — | 23 |
+| IV | 3.5 | — | 26 |
+| V | 4 | — | 29 |
+
+Spell ID: `kingdomwands:ignite`. Inspect any rank in game with `/resonantarcana spell ignite <level>`.
+
+### Ember Veil
+
+A damaging aura that moves with you. Fire hits ignite for three seconds.
+
+**Role:** Sustain · **Cast:** 0.5s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 27 |
+| II | 2.5 | — | 32 |
+| III | 3 | — | 37 |
+| IV | 3.5 | — | 42 |
+| V | 4 | — | 47 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 3s.
+
+Spell ID: `kingdomwands:ember_veil`. Inspect any rank in game with `/resonantarcana spell ember_veil <level>`.
+
+### Solar Cataclysm
+
+Charge for three seconds, mark your aim, then drop a blazing meteor. Ceilings limit its drop. Fire hits ignite for three seconds.
+
+**Role:** Attack · **Cast:** 3s · **Cooldown:** 20s · **Range:** 40 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 32 | — | 90 |
+| II | 40 | — | 100 |
+| III | 48 | — | 110 |
+| IV | 56 | — | 120 |
+| V | 64 | — | 130 |
+
+Spell ID: `kingdomwands:solar_cataclysm`. Inspect any rank in game with `/resonantarcana spell solar_cataclysm <level>`.
+
+### Cinder Step
+
+Blink through a safe line of sight in a burst of embers. Range grows by 1 block per additional spell level.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 6s · **Range:** 8 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 28 |
+| II | — | — | 33 |
+| III | — | — | 38 |
+| IV | — | — | 43 |
+| V | — | — | 48 |
+
+Spell ID: `kingdomwands:cinder_step`. Inspect any rank in game with `/resonantarcana spell cinder_step <level>`.
+
+### Phoenix Rush
+
+Launch forwards in a rising rush and hit nearby enemies in a four-block launch burst. Slow Falling protects the short descent. Fire hits ignite for three seconds.
+
+**Role:** Mobility · **Cast:** 0.8s · **Cooldown:** 9s · **Range:** 8 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 45 |
+| II | 15 | — | 54 |
+| III | 18 | — | 63 |
+| IV | 21 | — | 72 |
+| V | 24 | — | 81 |
+
+Spell ID: `kingdomwands:phoenix_rush`. Inspect any rank in game with `/resonantarcana spell phoenix_rush <level>`.
+
+### Dragon Breath
+
+Exhale a broad cone of flame following your aim for 1.5 seconds. Three pulses can hit enemies that remain in the cone. Fire hits ignite for three seconds.
+
+**Role:** Sustain · **Cast:** 1s · **Cooldown:** 8s · **Range:** 10 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 50 |
+| II | 3.75 | — | 60 |
+| III | 4.5 | — | 70 |
+| IV | 5.25 | — | 80 |
+| V | 6 | — | 90 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 1.5s.
+
+Spell ID: `kingdomwands:dragon_breath`. Inspect any rank in game with `/resonantarcana spell dragon_breath <level>`.
+
+<a id="dark-wand"></a>
 ## Dark Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Shadow Bolt | 0s | 5 | 1.5 | 36 | 1.25s |
-| Umbral Seeker | 0.6s | 6 | 2 | 36 | 3.5s |
-| Umbral Wave | 0.35s | 5 | 2.5 | 28 | 3.25s |
-| Nightfall | 1s | 12 | 6 | 28 | 7s |
-| Dread Mark | 0.5s | 14 | 3.5 | 24 | 8s |
-| Umbral Veil | 0.5s | 3 | 8 | 0 | 8s |
-| DOOM | 4s | 72 | 12 | 32 | 60s |
+**Ender school.** Saved item ID: `kingdomwands:dark_wand`.
 
+### Shadow Bolt
+
+A travelling projectile that stops at walls. Ender shadow hits weaken for three seconds.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1.25s · **Range:** 36 blocks · **Radius / width:** 1.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 20 |
+| II | 6.25 | — | 24 |
+| III | 7.5 | — | 28 |
+| IV | 8.75 | — | 32 |
+| V | 10 | — | 36 |
+
+Spell ID: `kingdomwands:shadow_bolt`. Inspect any rank in game with `/resonantarcana spell shadow_bolt <level>`.
+
+### Umbral Seeker
+
+A projectile that follows your selected target. Ender shadow hits weaken for three seconds.
+
+**Role:** Attack · **Cast:** 0.6s · **Cooldown:** 3.5s · **Range:** 36 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 27 |
+| II | 7.5 | — | 32 |
+| III | 9 | — | 37 |
+| IV | 10.5 | — | 42 |
+| V | 12 | — | 47 |
+
+Spell ID: `kingdomwands:soul_seeker`. Inspect any rank in game with `/resonantarcana spell soul_seeker <level>`.
+
+### Umbral Wave
+
+A wide travelling arc, hitting each enemy once. Ender shadow hits weaken for three seconds.
+
+**Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 28 blocks · **Radius / width:** 2.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 24 |
+| II | 6.25 | — | 28 |
+| III | 7.5 | — | 32 |
+| IV | 8.75 | — | 36 |
+| V | 10 | — | 40 |
+
+Spell ID: `kingdomwands:dark_wave`. Inspect any rank in game with `/resonantarcana spell dark_wave <level>`.
+
+### Nightfall
+
+An area burst centred on your aim. Ender shadow hits weaken for three seconds.
+
+**Role:** Attack · **Cast:** 1s · **Cooldown:** 7s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 46 |
+| II | 15 | — | 55 |
+| III | 18 | — | 64 |
+| IV | 21 | — | 73 |
+| V | 24 | — | 82 |
+
+Spell ID: `kingdomwands:nightfall`. Inspect any rank in game with `/resonantarcana spell nightfall <level>`.
+
+### Dread Mark
+
+Curse a target; detonate after two seconds. Cover breaks the curse. Ender shadow hits weaken for three seconds.
+
+**Role:** Control · **Cast:** 0.5s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 3.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 14 | — | 52 |
+| II | 17.5 | — | 62 |
+| III | 21 | — | 72 |
+| IV | 24.5 | — | 82 |
+| V | 28 | — | 92 |
+
+**Base active phase:** 2s.
+
+Spell ID: `kingdomwands:shadow_cage`. Inspect any rank in game with `/resonantarcana spell shadow_cage <level>`.
+
+### Umbral Veil
+
+A damaging aura that moves with you. Ender shadow hits weaken for three seconds.
+
+**Role:** Sustain · **Cast:** 0.5s · **Cooldown:** 8s · **Range:** 0 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 30 |
+| II | 3.75 | — | 36 |
+| III | 4.5 | — | 42 |
+| IV | 5.25 | — | 48 |
+| V | 6 | — | 54 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 3s.
+
+Spell ID: `kingdomwands:soul_aura`. Inspect any rank in game with `/resonantarcana spell soul_aura <level>`.
+
+### DOOM
+
+Grow a vast black hole. It drags visible enemies inward, devours its core, then collapses. One damaging hit per enemy. Ender shadow hits weaken for three seconds.
+
+**Role:** Attack · **Cast:** 4s · **Cooldown:** 60s · **Range:** 32 blocks · **Radius / width:** 12 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 100 |
+
+**Base active phase:** 4.5s.
+
+Spell ID: `kingdomwands:doom`. Inspect any rank in game with `/resonantarcana spell doom <level>`.
+
+### Umbral Step
+
+Blink to a clear position and become invisible for one second. Higher levels extend blink range.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 7s · **Range:** 10 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 30 |
+| II | — | — | 36 |
+| III | — | — | 42 |
+| IV | — | — | 48 |
+| V | — | — | 54 |
+
+Spell ID: `kingdomwands:umbral_step`. Inspect any rank in game with `/resonantarcana spell umbral_step <level>`.
+
+### Dusk Cleave
+
+Carve a shadow crescent across the space in front of you, weakening enemies hit by the arc. Ender shadow hits weaken for three seconds.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 6s · **Range:** 6 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 36 |
+| II | 12.5 | — | 43 |
+| III | 15 | — | 50 |
+| IV | 17.5 | — | 57 |
+| V | 20 | — | 64 |
+
+Spell ID: `kingdomwands:dusk_cleave`. Inspect any rank in game with `/resonantarcana spell dusk_cleave <level>`.
+
+### Dread Effigy
+
+Place a spectral effigy at your aim for four seconds. Four pulses damage and weaken visible enemies near it. Ender shadow hits weaken for three seconds.
+
+**Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 55 |
+| II | 2.5 | — | 65 |
+| III | 3 | — | 75 |
+| IV | 3.5 | — | 85 |
+| V | 4 | — | 95 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:dread_effigy`. Inspect any rank in game with `/resonantarcana spell dread_effigy <level>`.
+
+### Veil of Night
+
+Gain invisibility and Speed I for six seconds at level I. Spell power extends the duration, up to twelve seconds.
+
+**Role:** Defense · **Cast:** 0.9s · **Cooldown:** 13s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 45 |
+| II | — | — | 54 |
+| III | — | — | 63 |
+| IV | — | — | 72 |
+| V | — | — | 81 |
+
+**Base active phase:** 6s. Duration at levels I–V without gear: 6s, 7.5s, 9s, 10.5s, 12s.
+
+Spell ID: `kingdomwands:veil_of_night`. Inspect any rank in game with `/resonantarcana spell veil_of_night <level>`.
+
+### Night Bloom
+
+Place a shadow trap. After a half-second arming period, an enemy within two blocks triggers one area explosion. Untriggered traps expire after four seconds. Ender shadow hits weaken for three seconds.
+
+**Role:** Control · **Cast:** 1.1s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 52 |
+| II | 20 | — | 62 |
+| III | 24 | — | 72 |
+| IV | 28 | — | 82 |
+| V | 32 | — | 92 |
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:night_bloom`. Inspect any rank in game with `/resonantarcana spell night_bloom <level>`.
+
+<a id="thunder-wand"></a>
 ## Thunder Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Thunder Bolt | 0s | 6 | 1.5 | 40 | 1.5s |
-| Chain Lightning | 0.6s | 6 | 6 | 28 | 6s |
-| Thunder Wave | 0.35s | 5 | 2.5 | 30 | 3.25s |
-| Storm Call | 1.6s | 5 | 6 | 28 | 12s |
-| Thunder Pulse | 0.7s | 10 | 9 | 0 | 7.5s |
-| Static Shock | 0.4s | 3 | 1 | 28 | 4s |
-| Lightning | 0.4s | 7 | 2 | 32 | 5s |
-| Smite | 1.4s | 18 | 5 | 32 | 10s |
-| Tempest Spear | 2.5s | 30 | 1.1 | 56 | 18s |
+**Lightning school.** Saved item ID: `kingdomwands:thunder_wand`.
 
+### Thunder Bolt
+
+A travelling projectile that stops at walls.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1.5s · **Range:** 40 blocks · **Radius / width:** 1.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 23 |
+| II | 7.5 | — | 27 |
+| III | 9 | — | 31 |
+| IV | 10.5 | — | 35 |
+| V | 12 | — | 39 |
+
+Spell ID: `kingdomwands:thunder_bolt`. Inspect any rank in game with `/resonantarcana spell thunder_bolt <level>`.
+
+### Chain Lightning
+
+Jump between up to five visible targets.
+
+**Role:** Attack · **Cast:** 0.6s · **Cooldown:** 6s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 32 |
+| II | 7.5 | — | 38 |
+| III | 9 | — | 44 |
+| IV | 10.5 | — | 50 |
+| V | 12 | — | 56 |
+
+Spell ID: `kingdomwands:chain_lightning`. Inspect any rank in game with `/resonantarcana spell chain_lightning <level>`.
+
+### Thunder Wave
+
+A wide travelling arc, hitting each enemy once.
+
+**Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 30 blocks · **Radius / width:** 2.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 24 |
+| II | 6.25 | — | 28 |
+| III | 7.5 | — | 32 |
+| IV | 8.75 | — | 36 |
+| V | 10 | — | 40 |
+
+Spell ID: `kingdomwands:thunder_wave`. Inspect any rank in game with `/resonantarcana spell thunder_wave <level>`.
+
+### Storm Call
+
+Call repeated lightning strikes over an area.
+
+**Role:** Sustain · **Cast:** 1.6s · **Cooldown:** 12s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 70 |
+| II | 6.25 | — | 80 |
+| III | 7.5 | — | 90 |
+| IV | 8.75 | — | 100 |
+| V | 10 | — | 110 |
+
+**Delivery:** up to 5 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `kingdomwands:storm_call`. Inspect any rank in game with `/resonantarcana spell storm_call <level>`.
+
+### Thunder Pulse
+
+An expanding shock ring around you.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 43 |
+| II | 12.5 | — | 51 |
+| III | 15 | — | 59 |
+| IV | 17.5 | — | 67 |
+| V | 20 | — | 75 |
+
+Spell ID: `kingdomwands:thunder_pulse`. Inspect any rank in game with `/resonantarcana spell thunder_pulse <level>`.
+
+### Static Shock
+
+Slow and weaken your target.
+
+**Role:** Control · **Cast:** 0.4s · **Cooldown:** 4s · **Range:** 28 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 22 |
+| II | 3.75 | — | 26 |
+| III | 4.5 | — | 30 |
+| IV | 5.25 | — | 34 |
+| V | 6 | — | 38 |
+
+Spell ID: `kingdomwands:static_shock`. Inspect any rank in game with `/resonantarcana spell static_shock <level>`.
+
+### Lightning
+
+Call a lightning strike at your aim.
+
+**Role:** Attack · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 32 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 7 | — | 32 |
+| II | 8.75 | — | 38 |
+| III | 10.5 | — | 44 |
+| IV | 12.25 | — | 50 |
+| V | 14 | — | 56 |
+
+Spell ID: `kingdomwands:lightning`. Inspect any rank in game with `/resonantarcana spell lightning <level>`.
+
+### Smite
+
+Call a lightning strike at your aim.
+
+**Role:** Attack · **Cast:** 1.4s · **Cooldown:** 10s · **Range:** 32 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 18 | — | 65 |
+| II | 22.5 | — | 75 |
+| III | 27 | — | 85 |
+| IV | 31.5 | — | 95 |
+| V | 36 | — | 105 |
+
+Spell ID: `kingdomwands:smite`. Inspect any rank in game with `/resonantarcana spell smite <level>`.
+
+### Tempest Spear
+
+Charge for 2.5 seconds, then fire a piercing storm lance. Solid cover stops the beam.
+
+**Role:** Attack · **Cast:** 2.5s · **Cooldown:** 18s · **Range:** 56 blocks · **Radius / width:** 1.1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 30 | — | 85 |
+| II | 37.5 | — | 95 |
+| III | 45 | — | 105 |
+| IV | 52.5 | — | 115 |
+| V | 60 | — | 125 |
+
+Spell ID: `kingdomwands:tempest_spear`. Inspect any rank in game with `/resonantarcana spell tempest_spear <level>`.
+
+### Storm Step
+
+Surge forwards and upwards with lightning afterimages. Slow Falling protects the short descent.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 5s · **Range:** 9 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 26 |
+| II | — | — | 31 |
+| III | — | — | 36 |
+| IV | — | — | 41 |
+| V | — | — | 46 |
+
+Spell ID: `kingdomwands:storm_step`. Inspect any rank in game with `/resonantarcana spell storm_step <level>`.
+
+### Thunderclap
+
+Release a broad thunder crescent and knock visible enemies away. Each target is hit once.
+
+**Role:** Attack · **Cast:** 0.9s · **Cooldown:** 7s · **Range:** 8 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 11 | — | 42 |
+| II | 13.75 | — | 50 |
+| III | 16.5 | — | 58 |
+| IV | 19.25 | — | 66 |
+| V | 22 | — | 74 |
+
+Spell ID: `kingdomwands:thunderclap`. Inspect any rank in game with `/resonantarcana spell thunderclap <level>`.
+
+### Arc Ricochet
+
+Throw a travelling lightning orb that can ricochet between three visible enemies, hitting each once.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 7s · **Range:** 32 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 40 |
+| II | 7.5 | — | 48 |
+| III | 9 | — | 56 |
+| IV | 10.5 | — | 64 |
+| V | 12 | — | 72 |
+
+Spell ID: `kingdomwands:arc_ricochet`. Inspect any rank in game with `/resonantarcana spell arc_ricochet <level>`.
+
+<a id="mephi-wand"></a>
 ## Rift Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Rift Bolt | 0s | 5 | 2 | 32 | 1.5s |
-| Rift Well | 1.25s | 3 | 5 | 28 | 9s |
-| Force Push | 0s | 2 | 1 | 24 | 3.25s |
-| Force Pull | 0s | 2 | 1 | 24 | 3.25s |
-| Suspension | 0.6s | 2 | 1 | 24 | 7s |
-| Singularity | 1.6s | 18 | 6 | 28 | 9s |
-| Event Horizon | 3.2s | 36 | 7 | 32 | 24s |
+**Ender school.** Saved item ID: `kingdomwands:mephi_wand`.
 
+### Rift Bolt
+
+A travelling projectile that stops at walls.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1.5s · **Range:** 32 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 21 |
+| II | 6.25 | — | 25 |
+| III | 7.5 | — | 29 |
+| IV | 8.75 | — | 33 |
+| V | 10 | — | 37 |
+
+Spell ID: `kingdomwands:gravity_bolt`. Inspect any rank in game with `/resonantarcana spell gravity_bolt <level>`.
+
+### Rift Well
+
+Draw nearby enemies into a gravity well.
+
+**Role:** Sustain · **Cast:** 1.25s · **Cooldown:** 9s · **Range:** 28 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 55 |
+| II | 3.75 | — | 65 |
+| III | 4.5 | — | 75 |
+| IV | 5.25 | — | 85 |
+| V | 6 | — | 95 |
+
+**Delivery:** up to 5 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `kingdomwands:gravity_well`. Inspect any rank in game with `/resonantarcana spell gravity_well <level>`.
+
+### Force Push
+
+Push the target away from you.
+
+**Role:** Control · **Cast:** instant · **Cooldown:** 3.25s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 18 |
+| II | 2.5 | — | 21 |
+| III | 3 | — | 24 |
+| IV | 3.5 | — | 27 |
+| V | 4 | — | 30 |
+
+Spell ID: `kingdomwands:force_push`. Inspect any rank in game with `/resonantarcana spell force_push <level>`.
+
+### Force Pull
+
+Pull the target towards you.
+
+**Role:** Control · **Cast:** instant · **Cooldown:** 3.25s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 18 |
+| II | 2.5 | — | 21 |
+| III | 3 | — | 24 |
+| IV | 3.5 | — | 27 |
+| V | 4 | — | 30 |
+
+Spell ID: `kingdomwands:force_pull`. Inspect any rank in game with `/resonantarcana spell force_pull <level>`.
+
+### Suspension
+
+Lift a target briefly, followed by a gentle descent.
+
+**Role:** Control · **Cast:** 0.6s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 26 |
+| II | 2.5 | — | 31 |
+| III | 3 | — | 36 |
+| IV | 3.5 | — | 41 |
+| V | 4 | — | 46 |
+
+**Base active phase:** 2s.
+
+Spell ID: `kingdomwands:gravity_choke`. Inspect any rank in game with `/resonantarcana spell gravity_choke <level>`.
+
+### Singularity
+
+An area burst centred on your aim.
+
+**Role:** Attack · **Cast:** 1.6s · **Cooldown:** 9s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 18 | — | 70 |
+| II | 22.5 | — | 80 |
+| III | 27 | — | 90 |
+| IV | 31.5 | — | 100 |
+| V | 36 | — | 110 |
+
+Spell ID: `kingdomwands:singularity`. Inspect any rank in game with `/resonantarcana spell singularity <level>`.
+
+### Event Horizon
+
+Charge for 3.2 seconds, then pull visible enemies inward for 1.5 seconds before a crushing detonation.
+
+**Role:** Attack · **Cast:** 3.2s · **Cooldown:** 24s · **Range:** 32 blocks · **Radius / width:** 7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 36 | — | 100 |
+| II | 45 | — | 110 |
+| III | 54 | — | 120 |
+| IV | 63 | — | 130 |
+| V | 72 | — | 140 |
+
+**Base active phase:** 1.5s.
+
+Spell ID: `kingdomwands:event_horizon`. Inspect any rank in game with `/resonantarcana spell event_horizon <level>`.
+
+### Rift Blink
+
+Blink along a clear path without crossing solid cover or loading terrain. Higher levels increase its range.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 6s · **Range:** 10 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 28 |
+| II | — | — | 33 |
+| III | — | — | 38 |
+| IV | — | — | 43 |
+| V | — | — | 48 |
+
+Spell ID: `kingdomwands:rift_blink`. Inspect any rank in game with `/resonantarcana spell rift_blink <level>`.
+
+### Orbital Blades
+
+Orbit three spatial blades around yourself for three seconds. Enemies can take one hit per second, up to three hits.
+
+**Role:** Defense · **Cast:** 1s · **Cooldown:** 10s · **Range:** 0 blocks · **Radius / width:** 3.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 48 |
+| II | 5 | — | 57 |
+| III | 6 | — | 66 |
+| IV | 7 | — | 75 |
+| V | 8 | — | 84 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 3s.
+
+Spell ID: `kingdomwands:orbital_blades`. Inspect any rank in game with `/resonantarcana spell orbital_blades <level>`.
+
+### Prismatic Ruin
+
+Merge opposing energies into a slow, broad spatial orb. It passes through enemies, hitting each once, and stops at solid cover or maximum range.
+
+**Role:** Attack · **Cast:** 3.5s · **Cooldown:** 30s · **Range:** 48 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 40 | — | 100 |
+| II | 50 | — | 110 |
+| III | 60 | — | 120 |
+| IV | 70 | — | 130 |
+| V | 80 | — | 140 |
+
+Spell ID: `kingdomwands:prismatic_ruin`. Inspect any rank in game with `/resonantarcana spell prismatic_ruin <level>`.
+
+### Gravity Stamp
+
+Mark your aim for one second, then crush visible enemies with a vertical spatial impact.
+
+**Role:** Control · **Cast:** 1.4s · **Cooldown:** 11s · **Range:** 28 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 18 | — | 55 |
+| II | 22.5 | — | 65 |
+| III | 27 | — | 75 |
+| IV | 31.5 | — | 85 |
+| V | 36 | — | 95 |
+
+**Base active phase:** 1s.
+
+Spell ID: `kingdomwands:gravity_stamp`. Inspect any rank in game with `/resonantarcana spell gravity_stamp <level>`.
+
+### Spatial Shear
+
+Cut a wide crescent through nearby space, striking each visible enemy in front of you once.
+
+**Role:** Attack · **Cast:** 0.9s · **Cooldown:** 7.5s · **Range:** 8 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 42 |
+| II | 15 | — | 50 |
+| III | 18 | — | 58 |
+| IV | 21 | — | 66 |
+| V | 24 | — | 74 |
+
+Spell ID: `kingdomwands:spatial_shear`. Inspect any rank in game with `/resonantarcana spell spatial_shear <level>`.
+
+<a id="soul-wand"></a>
 ## Soul Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Echo Bolt | 0s | 5 | 1.5 | 36 | 1.25s |
-| Sculk Wave | 0.35s | 5 | 2.5 | 28 | 3.25s |
-| Sonic Scream | 1s | 14 | 140° cone | 12 | 8s |
-| Soul Siphon | 0.7s | 5 | 1 | 24 | 5s |
-| Soul Prison | 0.6s | 2 | 1 | 24 | 7s |
-| Shrieking Pulse | 0.8s | 9 | 9 | 0 | 7.5s |
-| Amethyst Nova | 1.2s | 14 | 5.5 | 28 | 8s |
-| Echo Ward | 0.5s | 0 | 3 | 0 | 9s |
-| Soul Cannon | 2s | 16 | 5 | 48 | 14s |
+**Eldritch school.** Saved item ID: `kingdomwands:soul_wand`.
 
+### Echo Bolt
+
+A travelling projectile that stops at walls.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1.25s · **Range:** 36 blocks · **Radius / width:** 1.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 20 |
+| II | 6.25 | — | 24 |
+| III | 7.5 | — | 28 |
+| IV | 8.75 | — | 32 |
+| V | 10 | — | 36 |
+
+Spell ID: `kingdomwands:echo_bolt`. Inspect any rank in game with `/resonantarcana spell echo_bolt <level>`.
+
+### Sculk Wave
+
+A wide travelling arc, hitting each enemy once.
+
+**Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 28 blocks · **Radius / width:** 2.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 24 |
+| II | 6.25 | — | 28 |
+| III | 7.5 | — | 32 |
+| IV | 8.75 | — | 36 |
+| V | 10 | — | 40 |
+
+Spell ID: `kingdomwands:sculk_wave`. Inspect any rank in game with `/resonantarcana spell sculk_wave <level>`.
+
+### Sonic Scream
+
+Charge for one second, then unleash a deafening, wide sonic scream over 12 blocks. Cover blocks the blast.
+
+**Role:** Attack · **Cast:** 1s · **Cooldown:** 8s · **Range:** 12 blocks · **Radius / width:** 12 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 14 | — | 55 |
+| II | 17.5 | — | 65 |
+| III | 21 | — | 75 |
+| IV | 24.5 | — | 85 |
+| V | 28 | — | 95 |
+
+Spell ID: `kingdomwands:sonic_boom`. Inspect any rank in game with `/resonantarcana spell sonic_boom <level>`.
+
+### Soul Siphon
+
+Damage a visible aimed target and restore 40% of health actually removed, capped at 2 health at level I. Healing scales with spell power.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 28 |
+| II | 6.25 | — | 33 |
+| III | 7.5 | — | 38 |
+| IV | 8.75 | — | 43 |
+| V | 10 | — | 48 |
+
+Spell ID: `kingdomwands:soul_siphon`. Inspect any rank in game with `/resonantarcana spell soul_siphon <level>`.
+
+### Soul Prison
+
+Restrain and damage your target briefly.
+
+**Role:** Control · **Cast:** 0.6s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 26 |
+| II | 2.5 | — | 31 |
+| III | 3 | — | 36 |
+| IV | 3.5 | — | 41 |
+| V | 4 | — | 46 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
+
+Spell ID: `kingdomwands:soul_prison`. Inspect any rank in game with `/resonantarcana spell soul_prison <level>`.
+
+### Shrieking Pulse
+
+An expanding shock ring around you.
+
+**Role:** Attack · **Cast:** 0.8s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 41 |
+| II | 11.25 | — | 49 |
+| III | 13.5 | — | 57 |
+| IV | 15.75 | — | 65 |
+| V | 18 | — | 73 |
+
+Spell ID: `kingdomwands:shrieking_pulse`. Inspect any rank in game with `/resonantarcana spell shrieking_pulse <level>`.
+
+### Amethyst Nova
+
+An area burst centred on your aim.
+
+**Role:** Attack · **Cast:** 1.2s · **Cooldown:** 8s · **Range:** 28 blocks · **Radius / width:** 5.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 14 | — | 55 |
+| II | 17.5 | — | 65 |
+| III | 21 | — | 75 |
+| IV | 24.5 | — | 85 |
+| V | 28 | — | 95 |
+
+Spell ID: `kingdomwands:amethyst_nova`. Inspect any rank in game with `/resonantarcana spell amethyst_nova <level>`.
+
+### Echo Ward
+
+Deflect incoming hostile projectiles for 4 seconds at level I. Higher spell power extends the duration, up to 8 seconds.
+
+**Role:** Defense · **Cast:** 0.5s · **Cooldown:** 9s · **Range:** 0 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 26 |
+| II | — | — | 31 |
+| III | — | — | 36 |
+| IV | — | — | 41 |
+| V | — | — | 46 |
+
+**Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
+
+Spell ID: `kingdomwands:echo_ward`. Inspect any rank in game with `/resonantarcana spell echo_ward <level>`.
+
+### Soul Cannon
+
+Charge for two seconds, then launch a massive echo blast. Switch away to cancel charging.
+
+**Role:** Attack · **Cast:** 2s · **Cooldown:** 14s · **Range:** 48 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 90 |
+| II | 20 | — | 100 |
+| III | 24 | — | 110 |
+| IV | 28 | — | 120 |
+| V | 32 | — | 130 |
+
+Spell ID: `kingdomwands:soul_cannon`. Inspect any rank in game with `/resonantarcana spell soul_cannon <level>`.
+
+### Wisp Lantern
+
+Place a soul lantern for four seconds. Four echo pulses damage visible enemies near it.
+
+**Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 52 |
+| II | 2.5 | — | 62 |
+| III | 3 | — | 72 |
+| IV | 3.5 | — | 82 |
+| V | 4 | — | 92 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:wisp_lantern`. Inspect any rank in game with `/resonantarcana spell wisp_lantern <level>`.
+
+### Resonant Guard
+
+Gain 6 absorption health and Resistance I for five seconds at level I. Spell power improves absorption and duration.
+
+**Role:** Defense · **Cast:** 0.9s · **Cooldown:** 12s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 44 |
+| II | — | — | 52 |
+| III | — | — | 60 |
+| IV | — | — | 68 |
+| V | — | — | 76 |
+
+**Base active phase:** 5s. Duration at levels I–V without gear: 5s, 6.25s, 7.5s, 8.75s, 10s.
+
+**Absorption at levels I–V:** 6, 7.5, 9, 10.5, 12 health.
+
+Spell ID: `kingdomwands:resonant_guard`. Inspect any rank in game with `/resonantarcana spell resonant_guard <level>`.
+
+### Memory Fracture
+
+Strike an aimed enemy. If it is affected by Darkness, direct damage increases by 50%; combine with Soul Prison.
+
+**Role:** Attack · **Cast:** 0.9s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 42 |
+| II | 12.5 | — | 50 |
+| III | 15 | — | 58 |
+| IV | 17.5 | — | 66 |
+| V | 20 | — | 74 |
+
+**Conditional direct damage at levels I–V:** 15, 18.75, 22.5, 26.25, 30.
+
+Spell ID: `kingdomwands:memory_fracture`. Inspect any rank in game with `/resonantarcana spell memory_fracture <level>`.
+
+<a id="venom-wand"></a>
 ## Venom Wand
 
-| Spell | Windup | Damage I | Radius | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Venom Sting | 0.25s | 2 | 2 | 24 | 2.5s |
-| Poison Wave | 0.35s | 2 | 1.8 | 28 | 3.5s |
-| Venom Bolt | 0s | 3 | 1.5 | 32 | 1.75s |
-| Miasma Field | 0.75s | 3 | 4.5 | 24 | 9s |
-| Withering Hex | 0.25s | 3 | 1 | 24 | 5.5s |
+**Nature school.** Saved item ID: `kingdomwands:venom_wand`.
 
-Solar Cataclysm has a 0.6-second target warning before its descent. Event Horizon pulls for 1.5 seconds after casting and then deals its damage once. Tempest Spear strikes once through visible enemies; its afterimages deal no extra damage. These three spells cost 90, 100 and 85 base mana respectively, begin at Epic rarity and cannot damage through solid cover.
+### Venom Sting
 
+Strike the living target you aim at. Nature hits poison for four seconds.
+
+**Role:** Attack · **Cast:** 0.25s · **Cooldown:** 2.5s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 17 |
+| II | 2.5 | — | 20 |
+| III | 3 | — | 23 |
+| IV | 3.5 | — | 26 |
+| V | 4 | — | 29 |
+
+Spell ID: `kingdomwands:poison_spark`. Inspect any rank in game with `/resonantarcana spell poison_spark <level>`.
+
+### Poison Wave
+
+A wide travelling arc, hitting each enemy once. Nature hits poison for four seconds.
+
+**Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.5s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 19 |
+| II | 2.5 | — | 22 |
+| III | 3 | — | 25 |
+| IV | 3.5 | — | 28 |
+| V | 4 | — | 31 |
+
+Spell ID: `kingdomwands:poison_wave`. Inspect any rank in game with `/resonantarcana spell poison_wave <level>`.
+
+### Venom Bolt
+
+A travelling projectile that stops at walls. Nature hits poison for four seconds.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1.75s · **Range:** 32 blocks · **Radius / width:** 1.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 17 |
+| II | 3.75 | — | 20 |
+| III | 4.5 | — | 23 |
+| IV | 5.25 | — | 26 |
+| V | 6 | — | 29 |
+
+Spell ID: `kingdomwands:venom_bolt`. Inspect any rank in game with `/resonantarcana spell venom_bolt <level>`.
+
+### Miasma Field
+
+Leave a poisonous cloud for nearly five seconds. Nature hits poison for four seconds.
+
+**Role:** Sustain · **Cast:** 0.75s · **Cooldown:** 9s · **Range:** 24 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 50 |
+| II | 3.75 | — | 60 |
+| III | 4.5 | — | 70 |
+| IV | 5.25 | — | 80 |
+| V | 6 | — | 90 |
+
+**Delivery:** up to 5 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `kingdomwands:miasma_field`. Inspect any rank in game with `/resonantarcana spell miasma_field <level>`.
+
+### Withering Hex
+
+Inflict poison and wither on an aimed target. Nature hits poison for four seconds.
+
+**Role:** Attack · **Cast:** 0.25s · **Cooldown:** 5.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 25 |
+| II | 3.75 | — | 30 |
+| III | 4.5 | — | 35 |
+| IV | 5.25 | — | 40 |
+| V | 6 | — | 45 |
+
+Spell ID: `kingdomwands:withering_hex`. Inspect any rank in game with `/resonantarcana spell withering_hex <level>`.
+
+### Thorn Lash
+
+Catch an aimed enemy with a thorn tether, pull it towards you and poison it. Nature hits poison for four seconds.
+
+**Role:** Control · **Cast:** 0.5s · **Cooldown:** 5.5s · **Range:** 20 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 30 |
+| II | 5 | — | 36 |
+| III | 6 | — | 42 |
+| IV | 7 | — | 48 |
+| V | 8 | — | 54 |
+
+Spell ID: `kingdomwands:thorn_lash`. Inspect any rank in game with `/resonantarcana spell thorn_lash <level>`.
+
+### Viper Fangs
+
+Release five venom fangs in a spreading fan. Each projectile can poison the enemy it hits. Nature hits poison for four seconds.
+
+**Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 24 blocks · **Radius / width:** 0.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 28 |
+| II | 3.75 | — | 33 |
+| III | 4.5 | — | 38 |
+| IV | 5.25 | — | 43 |
+| V | 6 | — | 48 |
+
+**Delivery:** up to 5 projectiles; the table gives the value for each one.
+
+Spell ID: `kingdomwands:viper_fangs`. Inspect any rank in game with `/resonantarcana spell viper_fangs <level>`.
+
+### Bramble Ring
+
+Expand a ring of thorns around yourself. Each visible enemy is damaged once, poisoned and briefly slowed. Nature hits poison for four seconds.
+
+**Role:** Control · **Cast:** 0.7s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 40 |
+| II | 6.25 | — | 48 |
+| III | 7.5 | — | 56 |
+| IV | 8.75 | — | 64 |
+| V | 10 | — | 72 |
+
+Spell ID: `kingdomwands:bramble_ring`. Inspect any rank in game with `/resonantarcana spell bramble_ring <level>`.
+
+### Toxic Molt
+
+Shed poison and wither, restore 4 health at level I and gain Speed I for four seconds. Healing and duration scale with spell power.
+
+**Role:** Healing · **Cast:** 0.8s · **Cooldown:** 11s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | 4 | 38 |
+| II | — | 5 | 45 |
+| III | — | 6 | 52 |
+| IV | — | 7 | 59 |
+| V | — | 8 | 66 |
+
+**Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
+
+Spell ID: `kingdomwands:toxic_molt`. Inspect any rank in game with `/resonantarcana spell toxic_molt <level>`.
+
+### Spore Totem
+
+Plant a spectral spore totem for four seconds. Four pulses poison and damage visible enemies near it. Nature hits poison for four seconds.
+
+**Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 50 |
+| II | 2.5 | — | 60 |
+| III | 3 | — | 70 |
+| IV | 3.5 | — | 80 |
+| V | 4 | — | 90 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:spore_totem`. Inspect any rank in game with `/resonantarcana spell spore_totem <level>`.
+
+### Corrosive Rain
+
+Call an acid cloud at your aim. Five falling pulses damage and poison visible enemies over four seconds. Nature hits poison for four seconds.
+
+**Role:** Sustain · **Cast:** 1.4s · **Cooldown:** 12s · **Range:** 28 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 60 |
+| II | 2.5 | — | 70 |
+| III | 3 | — | 80 |
+| IV | 3.5 | — | 90 |
+| V | 4 | — | 100 |
+
+**Delivery:** up to 5 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4.05s.
+
+Spell ID: `kingdomwands:corrosive_rain`. Inspect any rank in game with `/resonantarcana spell corrosive_rain <level>`.
+
+### Gorgon Gaze
+
+Fix visible enemies in a wide forward cone with a petrifying gaze, applying heavy slowness and weakness for two seconds at level I. Nature hits poison for four seconds.
+
+**Role:** Control · **Cast:** 1.2s · **Cooldown:** 10s · **Range:** 10 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | — | 48 |
+| II | 2.5 | — | 57 |
+| III | 3 | — | 66 |
+| IV | 3.5 | — | 75 |
+| V | 4 | — | 84 |
+
+**Base active phase:** 2s. Duration at levels I–V without gear: 2s, 2.5s, 3s, 3.5s, 4s.
+
+Spell ID: `kingdomwands:gorgon_gaze`. Inspect any rank in game with `/resonantarcana spell gorgon_gaze <level>`.
+
+<a id="holy-wand"></a>
 ## Holy Wand
 
-| Spell | Windup | Healing I | Radius | Base cooldown |
-| --- | ---: | ---: | ---: | ---: |
-| Sanctuary | 2.5s | Up to 12 health | 8 | 18s |
+**Holy school.** Saved item ID: `kingdomwands:holy_wand`.
 
-Sanctuary restores the caster, nearby scoreboard teammates and owned pets with line of sight. It cleanses poison, wither, blindness and darkness, leaves hostile mobs unharmed and cannot overheal. Base mana cost: 80.
+### Sanctuary
 
+Restore up to 12 health to yourself and eligible allies within eight blocks; cleanse poison, wither, blindness and darkness. Allies include owned pets, scoreboard teammates, and teamless players when enabled.
+
+**Role:** Healing · **Cast:** 2.5s · **Cooldown:** 18s · **Range:** 0 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | 12 | 80 |
+| II | — | 15 | 90 |
+| III | — | 18 | 100 |
+| IV | — | 21 | 110 |
+| V | — | 24 | 120 |
+
+Spell ID: `kingdomwands:sanctuary`. Inspect any rank in game with `/resonantarcana spell sanctuary <level>`.
+
+### Luminous Dart
+
+Fire a quick dart of holy light. It stops at solid cover.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1s · **Range:** 32 blocks · **Radius / width:** 0.7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 16 |
+| II | 5 | — | 19 |
+| III | 6 | — | 22 |
+| IV | 7 | — | 25 |
+| V | 8 | — | 28 |
+
+Spell ID: `kingdomwands:luminous_dart`. Inspect any rank in game with `/resonantarcana spell luminous_dart <level>`.
+
+### Mending Light
+
+Restore 6 health at level I to the most injured eligible ally within eight blocks, including yourself. Requires line of sight.
+
+**Role:** Healing · **Cast:** 0.9s · **Cooldown:** 6s · **Range:** 0 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | 6 | 32 |
+| II | — | 7.5 | 38 |
+| III | — | 9 | 44 |
+| IV | — | 10.5 | 50 |
+| V | — | 12 | 56 |
+
+Spell ID: `kingdomwands:mending_light`. Inspect any rank in game with `/resonantarcana spell mending_light <level>`.
+
+### Blessing of Vigor
+
+Gain 4 absorption health and Speed I for six seconds at level I. Spell power increases the shield and duration.
+
+**Role:** Defense · **Cast:** 0.9s · **Cooldown:** 12s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 42 |
+| II | — | — | 50 |
+| III | — | — | 58 |
+| IV | — | — | 66 |
+| V | — | — | 74 |
+
+**Base active phase:** 6s. Duration at levels I–V without gear: 6s, 7.5s, 9s, 10.5s, 12s.
+
+**Absorption at levels I–V:** 4, 5, 6, 7, 8 health.
+
+Spell ID: `kingdomwands:blessing_of_vigor`. Inspect any rank in game with `/resonantarcana spell blessing_of_vigor <level>`.
+
+### Consecration
+
+Place a consecrated beacon for four seconds. Each of four pulses damages enemies and restores 1 health at level I to eligible allies in its area.
+
+**Role:** Healing · **Cast:** 1.2s · **Cooldown:** 12s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2 | 1 | 55 |
+| II | 2.5 | 1.25 | 65 |
+| III | 3 | 1.5 | 75 |
+| IV | 3.5 | 1.75 | 85 |
+| V | 4 | 2 | 95 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:consecration`. Inspect any rank in game with `/resonantarcana spell consecration <level>`.
+
+### Radiant Sweep
+
+Sweep a radiant crescent through visible enemies in front of you.
+
+**Role:** Attack · **Cast:** 0.6s · **Cooldown:** 5.5s · **Range:** 6 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 30 |
+| II | 10 | — | 36 |
+| III | 12 | — | 42 |
+| IV | 14 | — | 48 |
+| V | 16 | — | 54 |
+
+Spell ID: `kingdomwands:radiant_sweep`. Inspect any rank in game with `/resonantarcana spell radiant_sweep <level>`.
+
+### Pilgrim Step
+
+Move along your aim in a flash of light, stopping before obstacles. Higher levels extend the safe blink range.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 6s · **Range:** 8 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 26 |
+| II | — | — | 31 |
+| III | — | — | 36 |
+| IV | — | — | 41 |
+| V | — | — | 46 |
+
+Spell ID: `kingdomwands:pilgrim_step`. Inspect any rank in game with `/resonantarcana spell pilgrim_step <level>`.
+
+### Absolution
+
+Cleanse poison, wither, blindness and darkness from eligible allies within eight blocks and grant brief Resistance I.
+
+**Role:** Healing · **Cast:** 1s · **Cooldown:** 10s · **Range:** 0 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 40 |
+| II | — | — | 48 |
+| III | — | — | 56 |
+| IV | — | — | 64 |
+| V | — | — | 72 |
+
+**Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
+
+Spell ID: `kingdomwands:absolution`. Inspect any rank in game with `/resonantarcana spell absolution <level>`.
+
+### Dawn Ward
+
+Deflect hostile incoming projectiles for four seconds at level I. Spell power extends the ward, up to eight seconds.
+
+**Role:** Defense · **Cast:** 0.8s · **Cooldown:** 10s · **Range:** 0 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 42 |
+| II | — | — | 50 |
+| III | — | — | 58 |
+| IV | — | — | 66 |
+| V | — | — | 74 |
+
+**Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
+
+Spell ID: `kingdomwands:dawn_ward`. Inspect any rank in game with `/resonantarcana spell dawn_ward <level>`.
+
+### Judgement Ray
+
+Charge a piercing ray of holy light, striking each visible enemy on its line once. Solid cover stops the ray.
+
+**Role:** Attack · **Cast:** 2s · **Cooldown:** 13s · **Range:** 40 blocks · **Radius / width:** 0.7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 22 | — | 70 |
+| II | 27.5 | — | 80 |
+| III | 33 | — | 90 |
+| IV | 38.5 | — | 100 |
+| V | 44 | — | 110 |
+
+Spell ID: `kingdomwands:judgement_ray`. Inspect any rank in game with `/resonantarcana spell judgement_ray <level>`.
+
+### Seraphic Descent
+
+Mark your aim for one second, then deliver a pillar of light. It damages enemies and restores 6 health at level I to eligible allies at the impact.
+
+**Role:** Healing · **Cast:** 2.5s · **Cooldown:** 20s · **Range:** 32 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 28 | 6 | 90 |
+| II | 35 | 7.5 | 100 |
+| III | 42 | 9 | 110 |
+| IV | 49 | 10.5 | 120 |
+| V | 56 | 12 | 130 |
+
+**Base active phase:** 1s.
+
+Spell ID: `kingdomwands:seraphic_descent`. Inspect any rank in game with `/resonantarcana spell seraphic_descent <level>`.
+
+### Renewal Hymn
+
+Carry a healing hymn around yourself for four seconds. Four pulses each restore 2 health at level I to eligible allies with line of sight.
+
+**Role:** Healing · **Cast:** 1.2s · **Cooldown:** 13s · **Range:** 0 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | 2 | 55 |
+| II | — | 2.5 | 65 |
+| III | — | 3 | 75 |
+| IV | — | 3.5 | 85 |
+| V | — | 4 | 95 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:renewal_hymn`. Inspect any rank in game with `/resonantarcana spell renewal_hymn <level>`.
+
+<a id="frost-wand"></a>
 ## Frost Wand
 
-| Spell | Windup | Damage I | Half-width | Range | Base cooldown |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Glacial Rupture | 2.5s | 28 | Up to 6 | 18 | 18s |
+**Ice school.** Saved item ID: `kingdomwands:frost_wand`.
 
-Glacial Rupture hits each enemy once and chills it. Base mana cost: 85.
+### Glacial Rupture
 
-DOOM grows after its four-second cast, starts devouring its core after two seconds, and collapses after 4.5 seconds. Each enemy takes one damaging hit at most, including the final collapse. It costs 100 base mana and has one Legendary level. Evoker’s Edict costs 80 base mana and sends three rows whose overlapping hits do not multiply the damage. Sonic Scream uses the original `sonic_boom` saved ID and costs 55 base mana.
+Send a broad glacial front forwards, damaging and chilling each visible enemy once. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Attack · **Cast:** 2.5s · **Cooldown:** 18s · **Range:** 18 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 28 | — | 85 |
+| II | 35 | — | 95 |
+| III | 42 | — | 105 |
+| IV | 49 | — | 115 |
+| V | 56 | — | 125 |
+
+Spell ID: `kingdomwands:glacial_rupture`. Inspect any rank in game with `/resonantarcana spell glacial_rupture <level>`.
+
+### Frost Needle
+
+Fire a fast ice needle that chills its target and stops at solid cover. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Attack · **Cast:** instant · **Cooldown:** 1s · **Range:** 32 blocks · **Radius / width:** 0.7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 16 |
+| II | 5 | — | 19 |
+| III | 6 | — | 22 |
+| IV | 7 | — | 25 |
+| V | 8 | — | 28 |
+
+Spell ID: `kingdomwands:frost_needle`. Inspect any rank in game with `/resonantarcana spell frost_needle <level>`.
+
+### Ice Serpent
+
+Send a low, weaving ice serpent horizontally along your aim. It chills each enemy struck and stops at solid cover; it does not climb terrain. Ice hits chill for two seconds and add 40 freezing ticks.
+
+**Role:** Control · **Cast:** 0.7s · **Cooldown:** 5.5s · **Range:** 24 blocks · **Radius / width:** 1.4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 7 | — | 34 |
+| II | 8.75 | — | 40 |
+| III | 10.5 | — | 46 |
+| IV | 12.25 | — | 52 |
+| V | 14 | — | 58 |
+
+Spell ID: `kingdomwands:ice_serpent`. Inspect any rank in game with `/resonantarcana spell ice_serpent <level>`.
+
+### Rime Nova
+
+Expand a frozen ring around yourself, chilling and damaging each visible enemy once. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Control · **Cast:** 0.9s · **Cooldown:** 8s · **Range:** 0 blocks · **Radius / width:** 7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 44 |
+| II | 11.25 | — | 52 |
+| III | 13.5 | — | 60 |
+| IV | 15.75 | — | 68 |
+| V | 18 | — | 76 |
+
+Spell ID: `kingdomwands:rime_nova`. Inspect any rank in game with `/resonantarcana spell rime_nova <level>`.
+
+### Cryo Lance
+
+Fire a precise piercing ice lance through visible enemies. Solid cover blocks it. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Attack · **Cast:** 0.9s · **Cooldown:** 6s · **Range:** 28 blocks · **Radius / width:** 0.7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 38 |
+| II | 12.5 | — | 45 |
+| III | 15 | — | 52 |
+| IV | 17.5 | — | 59 |
+| V | 20 | — | 66 |
+
+Spell ID: `kingdomwands:cryo_lance`. Inspect any rank in game with `/resonantarcana spell cryo_lance <level>`.
+
+### Frozen Aegis
+
+Gain 6 absorption health and Resistance I for five seconds at level I. Spell power strengthens and extends the aegis.
+
+**Role:** Defense · **Cast:** 0.9s · **Cooldown:** 12s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 44 |
+| II | — | — | 52 |
+| III | — | — | 60 |
+| IV | — | — | 68 |
+| V | — | — | 76 |
+
+**Base active phase:** 5s. Duration at levels I–V without gear: 5s, 6.25s, 7.5s, 8.75s, 10s.
+
+**Absorption at levels I–V:** 6, 7.5, 9, 10.5, 12 health.
+
+Spell ID: `kingdomwands:frozen_aegis`. Inspect any rank in game with `/resonantarcana spell frozen_aegis <level>`.
+
+### Glacier Step
+
+Blink safely in a burst of snowflakes. Higher levels increase the range without allowing travel through walls.
+
+**Role:** Mobility · **Cast:** instant · **Cooldown:** 6s · **Range:** 8 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 26 |
+| II | — | — | 31 |
+| III | — | — | 36 |
+| IV | — | — | 41 |
+| V | — | — | 46 |
+
+Spell ID: `kingdomwands:glacier_step`. Inspect any rank in game with `/resonantarcana spell glacier_step <level>`.
+
+### Shatter
+
+Strike an aimed enemy. Direct damage increases by 50% at 140 freezing ticks or Slowness III or stronger; combine with Glacial Prison or Absolute Zero. Ice hits chill for two seconds and add 40 freezing ticks.
+
+**Role:** Attack · **Cast:** 0.9s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 42 |
+| II | 12.5 | — | 50 |
+| III | 15 | — | 58 |
+| IV | 17.5 | — | 66 |
+| V | 20 | — | 74 |
+
+**Conditional direct damage at levels I–V:** 15, 18.75, 22.5, 26.25, 30.
+
+Spell ID: `kingdomwands:shatter`. Inspect any rank in game with `/resonantarcana spell shatter <level>`.
+
+### Hailstorm
+
+Call a hail cloud at your aim. Five pulses damage and chill visible enemies over four seconds. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Sustain · **Cast:** 1.4s · **Cooldown:** 12s · **Range:** 28 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 2.5 | — | 60 |
+| II | 3.125 | — | 70 |
+| III | 3.75 | — | 80 |
+| IV | 4.375 | — | 90 |
+| V | 5 | — | 100 |
+
+**Delivery:** up to 5 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4.05s.
+
+Spell ID: `kingdomwands:hailstorm`. Inspect any rank in game with `/resonantarcana spell hailstorm <level>`.
+
+### Glacial Prison
+
+Hold an aimed enemy in spectral ice for three seconds at level I. Cover, distance or large movement breaks the restraint.
+
+**Role:** Control · **Cast:** 1s · **Cooldown:** 9s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 45 |
+| II | — | — | 54 |
+| III | — | — | 63 |
+| IV | — | — | 72 |
+| V | — | — | 81 |
+
+**Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
+
+Spell ID: `kingdomwands:glacial_prison`. Inspect any rank in game with `/resonantarcana spell glacial_prison <level>`.
+
+### Crystal Barrage
+
+Release five divergent crystal projectiles. Damage is per projectile; their impacts chill enemies. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Attack · **Cast:** 0.7s · **Cooldown:** 6s · **Range:** 30 blocks · **Radius / width:** 0.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 36 |
+| II | 5 | — | 43 |
+| III | 6 | — | 50 |
+| IV | 7 | — | 57 |
+| V | 8 | — | 64 |
+
+**Delivery:** up to 5 projectiles; the table gives the value for each one.
+
+Spell ID: `kingdomwands:crystal_barrage`. Inspect any rank in game with `/resonantarcana spell crystal_barrage <level>`.
+
+### Absolute Zero
+
+Establish a frozen domain for four seconds. Four pulses chill and freeze visible enemies in its area. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+
+**Role:** Control · **Cast:** 2.5s · **Cooldown:** 20s · **Range:** 28 blocks · **Radius / width:** 7 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 3 | — | 85 |
+| II | 3.75 | — | 95 |
+| III | 4.5 | — | 105 |
+| IV | 5.25 | — | 115 |
+| V | 6 | — | 125 |
+
+**Delivery:** up to 4 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `kingdomwands:absolute_zero`. Inspect any rank in game with `/resonantarcana spell absolute_zero <level>`.

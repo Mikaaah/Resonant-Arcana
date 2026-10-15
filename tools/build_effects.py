@@ -2,6 +2,7 @@
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import math
+import json
 from pathlib import Path
 import random
 import shutil
@@ -18,7 +19,20 @@ PALETTES = {
     'gravity': (0xCF58E8, 0xF6A5FF), 'soul': (0x24D7CB, 0xAA70EF),
     'holy': (0xFFE5A1, 0xFFFBEA), 'ice': (0x81D9FF, 0xE4FAFF),
 }
-SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact pyre_charge pyre_fall pyre_impact tempest_charge tempest_beam tempest_impact horizon_charge horizon_well horizon_impact scream_front scream_impact doom_charge doom_well doom_impact sanctuary_charge sanctuary_field sanctuary_bloom glacier_charge glacier_front glacier_impact fang_charge fang_row fang_impact'.split()
+SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact pyre_charge pyre_fall pyre_impact tempest_charge tempest_beam tempest_impact horizon_charge horizon_well horizon_impact scream_front scream_impact doom_charge doom_well doom_impact sanctuary_charge sanctuary_field sanctuary_bloom glacier_charge glacier_front glacier_impact fang_charge fang_row fang_impact slash orbit totem rain trap serpent blessing domain fusion_charge fusion_orb fusion_impact'.split()
+
+
+SPECIAL_THEMES = {
+    'slash': ('blood','fire','dark','thunder','gravity','holy'),
+    'orbit': ('gravity',), 'totem': ('dark','soul','poison','holy'),
+    'rain': ('poison','ice'), 'trap': ('dark',), 'serpent': ('ice',),
+    'blessing': ('blood','dark','soul','poison','holy','ice'), 'domain': ('ice',),
+}
+def packaged(shape, theme):
+    dedicated={'cannon_':'soul','pyre_':'fire','tempest_':'thunder','horizon_':'gravity','scream_':'soul','doom_':'dark','sanctuary_':'holy','glacier_':'ice','fang_':'magic','fusion_':'gravity'}
+    for prefix, school in dedicated.items():
+        if shape.startswith(prefix): return theme == school
+    return theme in SPECIAL_THEMES[shape] if shape in SPECIAL_THEMES else True
 
 
 def element(parent, name, text=None):
@@ -198,13 +212,88 @@ def author(shape, theme):
                        size=(.08,.3,.08),rotation=(0,0,i*31),spin=(0,0,6),texture='shard')
                 if i%8==0:sprite('Echo crescent',c,life=18,pos=(0,0,-i*.025),size=(1.5,1.5,1),
                                  growth=(.018,.018,0),rotation=(0,0,i*20),texture='arc',billboard=2,alpha=160)
+            elif theme=='holy':
+                sprite('Ascending feather of light',accent if i%3==0 else c,life=24,
+                       pos=(x,y*.6,z),velocity=(vel[0]*.5,.035+t*.035,vel[2]),
+                       size=(.14,.48,.14),rotation=(0,0,35+math.sin(a)*40),spin=(0,0,2),texture='shard')
+                if i%4==0:sprite('Dawn star',accent,life=18,pos=(x,y,z),size=(.32,.32,.32),texture='star')
+            elif theme=='ice':
+                sprite('Fractured frost crystal',accent if i%3==0 else c,life=24,
+                       pos=(x,y,z),velocity=(vel[0],-.018,vel[2]),size=(.14,.48,.14),
+                       rotation=(0,0,i*37),spin=(0,0,4),texture='shard')
+                if i%6==0:sprite('Cold mist',c,life=28,pos=(x,-.2,z),size=(.7,.35,.7),
+                                 velocity=(0,.008,-.012),texture='smoke',alpha=85)
             else:
                 sprite('Orbiting arcane diamond',accent if i%3==0 else c,life=18,pos=(x,y,z),velocity=vel,
                        size=(.16,.22,.16),rotation=(0,0,45),spin=(0,0,4),texture='shard')
                 if i%9==0:sprite('Swept arcane ribbon',c,life=15,pos=(0,0,z),size=(1.25,1.25,1),
                                  rotation=(0,0,i*40),spin=(0,0,8),texture='arc',billboard=2)
         if theme=='gravity':sprite('Light eating core',0x100518,life=22,size=(.7,.7,.7),texture='smoke',blend=1,alpha=245)
-    if shape.startswith('scream_'):
+    if shape.startswith('fusion_'):
+        charge=shape=='fusion_charge';impact=shape=='fusion_impact'
+        for side,col in ((-1,0x538DFF),(1,0xFF4267)):
+            pos=(side*.65,0,0) if charge else (0,0,0)
+            sprite('Opposed energy nucleus',col,life=24,pos=pos,size=(.65,.65,.65),texture='glow',alpha=240)
+            for i in range(20):
+                a=i*math.tau/20;radius=.65 if charge else 1.1
+                sprite('Braided fusion stream',col,life=24,pos=(math.cos(a)*radius,math.sin(a)*radius,-i*.06),
+                       velocity=(-math.cos(a)*.025,-math.sin(a)*.025,.02),size=(.16,.28,.16),texture='shard',spin=(0,0,8*side))
+        sprite('Violet singularity',0xECBEFF,life=22,size=(1.25,1.25,1.25),texture='star')
+        for i in range(3):sprite('Spatial fracture crescent',c,life=26,size=(1.8+i*.2,1.8+i*.2,1),
+                                 growth=(.035,.035,0) if impact else (0,0,0),rotation=(i*35,0,i*100),texture='arc',billboard=2)
+    elif shape=='slash':
+        for i in range(4):
+            sprite('Sweeping cutting edge',accent if i==0 else c,life=15+i*2,
+                   size=(2.1-i*.18,2.1-i*.18,1),rotation=(0,0,15+i*7),texture='arc',billboard=2,alpha=240)
+        for i in range(22):
+            a=(i/21-.5)*2.5
+            sprite('Cutting wake',accent if i%4==0 else c,life=18,pos=(math.sin(a),math.cos(a)*.7,0),
+                   velocity=(math.sin(a)*.045,math.cos(a)*.025,-.02),size=(.12,.35,.12),texture='flame' if theme=='fire' else 'shard')
+    elif shape=='orbit':
+        sprite('Orbiting spectral blade',accent,life=16,size=(.18,1.6,.18),rotation=(0,0,35),texture='shard')
+        sprite('Blade motion crescent',c,life=16,size=(1.4,1.4,1),rotation=(0,0,40),texture='arc',billboard=2)
+        motes(12,radius=.4,life=18,outward=.02,shards=True)
+    elif shape=='totem':
+        for i in range(5):
+            sprite('Suspended lantern crystal',accent if i%2 else c,life=26,pos=(0,.15+i*.22,0),
+                   size=(.18,.4,.18),rotation=(0,0,i*45),spin=(0,0,4),texture='shard')
+        for i in range(24):
+            a=i*math.tau/24
+            sprite('Spiralling aura wisp',c,life=26,pos=(math.cos(a)*.7,.05,math.sin(a)*.7),
+                   velocity=(-math.sin(a)*.015,.02,math.cos(a)*.015),size=(.18,.18,.18),texture='star')
+    elif shape=='rain':
+        for i in range(32):
+            a=i*2.39996;r=math.sqrt((i+.5)/32)*.85
+            sprite('Falling hail shard' if theme=='ice' else 'Falling acid drop',accent if i%4==0 else c,
+                   life=24,pos=(math.cos(a)*r,3+(i%4)*.3,math.sin(a)*r),velocity=(0,-.15,0),
+                   size=(.11,.4,.11),texture='shard' if theme=='ice' else 'flame')
+        motes(18,radius=.8,life=24,outward=.015,shards=theme=='ice')
+    elif shape=='trap':
+        for i in range(12):
+            a=i*math.tau/12
+            sprite('Closed night petal',accent if i%3==0 else c,life=26,pos=(math.cos(a)*.6,0,math.sin(a)*.6),
+                   size=(.2,.65,.2),rotation=(0,0,30*math.sin(a)),texture='flame',alpha=200)
+        sprite('Dormant shadow seed',0x1C082F,life=28,size=(.6,.6,.6),texture='smoke',blend=1)
+    elif shape=='serpent':
+        for i in range(26):
+            t=i/25
+            sprite('Weaving frost spine',accent if i%4==0 else c,life=22,pos=(math.sin(t*7)*.25,0,-t*2),
+                   size=(.16,.5*(1-t*.5),.16),rotation=(0,0,30*math.cos(t*7)),texture='shard')
+        sprite('Ice serpent crown',accent,life=18,size=(.55,.55,.55),texture='star')
+    elif shape=='blessing':
+        for i in range(30):
+            a=i*2.39996;y=(i%10)/10
+            sprite('Rising protective ribbon',accent if i%4==0 else c,life=28,pos=(math.cos(a)*.6,y-.6,math.sin(a)*.6),
+                   velocity=(-math.sin(a)*.012,.025,math.cos(a)*.012),size=(.12,.35,.12),texture='shard')
+        for i in range(5):sprite('Blessing star',accent,life=26,pos=(math.sin(i*3)*.7,i*.3-.5,math.cos(i*3)*.7),size=(.3,.3,.3),texture='star')
+    elif shape=='domain':
+        for i in range(32):
+            a=i*math.tau/32
+            sprite('Rising permafrost boundary',accent if i%4==0 else c,life=28,pos=(math.cos(a)*.85,-.2,math.sin(a)*.85),
+                   size=(.12,.65+(i%3)*.25,.12),texture='shard')
+        for i in range(12):sprite('Polar drifting mist',c,life=30,pos=(math.sin(i*3)*.6,.1,math.cos(i*3)*.6),
+                                 size=(.7,.35,.7),velocity=(.005,.006,0),texture='smoke',alpha=95)
+    elif shape.startswith('scream_'):
         for i in range(4):
             sprite('Sonic pressure crescent',0xCFFFF9 if i%2 else c,life=20,
                    pos=(0,0,-i*.08),size=(1.9-i*.15,1.9-i*.15,1),growth=(.025,.025,0),
@@ -439,11 +528,8 @@ def main():
         if not exported.exists() or exported.read_bytes()[:4]!=b'EFKE':raise RuntimeError(f'Export failed: {exported}')
         shutil.copy2(exported,ASSETS/exported.name)
         return theme
-    def packaged(shape,theme):
-        dedicated={'cannon_':'soul','pyre_':'fire','tempest_':'thunder','horizon_':'gravity','scream_':'soul','doom_':'dark','sanctuary_':'holy','glacier_':'ice','fang_':'magic'}
-        for prefix,school in dedicated.items():
-            if shape.startswith(prefix):return theme==school
-        return theme not in ('holy','ice')
+    manifest={'schemaVersion':1,'effects':sorted(f'{shape}_{theme}.efkefc' for theme in PALETTES for shape in SHAPES if packaged(shape,theme))}
+    (ASSETS/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     completed={theme:0 for theme in args.theme}
     with ThreadPoolExecutor(max_workers=max(1,min(8,args.jobs))) as pool:
         tasks=[pool.submit(export,theme,shape) for theme in args.theme for shape in args.shape if packaged(shape,theme)]

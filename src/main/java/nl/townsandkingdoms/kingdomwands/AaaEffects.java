@@ -43,9 +43,9 @@ final class AaaEffects {
     static void visual(WandNetwork.Visual message) { visual(message,true); }
     private static void visual(WandNetwork.Visual message,boolean packet) {
         if(packet)received++;
-        if(!message.valid()||!KingdomWands.AAA_PARTICLES.get())return;
+        if(!message.valid()||!ArcanaConfig.AAA_PARTICLES.get())return;
         var mc=Minecraft.getInstance();
-        if(mc.level==null||mc.player==null||spawned>=KingdomWands.AAA_BUDGET.get())return;
+        if(mc.level==null||mc.player==null||spawned>=ArcanaConfig.AAA_BUDGET.get())return;
         Vec3 start=new Vec3(message.x(),message.y(),message.z()),end=new Vec3(message.endX(),message.endY(),message.endZ());
         // Use the nearest point, not just the impact: a nearby beam's far end may be distant.
         Vec3 delta=end.subtract(start);double lengthSquared=delta.lengthSqr();
@@ -56,7 +56,7 @@ final class AaaEffects {
         var spell=Spell.values()[message.spell()];var stage=SpellVisuals.Stage.values()[message.stage()];
         var shape=SpellVisuals.shape(spell,stage);
         float size=message.size(),sx=size,sy=size,sz=size;
-        boolean directional=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE||stage==SpellVisuals.Stage.CAST||stage==SpellVisuals.Stage.FLIGHT||stage==SpellVisuals.Stage.CHARGE||shape==SpellVisuals.Shape.FANG_ROW||shape==SpellVisuals.Shape.SCREAM_IMPACT;
+        boolean directional=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE||stage==SpellVisuals.Stage.CAST||stage==SpellVisuals.Stage.FLIGHT||stage==SpellVisuals.Stage.CHARGE||shape==SpellVisuals.Shape.FANG_ROW||shape==SpellVisuals.Shape.SCREAM_IMPACT||shape==SpellVisuals.Shape.SLASH||shape==SpellVisuals.Shape.ORBIT;
         if(stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE){
             if(lengthSquared<0.01)return;
             sx=sy=shape==SpellVisuals.Shape.TEMPEST_BEAM?1.5f*size:shape==SpellVisuals.Shape.FLAME?0.8f:shape==SpellVisuals.Shape.LIGHTNING?0.7f:0.45f;
@@ -65,7 +65,7 @@ final class AaaEffects {
             // Flight messages start at the visible head; their endpoint carries its direction.
             sy=shape==SpellVisuals.Shape.WAVE?0.9f:size;
         } else if(stage==SpellVisuals.Stage.AREA){
-            sy=switch(shape){case PULSE -> 0.7f;case CAGE,CURSE -> 1.0f;case FANG_ROW -> 1.8f;case SANCTUARY_FIELD -> 1.2f;case DOOM_WELL -> size;case VORTEX -> Math.min(4,size);default -> Math.min(2.5f,size);};
+            sy=switch(shape){case PULSE -> 0.7f;case TOTEM -> 1.5f;case RAIN -> 1f;case BLESSING -> 1f;case DOMAIN -> 1.5f;case SLASH,ORBIT -> size;case CAGE,CURSE -> 1.0f;case FANG_ROW -> 1.8f;case SANCTUARY_FIELD -> 1.2f;case DOOM_WELL -> size;case VORTEX -> Math.min(4,size);default -> Math.min(2.5f,size);};
         }
         try {
             var id=ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,shape.name().toLowerCase(Locale.ROOT)+"_"+spell.theme.name().toLowerCase(Locale.ROOT));
@@ -120,7 +120,7 @@ final class AaaEffects {
         String aaa=mods.getModContainerById("aaa_particles").map(m->m.getModInfo().getVersion().toString()).orElse("not installed");
         String kw=mods.getModContainerById(KingdomWands.ID).map(m->m.getModInfo().getVersion().toString()).orElse("unknown");
         if(!checked)initialize();
-        say("Client "+kw+" | AAAParticles "+aaa+" | enabled="+KingdomWands.AAA_PARTICLES.get()+" | API="+available);
+        say("Client "+kw+" | AAAParticles "+aaa+" | enabled="+ArcanaConfig.AAA_PARTICLES.get()+" | API="+available);
         int assets=0,registered=0;
         var manager=Minecraft.getInstance().getResourceManager();
         for(var shape:SpellVisuals.Shape.values())for(var theme:Spell.Theme.values()){
@@ -135,11 +135,11 @@ final class AaaEffects {
         }catch(ReflectiveOperationException|LinkageError|RuntimeException error){lastError=error.toString();}
         say("Effect files="+assets+"/"+SpellVisuals.assetCount()+" | registered="+registered+"/"+SpellVisuals.assetCount()+" | packets="+received+" | requested="+requested+" | created="+played+" | failures="+failed);
         say("Last error: "+lastError);
-        KingdomWands.LOG.info("Wand visual diagnostics: client={}, AAA={}, enabled={}, API={}, files={}, registered={}, packets={}, requested={}, created={}, failures={}, lastError={}",kw,aaa,KingdomWands.AAA_PARTICLES.get(),available,assets,registered,received,requested,played,failed,lastError);
+        KingdomWands.LOG.info("Wand visual diagnostics: client={}, AAA={}, enabled={}, API={}, files={}, registered={}, packets={}, requested={}, created={}, failures={}, lastError={}",kw,aaa,ArcanaConfig.AAA_PARTICLES.get(),available,assets,registered,received,requested,played,failed,lastError);
     }
     static void test(){
         diagnostics();
-        if(!available||!KingdomWands.AAA_PARTICLES.get()){
+        if(!available||!ArcanaConfig.AAA_PARTICLES.get()){
             say("Test unavailable: AAAParticles must be installed and aaaParticles must be true.");return;
         }
         testTicks=60;

@@ -28,6 +28,12 @@ final class SpellAudio {
         case SINGULARITY->irons("spell.black_hole.charge");case GRAVITY_WELL->irons("spell.gravity_fissure.charge");
         case FIRE_COMET->irons("spell.fire_bomb.charge");case EMPIRE_COMET,ARCANE_VOLLEY->irons("spell.summon_swords.charge");
         case SOUL_PRISON,CAPTURE,GRAVITY_CHOKE->irons("spell.arcane_shackle.charge");
+        case PRISMATIC_RUIN->irons("spell.soulfire_ray.charge");
+        case SERAPHIC_DESCENT,JUDGEMENT_RAY->irons("entity.sunbeam.windup");
+        case CRIMSON_HARVEST,SHATTER,MEMORY_FRACTURE->irons("spell.summon_swords.charge");
+        case GLACIAL_PRISON,ABSOLUTE_ZERO->irons("spell.frostbite.freeze");
+        case DRAGON_BREATH->irons("spell.heat_surge.prepare");
+        case NIGHT_BLOOM,DREAD_EFFIGY->irons("cast.void_tentacles.start");
         default->irons(switch(spell.theme){
             case HOLY->"cast.generic.holy";case ICE->"spell.frostwave.prepare";
             case MAGIC->"magic_arrow_charge";case BLOOD->"heartstop_cast";case POISON->"spell.acid_orb.charge";
@@ -62,7 +68,7 @@ final class SpellAudio {
         case SOUL->"entity.warden.heartbeat";case GRAVITY->"block.beacon.ambient";case MAGIC->"block.amethyst_block.chime";
     };}
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
-    static float volume(float base){return (float)(base*KingdomWands.SOUND_VOLUME.get());}
+    static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
         case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_BOOM->"entity.enderman.scream";
         case DOOM->irons("spell.black_hole.cast");case SANCTUARY->irons("cast.generic.holy");
@@ -74,10 +80,32 @@ final class SpellAudio {
         case FLAME_SHOCK_WAVE->irons("spell.flaming_strike.cast");case THUNDER_PULSE->irons("spell.shockwave.cast");
         case SHRIEKING_PULSE->"entity.warden.roar";
         case SOUL_PRISON->"block.sculk_shrieker.shriek";
+        case ARCANE_STEP,RIFT_BLINK,UMBRAL_STEP,PILGRIM_STEP->irons("abyssal_teleport");
+        case CINDER_STEP,PHOENIX_RUSH->irons("spell.heat_surge.prepare");
+        case STORM_STEP->irons("lightning_woosh_01");case GLACIER_STEP->irons("frost_step");
+        case BLOOD_REAP,DUSK_CLEAVE,SPATIAL_SHEAR,RADIANT_SWEEP->irons("entity.generic.swing_blade");
+        case THUNDERCLAP->irons("spell.shockwave.cast");
+        case BLOOD_NEEDLES,VIPER_FANGS,CRYSTAL_BARRAGE->irons("entity.generic.throw_dagger");
+        case CRIMSON_TETHER->irons("cast.blood_step");case SANGUINE_PACT->irons("heartstop_cast");
+        case CRIMSON_HARVEST->irons("entity.devour_jaw.bite");
+        case VEIL_OF_NIGHT->irons("cast.abyssal_shroud");case NIGHT_BLOOM->irons("spell.blight.begin");
+        case DREAD_EFFIGY,WISP_LANTERN,SPORE_TOTEM->irons("spell.firefly_swarm.prepare");
+        case ORBITAL_BLADES->irons("spell.summon_swords.cast");
+        case PRISMATIC_RUIN->irons("spell.soulfire_ray.cast");case GRAVITY_STAMP->irons("spell.gravity_fissure.charge");
+        case RESONANT_GUARD->irons("spell.echoing_strikes.cast");case MEMORY_FRACTURE->irons("entity.echoing_strike.echoing_strike");
+        case THORN_LASH,BRAMBLE_RING->irons("entity.root.emerge");case TOXIC_MOLT->irons("spell.spider_aspect.cast");
+        case GORGON_GAZE->irons("spell.poison_splash.begin");case CORROSIVE_RAIN->irons("spell.blight.begin");
+        case LUMINOUS_DART->irons("spell.guiding_bolt.cast");
+        case MENDING_LIGHT,ABSOLUTION,RENEWAL_HYMN->irons("spell.cleanse.cast");
+        case BLESSING_OF_VIGOR,DAWN_WARD,CONSECRATION->irons("cast.generic.holy");
+        case JUDGEMENT_RAY,SERAPHIC_DESCENT->irons("spell.divine_smite.cast");
+        case FROST_NEEDLE,CRYO_LANCE->irons("spell.ray_of_frost.cast");
+        case ICE_SERPENT,SHATTER,HAILSTORM->irons("entity.ice_spike.emerge");
+        case FROZEN_AEGIS->irons("cast.ice_block");case GLACIAL_PRISON,ABSOLUTE_ZERO->irons("spell.frostbite.freeze");
         default->castId(spell.theme);
     };}
     private static float castPitch(Spell spell){return switch(spell.kind){
-        case COMET,CANNON,BURST,SMITE,WELL,METEOR,RAIL,COLLAPSE->0.7f;
+        case COMET,CANNON,BURST,SMITE,WELL,METEOR,RAIL,COLLAPSE,PIERCING_ORB,PILLAR,DOMAIN->0.7f;
         case BOLT,VOLLEY,WAVE,LANCE->1.15f;
         case SIPHON,CAPTURE,CHOKE,SUSPEND->0.85f;
         default->1.0f;
@@ -93,9 +121,15 @@ final class SpellAudio {
     }
     static void impact(ServerPlayer player,Vec3 pos,Spell spell){
         float weight=switch(spell.kind){case COMET,BURST,PULSE,SMITE,SONIC,MARK,METEOR,RAIL,COLLAPSE->1.15f;default->1.0f;};
-        float gain=(float)(weight*KingdomWands.IMPACT_VOLUME.get());
-        boolean direct=KingdomWands.CASTER_IMPACTS.get();
-        String primary=spell.kind==Spell.Kind.SONIC?"entity.warden.sonic_boom":impactId(spell.theme);
+        float gain=(float)(weight*ArcanaConfig.IMPACT_VOLUME.get());
+        boolean direct=ArcanaConfig.CASTER_IMPACTS.get();
+        String primary=switch(spell){
+            case SONIC_BOOM->"entity.warden.sonic_boom";
+            case JUDGEMENT_RAY,SERAPHIC_DESCENT->irons("entity.sunbeam.impact");
+            case PRISMATIC_RUIN->irons("force_impact");case SHATTER->irons("entity.ice_block.impact");
+            case MENDING_LIGHT,SANCTUARY->irons("spell.cleanse.cast");
+            default->impactId(spell.theme);
+        };
         cue(player,pos,primary,1.6f*gain,spell.theme==Spell.Theme.BLOOD?0.7f:0.85f,direct);
         cue(player,pos,(spell.kind==Spell.Kind.METEOR||spell.kind==Spell.Kind.COLLAPSE||spell.kind==Spell.Kind.DOOM)?"entity.generic.explode":impactAccentId(spell.theme),1.05f*gain,0.8f,direct);
     }
@@ -108,8 +142,8 @@ final class SpellAudio {
         cue(player,pos,"entity.warden.heartbeat",1.0f,0.7f+progress*0.5f,true);
     }
     static void cannon(ServerPlayer player,Vec3 pos,String phase){
-        float gain=KingdomWands.IMPACT_VOLUME.get().floatValue();
-        boolean direct=KingdomWands.CASTER_IMPACTS.get();
+        float gain=ArcanaConfig.IMPACT_VOLUME.get().floatValue();
+        boolean direct=ArcanaConfig.CASTER_IMPACTS.get();
         switch(phase){
             case "release" -> {
                 cue(player,pos,"entity.warden.sonic_boom",2.4f*gain,0.65f,true);

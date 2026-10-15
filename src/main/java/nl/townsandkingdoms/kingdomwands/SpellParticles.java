@@ -13,7 +13,7 @@ final class SpellParticles {
     private static int remaining;
     private static long frame;
     private SpellParticles() {}
-    static void tick(){remaining=128;frame++;}
+    static void tick(){remaining=ArcanaConfig.NATIVE_BUDGET.get();frame++;}
     static Vec3 chargeOffset(Spell.Theme theme,double a,double progress){
         double r=1.8-progress;
         return switch(theme){
@@ -67,6 +67,7 @@ final class SpellParticles {
                 case MAGIC -> {p=p.add(side.scale(Math.cos(a)*r)).add(up.scale(Math.sin(a)*r));v=dir.scale(.07);}
                 default -> throw new IllegalStateException();
             }
+            if(spell.kind==Spell.Kind.RAIN&&stage==SpellVisuals.Stage.AREA){p=pos.add(Math.cos(a)*size*.8,3+t,Math.sin(a)*size*.8);v=new Vec3(0,-.3,0);}
             level.sendParticles(particle(spell.theme),p.x,p.y,p.z,0,v.x,v.y,v.z,1);
         }
         if(impact&&remaining>0){

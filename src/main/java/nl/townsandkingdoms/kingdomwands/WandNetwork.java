@@ -14,6 +14,11 @@ public final class WandNetwork {
         public static final StreamCodec<RegistryFriendlyByteBuf,Action> CODEC=StreamCodec.of((buf,msg)->buf.writeVarInt(msg.action),buf->new Action(buf.readVarInt()));
         @Override public Type<Action> type(){return TYPE;}
     }
+    public record Select(ResourceLocation wand,int slot) implements CustomPacketPayload {
+        public static final Type<Select> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,"select"));
+        public static final StreamCodec<RegistryFriendlyByteBuf,Select> CODEC=StreamCodec.of((b,m)->{b.writeResourceLocation(m.wand);b.writeVarInt(m.slot);},b->new Select(b.readResourceLocation(),b.readVarInt()));
+        @Override public Type<Select> type(){return TYPE;}
+    }
     /** Pure visual burst: the server never spawns damaging rocket entities. */
     public record Burst(double x,double y,double z,int color,float scale) implements CustomPacketPayload {
         public Burst(double x,double y,double z,int color){this(x,y,z,color,1);}
@@ -37,10 +42,17 @@ public final class WandNetwork {
                 &&new net.minecraft.world.phys.Vec3(x,y,z).distanceToSqr(new net.minecraft.world.phys.Vec3(endX,endY,endZ))<=128*128;
         }
     }
+    static void select(ServerPlayer player,Select message){
+        if(message.slot>=0&&message.slot<12&&player.getMainHandItem().getItem() instanceof WandItem
+            &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
+    }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("7");
+        var r=e.registrar("8");
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer player)SpellEngine.action(player,msg.action);
+        }));
+        r.playToServer(Select.TYPE,Select.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
+            if(ctx.player() instanceof ServerPlayer p)select(p,msg);
         }));
         r.playToClient(Visual.TYPE,Visual.CODEC,(msg,ctx)->ctx.enqueueWork(()->AaaEffects.visual(msg)));
         r.playToClient(Burst.TYPE,Burst.CODEC,(msg,ctx)->ctx.enqueueWork(()->WandClient.burst(msg)));

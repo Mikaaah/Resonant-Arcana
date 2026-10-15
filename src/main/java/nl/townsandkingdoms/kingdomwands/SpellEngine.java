@@ -37,12 +37,15 @@ public final class SpellEngine {
     public static int activeCount(){return ACTIVE.size();}
     public static void clear(){ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
-        if(action<0||action>2||!player.isAlive()||player.isSpectator())return;
+        if(action<0||action>14||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
         if(!(stack.getItem() instanceof WandItem wand))return;
         if(LAST_ACTION.getOrDefault(player.getUUID(),Long.MIN_VALUE)==ticks)return;
         LAST_ACTION.put(player.getUUID(),ticks);
-        if(action==0){if(KingdomWands.WAND_CASTING.get())IronsCompat.castWand(player,wand.selected(stack),stack);else message(player,"Use your spellbook to cast");}else {IronsCompat.cancel(player);wand.cycle(player,stack,action==1?1:-1);}
+        if(action==0){if(ArcanaConfig.WAND_CASTING.get())IronsCompat.castWand(player,wand.selected(stack),stack);else message(player,"Use your spellbook to cast");}
+        else if(action==2&&IronsCompat.learnOffhand(player,wand,stack))return;
+        else if(action>=3){if(action-3<wand.spells.size()){IronsCompat.cancel(player);wand.select(stack,action-3);wand.announce(player,stack);}}
+        else {IronsCompat.cancel(player);wand.cycle(player,stack,action==1?1:-1);}
     }
     public static boolean cast(ServerPlayer player,Spell spell) {
         return cast(player,spell,null);
@@ -52,9 +55,10 @@ public final class SpellEngine {
         return cast(player,spell,new BookCast(Math.clamp(power,0,10),source,Math.max(1,cooldown),prepared));
     }
     static boolean canStart(ServerPlayer player,Spell spell){
-        if(!player.isAlive()||player.isSpectator()||ACTIVE.size()>=KingdomWands.MAX_ACTIVE.get()||ACTIVE.stream().filter(c->c.owner.equals(player.getUUID())).count()>=8)return false;
+        if(!player.isAlive()||player.isSpectator()||ACTIVE.size()>=ArcanaConfig.MAX_ACTIVE.get()||ACTIVE.stream().filter(c->c.owner.equals(player.getUUID())).count()>=ArcanaConfig.PER_PLAYER_LIMIT.get())return false;
         if(COOLDOWNS.getOrDefault(player.getUUID(),Map.of()).getOrDefault(spell.cooldownKey(),0L)>ticks)return false;
         Vec3 start=player.getEyePosition();
+        if(!SpellActions.canStart(player,spell))return false;
         return !requiresTarget(spell)||target(player,start,clipLoaded(player.serverLevel(),start,player.getLookAngle(),spell.range,player),0.5)!=null;
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
@@ -75,7 +79,7 @@ public final class SpellEngine {
         var cooldowns=COOLDOWNS.computeIfAbsent(player.getUUID(),id->new HashMap<>());
         long left=cooldowns.getOrDefault(spell.cooldownKey(),0L)-ticks;
         if(left>0){message(player,spell.title+": "+String.format(Locale.ROOT,"%.1f",left/20.0)+"s");return false;}
-        if(ACTIVE.size()>=KingdomWands.MAX_ACTIVE.get()||ACTIVE.stream().filter(c->c.owner.equals(player.getUUID())).count()>=8){message(player,"Too many active spells");return false;}
+        if(ACTIVE.size()>=ArcanaConfig.MAX_ACTIVE.get()||ACTIVE.stream().filter(c->c.owner.equals(player.getUUID())).count()>=ArcanaConfig.PER_PLAYER_LIMIT.get()){message(player,"Too many active spells");return false;}
         ServerLevel level=player.serverLevel();
         Vec3 start=player.getEyePosition(), direction=player.getLookAngle().normalize();
         Vec3 aim=clipLoaded(level,start,direction,spell.range,player);
@@ -94,7 +98,7 @@ public final class SpellEngine {
         if(book==null||!book.prepared())SpellAudio.cast(player,spell);
         SpellVisuals.send(level,spell,SpellVisuals.Stage.CAST,muzzle,muzzle.add(direction),0.65);
 
-        switch(spell.kind){
+        if(SpellActions.handles(spell.kind))timed=SpellActions.begin(cast);else switch(spell.kind){
             case TARGET, CONFUSE, STUN, LAUNCH, PUSH, PULL, SIPHON -> {
                 timed=false;
                 if(target==null){message(player,"Aim at a living target within range");return false;}
@@ -127,9 +131,9 @@ public final class SpellEngine {
             case STORM, WELL, FIELD -> {cast.pos=target!=null?target.position():aim;cast.duration=96;}
             case AURA -> {cast.pos=player.position();cast.duration=60;}
             case LEAP -> {SpellVisuals.send(level,spell,SpellVisuals.Stage.LINK,start.subtract(direction.scale(3)),start,1);timed=false;player.setDeltaMovement(direction.scale(1.15).add(0,0.4,0));player.hurtMarked=true;trail(level,start,spell.theme,0.25);}
-            case CAPTURE, CHOKE -> {cast.anchor=target.position();cast.duration=60;}
+            case CAPTURE, CHOKE -> {cast.anchor=target.position();cast.duration=SpellActions.supportDuration(cast,60);}
             case PULSE -> {cast.pos=player.position().add(0,0.5,0);cast.duration=14;}
-            case WARD -> cast.duration=80;
+            case WARD -> cast.duration=SpellActions.supportDuration(cast,spell.duration());
             case TWISTER -> {cast.pos=target!=null?target.position():aim;cast.duration=40;}
             case CHANNEL -> cast.duration=30;
             case SONIC -> cast.duration=30;
@@ -137,17 +141,17 @@ public final class SpellEngine {
             case MARK -> {cast.pos=target.position();cast.duration=40;}
             case SUSPEND -> {cast.anchor=target.position();cast.pos=target.position();cast.duration=40;}
             case VOLLEY -> cast.duration=44;
-            case LANCE -> {timed=false;beam(cast,start,direction,false);}
+            case LANCE -> {timed=false;beam(cast,start,direction);}
             default -> cast.duration=(int)Math.ceil(spell.range/(spell.kind==Spell.Kind.COMET?0.9:1.1))+2;
         }
         if(book!=null&&book.prepared())cast.age=spell.kind==Spell.Kind.CANNON?39:spell.kind==Spell.Kind.SONIC?19:0;
         if(timed)ACTIVE.add(cast);
-        int cooldown=book!=null?book.cooldown():Math.max(1,(int)Math.ceil(spell.cooldown*KingdomWands.COOLDOWNS.get()));
+        int cooldown=book!=null?book.cooldown():Math.max(1,(int)Math.ceil(spell.cooldown*ArcanaConfig.COOLDOWNS.get()));
         // Iron's owns individual spell cooldowns; keep only cross-spell recovery groups here.
         if(book==null||!spell.cooldownKey().equals(spell.name()))cooldowns.put(spell.cooldownKey(),ticks+cooldown);
         message(player,spell.title);return true;
     }
-    private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND->true;default->false;};}
+    private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE->true;default->false;};}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
         for(Iterator<Cast> it=ACTIVE.iterator();it.hasNext();){Cast c=it.next();
@@ -167,6 +171,7 @@ public final class SpellEngine {
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
         if(c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
+        if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
                 double radius=Math.min(c.spell.radius,2+c.age*.25);
@@ -229,7 +234,7 @@ public final class SpellEngine {
             case RAIL -> {
                 if(c.age==1){
                     c.anchor=clipLoaded(c.level,c.pos,c.dir,c.spell.range,c.caster);
-                    beam(c,c.pos,c.dir,false);
+                    beam(c,c.pos,c.dir);
                 }else if(c.age==5||c.age==10){
                     SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,c.pos,c.anchor,c.age==5?.7:.35);
                 }
@@ -292,7 +297,7 @@ public final class SpellEngine {
                 if(c.age==1)impactFeedback(c,victim.getBoundingBox().getCenter());
                 victim.setDeltaMovement(Vec3.ZERO);victim.hurtMarked=true;
                 effect(victim,MobEffects.MOVEMENT_SLOWDOWN,5,10);effect(victim,MobEffects.WEAKNESS,5,2);
-                if(c.spell.kind==Spell.Kind.CHOKE&&c.age%20==1){c.hit.clear();hit(c,victim,c.anchor,true);}
+                if(c.spell.kind==Spell.Kind.CHOKE&&c.age%20==1&&c.age<=c.spell.duration()){c.hit.clear();hit(c,victim,c.anchor,true);}
                 if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,victim.getBoundingBox().getCenter(),victim.getBoundingBox().getCenter(),0.9);
                 if(c.age%4==0)ring(c.level,victim.position().add(0,0.2+c.age%12*0.12,0),0.8,c.spell.theme,c.age*0.2);
             }
@@ -410,7 +415,8 @@ public final class SpellEngine {
         if(c.age<=40){
             if(c.book==null&&!(c.caster.getMainHandItem().getItem() instanceof WandItem))return false;
             c.travel=c.caster.getLookAngle().normalize();
-            c.pos=clipLoaded(c.level,c.caster.getEyePosition(),c.travel,1.25,c.caster);
+            // Preserve the cannon's original one-block muzzle offset.
+            c.pos=clipLoaded(c.level,c.caster.getEyePosition(),c.travel,1,c.caster);
             double progress=c.age/40.0;
             if(c.age<40){
                 if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.CHARGE,c.pos,c.pos.add(c.travel),0.6+progress*0.9);
@@ -463,48 +469,47 @@ public final class SpellEngine {
     private static void cannonSparks(Cast c,Vec3 pos,float scale){
         PacketDistributor.sendToPlayersNear(c.level,null,pos.x,pos.y,pos.z,96,new WandNetwork.Burst(pos.x,pos.y,pos.z,c.spell.theme.color,scale));
     }
-    private static void beam(Cast c,Vec3 start,Vec3 dir,boolean sonic){
+    private static void beam(Cast c,Vec3 start,Vec3 dir){
         Vec3 end=clipLoaded(c.level,start,dir,c.spell.range,c.caster);double length=start.distanceTo(end);
         SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,start,end,1);
         for(double d=0;d<=length;d+=0.5){Vec3 point=start.add(dir.scale(d));trail(c.level,point,c.spell.theme,0.04);
-            if(sonic&&d%2==0)c.level.sendParticles(ParticleTypes.SONIC_BOOM,point.x,point.y,point.z,1,0,0,0,0);
         }
         for(var victim:near(c.caster,start.add(end).scale(0.5),length*0.5+2))
             if(victim.getBoundingBox().inflate(c.spell.radius).clip(start,end).isPresent()&&visible(c,start,victim.getBoundingBox().getCenter()))hit(c,victim,start,true);
 
         burst(c,end);
     }
-    private static boolean healingAlly(ServerPlayer caster,LivingEntity entity){
+    static boolean healingAlly(ServerPlayer caster,LivingEntity entity){
         if(!entity.isAlive()||entity.isSpectator())return false;
         if(entity==caster)return true;
         if(entity instanceof TamableAnimal pet)return caster.getUUID().equals(pet.getOwnerUUID());
-        return entity instanceof net.minecraft.world.entity.player.Player&&caster.getTeam()!=null&&caster.getTeam()==entity.getTeam();
+        return entity instanceof net.minecraft.world.entity.player.Player&&(caster.getTeam()!=null&&caster.getTeam()==entity.getTeam()||ArcanaConfig.TEAMLESS_HEALING.get()&&caster.getTeam()==null&&entity.getTeam()==null);
     }
     private static void sanctuary(Cast c){
         Vec3 center=c.caster.position().add(0,.5,0);float amount=12*(c.book==null?1:c.book.power());
         var allies=c.level.getEntitiesOfClass(LivingEntity.class,new AABB(center,center).inflate(c.spell.radius),e->healingAlly(c.caster,e));
         if(!allies.contains(c.caster))allies.add(c.caster);
         for(var ally:allies)if(ally.getBoundingBox().getCenter().distanceToSqr(center)<c.spell.radius*c.spell.radius&&visible(c,c.caster.getEyePosition(),ally.getBoundingBox().getCenter())){
-            ally.heal(amount);
+            ally.heal((float)(amount*ArcanaConfig.HEALING.get()));
             for(var debuff:List.of(MobEffects.POISON,MobEffects.WITHER,MobEffects.BLINDNESS,MobEffects.DARKNESS))ally.removeEffect(debuff);
             SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,ally.getBoundingBox().getCenter(),ally.getBoundingBox().getCenter(),1.4);
         }
         SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,center,center,c.spell.radius);SpellAudio.impact(c.caster,center,c.spell);
     }
-    private static void area(Cast c,Vec3 pos,double radius,boolean once){
+    static void area(Cast c,Vec3 pos,double radius,boolean once){
         for(LivingEntity entity:near(c.caster,pos,radius))if(visible(c,pos,entity.getBoundingBox().getCenter()))hit(c,entity,pos,once);
     }
     public static boolean allowed(ServerPlayer caster,Entity entity){
         if(entity==caster||!entity.isAlive()||entity.isSpectator()||entity instanceof ArmorStand)return false;
-        if(entity instanceof net.minecraft.world.entity.player.Player other&&(!KingdomWands.PVP.get()||!caster.server.isPvpAllowed()||!caster.canHarmPlayer(other)))return false;
+        if(entity instanceof net.minecraft.world.entity.player.Player other&&(!ArcanaConfig.PVP.get()||!caster.server.isPvpAllowed()||!caster.canHarmPlayer(other)))return false;
         if(entity instanceof TamableAnimal tame&&caster.getUUID().equals(tame.getOwnerUUID()))return false;
         var team=caster.getTeam();
         return team==null||team.isAllowFriendlyFire()||entity.getTeam()!=team;
     }
-    private static List<LivingEntity> near(ServerPlayer player,Vec3 pos,double radius){
+    static List<LivingEntity> near(ServerPlayer player,Vec3 pos,double radius){
         return player.serverLevel().getEntitiesOfClass(LivingEntity.class,new AABB(pos,pos).inflate(radius),e->allowed(player,e)&&e.getBoundingBox().getCenter().distanceToSqr(pos)<(radius+1)*(radius+1));
     }
-    private static LivingEntity target(ServerPlayer caster,Vec3 start,Vec3 end,double margin){
+    static LivingEntity target(ServerPlayer caster,Vec3 start,Vec3 end,double margin){
         LivingEntity result=null;double distance=start.distanceToSqr(end)+1;
         for(var entity:caster.serverLevel().getEntitiesOfClass(LivingEntity.class,new AABB(start,end).inflate(margin+1),e->allowed(caster,e))){
             AABB box=entity.getBoundingBox().inflate(margin);var point=box.clip(start,end);
@@ -513,20 +518,26 @@ public final class SpellEngine {
         }
         return result;
     }
-    private static Vec3 clipLoaded(ServerLevel level,Vec3 start,Vec3 dir,double range,Entity caster){
-        Vec3 end=start;
-        for(double d=0.5;d<=range;d+=0.5){Vec3 p=start.add(dir.scale(d));if(!level.hasChunkAt(BlockPos.containing(p)))break;end=p;}
+    static Vec3 clipLoaded(ServerLevel level,Vec3 start,Vec3 dir,double range,Entity caster){
+        Vec3 end=start;double travelled=0;
+        for(double d=.5;d<=range;d+=.5){Vec3 p=start.add(dir.scale(d));if(!level.hasChunkAt(BlockPos.containing(p)))break;end=p;travelled=d;}
+        if(range-travelled<.5001){Vec3 exact=start.add(dir.scale(range));if(level.hasChunkAt(BlockPos.containing(exact)))end=exact;}
         return level.clip(new ClipContext(start,end,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
     }
-    private static boolean visible(Cast c,Vec3 start,Vec3 end){return c.level.clip(new ClipContext(start,end,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,c.caster)).getType()==HitResult.Type.MISS;}
-    private static void hit(Cast c,LivingEntity victim,Vec3 from,boolean once){
+    static boolean visible(Cast c,Vec3 start,Vec3 end){return c.level.clip(new ClipContext(start,end,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,c.caster)).getType()==HitResult.Type.MISS;}
+    static void hit(Cast c,LivingEntity victim,Vec3 from,boolean once){
         if(!allowed(c.caster,victim)||(once&&!c.hit.add(victim.getUUID())))return;
         if(c.spell.damage>0){
             float before=victim.getHealth();
-            boolean hurt=victim.hurt(c.book==null?c.level.damageSources().indirectMagic(c.caster,c.caster):c.book.source(),(float)(c.spell.damage*KingdomWands.DAMAGE.get()*(c.book==null?1:c.book.power())));
-            if(hurt)impactFeedback(c,victim.getBoundingBox().getCenter());
+            float multiplier=1;
+            if(c.spell.kind==Spell.Kind.EXECUTE){
+                boolean exploit=c.spell==Spell.CRIMSON_HARVEST?victim.getHealth()<=victim.getMaxHealth()*.35f:c.spell==Spell.MEMORY_FRACTURE?victim.hasEffect(MobEffects.DARKNESS):victim.getTicksFrozen()>=140||(victim.getEffect(MobEffects.MOVEMENT_SLOWDOWN)!=null&&victim.getEffect(MobEffects.MOVEMENT_SLOWDOWN).getAmplifier()>=2);
+                if(exploit)multiplier=1.5f;
+            }
+            boolean hurt=victim.hurt(c.book==null?c.level.damageSources().indirectMagic(c.caster,c.caster):c.book.source(),(float)(c.spell.damage*multiplier*ArcanaConfig.DAMAGE.get()*(c.book==null?1:c.book.power())));
+            if(hurt){impactFeedback(c,victim.getBoundingBox().getCenter());if(c.spell==Spell.CRIMSON_HARVEST&&!victim.isAlive())SpellActions.heal(c,c.caster,2);}
             if(c.spell.kind==Spell.Kind.SIPHON&&hurt&&victim.getHealth()<before){
-                c.caster.heal(Math.min(2.0f,(before-victim.getHealth())*0.4f));
+                c.caster.heal((float)(Math.min(2.0f*SpellActions.power(c),(before-victim.getHealth())*0.4f)*ArcanaConfig.HEALING.get()));
                 Vec3 fromSoul=victim.getBoundingBox().getCenter(),toSoul=c.caster.getEyePosition();
                 SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,fromSoul,toSoul,1);
                 for(int i=0;i<=20;i++)trail(c.level,fromSoul.lerp(toSoul,i/20.0),c.spell.theme,0.035);
@@ -535,6 +546,9 @@ public final class SpellEngine {
         if(c.spell.damage==0)impactFeedback(c,victim.getBoundingBox().getCenter());
         if(c.spell==Spell.WITHERING_HEX)effect(victim,MobEffects.WITHER,60,0);
         if(c.spell==Spell.SOUL_PRISON)effect(victim,MobEffects.DARKNESS,60,0);
+        if(c.spell.theme==Spell.Theme.ICE){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,0);victim.setTicksFrozen(Math.min(240,victim.getTicksFrozen()+40));}
+        if(c.spell==Spell.BRAMBLE_RING)effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,1);
+        if(c.spell.kind==Spell.Kind.DOMAIN){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,50,3);victim.setTicksFrozen(Math.max(160,victim.getTicksFrozen()));}
         if(c.spell.theme==Spell.Theme.FIRE)victim.igniteForSeconds(3);
         if(c.spell.theme==Spell.Theme.DARK){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
         if(c.spell.theme==Spell.Theme.POISON)effect(victim,MobEffects.POISON,80,0);
@@ -543,27 +557,27 @@ public final class SpellEngine {
             case STUN->{effect(victim,MobEffects.MOVEMENT_SLOWDOWN,60,5);effect(victim,MobEffects.WEAKNESS,60,1);}
             case PUSH,PULL->{Vec3 d=victim.position().subtract(c.caster.position()).multiply(1,0,1).normalize().scale(c.spell.kind==Spell.Kind.PULL?-0.9:1.3);victim.setDeltaMovement(d.add(0,0.25,0));victim.hurtMarked=true;}
             case LAUNCH->{victim.setDeltaMovement(victim.getDeltaMovement().add(0,1.1,0));victim.hurtMarked=true;}
-            case CANNON,COMET,PULSE,BURST,TWISTER,SMITE->{Vec3 delta=victim.position().subtract(from).multiply(1,0,1).normalize().scale(0.65);victim.push(delta.x,0.3,delta.z);victim.hurtMarked=true;}
+            case SWEEP,CANNON,COMET,PULSE,BURST,TWISTER,SMITE->{Vec3 delta=victim.position().subtract(from).multiply(1,0,1).normalize().scale(0.65);victim.push(delta.x,0.3,delta.z);victim.hurtMarked=true;}
             default->{}
         }
     }
-    private static void effect(LivingEntity e,net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect,int ticks,int amp){e.addEffect(new MobEffectInstance(effect,ticks,amp));}
+    static void effect(LivingEntity e,net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect,int ticks,int amp){e.addEffect(new MobEffectInstance(effect,ticks,amp));}
     public static void switchEffect(ServerPlayer player,Spell.Theme theme){
         trail(player.serverLevel(),player.getEyePosition().add(player.getLookAngle().scale(0.6)),theme,0.15);
         player.serverLevel().playSound(null,player.blockPosition(),SoundEvents.UI_BUTTON_CLICK.value(),SoundSource.PLAYERS,0.35F,1.4F);
     }
-    private static void trail(ServerLevel level,Vec3 pos,Spell.Theme theme,double spread){
-        if(visualPoints++>=KingdomWands.VISUAL_BUDGET.get())return;
+    static void trail(ServerLevel level,Vec3 pos,Spell.Theme theme,double spread){
+        if(visualPoints++>=ArcanaConfig.VISUAL_BUDGET.get())return;
         int color=theme.color;Vector3f rgb=new Vector3f(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f);
         if(theme==Spell.Theme.BLOOD){
-            level.sendParticles(new DustColorTransitionOptions(rgb,new Vector3f(0.19f,0.005f,0.025f),1.25f),pos.x,pos.y,pos.z,KingdomWands.PARTICLES.get(),spread,spread,spread,0);
+            level.sendParticles(new DustColorTransitionOptions(rgb,new Vector3f(0.19f,0.005f,0.025f),1.25f),pos.x,pos.y,pos.z,ArcanaConfig.PARTICLES.get(),spread,spread,spread,0);
             // Real blood droplets from Iron's, rather than redstone block debris.
             level.sendParticles(SpellParticles.particle(Spell.Theme.BLOOD),pos.x,pos.y,pos.z,1,spread,spread,spread,0.015);
         } else if(theme==Spell.Theme.SOUL){
-            level.sendParticles(new DustColorTransitionOptions(rgb,new Vector3f(0.025f,0.12f,0.17f),1.15f),pos.x,pos.y,pos.z,KingdomWands.PARTICLES.get(),spread,spread,spread,0);
+            level.sendParticles(new DustColorTransitionOptions(rgb,new Vector3f(0.025f,0.12f,0.17f),1.15f),pos.x,pos.y,pos.z,ArcanaConfig.PARTICLES.get(),spread,spread,spread,0);
             level.sendParticles(ParticleTypes.SCULK_SOUL,pos.x,pos.y,pos.z,1,spread,spread,spread,0.012);
         } else {
-            level.sendParticles(new DustParticleOptions(rgb,1.1f),pos.x,pos.y,pos.z,KingdomWands.PARTICLES.get(),spread,spread,spread,0);
+            level.sendParticles(new DustParticleOptions(rgb,1.1f),pos.x,pos.y,pos.z,ArcanaConfig.PARTICLES.get(),spread,spread,spread,0);
             var accent=switch(theme){case FIRE->ParticleTypes.FLAME;case DARK->ParticleTypes.SOUL;case GRAVITY->ParticleTypes.REVERSE_PORTAL;case POISON->ParticleTypes.SPORE_BLOSSOM_AIR;case THUNDER->ParticleTypes.ELECTRIC_SPARK;default->ParticleTypes.ENCHANT;};
             level.sendParticles(accent,pos.x,pos.y,pos.z,1,spread,spread,spread,0.005);
         }
@@ -573,18 +587,18 @@ public final class SpellEngine {
         Vec3 side=c.dir.cross(new Vec3(0,1,0));if(side.lengthSqr()<0.01)side=new Vec3(1,0,0);side=side.normalize();
         for(int i=-4;i<=4;i++){double t=i/4.0;Vec3 p=center.add(side.scale(t*c.spell.radius)).add(0,(1-t*t)*0.3,0);trail(c.level,p,c.spell.theme,0.05);}
     }
-    private static void ring(ServerLevel level,Vec3 center,double radius,Spell.Theme theme,double offset){
+    static void ring(ServerLevel level,Vec3 center,double radius,Spell.Theme theme,double offset){
         int count=Math.min(48,Math.max(12,(int)(radius*10)));
         for(int i=0;i<count;i++){double a=i*Math.PI*2/count+offset;trail(level,center.add(Math.cos(a)*radius,0,Math.sin(a)*radius),theme,0.015);}
     }
-    private static void impactFeedback(Cast c,Vec3 pos){
+    static void impactFeedback(Cast c,Vec3 pos){
         if(c.spell.kind==Spell.Kind.CANNON)return;
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
         if(c.spell.kind!=Spell.Kind.METEOR&&c.spell.kind!=Spell.Kind.RAIL&&c.spell.kind!=Spell.Kind.COLLAPSE&&c.spell.kind!=Spell.Kind.DOOM)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
         c.lastImpactTick=ticks;SpellAudio.impact(c.caster,pos,c.spell);
     }
-    private static void burst(Cast c,Vec3 pos){
+    static void burst(Cast c,Vec3 pos){
         ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
         SpellVisuals.send(level,c.spell,SpellVisuals.Stage.IMPACT,pos,pos,Math.clamp(c.spell.radius,1.2,5));
         if(theme==Spell.Theme.SOUL)PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
@@ -627,8 +641,9 @@ public final class SpellEngine {
         Vec3 pos;final Vec3 dir;double distance;
         VolleyBolt(Vec3 pos,Vec3 dir){this.pos=pos;this.dir=dir;}
     }
-    private static final class Cast {
+    static final class Cast {
         final UUID owner;final ServerLevel level;final Spell spell;final Vec3 dir;final LivingEntity target;final Set<UUID> hit=new HashSet<>();final List<VolleyBolt> bolts=new ArrayList<>();
+        final List<SpellActions.Shot> shots=new ArrayList<>();
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;

@@ -18,12 +18,13 @@ import org.lwjgl.glfw.GLFW;
 public final class WandClient {
     public static final KeyMapping CAST=new KeyMapping("key.kingdomwands.cast",InputConstants.Type.KEYSYM,GLFW.GLFW_KEY_G,"key.categories.kingdomwands");
     public static final KeyMapping NEXT=new KeyMapping("key.kingdomwands.next",InputConstants.Type.KEYSYM,GLFW.GLFW_KEY_V,"key.categories.kingdomwands");
+    public static final KeyMapping SELECT=new KeyMapping("key.kingdomwands.select",InputConstants.Type.KEYSYM,GLFW.GLFW_KEY_X,"key.categories.kingdomwands");
     private static int visualBursts;
     private WandClient() {}
     @SubscribeEvent public static void input(InputEvent.InteractionKeyMappingTriggered e) {
         var mc=Minecraft.getInstance();
         if(mc.player==null||mc.screen!=null||!(mc.player.getMainHandItem().getItem() instanceof WandItem))return;
-        if(e.isAttack()&&KingdomWands.MOUSE_CONTROLS.get()) {
+        if(e.isAttack()&&ArcanaConfig.MOUSE_CONTROLS.get()) {
             e.setCanceled(true);e.setSwingHand(false);PacketDistributor.sendToServer(new WandNetwork.Action(0));
         } else if(e.isUseItem()) {
             // Cancel both hands so block/offhand interaction cannot leak through the wand action.
@@ -40,8 +41,21 @@ public final class WandClient {
         visualBursts=0;
         AaaEffects.tick();
         var mc=Minecraft.getInstance();
+        while(SELECT.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem wand)mc.setScreen(new WandSelectScreen(wand,mc.player.getMainHandItem()));
         while(CAST.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem)PacketDistributor.sendToServer(new WandNetwork.Action(0));
         while(NEXT.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem)PacketDistributor.sendToServer(new WandNetwork.Action(mc.player.isShiftKeyDown()?2:1));
+    }
+    @SubscribeEvent public static void hud(net.neoforged.neoforge.client.event.RenderGuiEvent.Post event){
+        var mc=Minecraft.getInstance();
+        if(!ArcanaConfig.WAND_HUD.get()||mc.player==null||mc.screen!=null||mc.options.hideGui||!(mc.player.getMainHandItem().getItem() instanceof WandItem wand))return;
+        if(io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(mc.player).isCasting())return;
+        var stack=mc.player.getMainHandItem();Spell spell=wand.selected(stack);int level=wand.level(stack);
+        var g=event.getGuiGraphics();int x=g.guiWidth()/2-110,y=g.guiHeight()-84;
+        g.fill(x,y,x+220,y+29,0xBB0D1421);g.fill(x,y+27,x+220,y+29,0xFF000000|spell.theme.color);
+        var icon=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(KingdomWands.ID,"textures/gui/spell_icons/"+spell.bookId()+".png");
+        g.blit(icon,x+5,y+5,0,0,19,19,19,19);
+        g.drawString(mc.font,spell.title+" "+WandItem.roman(level),x+29,y+4,0xFF000000|spell.theme.color,false);
+        g.drawString(mc.font,mc.font.plainSubstrByWidth(spell.manaAtLevel(level)+" base mana · "+SELECT.getTranslatedKeyMessage().getString()+" to choose",185),x+29,y+16,0xFFB4C2D6,false);
     }
     public static void burst(WandNetwork.Burst b) {
         var mc=Minecraft.getInstance();
@@ -50,7 +64,7 @@ public final class WandClient {
         if(b.color()==Spell.Theme.BLOOD.color)return;
         // Use coloured sparks directly: no automatic white fade or duplicate vanilla blast audio.
         float r=((b.color()>>16)&255)/255f,g=((b.color()>>8)&255)/255f,blue=(b.color()&255)/255f;
-        int count=Math.min(144,(int)(24*KingdomWands.PARTICLES.get()*Math.max(1,b.scale())));
+        int count=Math.min(144,(int)(24*ArcanaConfig.PARTICLES.get()*Math.max(1,b.scale())));
         for(int i=0;i<count;i++){
             double y=1-2*(i+0.5)/count,radial=Math.sqrt(1-y*y),a=i*2.399963229728653;
             double speed=(0.12+(i%3)*0.035)*b.scale();
@@ -63,6 +77,6 @@ public final class WandClient {
     }
     @EventBusSubscriber(modid=KingdomWands.ID,value=Dist.CLIENT,bus=EventBusSubscriber.Bus.MOD)
     public static final class Registration {
-        @SubscribeEvent public static void keys(RegisterKeyMappingsEvent e){e.register(CAST);e.register(NEXT);}
+        @SubscribeEvent public static void keys(RegisterKeyMappingsEvent e){e.register(CAST);e.register(NEXT);e.register(SELECT);}
     }
 }

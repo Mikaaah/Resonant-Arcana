@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.11.0-alpha'
+version = '0.12.0-alpha'
 group = 'nl.townsandkingdoms.kingdomwands'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -30,7 +30,8 @@ tasks.register('verifyEffects') {
     inputs.dir(effects)
     doLast {
         def assets = fileTree(effects).matching { include '*.efkefc' }.files
-        if (assets.size() != 163) throw new GradleException("Expected 163 wand effects; found ${assets.size()}")
+        def manifest = new groovy.json.JsonSlurper().parse(new File(effects, 'manifest.json')).effects as Set
+        if ((assets.collect { it.name } as Set) != manifest) throw new GradleException('Packaged effects do not match manifest.json')
         assets.each { asset ->
             def buffer = java.nio.ByteBuffer.wrap(asset.bytes).order(java.nio.ByteOrder.LITTLE_ENDIAN)
             if (buffer.remaining() < 8 || buffer.getInt() != 0x454b4645) throw new GradleException("Invalid effect container: ${asset.name}")
@@ -66,7 +67,7 @@ tasks.register('verifyEffects') {
             }
             if (!found) throw new GradleException("Native effect chunk missing: ${asset.name}")
         }
-        logger.lifecycle('Verified all 163 effects use packaged Minecraft texture paths.')
+        logger.lifecycle("Verified all ${assets.size()} effects use packaged Minecraft texture paths.")
     }
 }
 tasks.named('check') { dependsOn 'verifyEffects' }

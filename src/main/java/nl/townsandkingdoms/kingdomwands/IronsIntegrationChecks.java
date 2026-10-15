@@ -84,7 +84,8 @@ final class IronsIntegrationChecks {
         var regen=player.getAttribute(AttributeRegistry.MANA_REGEN);double previousRegen=regen.getBaseValue();regen.setBaseValue(0);
         level.addNewPlayer(player);
         try{
-            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_BOOM)){
+            upgradeChecks(level,check,player,data,manager);
+            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_BOOM,Spell.PRISMATIC_RUIN,Spell.SERAPHIC_DESCENT,Spell.GRAVITY_STAMP,Spell.JUDGEMENT_RAY,Spell.ICE_SERPENT,Spell.HAILSTORM,Spell.CONSECRATION,Spell.CRIMSON_TETHER,Spell.DRAGON_BREATH,Spell.NIGHT_BLOOM)){
                 SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
                 player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);player.setHealth(selected==Spell.SANCTUARY?5:20);
                 var wand=KingdomWands.ITEMS.getEntries().stream().map(e->(WandItem)e.get()).filter(w->w.spells.contains(selected)).findFirst().orElseThrow();
@@ -138,6 +139,32 @@ final class IronsIntegrationChecks {
             data.resetCastingState();SpellEngine.clear();regen.setBaseValue(previousRegen);
             level.removePlayerImmediately(player,net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_WITH_PLAYER);
         }
+    }
+    private static void upgradeChecks(ServerLevel level,BiConsumer<Boolean,String> check,net.neoforged.neoforge.common.util.FakePlayer player,MagicData data,io.redspace.ironsspellbooks.capabilities.magic.MagicManager manager){
+        var wand=KingdomWands.FROST.get();ItemStack stack=wand.getDefaultInstance();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+        var scroll=IronsCompat.scroll(Spell.FROST_NEEDLE,3);scroll.setCount(2);player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,scroll);
+        check.accept(IronsCompat.learnOffhand(player,wand,stack)&&wand.level(stack)==3&&scroll.getCount()==1,"matching scroll teaches level III and consumes exactly one");
+        var lower=IronsCompat.scroll(Spell.FROST_NEEDLE,2);player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,lower);IronsCompat.learnOffhand(player,wand,stack);
+        check.accept(wand.level(stack)==3&&lower.getCount()==1,"lower rank scroll is rejected without consumption");
+        var foreign=IronsCompat.scroll(Spell.SOUL_CANNON,5);player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,foreign);IronsCompat.learnOffhand(player,wand,stack);
+        check.accept(wand.level(stack)==3&&foreign.getCount()==1,"foreign-school scroll is rejected without consumption");
+        player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,ItemRegistry.SCROLL.get().getDefaultInstance());IronsCompat.learnOffhand(player,wand,stack);
+        check.accept(wand.level(stack)==3,"empty scroll cannot erase learned ranks");
+        var top=IronsCompat.scroll(Spell.FROST_NEEDLE,5);player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,top);IronsCompat.learnOffhand(player,wand,stack);
+        check.accept(wand.level(stack)==5&&top.isEmpty(),"matching level V scroll upgrades and is consumed");
+        var nativeSpell=SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.FROST_NEEDLE));
+        SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+        player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);Zombie victim=target(level,6);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
+        check.accept(IronsCompat.castWand(player,Spell.FROST_NEEDLE,stack),"upgraded wand starts native level V cast");
+        for(int i=0;i<35;i++){manager.tick(level);SpellEngine.tick();}
+        check.accept(ISpellContainer.get(stack).getSpellAtIndex(0).getLevel()==5,"native imbued container receives stored wand rank");
+        check.accept(data.getMana()==100-nativeSpell.getManaCost(5)&&victim.getHealth()==12,"native level V consumes correct mana and deals eight damage (mana="+data.getMana()+", health="+victim.getHealth()+")");victim.discard();
+        SpellEngine.clear();WandNetwork.select(player,new WandNetwork.Select(KingdomWands.SOUL.getId(),1));
+        check.accept(wand.selected(stack)==Spell.FROST_NEEDLE,"selection packet for another held wand is rejected");
+        WandNetwork.select(player,new WandNetwork.Select(KingdomWands.FROST.getId(),999));check.accept(wand.selected(stack)==Spell.FROST_NEEDLE,"invalid selection slot is rejected");
+        WandNetwork.select(player,new WandNetwork.Select(KingdomWands.FROST.getId(),11));check.accept(wand.selected(stack)==Spell.ABSOLUTE_ZERO,"valid selection packet selects slot twelve without casting");
+        player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,ItemStack.EMPTY);SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
     }
     private static Zombie target(ServerLevel level,double z){
         Zombie zombie=new Zombie(EntityType.ZOMBIE,level);zombie.setPos(0,81,z);zombie.setNoAi(true);zombie.setNoGravity(true);level.addFreshEntity(zombie);return zombie;

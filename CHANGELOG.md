@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.12.0-alpha
+
+- Expand every wand to 12 spells: 120 spells across ten complete kits.
+- Add Holy healing, blessings, cleansing, consecration, judgement and support spells.
+- Add Frost needles, an ice serpent, hail, crystal fans, shatter combos and a freezing domain.
+- Add crimson executions, shadow traps, lightning ricochets, orbiting blades, dragon breath and Prismatic Ruin.
+- Give 119 spells levels I–V, with explicit damage, healing and mana progression. DOOM remains single-level Legendary.
+- Add original wand sprites, survival recipes, a 12-slot spell picker and a selected-spell HUD.
+- Let wands learn higher ranks by consuming matching native Iron’s scrolls.
+- Expand to 222 optional AAAParticles effects, with distinct slashes, totems, hail, protective ribbons and fusion geometry. Add varied native Iron’s release sounds and timed accents.
+- Separate synchronized server rules from local client display, input and particle settings. Add healing, teamless-healing and per-player simulation controls.
+- Generate the complete spell reference from the validated runtime catalogue. Add configuration and migration documentation.
+- Preserve saved spell IDs and the Soul Cannon sequence; retain native Iron’s mana, casting, cooldown, inscription and school scaling.
+
 ## 0.11.0-alpha — Scream, sanctuary and DOOM
 
 - Replace Sonic Boom with Sonic Scream: a one-second windup, wide 12-block cone, Enderman scream and layered sonic pressure fronts. Keep the existing saved spell ID.
