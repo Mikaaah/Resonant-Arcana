@@ -351,7 +351,7 @@ public final class SpellEngine {
     }
     private static void burst(Cast c,Vec3 pos){
         ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
-        if(theme!=Spell.Theme.BLOOD)PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
+        PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
         for(int i=0;i<12;i++){double a=i*Math.PI/6;trail(level,pos.add(Math.cos(a)*0.4,0.25,Math.sin(a)*0.4),theme,0.12);}
         ring(level,pos,1.25,theme,0);
         if(theme==Spell.Theme.BLOOD)level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK,Blocks.REDSTONE_BLOCK.defaultBlockState()),pos.x,pos.y,pos.z,24,0.3,0.3,0.3,0.18);

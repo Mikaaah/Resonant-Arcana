@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0-alpha
+
+- Add optional AAAParticles impact effects for all eight wand themes.
+- Add expanding shock rings and short impact flashes, including cyan and amethyst Soul effects.
+- Keep vanilla particles and sounds when AAAParticles is absent or disabled.
+- Add the `aaaParticles` setting.
+
 ## 0.4.1-alpha
 
 - Replaced quiet casting cues with stronger themed sounds and layered impacts.
