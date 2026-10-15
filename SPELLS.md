@@ -1,118 +1,104 @@
 # Spells
 
-Cooldowns below are base values before configuration multipliers. Related healing, ward, stun and restraint spells share recovery within their groups.
+Base values at level I, before equipment, cast-speed modifiers and configuration. Damage is per hit or pulse. Fields and storms pulse up to five times; Cinder Vortex pulses four times. Related healing, ward, stun and restraint spells share recovery.
 
-## Arcane Wand — 10 spells
+Most spells have five levels; spells with a base windup of at least one second have three. Each level above I adds 25% base spell power. Wands cast at level I; spellbooks support higher levels.
 
-Arcane precision, mobility and utility.
+## Arcane Wand
 
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Spark | A travelling projectile that stops at walls. | 0.6s |
-| Arcane Strike | Strike the living target you aim at. | 1.75s |
-| Mind Haze | Briefly blind and disorient your target. | 5s |
-| Stun | Slow and weaken the target. | 5s |
-| Arcane Bind | Hold the target briefly; cover breaks the tether. | 8s |
-| Astral Comet | A slow projectile with an area impact. | 5s |
-| Arcane Repulse | An expanding shock ring around you. | 5s |
-| Launch | Launch your target upwards. | 3.5s |
-| Leap | Propel yourself forwards and upwards. | 4s |
-| Arcane Volley | Fire three staggered arcane projectiles. | 4.5s |
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Spark | 0s | 3 | 1 | 32 | 0.6s |
+| Arcane Strike | 0.25s | 5 | 2 | 24 | 1.75s |
+| Mind Haze | 0.4s | 0 | 1 | 24 | 5s |
+| Stun | 0.4s | 1 | 1 | 24 | 5s |
+| Arcane Bind | 0.6s | 0 | 1 | 24 | 8s |
+| Astral Comet | 1s | 14 | 4.5 | 48 | 6s |
+| Arcane Repulse | 0.5s | 8 | 7 | 0 | 6s |
+| Launch | 0s | 2 | 1 | 24 | 3.5s |
+| Leap | 0s | 0 | 0 | 0 | 4s |
+| Arcane Volley | 0.5s | 3 | 1 | 32 | 4.5s |
 
-## Blood Wand — 7 spells
+## Blood Wand
 
-Crimson pressure, piercing and life drain.
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Blood Wave | 0.35s | 5 | 1.8 | 28 | 3s |
+| Crimson Strike | 0.25s | 5 | 2 | 24 | 1.75s |
+| Crimson Rupture | 1s | 12 | 5 | 24 | 7s |
+| Hemorrhagic Shock | 0.4s | 2 | 1 | 24 | 5s |
+| Blood Ward | 0.5s | 0 | 3 | 0 | 9s |
+| Sanguine Drain | 0.7s | 5 | 1 | 24 | 5s |
+| Blood Lance | 0.5s | 9 | 0.6 | 24 | 4.5s |
 
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Blood Wave | A wide travelling arc, hitting each enemy once. | 3s |
-| Crimson Strike | Strike the living target you aim at. | 1.75s |
-| Crimson Rupture | An area burst centred on your aim. | 6s |
-| Hemorrhagic Shock | Slow and weaken the target with a crimson impact. | 5s |
-| Blood Ward | Redirect incoming enemy projectiles for four seconds. | 9s |
-| Sanguine Drain | Crimson drain: heal from actual health damage, up to one heart. | 5s |
-| Blood Lance | An instant piercing line through visible enemies. | 4s |
+## Cinder Wand
 
-## Cinder Wand — 8 spells
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Fire Comet | 1s | 12 | 4.5 | 44 | 6s |
+| Cinder Vortex | 1.25s | 7 | 3 | 30 | 6s |
+| Flame Wave | 0.35s | 5 | 1.8 | 28 | 3s |
+| Cinder Surge | 0.8s | 9 | 9 | 0 | 7.5s |
+| Flamethrower | 0.4s | 2 | 1.4 | 12 | 5s |
+| Fireball | 0s | 6 | 2 | 40 | 2.5s |
+| Ignite | 0.25s | 2 | 1 | 24 | 2.5s |
+| Ember Veil | 0.5s | 2 | 5 | 0 | 7.5s |
 
-Fire channels, spreading pressure and area denial.
+## Dark Wand
 
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Fire Comet | A slow projectile with an area impact. | 5s |
-| Cinder Vortex | A stationary vortex dealing repeated area damage. | 6s |
-| Flame Wave | A wide travelling arc, hitting each enemy once. | 3s |
-| Cinder Surge | An expanding shock ring around you. | 6.5s |
-| Flamethrower | A short stream following your current aim. | 5s |
-| Fireball | A travelling projectile that stops at walls. | 2.5s |
-| Ignite | Strike the living target you aim at. | 2.5s |
-| Ember Veil | Three-second moving fire aura with a five-block radius. | 7.5s |
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Shadow Bolt | 0s | 5 | 1.5 | 36 | 1.25s |
+| Umbral Seeker | 0.6s | 6 | 2 | 36 | 3.5s |
+| Umbral Wave | 0.35s | 5 | 2.5 | 28 | 3.25s |
+| Nightfall | 1s | 12 | 6 | 28 | 7s |
+| Dread Mark | 0.5s | 14 | 3.5 | 24 | 8s |
+| Umbral Veil | 0.5s | 3 | 8 | 0 | 8s |
 
-## Dark Wand — 6 spells
+## Thunder Wand
 
-Shadow pursuit, curses and weakness.
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Thunder Bolt | 0s | 6 | 1.5 | 40 | 1.5s |
+| Chain Lightning | 0.6s | 6 | 6 | 28 | 6s |
+| Thunder Wave | 0.35s | 5 | 2.5 | 30 | 3.25s |
+| Storm Call | 1.6s | 5 | 6 | 28 | 12s |
+| Thunder Pulse | 0.7s | 10 | 9 | 0 | 7.5s |
+| Static Shock | 0.4s | 3 | 1 | 28 | 4s |
+| Lightning | 0.4s | 7 | 2 | 32 | 5s |
+| Smite | 1.4s | 18 | 5 | 32 | 10s |
 
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Shadow Bolt | A travelling projectile that stops at walls. | 1.25s |
-| Umbral Seeker | A projectile that follows your selected target. | 3.5s |
-| Umbral Wave | A wide travelling arc, hitting each enemy once. | 3.25s |
-| Nightfall | An area burst centred on your aim. | 6s |
-| Dread Mark | Curse a target; detonate after two seconds. Cover breaks the curse. | 7s |
-| Umbral Veil | A damaging aura that moves with you. | 8s |
+## Rift Wand
 
-## Thunder Wand — 8 spells
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Rift Bolt | 0s | 5 | 2 | 32 | 1.5s |
+| Rift Well | 1.25s | 3 | 5 | 28 | 9s |
+| Force Push | 0s | 2 | 1 | 24 | 3.25s |
+| Force Pull | 0s | 2 | 1 | 24 | 3.25s |
+| Suspension | 0.6s | 2 | 1 | 24 | 7s |
+| Singularity | 1.6s | 18 | 6 | 28 | 9s |
 
-Focused lightning, chain attacks and storms.
+## Soul Wand
 
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Thunder Bolt | A travelling projectile that stops at walls. | 1.5s |
-| Chain Lightning | Jump between up to five visible targets. | 5.5s |
-| Thunder Wave | A wide travelling arc, hitting each enemy once. | 3.25s |
-| Storm Call | Call repeated lightning strikes over an area. | 9s |
-| Thunder Pulse | An expanding shock ring around you. | 6s |
-| Static Shock | Slow and weaken the target. | 4s |
-| Lightning | Focused lightning strike with a two-block impact radius. | 5s |
-| Smite | Heavier lightning strike with a four-block impact radius. | 8s |
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Echo Bolt | 0s | 5 | 1.5 | 36 | 1.25s |
+| Sculk Wave | 0.35s | 5 | 2.5 | 28 | 3.25s |
+| Sonic Boom | 0.6s | 8 | 0.8 | 28 | 6s |
+| Soul Siphon | 0.7s | 5 | 1 | 24 | 5s |
+| Soul Prison | 0.6s | 2 | 1 | 24 | 7s |
+| Shrieking Pulse | 0.8s | 9 | 9 | 0 | 7.5s |
+| Amethyst Nova | 1.2s | 14 | 5.5 | 28 | 8s |
+| Echo Ward | 0.5s | 0 | 3 | 0 | 9s |
+| Soul Cannon | 2s | 16 | 5 | 48 | 14s |
 
-## Rift Wand — 6 spells
+## Venom Wand
 
-Gravity, displacement and suspension.
-
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Rift Bolt | A travelling projectile that stops at walls. | 1.5s |
-| Rift Well | Draw nearby enemies into a gravity well. | 8s |
-| Force Push | Push the target away from you. | 3.25s |
-| Force Pull | Pull the target towards you. | 3.25s |
-| Suspension | Lift a target briefly, followed by a gentle descent. | 7s |
-| Singularity | An area burst centred on your aim. | 8s |
-
-## Soul Wand — 9 spells
-
-Sculk resonance, sonic attacks and echo magic.
-
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Echo Bolt | A travelling projectile that stops at walls. | 1.25s |
-| Sculk Wave | A wide travelling arc, hitting each enemy once. | 3.25s |
-| Sonic Boom | Charge for 0.6 seconds, then fire a piercing sonic beam. | 6s |
-| Soul Siphon | Drain essence into healing, up to one heart; shares recovery with Sanguine Drain. | 5s |
-| Soul Prison | Three-second damaging restraint with darkness. | 7s |
-| Shrieking Pulse | An expanding shock ring around you. | 6.5s |
-| Amethyst Nova | Aimed sculk/crystal area burst with teal and violet sparks. | 6s |
-| Echo Ward | Redirect incoming enemy projectiles for four seconds. | 9s |
-| Soul Cannon | Two-second charge, then a travelling echo blast with spaced firework bursts and a five-block area impact. 48-block range; 16 base damage. | 14s |
-
-## Venom Wand — 5 spells
-
-Poison, wither and lingering clouds.
-
-| Spell | Role | Base cooldown |
-| --- | --- | --- |
-| Venom Sting | Strike the living target you aim at. | 2.5s |
-| Poison Wave | A wide travelling arc, hitting each enemy once. | 3.5s |
-| Venom Bolt | A travelling projectile that stops at walls. | 1.75s |
-| Miasma Field | A stationary three-second poison field; damage pulses once per second. | 7.5s |
-| Withering Hex | Inflict poison and wither on an aimed target. | 5.5s |
+| Spell | Windup | Damage I | Radius | Range | Base cooldown |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Venom Sting | 0.25s | 2 | 2 | 24 | 2.5s |
+| Poison Wave | 0.35s | 2 | 1.8 | 28 | 3.5s |
+| Venom Bolt | 0s | 3 | 1.5 | 32 | 1.75s |
+| Miasma Field | 0.75s | 3 | 4.5 | 24 | 9s |
+| Withering Hex | 0.25s | 3 | 1 | 24 | 5.5s |

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0-alpha — Cast and release
+
+- Make Iron’s Spells ’n Spellbooks the required casting backend. Existing wands now use native mana, charge bars, cooldowns and animations.
+- Replace the synthesized casting and impact samples with Iron’s sound events and vanilla accents. Keep Soul Cannon’s existing effect and sound sequence.
+- Add short windups to waves and control spells, and longer windups to comets, storms, smites and large bursts. Basic bolts and movement spells remain instant.
+- Increase selected heavy spell damage and impact radius. Extend Storm Call, Rift Well and Miasma Field to 4.8 seconds.
+- Add five spell levels for most spells and three for heavy spells, with increased spell power and mana costs at higher levels.
+- Support cancelling wand charges by cycling spells; repeated cast input no longer restarts a charge.
+- Add distinct charging and release animations for beam, storm, burst and defensive spells.
+- Keep saved item and spell IDs. Update both client and server, and install Iron’s with its dependencies.
+
 ## 0.8.0-alpha — Resonant Arcana
 
 - Rebrand Kingdom Wands as Resonant Arcana. Rename Empire, Celcrius and Mephi wands to Arcane, Cinder and Rift, with related spell names updated.

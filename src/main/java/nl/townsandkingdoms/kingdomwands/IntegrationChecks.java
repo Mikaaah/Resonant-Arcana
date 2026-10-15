@@ -39,6 +39,8 @@ public final class IntegrationChecks {
         Map<String,Object> report=new LinkedHashMap<>();List<Map<String,Object>> results=new ArrayList<>();
         try {
             ServerLevel level=server.overworld();
+            // Iron's builds its server spell config during the player/datapack sync lifecycle.
+            io.redspace.ironsspellbooks.api.config.SpellConfigManager.onDatapackSync(new net.neoforged.neoforge.event.OnDatapackSyncEvent(server.getPlayerList(),null));
             for(int x=-1;x<=1;x++)for(int z=-1;z<=2;z++)level.getChunk(x,z);
             for(int x=-12;x<=12;x++)for(int z=-8;z<=24;z++){
                 level.setBlockAndUpdate(new BlockPos(x,80,z),Blocks.STONE.defaultBlockState());
@@ -89,6 +91,11 @@ public final class IntegrationChecks {
             check(wand.selected(identityStack)==Spell.EMPIRE_PULSE,"stable spell ID takes priority over stale numeric slot");
             for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.castAccentId(theme),SpellAudio.impactId(theme),SpellAudio.impactAccentId(theme),SpellAudio.sustainId(theme)))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"sound exists: "+id);
+            for(Spell spell:Spell.values()){
+                String id=SpellAudio.chargeId(spell);
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"charge sound exists: "+spell);
+                check(!SpellAudio.castId(spell.theme).startsWith("kingdomwands:"),"retired vacuum cast is not referenced: "+spell);
+            }
             for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_BOOM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"special soul sound exists: "+id);
             visuals.clear();SpellVisuals.tick();
@@ -222,8 +229,12 @@ public final class IntegrationChecks {
             SpellEngine.action(player,0);check(SpellEngine.activeCount()==0,"unarmed action packet is rejected");
             player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.EMPIRE.toStack());
             SpellEngine.action(player,99);check(SpellEngine.activeCount()==0,"invalid action packet is rejected");
-            SpellEngine.action(player,0);check(SpellEngine.activeCount()==1,"valid held wand action casts");
+            var actionMagic=io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
+            if(actionMagic.getSyncedData()==null)actionMagic.setSyncedData(new io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData(player));
+            actionMagic.setMana(100);
+            SpellEngine.action(player,0);check(actionMagic.isCasting(),"held wand starts native Iron casting");
             SpellEngine.action(player,1);check(wand.selection(player.getMainHandItem())==0,"multiple actions in one tick are rate limited");
+            IronsCompat.cancel(player);
             SpellEngine.clear();player.setGameMode(GameType.SPECTATOR);SpellEngine.action(player,0);check(SpellEngine.activeCount()==0,"spectator casting is rejected");player.setGameMode(GameType.SURVIVAL);
             SpellEngine.clear();resetPlayer(player);
             for(Spell spell:List.of(Spell.SPARK,Spell.BLOOD_WAVE,Spell.POISON_WAVE,Spell.FLAME_WAVE,Spell.EMPIRE_COMET,Spell.FIRE_COMET,Spell.FIREBALL,Spell.EMPIRE_PULSE))check(SpellEngine.cast(player,spell),"concurrent cast "+spell);
@@ -232,7 +243,7 @@ public final class IntegrationChecks {
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
             cannonChecks(level);
             audioChecks(level);
-            if(net.neoforged.fml.ModList.get().isLoaded("irons_spellbooks"))IronsIntegrationChecks.run(level,IntegrationChecks::check);
+            IronsIntegrationChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());KingdomWands.LOG.error("Wand integration failed",error);}
         finally{

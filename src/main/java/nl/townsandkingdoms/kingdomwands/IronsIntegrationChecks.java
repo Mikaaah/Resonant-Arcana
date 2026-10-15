@@ -27,7 +27,7 @@ final class IronsIntegrationChecks {
             var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(spell));
             check.accept(registered instanceof IronsCompat.ArcanaSpell,"Iron spell registered: "+spell);
             check.accept(registered.isEnabled()&&registered.allowCrafting(),"Iron spell enabled and craftable: "+spell);
-            check.accept(registered.getSchoolType()!=null&&registered.getMaxLevel()==1,"Iron school and level configured: "+spell);
+            check.accept(registered.getSchoolType()==io.redspace.ironsspellbooks.api.registry.SchoolRegistry.getSchool(IronsCompat.school(spell.theme))&&registered.getMaxLevel()==spell.levelCap(),"Iron school and level configured: "+spell+" school="+registered.getSchoolType()+" max="+registered.getMaxLevel()+" expected="+spell.levelCap()+" defaults="+registered.getDefaultConfig().maxLevel);
             ItemStack scroll=IronsCompat.scroll(spell);
             check.accept(ISpellContainer.get(scroll).getSpellAtIndex(0).getSpell().equals(registered),"Iron scroll contains spell: "+spell);
             ItemStack restored=ItemStack.parseOptional(level.registryAccess(),(CompoundTag)scroll.save(level.registryAccess()));
@@ -76,6 +76,57 @@ final class IronsIntegrationChecks {
         var targeted=SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.EMPIRE_SPARK));
         check.accept(!targeted.checkPreCastConditions(level,1,player,data),"Iron targeted spells fail preflight when no target exists");
         check.accept(data.getMana()==100-cannon.getManaCost(1),"failed Iron preflight leaves mana unchanged");
+        chargedWandChecks(level,check,player,data);
+    }
+    /** Uses Iron's real public tick loop, not a stand-in windup timer. */
+    private static void chargedWandChecks(ServerLevel level,BiConsumer<Boolean,String> check,net.neoforged.neoforge.common.util.FakePlayer player,MagicData data){
+        var manager=(io.redspace.ironsspellbooks.capabilities.magic.MagicManager)io.redspace.ironsspellbooks.api.magic.MagicHelper.MAGIC_MANAGER;
+        var regen=player.getAttribute(AttributeRegistry.MANA_REGEN);double previousRegen=regen.getBaseValue();regen.setBaseValue(0);
+        level.addNewPlayer(player);
+        try{
+            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE)){
+                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+                player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);
+                var wand=KingdomWands.ITEMS.getEntries().stream().map(e->(WandItem)e.get()).filter(w->w.spells.contains(selected)).findFirst().orElseThrow();
+                ItemStack stack=wand.getDefaultInstance();wand.select(stack,wand.spells.indexOf(selected));
+                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);Zombie victim=target(level,6);
+                SpellEngine.action(player,0);
+                var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
+                check.accept(data.isCasting()&&data.getCastDuration()>0,"wand uses Iron windup: "+selected);
+                for(int t=0;t<registered.getEffectiveCastTime(1,player);t++){
+                    manager.tick(level);SpellEngine.tick();
+                    check.accept(victim.getHealth()==20,"no damage before native charge completes: "+selected);
+                }
+                check.accept(data.getMana()==100,"native windup does not charge mana early: "+selected);
+                manager.tick(level);SpellEngine.tick();
+                check.accept(data.getMana()==100-registered.getManaCost(1),"wand spends native mana exactly once: "+selected);
+                for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
+                check.accept(victim.getHealth()<20,"charged wand releases its gameplay: "+selected);
+                check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"charged wand and effect clean up: "+selected);victim.discard();
+            }
+            SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+            ItemStack stack=KingdomWands.CELCRIUS.toStack();KingdomWands.CELCRIUS.get().select(stack,0);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+            Zombie victim=target(level,6);SpellEngine.action(player,0);manager.tick(level);SpellEngine.tick();
+            check.accept(data.isCasting(),"wand cancellation test is charging");
+            SpellEngine.action(player,1);
+            check.accept(!data.isCasting(),"cycling wand cancels native charge");
+            for(int t=0;t<60;t++){manager.tick(level);SpellEngine.tick();}
+            check.accept(victim.getHealth()==20&&data.getMana()==100,"cancelled charge does no damage and spends no mana");victim.discard();
+            SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(0);
+            KingdomWands.CELCRIUS.get().select(stack,0);SpellEngine.action(player,0);
+            check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"wand cannot bypass Iron mana gate");
+            for(Spell selected:Spell.values()){
+                var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
+                check.accept(registered.getCastTime(1)==selected.castTicks(),"spell cast tier is applied: "+selected);
+                check.accept(registered.getSpellPower(registered.getMaxLevel(),player)>registered.getSpellPower(1,player),"spell tiers increase power: "+selected);
+            }
+            check.accept(Spell.SPARK.castTicks()==0&&Spell.LEAP.castTicks()==0,"basic bolts and movement stay responsive");
+            check.accept(Spell.SOUL_CANNON.damage==16&&Spell.SOUL_CANNON.range==48&&Spell.SOUL_CANNON.castTicks()==40,"Soul Cannon base behavior is preserved");
+            check.accept(Spell.SMITE.damage==18&&Spell.SINGULARITY.damage==18&&Spell.AMETHYST_NOVA.damage==14,"heavy spells receive meaningful base damage");
+        }finally{
+            data.resetCastingState();SpellEngine.clear();regen.setBaseValue(previousRegen);
+            level.removePlayerImmediately(player,net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_WITH_PLAYER);
+        }
     }
     private static Zombie target(ServerLevel level,double z){
         Zombie zombie=new Zombie(EntityType.ZOMBIE,level);zombie.setPos(0,81,z);zombie.setNoAi(true);zombie.setNoGravity(true);level.addFreshEntity(zombie);return zombie;

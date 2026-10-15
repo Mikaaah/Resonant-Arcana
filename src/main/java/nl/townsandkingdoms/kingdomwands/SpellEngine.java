@@ -42,7 +42,7 @@ public final class SpellEngine {
         if(!(stack.getItem() instanceof WandItem wand))return;
         if(LAST_ACTION.getOrDefault(player.getUUID(),Long.MIN_VALUE)==ticks)return;
         LAST_ACTION.put(player.getUUID(),ticks);
-        if(action==0){if(KingdomWands.WAND_CASTING.get())cast(player,wand.selected(stack));else message(player,"Use your spellbook to cast");}else wand.cycle(player,stack,action==1?1:-1);
+        if(action==0){if(KingdomWands.WAND_CASTING.get())IronsCompat.castWand(player,wand.selected(stack),stack);else message(player,"Use your spellbook to cast");}else {IronsCompat.cancel(player);wand.cycle(player,stack,action==1?1:-1);}
     }
     public static boolean cast(ServerPlayer player,Spell spell) {
         return cast(player,spell,null);
@@ -64,7 +64,9 @@ public final class SpellEngine {
         for(int i=0;i<3;i++){
             double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7));
             Vec3 pos=center.add(offset),velocity=offset.scale(-.12);
-            player.serverLevel().sendParticles(ParticleTypes.REVERSE_PORTAL,pos.x,pos.y,pos.z,0,velocity.x,velocity.y,velocity.z,1);
+            if(spell.theme==Spell.Theme.SOUL||spell.theme==Spell.Theme.DARK||spell.theme==Spell.Theme.GRAVITY)
+                player.serverLevel().sendParticles(ParticleTypes.REVERSE_PORTAL,pos.x,pos.y,pos.z,0,velocity.x,velocity.y,velocity.z,1);
+            else trail(player.serverLevel(),pos,spell.theme,.025);
         }
         if(spell==Spell.SOUL_CANNON&&elapsed%8==0)SpellAudio.cannonCharge(player,center,(float)progress);
     }
@@ -107,7 +109,7 @@ public final class SpellEngine {
                 lightning(cast,loc);area(cast,loc,spell.radius,true);
             }
             case CHAIN -> {timed=false;chain(cast,target);}
-            case STORM, WELL, FIELD -> {cast.pos=target!=null?target.position():aim;cast.duration=60;}
+            case STORM, WELL, FIELD -> {cast.pos=target!=null?target.position():aim;cast.duration=96;}
             case AURA -> {cast.pos=player.position();cast.duration=60;}
             case LEAP -> {SpellVisuals.send(level,spell,SpellVisuals.Stage.LINK,start.subtract(direction.scale(3)),start,1);timed=false;player.setDeltaMovement(direction.scale(1.15).add(0,0.4,0));player.hurtMarked=true;trail(level,start,spell.theme,0.25);}
             case CAPTURE, CHOKE -> {cast.anchor=target.position();cast.duration=60;}
@@ -121,12 +123,13 @@ public final class SpellEngine {
             case SUSPEND -> {cast.anchor=target.position();cast.pos=target.position();cast.duration=40;}
             case VOLLEY -> cast.duration=44;
             case LANCE -> {timed=false;beam(cast,start,direction,false);}
-            default -> cast.duration=(int)Math.ceil(spell.range/1.1)+2;
+            default -> cast.duration=(int)Math.ceil(spell.range/(spell.kind==Spell.Kind.COMET?0.9:1.1))+2;
         }
         if(book!=null&&book.prepared())cast.age=spell.kind==Spell.Kind.CANNON?39:spell.kind==Spell.Kind.SONIC?11:0;
         if(timed)ACTIVE.add(cast);
         int cooldown=book!=null?book.cooldown():Math.max(1,(int)Math.ceil(spell.cooldown*KingdomWands.COOLDOWNS.get()));
-        cooldowns.put(spell.cooldownKey(),ticks+cooldown);
+        // Iron's owns individual spell cooldowns; keep only cross-spell recovery groups here.
+        if(book==null||!spell.cooldownKey().equals(spell.name()))cooldowns.put(spell.cooldownKey(),ticks+cooldown);
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND->true;default->false;};}
@@ -415,7 +418,7 @@ public final class SpellEngine {
         if(c.spell==Spell.WITHERING_HEX)effect(victim,MobEffects.WITHER,60,0);
         if(c.spell==Spell.SOUL_PRISON)effect(victim,MobEffects.DARKNESS,60,0);
         if(c.spell.theme==Spell.Theme.FIRE)victim.igniteForSeconds(3);
-        if(c.spell.theme==Spell.Theme.DARK){effect(victim,MobEffects.WEAKNESS,60,0);}
+        if(c.spell.theme==Spell.Theme.DARK){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
         if(c.spell.theme==Spell.Theme.POISON)effect(victim,MobEffects.POISON,80,0);
         switch(c.spell.kind){
             case CONFUSE->{effect(victim,MobEffects.CONFUSION,100,0);effect(victim,MobEffects.BLINDNESS,40,0);}

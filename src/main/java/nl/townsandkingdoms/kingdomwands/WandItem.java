@@ -55,6 +55,7 @@ public final class WandItem extends Item {
         Spell spell=selected(stack);
         lines.add(Component.literal(spell.title+"  ["+(selection(stack)+1)+"/"+spells.size()+"]").withStyle(ChatFormatting.LIGHT_PURPLE));
         lines.add(Component.literal(spell.description()).withStyle(style->style.withColor(spell.theme.color)));
+        lines.add(Component.literal(String.format(java.util.Locale.ROOT,"Cast: %.2fs | Mana: %d | Level I",spell.castTicks()/20.0,spell.manaCost())).withStyle(ChatFormatting.GRAY));
         lines.add(Component.literal("Left-click: cast | Right-click: next spell").withStyle(ChatFormatting.GRAY));
         lines.add(Component.literal("Sneak + right-click: previous spell").withStyle(ChatFormatting.GRAY));
         lines.add(Component.literal("Alternate cast key: set in Controls").withStyle(ChatFormatting.DARK_GRAY));

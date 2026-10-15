@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.8.0-alpha'
+version = '0.9.0-alpha'
 group = 'nl.townsandkingdoms.kingdomwands'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -80,3 +80,13 @@ dependencies {
         compileOnly('io.redspace:irons_spellbooks:1.21.1-3.16.3') { transitive = false }
     }
 }
+
+// Retired synthesized audio is replaced by Iron's and vanilla sound events.
+tasks.named('processResources') {
+    doFirst {
+        delete file('build/resources/main/assets/kingdomwands/sounds')
+        delete file('build/resources/main/assets/kingdomwands/sounds.json')
+    }
+    exclude 'assets/kingdomwands/sounds/**', 'assets/kingdomwands/sounds.json'
+}
+tasks.named('jar') { exclude 'assets/kingdomwands/sounds/**', 'assets/kingdomwands/sounds.json' }

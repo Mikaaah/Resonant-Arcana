@@ -11,14 +11,36 @@ import net.minecraft.world.phys.Vec3;
 /** Layered spell audio. The caster can hear their own impacts independently of world attenuation. */
 final class SpellAudio {
     private SpellAudio() {}
-    static String castId(Spell.Theme theme){return KingdomWands.ID+":cast_"+theme.name().toLowerCase(java.util.Locale.ROOT);}
+    static String castId(Spell.Theme theme){return irons(switch(theme){
+        case MAGIC->"magic_arrow_release";case BLOOD->"cast.generic.blood";case POISON->"spell.acid_orb.cast";
+        case FIRE->"cast.fireball";case THUNDER->"lightning_lance_cast";case DARK->"spell.shadow_slash.cast";
+        case GRAVITY->"spell.gust.cast";case SOUL->"spell.eldritch_blast.cast";
+    });}
+    private static String irons(String path){return "irons_spellbooks:"+path;}
+    static String chargeId(Spell spell){return switch(spell){
+        case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
+        case SMITE->irons("spell.divine_smite.windup");case STORM_CALL->irons("spell.thunderstorm.prepare");
+        case SINGULARITY->irons("spell.black_hole.charge");case GRAVITY_WELL->irons("spell.gravity_fissure.charge");
+        case FIRE_COMET->irons("spell.fire_bomb.charge");case EMPIRE_COMET,ARCANE_VOLLEY->irons("spell.summon_swords.charge");
+        case SOUL_PRISON,CAPTURE,GRAVITY_CHOKE->irons("spell.arcane_shackle.charge");
+        default->irons(switch(spell.theme){
+            case MAGIC->"magic_arrow_charge";case BLOOD->"heartstop_cast";case POISON->"spell.acid_orb.charge";
+            case FIRE->"spell.heat_surge.prepare";case THUNDER->"spell.shockwave.prepare";
+            case DARK->"cast.raise_dead.start";case GRAVITY->"spell.gust.charge";case SOUL->"cast.generic.eldritch_prepare";
+        });
+    };}
     static String castAccentId(Spell.Theme theme){return switch(theme){
         case BLOOD->"entity.player.attack.strong";case POISON->"block.brewing_stand.brew";
         case FIRE->"item.firecharge.use";case THUNDER->"entity.lightning_bolt.impact";
         case DARK->"entity.illusioner.cast_spell";case SOUL->"block.amethyst_block.resonate";
         case GRAVITY->"entity.breeze.wind_burst";case MAGIC->"block.amethyst_block.chime";
     };}
-    static String impactId(Spell.Theme theme){return KingdomWands.ID+":impact_"+theme.name().toLowerCase(java.util.Locale.ROOT);}
+    static String impactId(Spell.Theme theme){return irons(switch(theme){
+        case MAGIC->"entity.generic.arcane_impact";case BLOOD->"entity.blood_needle.impact";
+        case POISON->"entity.acid_orb.impact";case FIRE->"entity.generic.fire_impact";
+        case THUNDER->"entity.lightning_strike.strike";case DARK,GRAVITY->"force_impact";
+        case SOUL->"entity.echoing_strike.echoing_strike";
+    });}
     static String impactAccentId(Spell.Theme theme){return switch(theme){
         case BLOOD,POISON->"block.slime_block.break";case FIRE->"item.firecharge.use";
         case THUNDER->"entity.firework_rocket.blast";case DARK->"entity.evoker_fangs.attack";
@@ -33,6 +55,9 @@ final class SpellAudio {
     static float volume(float base){return (float)(base*KingdomWands.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
         case SOUL_CANNON,SONIC_BOOM->"entity.warden.sonic_charge";
+        case SMITE->irons("spell.divine_smite.cast");case SINGULARITY->irons("spell.black_hole.cast");
+        case FIRE_COMET->irons("spell.fire_bomb.cast");case EMPIRE_COMET,ARCANE_VOLLEY->irons("spell.summon_swords.cast");
+        case FLAME_SHOCK_WAVE->irons("spell.flaming_strike.cast");case THUNDER_PULSE->irons("spell.shockwave.cast");
         case SHRIEKING_PULSE->"entity.warden.roar";
         case SOUL_PRISON->"block.sculk_shrieker.shriek";
         default->castId(spell.theme);
@@ -43,6 +68,11 @@ final class SpellAudio {
         case SIPHON,CAPTURE,CHOKE,SUSPEND->0.85f;
         default->1.0f;
     };}
+    static void charge(ServerPlayer player,Spell spell){
+        if(spell==Spell.SOUL_CANNON||spell==Spell.SONIC_BOOM){cast(player,spell);return;}
+        cue(player,player.position(),chargeId(spell),1.15f,1.0f,true);
+        cue(player,player.position(),castAccentId(spell.theme),0.45f,0.85f,true);
+    }
     static void cast(ServerPlayer player,Spell spell){
         cue(player,player.position(),spellCastId(spell),1.3f,castPitch(spell),true);
         cue(player,player.position(),castAccentId(spell.theme),0.85f,castPitch(spell)+0.12f,true);
