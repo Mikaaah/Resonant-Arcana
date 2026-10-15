@@ -1,42 +1,8 @@
-# Spell review — 0.4.0-alpha
+# Spells
 
-Every spell was reviewed for theme, role, duplicated selection and upgrade behavior.
-The revised catalogue has **8 wands / 58 distinct spells**, each assigned to one wand.
-These are design and functional changes; final combat balance still needs playtesting.
+Cooldowns below are base values before configuration multipliers. Related healing, ward, stun and restraint spells share recovery within their groups.
 
-## Decisions
-
-- Empire becomes an arcane utility wand: 20 selections become 10. Blood spells
-  stay on Blood, fire spells on Celcrius, lightning on Thunder and poison on Venom.
-- Fire Pulse is removed because Flame Shock Wave already fills its fire pulse role.
-- Venom gets the existing Poison Spark/Wave plus Venom Bolt, Miasma Field and Withering Hex.
-- Blood gains Sanguine Drain and Blood Lance. Healing is conditional on actual health damage.
-- Empire gains Arcane Volley: three staggered travelling projectiles, retaining normal damage immunity frames.
-- Celcrius gains Ignite and Ember Veil, a short-range mobile fire aura.
-- Dark's Soul Seeker/Aura become Shadow Seeker/Dread Aura. Shadow Cage becomes
-  Dread Mark: a stronger delayed curse, interrupted by cover, instead of another restraint.
-- Mephi's Gravity Choke becomes Suspension: lift with a gentle descent. Its item
-  texture is now an ender eye so the Soul Wand keeps a distinct echo shard appearance.
-- Soul keeps all eight spells and its warden/sculk/amethyst identity.
-- Healing, wards, stuns and restraints each have shared recovery groups across wands.
-  Other spells keep individual cooldowns. Switching wands does not clear cooldowns.
-- Added short effect descriptions to the selected-spell tooltip.
-- Flamethrower now checks line of sight to prevent its wide hitbox reaching through thin walls.
-
-## Saved wands
-
-Existing item registry IDs are retained. Versions 0.1–0.3 saved only numeric
-selections; those indices are read against their original layouts. If the old
-spell remains on that wand, it stays selected. A moved/removed Empire selection
-falls back to Spark. It does not silently select an unrelated numeric slot.
-New selections also store a stable spell ID and retain unrelated custom data.
-
-## Lineups
-
-Base cooldowns below are before `cooldownMultiplier`. Damage immunity frames,
-config multipliers, server PvP and scoreboard rules still apply.
-
-### Empire Wand — 10 spells
+## Empire Wand — 10 spells
 
 Arcane precision, mobility and utility.
 
@@ -45,15 +11,15 @@ Arcane precision, mobility and utility.
 | Spark | A travelling projectile that stops at walls. | 0.6s |
 | Empire Spark | Strike the living target you aim at. | 1.75s |
 | Confuse | Briefly blind and disorient your target. | 5s |
-| Stun | shared_stun | 5s |
-| Capture | shared_restraint | 8s |
+| Stun | Slow and weaken the target. | 5s |
+| Capture | Hold the target briefly; cover breaks the tether. | 8s |
 | Empire Comet | A slow projectile with an area impact. | 5s |
 | Empire Pulse | An expanding shock ring around you. | 5s |
 | Launch | Launch your target upwards. | 3.5s |
 | Leap | Propel yourself forwards and upwards. | 4s |
 | Arcane Volley | Fire three staggered arcane projectiles. | 4.5s |
 
-### Blood Wand — 7 spells
+## Blood Wand — 7 spells
 
 Crimson pressure, piercing and life drain.
 
@@ -63,11 +29,11 @@ Crimson pressure, piercing and life drain.
 | Blood Spark | Strike the living target you aim at. | 1.75s |
 | Blood Explode | An area burst centred on your aim. | 6s |
 | Blood Stun | Slow and weaken the target with a crimson impact. | 5s |
-| Blood Ward | shared_ward | 9s |
+| Blood Ward | Redirect incoming enemy projectiles for four seconds. | 9s |
 | Sanguine Drain | Crimson drain: heal from actual health damage, up to one heart. | 5s |
 | Blood Lance | An instant piercing line through visible enemies. | 4s |
 
-### Celcrius Wand — 8 spells
+## Celcrius Wand — 8 spells
 
 Fire channels, spreading pressure and area denial.
 
@@ -82,7 +48,7 @@ Fire channels, spreading pressure and area denial.
 | Ignite | Strike the living target you aim at. | 2.5s |
 | Ember Veil | Three-second moving fire aura with a five-block radius. | 7.5s |
 
-### Dark Wand — 6 spells
+## Dark Wand — 6 spells
 
 Shadow pursuit, curses and weakness.
 
@@ -95,7 +61,7 @@ Shadow pursuit, curses and weakness.
 | Dread Mark | Curse a target; detonate after two seconds. Cover breaks the curse. | 7s |
 | Dread Aura | A damaging aura that moves with you. | 8s |
 
-### Thunder Wand — 8 spells
+## Thunder Wand — 8 spells
 
 Focused lightning, chain attacks and storms.
 
@@ -106,11 +72,11 @@ Focused lightning, chain attacks and storms.
 | Thunder Wave | A wide travelling arc, hitting each enemy once. | 3.25s |
 | Storm Call | Call repeated lightning strikes over an area. | 9s |
 | Thunder Pulse | An expanding shock ring around you. | 6s |
-| Static Shock | shared_stun | 4s |
+| Static Shock | Slow and weaken the target. | 4s |
 | Lightning | Focused lightning strike with a two-block impact radius. | 5s |
 | Smite | Heavier lightning strike with a four-block impact radius. | 8s |
 
-### Mephi Wand — 6 spells
+## Mephi Wand — 6 spells
 
 Gravity, displacement and suspension.
 
@@ -123,7 +89,7 @@ Gravity, displacement and suspension.
 | Suspension | Lift a target briefly, followed by a gentle descent. | 7s |
 | Singularity | An area burst centred on your aim. | 8s |
 
-### Soul Wand — 8 spells
+## Soul Wand — 8 spells
 
 Sculk resonance, sonic attacks and echo magic.
 
@@ -136,9 +102,9 @@ Sculk resonance, sonic attacks and echo magic.
 | Soul Prison | Three-second damaging restraint with darkness. | 7s |
 | Shrieking Pulse | An expanding shock ring around you. | 6.5s |
 | Amethyst Nova | Aimed sculk/crystal area burst with teal and violet sparks. | 6s |
-| Echo Ward | shared_ward | 9s |
+| Echo Ward | Redirect incoming enemy projectiles for four seconds. | 9s |
 
-### Venom Wand — 5 spells
+## Venom Wand — 5 spells
 
 Poison, wither and lingering clouds.
 

@@ -4,3 +4,11 @@ run/
 run-client/
 *.jar
 !gradle/wrapper/gradle-wrapper.jar
+validation/
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store
+Thumbs.db
+!downloads/*.jar
