@@ -57,17 +57,21 @@ public final class SpellEngine {
         if(requiresTarget(spell)&&target==null){message(player,"Aim at a living target within range");return false;}
         Cast cast=new Cast(player,spell,start,direction,aim,target);
         boolean timed=true;
+        ring(level,player.position().add(0,0.12,0),0.7,spell.theme,0);
+        if(spell.theme==Spell.Theme.SOUL)level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,start.x,start.y,start.z,6,0.15,0.15,0.15,0.02);
+        SpellAudio.cast(player,spell);
+
         switch(spell.kind){
             case TARGET, CONFUSE, STUN, LAUNCH, PUSH, PULL, SIPHON -> {
                 timed=false;
                 if(target==null){message(player,"Aim at a living target within range");return false;}
                 hit(cast,target,target.position(),true);
-                burst(level,target.getBoundingBox().getCenter(),spell.theme);
+                burst(cast,target.getBoundingBox().getCenter());
             }
-            case BURST -> {timed=false;Vec3 loc=target!=null?target.getBoundingBox().getCenter():aim;area(cast,loc,spell.radius,true);burst(level,loc,spell.theme);}
+            case BURST -> {timed=false;Vec3 loc=target!=null?target.getBoundingBox().getCenter():aim;area(cast,loc,spell.radius,true);burst(cast,loc);}
             case LIGHTNING,SMITE -> {
                 timed=false;Vec3 loc=target!=null?target.position():aim;
-                lightning(level,loc,spell.theme);area(cast,loc,spell.radius,true);
+                lightning(cast,loc);area(cast,loc,spell.radius,true);
             }
             case CHAIN -> {timed=false;chain(cast,target);}
             case STORM, WELL, FIELD -> {cast.pos=target!=null?target.position():aim;cast.duration=60;}
@@ -88,9 +92,6 @@ public final class SpellEngine {
         if(timed)ACTIVE.add(cast);
         int cooldown=Math.max(1,(int)Math.ceil(spell.cooldown*KingdomWands.COOLDOWNS.get()));
         cooldowns.put(spell.cooldownKey(),ticks+cooldown);
-        ring(level,player.position().add(0,0.12,0),0.7,spell.theme,0);
-        if(spell.theme==Spell.Theme.SOUL)level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,start.x,start.y,start.z,6,0.15,0.15,0.15,0.02);
-        SpellAudio.cast(player,spell);
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND->true;default->false;};}
@@ -130,7 +131,7 @@ public final class SpellEngine {
                     waveVisual(c,end);
                 } else {
                     LivingEntity victim=target(c.caster,c.pos,end,c.spell.kind==Spell.Kind.COMET?0.65:0.3);
-                    if(victim!=null){Vec3 impact=victim.getBoundingBox().getCenter();area(c,impact,c.spell.radius,true);burst(c.level,impact,c.spell.theme);return false;}
+                    if(victim!=null){Vec3 impact=victim.getBoundingBox().getCenter();area(c,impact,c.spell.radius,true);burst(c,impact);return false;}
                     for(int s=0;s<3;s++){
                         Vec3 point=c.pos.lerp(end,s/3.0);trail(c.level,point,c.spell.theme,0.06);
                         if(c.spell.kind==Spell.Kind.COMET){
@@ -142,7 +143,7 @@ public final class SpellEngine {
                     }
                 }
                 c.pos=end;
-                if(block.getType()!=HitResult.Type.MISS){if(c.spell.kind!=Spell.Kind.WAVE){area(c,end,c.spell.radius,true);burst(c.level,end,c.spell.theme);}return false;}
+                if(block.getType()!=HitResult.Type.MISS){if(c.spell.kind!=Spell.Kind.WAVE){area(c,end,c.spell.radius,true);burst(c,end);}return false;}
             }
             case PULSE -> {
                 double radius=c.spell.radius*c.age/c.duration;
@@ -156,6 +157,7 @@ public final class SpellEngine {
                 LivingEntity victim=c.target;
                 if(victim==null||!victim.isAlive()||victim.level()!=c.level||!allowed(c.caster,victim)||victim.position().distanceToSqr(c.anchor)>16||victim.distanceToSqr(c.caster)>(c.spell.range+4)*(c.spell.range+4)||!visible(c,c.caster.getEyePosition(),victim.getBoundingBox().getCenter()))return false;
                 // Do not teleport a target back across a wall or a large external movement.
+                if(c.age==1)impactFeedback(c,victim.getBoundingBox().getCenter());
                 victim.setDeltaMovement(Vec3.ZERO);victim.hurtMarked=true;
                 effect(victim,MobEffects.MOVEMENT_SLOWDOWN,5,10);effect(victim,MobEffects.WEAKNESS,5,2);
                 if(c.spell.kind==Spell.Kind.CHOKE&&c.age%20==1){c.hit.clear();hit(c,victim,c.anchor,true);}
@@ -172,7 +174,7 @@ public final class SpellEngine {
                     if(c.age==1)hit(c,victim,c.pos,true);
                 }
                 if(c.age%4==0)ring(c.level,c.pos,0.7,c.spell.theme,c.age*0.3);
-                if(c.spell.kind==Spell.Kind.MARK&&c.age==40){area(c,c.pos,c.spell.radius,true);burst(c.level,c.pos,c.spell.theme);return false;}
+                if(c.spell.kind==Spell.Kind.MARK&&c.age==40){area(c,c.pos,c.spell.radius,true);burst(c,c.pos);return false;}
             }
             case VOLLEY -> {
                 if(c.age==1||c.age==7||c.age==13){
@@ -184,7 +186,7 @@ public final class SpellEngine {
                     if(b.distance>=c.spell.range||!c.level.hasChunkAt(BlockPos.containing(next))){it.remove();continue;}
                     var block=c.level.clip(new ClipContext(b.pos,next,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,c.caster));Vec3 end=block.getLocation();
                     LivingEntity victim=target(c.caster,b.pos,end,0.3);
-                    if(victim!=null){c.hit.clear();area(c,victim.getBoundingBox().getCenter(),c.spell.radius,true);burst(c.level,victim.getBoundingBox().getCenter(),c.spell.theme);it.remove();continue;}
+                    if(victim!=null){c.hit.clear();area(c,victim.getBoundingBox().getCenter(),c.spell.radius,true);burst(c,victim.getBoundingBox().getCenter());it.remove();continue;}
                     for(int i=0;i<3;i++)trail(c.level,b.pos.lerp(end,i/3.0),c.spell.theme,0.035);
                     b.pos=end;b.distance+=1.1;
                     if(block.getType()!=HitResult.Type.MISS)it.remove();
@@ -201,7 +203,7 @@ public final class SpellEngine {
                     c.hit.clear();area(c,c.pos,c.spell.radius,true);
                     if(c.spell.kind==Spell.Kind.STORM){
                         var victims=near(c.caster,c.pos,c.spell.radius);
-                        int bolts=0;for(var victim:victims)if(visible(c,c.pos,victim.getBoundingBox().getCenter())&&bolts++<3)lightning(c.level,victim.position(),c.spell.theme);
+                        int bolts=0;for(var victim:victims)if(visible(c,c.pos,victim.getBoundingBox().getCenter())&&bolts++<3)lightning(c,victim.position());
                     }
                 }
                 if(c.spell.kind==Spell.Kind.WELL)for(var victim:near(c.caster,c.pos,c.spell.radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
@@ -239,7 +241,7 @@ public final class SpellEngine {
                 for(var p:c.level.getEntitiesOfClass(Projectile.class,new AABB(c.pos,c.pos).inflate(c.spell.radius),p->p.getOwner()!=c.caster)) {
                     if(p.getOwner()!=null&&!allowed(c.caster,p.getOwner()))continue;
                     if(p.getDeltaMovement().dot(p.position().subtract(c.pos))<0){
-                        p.setDeltaMovement(p.position().subtract(c.pos).normalize().scale(Math.max(0.5,p.getDeltaMovement().length())));p.hurtMarked=true;
+                        p.setDeltaMovement(p.position().subtract(c.pos).normalize().scale(Math.max(0.5,p.getDeltaMovement().length())));p.hurtMarked=true;impactFeedback(c,p.position());
                     }
                 }
             }
@@ -254,8 +256,8 @@ public final class SpellEngine {
         }
         for(var victim:near(c.caster,start.add(end).scale(0.5),length*0.5+2))
             if(victim.getBoundingBox().inflate(c.spell.radius).clip(start,end).isPresent()&&visible(c,start,victim.getBoundingBox().getCenter()))hit(c,victim,start,true);
-        if(sonic)SpellAudio.world(c.level,start,"entity.warden.sonic_boom",1.0f,1.0f);
-        burst(c.level,end,c.spell.theme);
+
+        burst(c,end);
     }
     private static void area(Cast c,Vec3 pos,double radius,boolean once){
         for(LivingEntity entity:near(c.caster,pos,radius))if(visible(c,pos,entity.getBoundingBox().getCenter()))hit(c,entity,pos,once);
@@ -287,18 +289,17 @@ public final class SpellEngine {
     private static boolean visible(Cast c,Vec3 start,Vec3 end){return c.level.clip(new ClipContext(start,end,ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,c.caster)).getType()==HitResult.Type.MISS;}
     private static void hit(Cast c,LivingEntity victim,Vec3 from,boolean once){
         if(!allowed(c.caster,victim)||(once&&!c.hit.add(victim.getUUID())))return;
-        if(c.spell.kind==Spell.Kind.WAVE&&c.age-c.lastImpact>=5){
-            c.lastImpact=c.age;SpellAudio.world(c.level,victim.position(),SpellAudio.impactId(c.spell.theme),0.55f,1.1f);
-        }
         if(c.spell.damage>0){
             float before=victim.getHealth();
             boolean hurt=victim.hurt(c.level.damageSources().indirectMagic(c.caster,c.caster),(float)(c.spell.damage*KingdomWands.DAMAGE.get()));
+            if(hurt)impactFeedback(c,victim.getBoundingBox().getCenter());
             if(c.spell.kind==Spell.Kind.SIPHON&&hurt&&victim.getHealth()<before){
                 c.caster.heal(Math.min(2.0f,(before-victim.getHealth())*0.4f));
                 Vec3 fromSoul=victim.getBoundingBox().getCenter(),toSoul=c.caster.getEyePosition();
                 for(int i=0;i<=20;i++)trail(c.level,fromSoul.lerp(toSoul,i/20.0),c.spell.theme,0.035);
             }
         }
+        if(c.spell.damage==0)impactFeedback(c,victim.getBoundingBox().getCenter());
         if(c.spell==Spell.WITHERING_HEX)effect(victim,MobEffects.WITHER,60,0);
         if(c.spell==Spell.SOUL_PRISON)effect(victim,MobEffects.DARKNESS,60,0);
         if(c.spell.theme==Spell.Theme.FIRE)victim.igniteForSeconds(3);
@@ -343,7 +344,13 @@ public final class SpellEngine {
         int count=Math.min(48,Math.max(12,(int)(radius*10)));
         for(int i=0;i<count;i++){double a=i*Math.PI*2/count+offset;trail(level,center.add(Math.cos(a)*radius,0,Math.sin(a)*radius),theme,0.015);}
     }
-    private static void burst(ServerLevel level,Vec3 pos,Spell.Theme theme){
+    private static void impactFeedback(Cast c,Vec3 pos){
+        // One layered hit per cast every eight ticks, including area and chain attacks.
+        if(ticks-c.lastImpactTick<8)return;
+        c.lastImpactTick=ticks;SpellAudio.impact(c.caster,pos,c.spell);
+    }
+    private static void burst(Cast c,Vec3 pos){
+        ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
         if(theme!=Spell.Theme.BLOOD)PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
         for(int i=0;i<12;i++){double a=i*Math.PI/6;trail(level,pos.add(Math.cos(a)*0.4,0.25,Math.sin(a)*0.4),theme,0.12);}
         ring(level,pos,1.25,theme,0);
@@ -353,13 +360,14 @@ public final class SpellEngine {
             level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,pos.x,pos.y,pos.z,8,0.3,0.3,0.3,0.025);
             level.sendParticles(new ShriekParticleOption(0),pos.x,pos.y,pos.z,1,0,0,0,0);
         }
-        SpellAudio.world(level,pos,SpellAudio.impactId(theme),0.9f,theme==Spell.Theme.BLOOD?0.65f:0.9f);
+        impactFeedback(c,pos);
     }
 
-    private static void lightning(ServerLevel level,Vec3 pos,Spell.Theme theme){
+    private static void lightning(Cast c,Vec3 pos){
+        ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
         Vec3 last=pos.add(0,16,0);
         for(int i=1;i<=32;i++){Vec3 next=pos.add(Math.sin(i*2.31)*0.55,16-i*0.5,Math.cos(i*1.7)*0.55);for(int j=0;j<3;j++)trail(level,last.lerp(next,j/3.0),theme,0.02);last=next;}
-        burst(level,pos,theme);
+        burst(c,pos);
     }
     private static void chain(Cast c,LivingEntity first){
         LivingEntity victim=first;Vec3 from=c.caster.getEyePosition();
@@ -367,7 +375,7 @@ public final class SpellEngine {
             Vec3 end=victim.getBoundingBox().getCenter();
             double length=from.distanceTo(end);int steps=Math.min(96,Math.max(2,(int)(length*4)));
             for(int i=0;i<=steps;i++){double t=i/(double)steps;trail(c.level,from.lerp(end,t).add(Math.sin(i*2.4)*0.12,Math.cos(i*1.7)*0.12,0),c.spell.theme,0.015);}
-            hit(c,victim,end,true);burst(c.level,end,c.spell.theme);from=end;
+            hit(c,victim,end,true);burst(c,end);from=end;
             LivingEntity next=null;double closest=c.spell.radius*c.spell.radius;
             for(var candidate:near(c.caster,end,c.spell.radius)){
                 double d=candidate.getBoundingBox().getCenter().distanceToSqr(end);
@@ -383,7 +391,7 @@ public final class SpellEngine {
     }
     private static final class Cast {
         final UUID owner;final ServerLevel level;final Spell spell;final Vec3 dir;final LivingEntity target;final Set<UUID> hit=new HashSet<>();final List<VolleyBolt> bolts=new ArrayList<>();
-        final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,lastImpact=-20;
+        final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;
         }

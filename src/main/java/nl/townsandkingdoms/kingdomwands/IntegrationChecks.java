@@ -77,7 +77,7 @@ public final class IntegrationChecks {
             var identityTag=new CompoundTag();identityTag.putInt("kingdomwands_spell",999);identityTag.putString("kingdomwands_spell_id","EMPIRE_PULSE");
             var identityStack=wand.getDefaultInstance();identityStack.set(DataComponents.CUSTOM_DATA,CustomData.of(identityTag));
             check(wand.selected(identityStack)==Spell.EMPIRE_PULSE,"stable spell ID takes priority over stale numeric slot");
-            for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.impactId(theme),SpellAudio.sustainId(theme)))
+            for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.castAccentId(theme),SpellAudio.impactId(theme),SpellAudio.impactAccentId(theme),SpellAudio.sustainId(theme)))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"sound exists: "+id);
             for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_BOOM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"special soul sound exists: "+id);
@@ -196,12 +196,54 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("kingdomwands status",server.createCommandSourceStack())==1,"status command executes");
+            audioChecks(level);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());KingdomWands.LOG.error("Wand integration failed",error);}
         finally{
             report.put("checks",checks);report.put("spells",results);report.put("clientRenderingTested",false);
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){KingdomWands.LOG.error("Could not write report",e);}
             KingdomWands.LOG.info("KINGDOM_WANDS_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
+        }
+    }
+    private static void audioChecks(ServerLevel level){
+        boolean oldFeedback=KingdomWands.CASTER_IMPACTS.get();double oldVolume=KingdomWands.SOUND_VOLUME.get(),oldImpact=KingdomWands.IMPACT_VOLUME.get();
+        var player=new AudioPlayer(level,new GameProfile(UUID.fromString("52182f8d-8d17-4310-b1e1-34954061e635"),"AudioTest"));
+        player.setGameMode(GameType.SURVIVAL);
+        try{
+            KingdomWands.SOUND_VOLUME.set(1.0);KingdomWands.IMPACT_VOLUME.set(1.0);KingdomWands.CASTER_IMPACTS.set(true);
+            SpellEngine.clear();resetPlayer(player);Zombie distant=spawn(level,0,81,24);
+            check(SpellEngine.cast(player,Spell.SPARK),"audio test projectile casts");int casts=player.heard.size();
+            check(casts==2,"cast emits two distinct sound layers to its caster");
+            for(int t=0;t<32;t++)SpellEngine.tick();
+            check(distant.getHealth()<20,"audio test projectile reaches distant target");
+            check(player.heard.subList(casts,player.heard.size()).contains("minecraft:"+SpellAudio.impactId(Spell.Theme.MAGIC)),"caster receives impact cue beyond normal sound range");
+            check(player.heard.size()==casts+2,"direct hit and burst do not double-play impact audio");distant.discard();
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.CASTER_IMPACTS.set(false);
+            Zombie positional=spawn(level,0,81,24);check(SpellEngine.cast(player,Spell.SPARK),"positional-only audio test casts");casts=player.heard.size();
+            for(int t=0;t<32;t++)SpellEngine.tick();
+            check(positional.getHealth()<20&&player.heard.size()==casts,"caster feedback option disables direct impact delivery");positional.discard();
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.CASTER_IMPACTS.set(true);KingdomWands.SOUND_VOLUME.set(0.0);
+            Zombie muted=spawn(level,0,81,6);check(SpellEngine.cast(player,Spell.SPARK),"muted audio test casts");for(int t=0;t<32;t++)SpellEngine.tick();
+            check(muted.getHealth()<20&&player.heard.isEmpty(),"soundVolume zero mutes casts and impacts without changing damage");muted.discard();
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.SOUND_VOLUME.set(1.0);KingdomWands.IMPACT_VOLUME.set(0.0);
+            Zombie noImpact=spawn(level,0,81,6);check(SpellEngine.cast(player,Spell.SPARK),"impact-volume audio test casts");casts=player.heard.size();
+            for(int t=0;t<32;t++)SpellEngine.tick();check(noImpact.getHealth()<20&&player.heard.size()==casts,"impactVolume zero preserves cast audio and mutes hits");noImpact.discard();
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();KingdomWands.IMPACT_VOLUME.set(1.0);
+            Zombie a=spawn(level,0,81,3),b=spawn(level,2,81,4),c=spawn(level,-2,81,4);
+            check(SpellEngine.cast(player,Spell.SOUL_AURA),"area audio test casts");casts=player.heard.size();SpellEngine.tick();
+            check(a.getHealth()<20&&b.getHealth()<20&&c.getHealth()<20,"area audio test affects three targets");
+            check(player.heard.size()==casts+2,"area hit audio is limited to one layered impact per cast");a.discard();b.discard();c.discard();
+        }finally{
+            SpellEngine.clear();KingdomWands.CASTER_IMPACTS.set(oldFeedback);KingdomWands.SOUND_VOLUME.set(oldVolume);KingdomWands.IMPACT_VOLUME.set(oldImpact);
+        }
+    }
+    /** Records the server's direct audio calls; a connected graphical client is still needed for listening tests. */
+    private static final class AudioPlayer extends FakePlayer{
+        final List<String> heard=new ArrayList<>();
+        AudioPlayer(ServerLevel level,GameProfile profile){super(level,profile);}
+        @Override public void playNotifySound(net.minecraft.sounds.SoundEvent sound,net.minecraft.sounds.SoundSource source,float volume,float pitch){
+            if(volume>0)heard.add(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.getKey(sound).toString());
+            super.playNotifySound(sound,source,volume,pitch);
         }
     }
     private static void resetPlayer(FakePlayer player){player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);player.setDeltaMovement(Vec3.ZERO);player.setHealth(player.getMaxHealth());player.removeAllEffects();}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1-alpha
+
+- Replaced quiet casting cues with stronger themed sounds and layered impacts.
+- Added direct caster feedback so distant hits remain audible.
+- Added impact audio to damage pulses, restraints and projectile deflections.
+- Limited repeated hit audio and prevented duplicate hit/burst sounds.
+- Added `impactVolume` and `casterImpactFeedback` settings.
+
 ## 0.4.0-alpha
 
 - Added the Venom Wand and seven spells: Arcane Volley, Sanguine Drain, Blood Lance, Ember Veil, Venom Bolt, Miasma Field and Withering Hex.

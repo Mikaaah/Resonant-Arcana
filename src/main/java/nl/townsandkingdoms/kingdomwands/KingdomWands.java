@@ -37,8 +37,8 @@ public final class KingdomWands {
             .icon(()->EMPIRE.toStack()).displayItems((params,out)->{ITEMS.getEntries().forEach(entry->out.accept(entry.get()));}).build());
     }
     public static final ModConfigSpec CONFIG;
-    public static final ModConfigSpec.BooleanValue PVP,MOUSE_CONTROLS;
-    public static final ModConfigSpec.DoubleValue DAMAGE,COOLDOWNS,SOUND_VOLUME;
+    public static final ModConfigSpec.BooleanValue PVP,MOUSE_CONTROLS,CASTER_IMPACTS;
+    public static final ModConfigSpec.DoubleValue DAMAGE,COOLDOWNS,SOUND_VOLUME,IMPACT_VOLUME;
     public static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,VISUAL_BUDGET;
     static {
         var b=new ModConfigSpec.Builder();
@@ -46,6 +46,8 @@ public final class KingdomWands {
         MOUSE_CONTROLS=b.comment("Use classic left-click casting. Disable on both sides if another combat mod intercepts attack inputs; use the cast key instead.").define("classicMouseCasting",true);
         DAMAGE=b.defineInRange("damageMultiplier",1.0,0.0,10.0);
         SOUND_VOLUME=b.comment("Spell sound volume multiplier; normal player sound settings still apply.").defineInRange("soundVolume",1.0,0.0,2.0);
+        IMPACT_VOLUME=b.comment("Impact audio multiplier, applied in addition to soundVolume.").defineInRange("impactVolume",1.0,0.0,3.0);
+        CASTER_IMPACTS=b.comment("Play your own impact feedback directly so ranged hits remain audible. Nearby players hear positional impacts.").define("casterImpactFeedback",true);
         COOLDOWNS=b.defineInRange("cooldownMultiplier",1.0,0.1,10.0);
         PARTICLES=b.comment("Trail density, 1 to 3. Spell collision is independent of visuals.").defineInRange("particleDensity",2,1,3);
         VISUAL_BUDGET=b.comment("Maximum detailed trail points per server tick, shared by active spells. Gameplay is independent of this visual budget.").defineInRange("maxParticlePointsPerTick",256,64,2048);
@@ -62,7 +64,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.4.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.4.1-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);

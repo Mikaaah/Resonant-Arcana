@@ -2,7 +2,7 @@
 
 Eight magic wands and 58 spells for Minecraft 1.21.1 on NeoForge. Each wand has its own spell list, particle effects and casting sounds.
 
-[Download 0.4.0-alpha](downloads/kingdom-wands-0.4.0-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
+[Download 0.4.1-alpha](downloads/kingdom-wands-0.4.1-alpha-neoforge-1.21.1.jar?raw=true) · [Spell guide](SPELLS.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Mikaaah/Kingdom-Wands/issues)
 
 ## Wands
 
@@ -52,11 +52,17 @@ Settings are in `config/kingdomwands-common.toml`.
 | `damageMultiplier` | `1.0` | Scale direct spell damage |
 | `cooldownMultiplier` | `1.0` | Scale cooldowns |
 | `soundVolume` | `1.0` | Scale spell audio; also respects the Players sound slider |
+| `impactVolume` | `1.0` | Additional impact volume multiplier, from 0 to 3 |
+| `casterImpactFeedback` | `true` | Hear your own ranged hits without distance fade |
 | `particleDensity` | `2` | Trail density, from 1 to 3 |
 | `maxParticlePointsPerTick` | `256` | Shared trail budget per server tick |
 | `maxActiveSpells` | `128` | Maximum active timed spells across the server |
 
 Cooldowns are shared across copies of a wand. Related healing, ward, stun and restraint spells also share cooldowns within their groups. Common configurations are local to each installation.
+
+Cast and impact sounds use layered effects. Your own impacts play directly to
+you; nearby players hear positional audio at the hit. Impact feedback is limited
+to once every eight ticks per cast to keep repeated and area hits controlled.
 
 ## Compatibility
 
