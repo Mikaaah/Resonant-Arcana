@@ -33,6 +33,7 @@ public final class WandClient {
     }
     @SubscribeEvent public static void tick(ClientTickEvent.Post e) {
         visualBursts=0;
+        AaaEffects.tick();
         var mc=Minecraft.getInstance();
         while(CAST.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem)PacketDistributor.sendToServer(new WandNetwork.Action(0));
         while(NEXT.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem)PacketDistributor.sendToServer(new WandNetwork.Action(mc.player.isShiftKeyDown()?2:1));
@@ -41,7 +42,6 @@ public final class WandClient {
         var mc=Minecraft.getInstance();
         if(mc.level==null||mc.player==null||visualBursts>=8||mc.player.distanceToSqr(b.x(),b.y(),b.z())>96*96)return;
         visualBursts++;
-        AaaEffects.burst(b);
         if(b.color()==Spell.Theme.BLOOD.color)return;
         // Use coloured sparks directly: no automatic white fade or duplicate vanilla blast audio.
         float r=((b.color()>>16)&255)/255f,g=((b.color()>>8)&255)/255f,blue=(b.color()&255)/255f;

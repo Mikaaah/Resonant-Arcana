@@ -29,6 +29,8 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 /** Explicitly gated developer fixture: starts and stops only with -Dkingdomwands.integrationTest=true. */
 public final class IntegrationChecks {
     private static final List<String> checks=new ArrayList<>();
+    private static final List<WandNetwork.Visual> visuals=new ArrayList<>();
+    static void visual(WandNetwork.Visual message){if(visuals.size()<512)visuals.add(message);}
     private IntegrationChecks() {}
     public static boolean enabled(){return Boolean.getBoolean("kingdomwands.integrationTest");}
     public static void start(ServerStartedEvent event){if(enabled())event.getServer().execute(()->run(event.getServer()));}
@@ -54,6 +56,14 @@ public final class IntegrationChecks {
             try {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
+                buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_BOOM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
+                WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
+                check(visual.valid(),"finite beam packet accepted");
+                check(!new WandNetwork.Visual(-1,0,0,0,0,0,0,0,1).valid(),"unknown visual spell rejected");
+                check(!new WandNetwork.Visual(0,999,0,0,0,0,0,0,1).valid(),"unknown visual stage rejected");
+                check(!new WandNetwork.Visual(0,0,Double.NaN,0,0,0,0,0,1).valid(),"nonfinite visual rejected");
+                check(!new WandNetwork.Visual(0,0,0,0,0,500,0,0,1).valid(),"unbounded beam rejected");
+                check(!new WandNetwork.Visual(0,0,0,0,0,0,0,0,Float.POSITIVE_INFINITY).valid(),"nonfinite effect size rejected");
             }finally{buffer.release();}
             check(KingdomWands.ITEMS.getEntries().size()==8,"eight registered wands");
             var catalog=EnumSet.noneOf(Spell.class);
@@ -81,8 +91,21 @@ public final class IntegrationChecks {
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"sound exists: "+id);
             for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_BOOM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.withDefaultNamespace(id)),"special soul sound exists: "+id);
+            visuals.clear();SpellVisuals.tick();
+            for(int i=0;i<100;i++)SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.FLIGHT,new Vec3(0,82,0),new Vec3(0,82,1),1);
+            check(visuals.size()==64,"detail visual traffic capped at 64 per tick");
+            for(int i=0;i<100;i++)SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
+            check(visuals.size()==96,"32 accent events reserved when detail budget is exhausted");
+            SpellVisuals.tick();SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
+            check(visuals.size()==97,"visual budgets recover on the next tick");
+            for(var shape:SpellVisuals.Shape.values())for(var theme:Spell.Theme.values()){
+                String asset="/assets/kingdomwands/effeks/"+shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc";
+                try(var input=IntegrationChecks.class.getResourceAsStream(asset)){
+                    check(input!=null&&new String(input.readNBytes(4),java.nio.charset.StandardCharsets.US_ASCII).equals("EFKE"),"native effect packaged: "+shape+"/"+theme);
+                }
+            }
             for(Spell spell:Spell.values()){
-                SpellEngine.clear();resetPlayer(player);
+                SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,KingdomWands.EMPIRE.toStack());
                 Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
                 if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
@@ -98,6 +121,16 @@ public final class IntegrationChecks {
                 };
                 check(observed,spell.name()+" has expected gameplay effect");
                 check(SpellEngine.activeCount()==0,spell.name()+" timed tasks expire");
+                check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
+                check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
+                SpellVisuals.Stage expectedStage=switch(spell.kind){
+                    case BOLT,COMET,WAVE,SEEKER,VOLLEY -> SpellVisuals.Stage.FLIGHT;
+                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD -> SpellVisuals.Stage.AREA;
+                    case LIGHTNING,SMITE -> SpellVisuals.Stage.STRIKE;
+                    case BURST -> SpellVisuals.Stage.IMPACT;
+                    default -> SpellVisuals.Stage.LINK;
+                };
+                check(visuals.stream().anyMatch(v->v.stage()==expectedStage.ordinal()),spell+" has "+expectedStage+" visuals");
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
                 if(arrow!=null)arrow.discard();zombie.discard();
             }

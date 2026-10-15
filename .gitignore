@@ -12,3 +12,6 @@ validation/
 .DS_Store
 Thumbs.db
 !downloads/*.jar
+
+__pycache__/
+*.pyc

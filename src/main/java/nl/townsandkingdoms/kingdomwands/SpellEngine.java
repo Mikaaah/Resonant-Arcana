@@ -35,7 +35,7 @@ public final class SpellEngine {
     private static int visualPoints;
     private SpellEngine() {}
     public static int activeCount(){return ACTIVE.size();}
-    public static void clear(){ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;}
+    public static void clear(){ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
         if(action<0||action>2||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
@@ -60,11 +60,14 @@ public final class SpellEngine {
         ring(level,player.position().add(0,0.12,0),0.7,spell.theme,0);
         if(spell.theme==Spell.Theme.SOUL)level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,start.x,start.y,start.z,6,0.15,0.15,0.15,0.02);
         SpellAudio.cast(player,spell);
+        SpellVisuals.send(level,spell,SpellVisuals.Stage.CAST,start.add(direction.scale(0.7)),start.add(direction.scale(1.7)),0.8);
 
         switch(spell.kind){
             case TARGET, CONFUSE, STUN, LAUNCH, PUSH, PULL, SIPHON -> {
                 timed=false;
                 if(target==null){message(player,"Aim at a living target within range");return false;}
+                if(spell.kind!=Spell.Kind.SIPHON)SpellVisuals.send(level,spell,SpellVisuals.Stage.LINK,start,target.getBoundingBox().getCenter(),1);
+                if(spell.kind==Spell.Kind.CONFUSE||spell.kind==Spell.Kind.STUN)SpellVisuals.send(level,spell,SpellVisuals.Stage.AREA,target.getBoundingBox().getCenter(),target.getBoundingBox().getCenter(),0.9);
                 hit(cast,target,target.position(),true);
                 burst(cast,target.getBoundingBox().getCenter());
             }
@@ -76,7 +79,7 @@ public final class SpellEngine {
             case CHAIN -> {timed=false;chain(cast,target);}
             case STORM, WELL, FIELD -> {cast.pos=target!=null?target.position():aim;cast.duration=60;}
             case AURA -> {cast.pos=player.position();cast.duration=60;}
-            case LEAP -> {timed=false;player.setDeltaMovement(direction.scale(1.15).add(0,0.4,0));player.hurtMarked=true;trail(level,start,spell.theme,0.25);}
+            case LEAP -> {SpellVisuals.send(level,spell,SpellVisuals.Stage.LINK,start.subtract(direction.scale(3)),start,1);timed=false;player.setDeltaMovement(direction.scale(1.15).add(0,0.4,0));player.hurtMarked=true;trail(level,start,spell.theme,0.25);}
             case CAPTURE, CHOKE -> {cast.anchor=target.position();cast.duration=60;}
             case PULSE -> {cast.pos=player.position().add(0,0.5,0);cast.duration=14;}
             case WARD -> cast.duration=80;
@@ -96,7 +99,7 @@ public final class SpellEngine {
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND->true;default->false;};}
     public static void tick(){
-        ticks++;visualPoints=0;
+        ticks++;visualPoints=0;SpellVisuals.tick();
         for(Iterator<Cast> it=ACTIVE.iterator();it.hasNext();){Cast c=it.next();
             ServerPlayer owner=c.level.getServer().getPlayerList().getPlayer(c.owner);
             // Fake players are only allowed through the explicitly gated integration fixture.
@@ -142,11 +145,13 @@ public final class SpellEngine {
                         }
                     }
                 }
+                if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,end,end.add(c.travel),c.spell.kind==Spell.Kind.WAVE?c.spell.radius:c.spell.kind==Spell.Kind.COMET?1.15:0.65);
                 c.pos=end;
                 if(block.getType()!=HitResult.Type.MISS){if(c.spell.kind!=Spell.Kind.WAVE){area(c,end,c.spell.radius,true);burst(c,end);}return false;}
             }
             case PULSE -> {
                 double radius=c.spell.radius*c.age/c.duration;
+                if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,radius);
                 ring(c.level,c.pos,radius,c.spell.theme,c.age*0.1);
                 for(var victim:near(c.caster,c.pos,radius+1)){
                     double d=victim.position().distanceTo(c.pos);
@@ -161,6 +166,7 @@ public final class SpellEngine {
                 victim.setDeltaMovement(Vec3.ZERO);victim.hurtMarked=true;
                 effect(victim,MobEffects.MOVEMENT_SLOWDOWN,5,10);effect(victim,MobEffects.WEAKNESS,5,2);
                 if(c.spell.kind==Spell.Kind.CHOKE&&c.age%20==1){c.hit.clear();hit(c,victim,c.anchor,true);}
+                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,victim.getBoundingBox().getCenter(),victim.getBoundingBox().getCenter(),0.9);
                 if(c.age%4==0)ring(c.level,victim.position().add(0,0.2+c.age%12*0.12,0),0.8,c.spell.theme,c.age*0.2);
             }
             case MARK, SUSPEND -> {
@@ -173,6 +179,7 @@ public final class SpellEngine {
                     effect(victim,MobEffects.MOVEMENT_SLOWDOWN,5,2);effect(victim,MobEffects.SLOW_FALLING,40,0);
                     if(c.age==1)hit(c,victim,c.pos,true);
                 }
+                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,0.9);
                 if(c.age%4==0)ring(c.level,c.pos,0.7,c.spell.theme,c.age*0.3);
                 if(c.spell.kind==Spell.Kind.MARK&&c.age==40){area(c,c.pos,c.spell.radius,true);burst(c,c.pos);return false;}
             }
@@ -188,6 +195,7 @@ public final class SpellEngine {
                     LivingEntity victim=target(c.caster,b.pos,end,0.3);
                     if(victim!=null){c.hit.clear();area(c,victim.getBoundingBox().getCenter(),c.spell.radius,true);burst(c,victim.getBoundingBox().getCenter());it.remove();continue;}
                     for(int i=0;i<3;i++)trail(c.level,b.pos.lerp(end,i/3.0),c.spell.theme,0.035);
+                    if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,end,end.add(b.dir),0.6);
                     b.pos=end;b.distance+=1.1;
                     if(block.getType()!=HitResult.Type.MISS)it.remove();
                 }
@@ -196,12 +204,15 @@ public final class SpellEngine {
             case WELL, STORM, AURA, FIELD -> {
                 if(c.spell.kind==Spell.Kind.AURA)c.pos=c.caster.position().add(0,0.3,0);
                 if(c.age%4==1){
+                    SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius);
                     ring(c.level,c.pos.add(0,0.15,0),c.spell.radius,c.spell.theme,c.age*0.15);
                     ring(c.level,c.pos.add(0,1.0,0),c.spell.radius*0.45,c.spell.theme,-c.age*0.2);
                 }
                 if(c.age%20==1){
                     c.hit.clear();area(c,c.pos,c.spell.radius,true);
                     if(c.spell.kind==Spell.Kind.STORM){
+                        Vec3 flash=c.pos.add(Math.sin(c.age*2.4)*c.spell.radius*0.65,0,Math.cos(c.age*1.7)*c.spell.radius*0.65);
+                        SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.STRIKE,flash.add(0,10,0),flash,1);
                         var victims=near(c.caster,c.pos,c.spell.radius);
                         int bolts=0;for(var victim:victims)if(visible(c,c.pos,victim.getBoundingBox().getCenter())&&bolts++<3)lightning(c,victim.position());
                     }
@@ -213,6 +224,7 @@ public final class SpellEngine {
                 }
             }
             case TWISTER -> {
+                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius);
                 if(c.age%2==0)for(int i=0;i<3;i++)ring(c.level,c.pos.add(0,i*0.65,0),c.spell.radius*(1-i*0.22),c.spell.theme,c.age*0.35+i);
                 if(c.age%10==1){c.hit.clear();area(c,c.pos,c.spell.radius,true);}
             }
@@ -220,6 +232,7 @@ public final class SpellEngine {
                 c.pos=c.caster.getEyePosition();
                 Vec3 dir=c.caster.getLookAngle().normalize();
                 if(c.age<12){
+                    if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.CHARGE,c.pos.add(dir.scale(0.9)),c.pos.add(dir.scale(1.9)),0.35+c.age*0.04);
                     if(c.age%3==0)ring(c.level,c.pos.add(dir.scale(0.9)),0.15+c.age*0.018,c.spell.theme,c.age*0.4);
                     return true;
                 }
@@ -230,6 +243,7 @@ public final class SpellEngine {
                 if(c.age%5!=1)return true;
                 c.hit.clear();Vec3 eye=c.caster.getEyePosition(),dir=c.caster.getLookAngle();
                 Vec3 end=clipLoaded(c.level,eye,dir,c.spell.range,c.caster);
+                SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,eye.add(dir.scale(0.6)),end,1);
                 double length=eye.distanceTo(end);
                 for(double d=0;d<=length;d+=0.6){Vec3 p=eye.add(dir.scale(d));trail(c.level,p,c.spell.theme,0.08+d*0.015);}
                 for(var victim:near(c.caster,eye.add(end).scale(0.5),length*0.5+2))
@@ -237,6 +251,7 @@ public final class SpellEngine {
             }
             case WARD -> {
                 c.pos=c.caster.position().add(0,1,0);
+                if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius);
                 if(c.age%4==1)ring(c.level,c.pos,c.spell.radius,c.spell.theme,c.age*0.15);
                 for(var p:c.level.getEntitiesOfClass(Projectile.class,new AABB(c.pos,c.pos).inflate(c.spell.radius),p->p.getOwner()!=c.caster)) {
                     if(p.getOwner()!=null&&!allowed(c.caster,p.getOwner()))continue;
@@ -251,6 +266,7 @@ public final class SpellEngine {
     }
     private static void beam(Cast c,Vec3 start,Vec3 dir,boolean sonic){
         Vec3 end=clipLoaded(c.level,start,dir,c.spell.range,c.caster);double length=start.distanceTo(end);
+        SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,start,end,1);
         for(double d=0;d<=length;d+=0.5){Vec3 point=start.add(dir.scale(d));trail(c.level,point,c.spell.theme,0.04);
             if(sonic&&d%2==0)c.level.sendParticles(ParticleTypes.SONIC_BOOM,point.x,point.y,point.z,1,0,0,0,0);
         }
@@ -296,6 +312,7 @@ public final class SpellEngine {
             if(c.spell.kind==Spell.Kind.SIPHON&&hurt&&victim.getHealth()<before){
                 c.caster.heal(Math.min(2.0f,(before-victim.getHealth())*0.4f));
                 Vec3 fromSoul=victim.getBoundingBox().getCenter(),toSoul=c.caster.getEyePosition();
+                SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,fromSoul,toSoul,1);
                 for(int i=0;i<=20;i++)trail(c.level,fromSoul.lerp(toSoul,i/20.0),c.spell.theme,0.035);
             }
         }
@@ -347,10 +364,12 @@ public final class SpellEngine {
     private static void impactFeedback(Cast c,Vec3 pos){
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
+        SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);
         c.lastImpactTick=ticks;SpellAudio.impact(c.caster,pos,c.spell);
     }
     private static void burst(Cast c,Vec3 pos){
         ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
+        SpellVisuals.send(level,c.spell,SpellVisuals.Stage.IMPACT,pos,pos,Math.clamp(c.spell.radius,1.2,5));
         PacketDistributor.sendToPlayersNear(level,null,pos.x,pos.y,pos.z,64,new WandNetwork.Burst(pos.x,pos.y,pos.z,theme.color));
         for(int i=0;i<12;i++){double a=i*Math.PI/6;trail(level,pos.add(Math.cos(a)*0.4,0.25,Math.sin(a)*0.4),theme,0.12);}
         ring(level,pos,1.25,theme,0);
@@ -366,6 +385,7 @@ public final class SpellEngine {
     private static void lightning(Cast c,Vec3 pos){
         ServerLevel level=c.level;Spell.Theme theme=c.spell.theme;
         Vec3 last=pos.add(0,16,0);
+        SpellVisuals.send(level,c.spell,SpellVisuals.Stage.STRIKE,last,pos,1);
         for(int i=1;i<=32;i++){Vec3 next=pos.add(Math.sin(i*2.31)*0.55,16-i*0.5,Math.cos(i*1.7)*0.55);for(int j=0;j<3;j++)trail(level,last.lerp(next,j/3.0),theme,0.02);last=next;}
         burst(c,pos);
     }
@@ -373,6 +393,7 @@ public final class SpellEngine {
         LivingEntity victim=first;Vec3 from=c.caster.getEyePosition();
         for(int jump=0;jump<5&&victim!=null;jump++){
             Vec3 end=victim.getBoundingBox().getCenter();
+            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,from,end,1);
             double length=from.distanceTo(end);int steps=Math.min(96,Math.max(2,(int)(length*4)));
             for(int i=0;i<=steps;i++){double t=i/(double)steps;trail(c.level,from.lerp(end,t).add(Math.sin(i*2.4)*0.12,Math.cos(i*1.7)*0.12,0),c.spell.theme,0.015);}
             hit(c,victim,end,true);burst(c,end);from=end;

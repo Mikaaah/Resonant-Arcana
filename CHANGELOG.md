@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0-alpha
+
+- Expand AAAParticles to casting, projectile flight, beams, waves and lingering effects across all 58 spells.
+- Add 17 effect forms in eight wand palettes, with original glow, rune, ember, lightning and crystal textures.
+- Add large impact bursts, animated cages and wards, swirling vortices and visible poison fields.
+- Keep effect positions, beam endpoints and area sizes tied to the server’s spell simulation.
+- Bound visual traffic and add `maxAaaEffectsPerTick` for client performance.
+- Update both client and server; the visual packet protocol has changed.
+
 ## 0.5.0-alpha
 
 - Add optional AAAParticles impact effects for all eight wand themes.

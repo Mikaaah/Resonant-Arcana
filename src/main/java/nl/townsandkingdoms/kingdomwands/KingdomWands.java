@@ -39,7 +39,7 @@ public final class KingdomWands {
     public static final ModConfigSpec CONFIG;
     public static final ModConfigSpec.BooleanValue PVP,MOUSE_CONTROLS,CASTER_IMPACTS,AAA_PARTICLES;
     public static final ModConfigSpec.DoubleValue DAMAGE,COOLDOWNS,SOUND_VOLUME,IMPACT_VOLUME;
-    public static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,VISUAL_BUDGET;
+    public static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,VISUAL_BUDGET,AAA_BUDGET;
     static {
         var b=new ModConfigSpec.Builder();
         PVP=b.comment("Allow spells to affect other players. Server PvP and scoreboard teams are also respected.").define("allowPvp",true);
@@ -49,7 +49,8 @@ public final class KingdomWands {
         IMPACT_VOLUME=b.comment("Impact audio multiplier, applied in addition to soundVolume.").defineInRange("impactVolume",1.0,0.0,3.0);
         CASTER_IMPACTS=b.comment("Play your own impact feedback directly so ranged hits remain audible. Nearby players hear positional impacts.").define("casterImpactFeedback",true);
         COOLDOWNS=b.defineInRange("cooldownMultiplier",1.0,0.1,10.0);
-        AAA_PARTICLES=b.comment("Use optional AAAParticles impact effects on this client when installed. Vanilla particles remain enabled.").define("aaaParticles",true);
+        AAA_PARTICLES=b.comment("Use optional AAAParticles spell visuals on this client when installed. Vanilla particles remain enabled.").define("aaaParticles",true);
+        AAA_BUDGET=b.comment("Maximum new AAAParticles effects per client tick. Each effect contains multiple animated particles.").defineInRange("maxAaaEffectsPerTick",32,8,96);
         PARTICLES=b.comment("Trail density, 1 to 3. Spell collision is independent of visuals.").defineInRange("particleDensity",2,1,3);
         VISUAL_BUDGET=b.comment("Maximum detailed trail points per server tick, shared by active spells. Gameplay is independent of this visual budget.").defineInRange("maxParticlePointsPerTick",256,64,2048);
         MAX_ACTIVE=b.comment("Maximum active timed spells per server; additional casts fail without starting cooldown.").defineInRange("maxActiveSpells",128,8,512);
@@ -65,7 +66,7 @@ public final class KingdomWands {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("kingdomwands");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.5.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Kingdom Wands 0.6.0-alpha: 8 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);event.getDispatcher().register(root);
