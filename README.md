@@ -111,7 +111,4 @@ If the extra effects are missing, run `/kwvisuals` for client diagnostics or `/k
 With Java 21 installed, run `./gradlew build` on Linux/macOS or `gradlew.bat build` on Windows. Output is written to `build/libs/`. The build uses Iron’s public API as a compile-only dependency. For an offline build, supply a local JAR with `-PironsSpellbooksJar=/path/to/irons_spellbooks-1.21.1-3.16.3.jar`; it is never included in the output. Original effects and spell icons can be rebuilt using the scripts in `tools/`.
 
 ## Credits and license
-
-Inspired by [Wands / ExtensiveMagicWands](https://github.com/JustDylan23/Wands) by JustDylan23 and jetp250, [EmpireWandPlus](https://github.com/Myuuiii/EmpireWandPlus), and KingdomWands by ExortisMagic Team.
-
 By Towns & Kingdoms. [MIT license](LICENSE).
