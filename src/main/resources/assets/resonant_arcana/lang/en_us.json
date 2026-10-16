@@ -146,5 +146,18 @@
   "effect.resonant_arcana.battle_tempo": "Battle Tempo",
   "spell.resonant_arcana.krakens_grasp": "Kraken\u2019s Grasp",
   "spell.resonant_arcana.ice_spike_eruption": "Ice Spike Eruption",
-  "spell.resonant_arcana.helvars_rift": "Helvar\u2019s Rift"
+  "spell.resonant_arcana.helvars_rift": "Helvar\u2019s Rift",
+  "spell.resonant_arcana.krakens_wrath": "Kraken\u2019s Wrath",
+  "spell.resonant_arcana.glacial_counter": "Glacial Counter",
+  "spell.resonant_arcana.rift_draw": "Rift Draw",
+  "spell.resonant_arcana.crimson_reversal": "Crimson Reversal",
+  "spell.resonant_arcana.thunderbrand": "Thunderbrand",
+  "spell.resonant_arcana.last_stand": "Last Stand",
+  "spell.resonant_arcana.ashen_rebirth": "Ashen Rebirth",
+  "spell.resonant_arcana.phantom_formation": "Phantom Formation",
+  "spell.resonant_arcana.funeral_bell": "Funeral Bell",
+  "spell.resonant_arcana.spellbreaker": "Spellbreaker",
+  "effect.resonant_arcana.glacial_guard": "Glacial Guard",
+  "effect.resonant_arcana.thunderbrand": "Thunderbrand",
+  "effect.resonant_arcana.phantom_formation": "Phantom Formation"
 }

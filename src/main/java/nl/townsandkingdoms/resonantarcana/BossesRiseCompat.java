@@ -19,7 +19,7 @@ final class BossesRiseCompat {
         .map(c->c.getModInfo().getVersion().toString().equals("2.1.2")).orElse(false);
     private BossesRiseCompat(){}
     static boolean available(){return AVAILABLE;}
-    static boolean handles(Spell.Kind kind){return switch(kind){case BOSS_TENTACLE,BOSS_ICE,BOSS_RIFT->true;default->false;};}
+    static boolean handles(Spell.Kind kind){return switch(kind){case BOSS_WRATH,BOSS_TENTACLE,BOSS_ICE,BOSS_RIFT->true;default->false;};}
     static boolean optional(Spell s){return handles(s.kind);}
     static void register(IEventBus bus){
         if(AVAILABLE)BossesRiseBridge.register(bus);
@@ -47,6 +47,7 @@ final class BossesRiseCompat {
         return null;
     }
     static boolean begin(Cast c){
+        if(c.spell.kind==Spell.Kind.BOSS_WRATH)return AdvancedSpells.beginWrath(c);
         if(!AVAILABLE)return false;
         if(c.spell.kind==Spell.Kind.BOSS_RIFT){
             c.duration=30;c.pos=clipLoaded(c.level,c.pos,c.dir,.8,c.caster);
@@ -69,6 +70,7 @@ final class BossesRiseCompat {
         c.duration=48;return true;
     }
     static boolean tick(Cast c){
+        if(c.spell.kind==Spell.Kind.BOSS_WRATH)return AdvancedSpells.tickWrath(c);
         switch(c.spell.kind){
             case BOSS_TENTACLE -> {
                 if(c.age%5==1&&c.age<48)water(c,c.pos,6);

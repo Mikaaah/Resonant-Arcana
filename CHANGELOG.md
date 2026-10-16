@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.16.0-alpha
+
+- Add Glacial Counter, Rift Draw, Crimson Reversal, Thunderbrand, Last Stand, Ashen Rebirth, Phantom Formation, Funeral Bell and Spellbreaker.
+- Add optional Kraken’s Wrath for Bosses’Rise 2.1.2, with four outer strikes and a heavy central slam.
+- Add a timed perfect guard, successful-melee proc hooks, bounded spectral swords, a defensive banner and native Iron’s recasts.
+- Give every new spell levels I–V, sound profiles, original icons, tooltips and rank documentation.
+- Respect native interruption immunity and CounterSpellEvent for Spellbreaker.
+- Keep proc attacks from triggering further melee procs; cap projectile removal and clean up buffs on expiry.
+- Expand to 137 core spells plus four optional spells, while preserving existing IDs and saved wand selections.
+
 ## 0.15.0-alpha
 
 - Add optional Bosses’Rise 2.1.2 integration with Kraken’s Grasp, Ice Spike Eruption and Helvar’s Rift, each at levels I–V.

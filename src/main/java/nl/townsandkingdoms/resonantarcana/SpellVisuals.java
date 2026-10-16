@@ -19,6 +19,14 @@ final class SpellVisuals {
         if(spell.kind==Spell.Kind.MARTIAL_BUFF&&stage==Stage.AREA)return Shape.WARD;
         if(spell.kind==Spell.Kind.BLADE_ARC&&stage==Stage.AREA)return Shape.SLASH;
         if(spell==Spell.SOULBLAST&&stage==Stage.FLIGHT)return Shape.SCREAM_FRONT;
+        if(spell==Spell.RIFT_DRAW||spell==Spell.CRIMSON_REVERSAL)return stage==Stage.AREA||stage==Stage.IMPACT?Shape.SLASH:Shape.BEAM;
+        if(spell==Spell.GLACIAL_COUNTER)return stage==Stage.AREA?Shape.WARD:stage==Stage.IMPACT?Shape.GLACIER_IMPACT:Shape.CHARGE;
+        if(spell==Spell.THUNDERBRAND)return stage==Stage.AREA||stage==Stage.LINK?Shape.LIGHTNING:Shape.CHARGE;
+        if(spell==Spell.LAST_STAND)return stage==Stage.AREA?Shape.TOTEM:stage==Stage.IMPACT?Shape.SANCTUARY_BLOOM:Shape.CHARGE;
+        if(spell==Spell.ASHEN_REBIRTH)return stage==Stage.AREA?Shape.FLAME:stage==Stage.IMPACT?Shape.PYRE_IMPACT:Shape.COMET;
+        if(spell==Spell.PHANTOM_FORMATION)return stage==Stage.AREA?Shape.CHARGE:stage==Stage.LINK?Shape.BEAM:Shape.ORB;
+        if(spell==Spell.FUNERAL_BELL)return stage==Stage.AREA?Shape.PULSE:Shape.CHARGE;
+        if(spell==Spell.SPELLBREAKER)return stage==Stage.AREA?Shape.WAVE:Shape.BEAM;
         if(spell==Spell.SOUL_CANNON)return switch(stage){
             case CAST,CHARGE -> Shape.CANNON_CHARGE;
             case FLIGHT,LINK -> Shape.CANNON_HEAD;

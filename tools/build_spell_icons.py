@@ -26,6 +26,38 @@ def main():
         elif kind=='BOSS_RIFT':
             d.ellipse((25,13,99,114),outline=c,width=10);d.ellipse((38,26,86,103),outline=white,width=4)
             line([(10,100),(42,77),(75,55),(116,25)],10);line([(50,71),(109,31)],4,white)
+        elif kind=='COUNTER':
+            d.polygon([(64,12),(108,32),(99,83),(64,116),(29,83),(20,32)],outline=c,width=9)
+            for i in range(3):line([(36+i*18,48),(64,79),(91-i*18,48)],5,white)
+        elif kind=='DRAW':
+            line([(13,82),(116,38)],11);line([(18,81),(112,40)],4,white)
+            for x,y in [(32,53),(76,91),(100,21)]:line([(x-6,y),(x+6,y)],4)
+        elif kind=='REVERSAL':
+            d.arc((15,18,113,113),40,305,fill=c,width=10);d.polygon([(15,25),(47,30),(24,53)],fill=white)
+            line([(41,91),(90,40)],9)
+        elif kind=='BRAND':
+            d.polygon([(67,10),(31,68),(60,66),(49,119),(101,52),(72,54),(88,10)],fill=c)
+            line([(25,106),(103,28)],4,white)
+        elif kind=='BANNER':
+            line([(31,16),(31,116)],9,white);d.polygon([(38,21),(107,21),(90,45),(108,67),(38,67)],fill=c)
+            line([(57,45),(84,45)],5,white);line([(71,32),(71,58)],5,white)
+        elif kind=='REBIRTH':
+            for sign in (-1,1):d.polygon([(64,85),(64+sign*48,27),(64+sign*37,75),(64+sign*17,97)],fill=c)
+            d.polygon([(64,15),(77,67),(64,114),(51,67)],fill=white)
+        elif kind=='FORMATION':
+            for x,y in [(25,51),(64,25),(101,51)]:
+                d.polygon([(x,y-14),(x-7,y+21),(x,y+35),(x+7,y+21)],fill=c)
+                line([(x-12,y+34),(x+12,y+34)],5,white);line([(x,y+35),(x,y+51)],6,white)
+        elif kind=='BELL':
+            d.pieslice((26,20,102,111),180,360,fill=c);d.rectangle((26,61,102,86),fill=c)
+            d.ellipse((49,82,79,110),fill=white);line([(17,86),(112,86)],8,white)
+            for x in [12,111]:line([(x,40),(x,69)],4)
+        elif kind=='BREAKER':
+            d.arc((19,18,110,112),35,175,fill=c,width=9);d.arc((19,18,110,112),210,345,fill=c,width=9)
+            line([(20,109),(100,19)],11,white);line([(48,71),(77,94)],7)
+        elif kind=='BOSS_WRATH':
+            for dx in [-39,-13,13,39]:line([(64+dx,108),(64+dx*1.2,70),(64+dx*.8,36),(64+dx*.45,24)],9)
+            d.ellipse((48,74,80,106),fill=white)
         elif kind=='WARCRY':
             d.arc((14,18,114,114),190,350,fill=c,width=9)
             for a in range(7):

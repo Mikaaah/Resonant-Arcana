@@ -19,7 +19,9 @@
         "ARCANE_VOLLEY",
         "EVOKERS_EDICT",
         "ARCANE_STEP",
-        "ARCANE_EDGE"
+        "ARCANE_EDGE",
+        "PHANTOM_FORMATION",
+        "SPELLBREAKER"
       ]
     },
     {
@@ -39,7 +41,8 @@
         "CRIMSON_TETHER",
         "SANGUINE_PACT",
         "CRIMSON_HARVEST",
-        "BLOOD_REND"
+        "BLOOD_REND",
+        "CRIMSON_REVERSAL"
       ]
     },
     {
@@ -59,7 +62,8 @@
         "CINDER_STEP",
         "PHOENIX_RUSH",
         "DRAGON_BREATH",
-        "CINDER_CLEAVE"
+        "CINDER_CLEAVE",
+        "ASHEN_REBIRTH"
       ]
     },
     {
@@ -99,7 +103,8 @@
         "STORM_STEP",
         "THUNDERCLAP",
         "ARC_RICOCHET",
-        "BATTLE_TEMPO"
+        "BATTLE_TEMPO",
+        "THUNDERBRAND"
       ]
     },
     {
@@ -118,7 +123,8 @@
         "ORBITAL_BLADES",
         "PRISMATIC_RUIN",
         "GRAVITY_STAMP",
-        "SPATIAL_SHEAR"
+        "SPATIAL_SHEAR",
+        "RIFT_DRAW"
       ]
     },
     {
@@ -138,7 +144,8 @@
         "WISP_LANTERN",
         "RESONANT_GUARD",
         "MEMORY_FRACTURE",
-        "SOULBLAST"
+        "SOULBLAST",
+        "FUNERAL_BELL"
       ]
     },
     {
@@ -158,7 +165,8 @@
         "SPORE_TOTEM",
         "CORROSIVE_RAIN",
         "GORGON_GAZE",
-        "KRAKENS_GRASP"
+        "KRAKENS_GRASP",
+        "KRAKENS_WRATH"
       ]
     },
     {
@@ -179,7 +187,8 @@
         "SERAPHIC_DESCENT",
         "RENEWAL_HYMN",
         "WARSCREAM",
-        "BULWARK_CHANT"
+        "BULWARK_CHANT",
+        "LAST_STAND"
       ]
     },
     {
@@ -200,7 +209,8 @@
         "CRYSTAL_BARRAGE",
         "ABSOLUTE_ZERO",
         "RIME_THRUST",
-        "ICE_SPIKE_ERUPTION"
+        "ICE_SPIKE_ERUPTION",
+        "GLACIAL_COUNTER"
       ]
     }
   ],
@@ -2662,7 +2672,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Weapon enchantment",
-      "description": "Empower yourself with flat melee attack damage and faster attacks for 8\u201316 seconds. Refreshes the existing enchantment.",
+      "description": "Empower yourself with flat melee attack damage and faster attacks for 8–16 seconds. Refreshes the existing enchantment.",
       "bookId": "arcane_edge"
     },
     "BULWARK_CHANT": {
@@ -2682,7 +2692,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Party defence",
-      "description": "Grant visible nearby allies Resistance I and temporary health for 8\u201316 seconds. Shields refresh rather than stack.",
+      "description": "Grant visible nearby allies Resistance I and temporary health for 8–16 seconds. Shields refresh rather than stack.",
       "bookId": "bulwark_chant"
     },
     "BATTLE_TEMPO": {
@@ -2702,7 +2712,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Party haste",
-      "description": "A rallying rhythm grants visible nearby allies faster attacks and movement for 8\u201316 seconds.",
+      "description": "A rallying rhythm grants visible nearby allies faster attacks and movement for 8–16 seconds.",
       "bookId": "battle_tempo"
     },
     "CINDER_CLEAVE": {
@@ -2762,11 +2772,11 @@
       "interval": 0,
       "pulses": 1,
       "role": "Spellsword sustain",
-      "description": "Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3\u20136 health for the entire cast.",
+      "description": "Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3–6 health for the entire cast.",
       "bookId": "blood_rend"
     },
     "KRAKENS_GRASP": {
-      "title": "Kraken\u2019s Grasp",
+      "title": "Kraken’s Grasp",
       "kind": "BOSS_TENTACLE",
       "theme": "POISON",
       "damage": 18,
@@ -2782,7 +2792,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Boss magic / control",
-      "description": "Requires Bosses\u2019Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.",
+      "description": "Requires Bosses’Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.",
       "bookId": "krakens_grasp"
     },
     "ICE_SPIKE_ERUPTION": {
@@ -2802,11 +2812,11 @@
       "interval": 0,
       "pulses": 1,
       "role": "Boss magic / eruption",
-      "description": "Requires Bosses\u2019Rise 2.1.2. Five ice spikes erupt in a line across a visible ground location. Each enemy can take one hit per cast. Slows and chills enemies without freezing allies.",
+      "description": "Requires Bosses’Rise 2.1.2. Five ice spikes erupt in a line across a visible ground location. Each enemy can take one hit per cast. Slows and chills enemies without freezing allies.",
       "bookId": "ice_spike_eruption"
     },
     "HELVARS_RIFT": {
-      "title": "Helvar\u2019s Rift",
+      "title": "Helvar’s Rift",
       "kind": "BOSS_RIFT",
       "theme": "DARK",
       "damage": 14,
@@ -2822,8 +2832,208 @@
       "interval": 0,
       "pulses": 1,
       "role": "Boss magic / projectile",
-      "description": "Requires Bosses\u2019Rise 2.1.2. Launch a rift projectile with Helvar\u2019s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.",
+      "description": "Requires Bosses’Rise 2.1.2. Launch a rift projectile with Helvar’s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.",
       "bookId": "helvars_rift"
+    },
+    "KRAKENS_WRATH": {
+      "title": "Kraken’s Wrath",
+      "kind": "BOSS_WRATH",
+      "theme": "POISON",
+      "damage": 12,
+      "radius": 4,
+      "range": 20,
+      "cooldown": 600,
+      "castTicks": 72,
+      "mana": 110,
+      "manaStep": 12,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 150,
+      "interval": 0,
+      "pulses": 2,
+      "role": "Boss magic / ultimate",
+      "description": "Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.",
+      "bookId": "krakens_wrath"
+    },
+    "GLACIAL_COUNTER": {
+      "title": "Glacial Counter",
+      "kind": "COUNTER",
+      "theme": "ICE",
+      "damage": 12,
+      "radius": 3,
+      "range": 6,
+      "cooldown": 160,
+      "castTicks": 0,
+      "mana": 30,
+      "manaStep": 4,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 18,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Reactive guard",
+      "description": "Guard for 0.9 seconds against one frontal, blockable hostile hit. The first 0.3 seconds block fully and return a 175% frost counter; later guards reduce damage by 70% and return a normal counter. Environmental damage and bypassing attacks are not blocked.",
+      "bookId": "glacial_counter"
+    },
+    "RIFT_DRAW": {
+      "title": "Rift Draw",
+      "kind": "DRAW",
+      "theme": "GRAVITY",
+      "damage": 16,
+      "radius": 0.65,
+      "range": 14,
+      "cooldown": 180,
+      "castTicks": 30,
+      "mana": 50,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 14,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Delayed spellsword cut",
+      "description": "Draw a thin distortion along your aim. After a 0.6-second warning, a piercing slash hits visible enemies, adding half your melee attack damage. Walls stop the cut.",
+      "bookId": "rift_draw"
+    },
+    "CRIMSON_REVERSAL": {
+      "title": "Crimson Reversal",
+      "kind": "REVERSAL",
+      "theme": "BLOOD",
+      "damage": 10,
+      "radius": 1.4,
+      "range": 8,
+      "cooldown": 200,
+      "castTicks": 10,
+      "mana": 35,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Dash / return",
+      "description": "Blink forward with a blood slash along the clear path, adding half your melee attack damage. Recast within three seconds to return safely to your starting position for no extra mana. The normal cooldown begins when the return is used or expires.",
+      "bookId": "crimson_reversal"
+    },
+    "THUNDERBRAND": {
+      "title": "Thunderbrand",
+      "kind": "BRAND",
+      "theme": "THUNDER",
+      "damage": 8,
+      "radius": 5,
+      "range": 16,
+      "cooldown": 320,
+      "castTicks": 16,
+      "mana": 55,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 200,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Melee enchantment",
+      "description": "Enchant your weapon for ten seconds. Every third successful player melee hit releases chain lightning to that enemy and up to two nearby enemies. Spell damage cannot build charges; recasting refreshes the enchantment without stacking it.",
+      "bookId": "thunderbrand"
+    },
+    "LAST_STAND": {
+      "title": "Last Stand",
+      "kind": "BANNER",
+      "theme": "HOLY",
+      "damage": 0,
+      "radius": 6,
+      "range": 10,
+      "cooldown": 400,
+      "castTicks": 26,
+      "mana": 70,
+      "manaStep": 8,
+      "maxLevel": 5,
+      "healing": 6,
+      "duration": 120,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Defensive rally",
+      "description": "Plant a radiant banner for six seconds. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.",
+      "bookId": "last_stand"
+    },
+    "ASHEN_REBIRTH": {
+      "title": "Ashen Rebirth",
+      "kind": "REBIRTH",
+      "theme": "FIRE",
+      "damage": 18,
+      "radius": 4,
+      "range": 8,
+      "cooldown": 240,
+      "castTicks": 12,
+      "mana": 45,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 24,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Escape / delayed blast",
+      "description": "Burst forward along a clear path as a phoenix, leaving a burning silhouette. After 0.8 seconds the silhouette detonates. Grants brief Slow Falling; the movement itself deals no damage.",
+      "bookId": "ashen_rebirth"
+    },
+    "PHANTOM_FORMATION": {
+      "title": "Phantom Formation",
+      "kind": "FORMATION",
+      "theme": "MAGIC",
+      "damage": 8,
+      "radius": 0.45,
+      "range": 20,
+      "cooldown": 340,
+      "castTicks": 24,
+      "mana": 60,
+      "manaStep": 7,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 200,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Melee follow-up",
+      "description": "Summon four to eight spectral swords for ten seconds. Each successful player melee hit sends one sword toward the struck enemy. Swords have an arming flight, collide with walls and do not trigger further swords or Thunderbrand.",
+      "bookId": "phantom_formation"
+    },
+    "FUNERAL_BELL": {
+      "title": "Funeral Bell",
+      "kind": "BELL",
+      "theme": "SOUL",
+      "damage": 8,
+      "radius": 9,
+      "range": 0,
+      "cooldown": 420,
+      "castTicks": 60,
+      "mana": 95,
+      "manaStep": 10,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 62,
+      "interval": 0,
+      "pulses": 3,
+      "role": "Expanding pressure waves",
+      "description": "Charge a funeral bell. Two expanding sonic rings deal the listed damage; a third toll deals triple damage. Each ring strikes an enemy at most once, briefly slowing and pushing it. Walls block the waves.",
+      "bookId": "funeral_bell"
+    },
+    "SPELLBREAKER": {
+      "title": "Spellbreaker",
+      "kind": "BREAKER",
+      "theme": "MAGIC",
+      "damage": 6,
+      "radius": 1,
+      "range": 7,
+      "cooldown": 160,
+      "castTicks": 8,
+      "mana": 35,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Anti-magic sweep",
+      "description": "Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hostile or unowned projectiles and interrupt eligible Iron’s casts. Allies, owned projectiles, protected casts and unrelated magic systems are not cancelled.",
+      "bookId": "spellbreaker"
     }
   }
 }

@@ -59,3 +59,27 @@ The server/client configuration filenames introduced in 0.12 stay `resonantarcan
 The adapter activates only for Bosses’Rise **2.1.2**. Both sides must have matching mod installations. Other versions leave the adapter disabled. Without Bosses’Rise, its three spells and visual entity types are not registered; core spells retain their IDs and behavior. Manage the three spells’ normal level, enablement and balance settings through Iron’s native spell configuration. Existing Resonant Arcana damage, cooldown, healing, PvP and active-cast limits still apply.
 
 Ground spells require a loaded, visible solid surface within the bounded ground search. Temporary visual entities never save into chunks and are removed when their cast ends or the caster leaves. The addon does not copy, modify or redistribute Bosses’Rise assets.
+
+## Reactive and spellsword spells (0.16)
+
+Individual spell mana, cooldown, maximum level and enabled state use Iron’s spell
+configuration. Resonant Arcana’s damage, healing and cooldown multipliers also
+apply. Reactive buffs snapshot spell power at cast time. Weapon contributions
+use the melee attack attribute at release. Buffs refresh without stacking.
+
+Thunderbrand and Phantom Formation react only to successful native
+`minecraft:player_attack` damage. Misses, cancelled hits and spell damage do
+not charge them. Combat mods using their own damage types need an explicit
+integration; no compatibility with every combat mod is implied.
+
+Crimson Reversal uses a native three-second recast instance. The return is free,
+then the normal cooldown starts; expiry also starts the cooldown. It requires
+a clear, loaded destination in the same dimension and within 16 blocks.
+
+Spellbreaker removes at most 32 visible hostile/unowned projectiles. It invokes
+Iron’s cancellation API only for eligible long casts, checks interruption
+immunity, and honours `CounterSpellEvent` cancellation. It cannot erase
+already-released fields or arbitrarily cancel independent magic systems.
+
+Kraken’s Wrath is available only with the supported Bosses’Rise 2.1.2 version.
+Its visuals stay in that mod; no third-party assets are bundled.

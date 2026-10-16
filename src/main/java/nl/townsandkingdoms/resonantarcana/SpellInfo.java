@@ -31,6 +31,13 @@ final class SpellInfo {
         if(s==Spell.BATTLE_TEMPO)out.add(Component.literal(String.format(Locale.ROOT,"Attack and movement speed: +%.1f%%",10+rank*2.5)));
         if(s==Spell.BLOOD_REND)out.add(Component.literal(String.format(Locale.ROOT,"Healing cap per cast: %.1f health",3*power)));
         if(s.kind==Spell.Kind.MARTIAL_BUFF||s.kind==Spell.Kind.WARCRY)out.add(Component.literal(String.format(Locale.ROOT,"Buff duration: %.1fs",s.duration()/20f*Math.clamp(power,1,2))));
+        if(s==Spell.RIFT_DRAW||s==Spell.CRIMSON_REVERSAL||s==Spell.SPELLBREAKER)out.add(Component.literal(String.format(Locale.ROOT,"Plus %.0f%% of melee attack damage at release",50*power)));
+        if(s==Spell.GLACIAL_COUNTER)out.add(Component.literal(String.format(Locale.ROOT,"Perfect counter: %.1f damage • Guard 0.9s • Perfect window 0.3s",s.damage*power*1.75)));
+        if(s==Spell.LAST_STAND)out.add(Component.literal(String.format(Locale.ROOT,"Temporary health once per ally: %.1f • Resistance I",4*Math.clamp(power,1,2))));
+        if(s==Spell.PHANTOM_FORMATION)out.add(Component.literal("Swords: "+(4+rank)+" • One per successful player melee hit"));
+        if(s==Spell.THUNDERBRAND)out.add(Component.literal("Every third successful player melee hit • Up to 3 targets"));
+        if(s==Spell.FUNERAL_BELL||s==Spell.KRAKENS_WRATH)out.add(Component.literal(String.format(Locale.ROOT,"Final hit: %.1f damage",s.damage*power*3)));
+        if(s==Spell.CRIMSON_REVERSAL)out.add(Component.literal("Free native recast: 3s • Cooldown after return or expiry"));
         return out;
     }
     private static String format(double n){return n==(int)n?Integer.toString((int)n):Double.toString(n);}

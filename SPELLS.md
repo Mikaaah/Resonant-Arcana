@@ -1,6 +1,6 @@
 # Spell reference
 
-**128 core spells + 3 optional Bosses’Rise spells · 10 wands · 12–14 spells per wand.**
+**137 core spells + 4 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
@@ -22,16 +22,16 @@ Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 second
 
 | Wand | School | Spell kit |
 | --- | --- | --- |
-| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge |
-| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend |
-| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave |
+| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge, Phantom Formation, Spellbreaker |
+| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend, Crimson Reversal |
+| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth |
 | [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift |
-| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo |
-| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear |
-| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast |
-| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp |
-| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant |
-| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption |
+| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo, Thunderbrand |
+| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear, Rift Draw |
+| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast, Funeral Bell |
+| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp, Kraken’s Wrath |
+| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant, Last Stand |
+| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption, Glacial Counter |
 
 ## Shared recovery
 
@@ -272,6 +272,46 @@ Empower yourself with flat melee attack damage and faster attacks for 8–16 sec
 
 Spell ID: `resonant_arcana:arcane_edge`. Inspect any rank in game with `/resonantarcana spell arcane_edge <level>`.
 
+### Phantom Formation
+
+Summon four to eight spectral swords for ten seconds. Each successful player melee hit sends one sword toward the struck enemy. Swords have an arming flight, collide with walls and do not trigger further swords or Thunderbrand.
+
+**Role:** Melee follow-up · **Cast:** 1.2s · **Cooldown:** 17s · **Range:** 20 blocks · **Radius / width:** 0.45 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 60 |
+| II | 10 | — | 67 |
+| III | 12 | — | 74 |
+| IV | 14 | — | 81 |
+| V | 16 | — | 88 |
+
+**Base active phase:** 10s.
+
+**Sword count I–V:** 4, 5, 6, 7, 8. Each successful native player melee hit queues one sword, which arms for 0.5 seconds before flying along the attack direction. It collides with the first enemy or wall, travels at most 20 blocks and cannot create further proc attacks. Unused swords expire after ten seconds.
+
+Spell ID: `resonant_arcana:phantom_formation`. Inspect any rank in game with `/resonantarcana spell phantom_formation <level>`.
+
+### Spellbreaker
+
+Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hostile or unowned projectiles and interrupt eligible Iron’s casts. Allies, owned projectiles, protected casts and unrelated magic systems are not cancelled.
+
+**Role:** Anti-magic sweep · **Cast:** 0.4s · **Cooldown:** 8s · **Range:** 7 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 35 |
+| II | 7.5 | — | 40 |
+| III | 9 | — | 45 |
+| IV | 10.5 | — | 50 |
+| V | 12 | — | 55 |
+
+**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the melee attack damage attribute at release, for levels I–V respectively.
+
+**Counterspell:** interrupts native Iron’s player and IMagicEntity long casts when their interruption rules and CounterSpellEvent allow it. Does not cancel already-released spells or arbitrary other magic systems. Up to 32 visible hostile/unowned projectiles in the forward cone are removed; owned projectiles, allies and Bosses’Rise visual adapters are protected.
+
+Spell ID: `resonant_arcana:spellbreaker`. Inspect any rank in game with `/resonantarcana spell spellbreaker <level>`.
+
 <a id="blood-wand"></a>
 ## Blood Wand
 
@@ -503,6 +543,26 @@ Rend a 90-degree crescent. Damage includes half your melee attack attribute. Res
 
 Spell ID: `resonant_arcana:blood_rend`. Inspect any rank in game with `/resonantarcana spell blood_rend <level>`.
 
+### Crimson Reversal
+
+Blink forward with a blood slash along the clear path, adding half your melee attack damage. Recast within three seconds to return safely to your starting position for no extra mana. The normal cooldown begins when the return is used or expires.
+
+**Role:** Dash / return · **Cast:** 0.5s · **Cooldown:** 10s · **Range:** 8 blocks · **Radius / width:** 1.4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 35 |
+| II | 12.5 | — | 40 |
+| III | 15 | — | 45 |
+| IV | 17.5 | — | 50 |
+| V | 20 | — | 55 |
+
+**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the melee attack damage attribute at release, for levels I–V respectively.
+
+**Native recast:** a three-second return window. The return costs no mana and has no second windup; using or timing out the return starts the normal cooldown. The saved anchor must remain in the same dimension, within 16 blocks, loaded, outside lava and free of collisions. The return cannot be used as a directly consumed scroll; inscribe it in a spellbook or cast with a wand.
+
+Spell ID: `resonant_arcana:crimson_reversal`. Inspect any rank in game with `/resonantarcana spell crimson_reversal <level>`.
+
 <a id="cinder-wand"></a>
 ## Cinder Wand
 
@@ -733,6 +793,26 @@ Sweep a burning crescent through a 120-degree cone. Damage includes half your me
 **Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.
 
 Spell ID: `resonant_arcana:cinder_cleave`. Inspect any rank in game with `/resonantarcana spell cinder_cleave <level>`.
+
+### Ashen Rebirth
+
+Burst forward along a clear path as a phoenix, leaving a burning silhouette. After 0.8 seconds the silhouette detonates. Grants brief Slow Falling; the movement itself deals no damage.
+
+**Role:** Escape / delayed blast · **Cast:** 0.6s · **Cooldown:** 12s · **Range:** 8 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 18 | — | 45 |
+| II | 22.5 | — | 51 |
+| III | 27 | — | 57 |
+| IV | 31.5 | — | 63 |
+| V | 36 | — | 69 |
+
+**Base active phase:** 1.2s.
+
+**Release:** safe forward blink up to eight blocks, with three seconds of Slow Falling. The silhouette remains at the departure point and explodes after 0.8 seconds. The movement itself deals no damage.
+
+Spell ID: `resonant_arcana:ashen_rebirth`. Inspect any rank in game with `/resonantarcana spell ashen_rebirth <level>`.
 
 <a id="dark-wand"></a>
 ## Dark Wand
@@ -1180,6 +1260,26 @@ A rallying rhythm grants visible nearby allies faster attacks and movement for 8
 
 Spell ID: `resonant_arcana:battle_tempo`. Inspect any rank in game with `/resonantarcana spell battle_tempo <level>`.
 
+### Thunderbrand
+
+Enchant your weapon for ten seconds. Every third successful player melee hit releases chain lightning to that enemy and up to two nearby enemies. Spell damage cannot build charges; recasting refreshes the enchantment without stacking it.
+
+**Role:** Melee enchantment · **Cast:** 0.8s · **Cooldown:** 16s · **Range:** 16 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 55 |
+| II | 10 | — | 61 |
+| III | 12 | — | 67 |
+| IV | 14 | — | 73 |
+| V | 16 | — | 79 |
+
+**Base active phase:** 10s.
+
+**Trigger:** every third successful native player melee hit. The third hit gains the listed damage before its normal mitigation; lightning separately strikes up to two nearby enemies. Lightning and spell damage never add charges. Duration is 10 seconds, with no stacking on recast. Mods must route melee damage through the native player-attack damage type; custom combat damage types need an explicit integration.
+
+Spell ID: `resonant_arcana:thunderbrand`. Inspect any rank in game with `/resonantarcana spell thunderbrand <level>`.
+
 <a id="rift-wand"></a>
 ## Rift Wand
 
@@ -1390,6 +1490,26 @@ Cut a wide crescent through nearby space, striking each visible enemy in front o
 | V | 24 | — | 74 |
 
 Spell ID: `resonant_arcana:spatial_shear`. Inspect any rank in game with `/resonantarcana spell spatial_shear <level>`.
+
+### Rift Draw
+
+Draw a thin distortion along your aim. After a 0.6-second warning, a piercing slash hits visible enemies, adding half your melee attack damage. Walls stop the cut.
+
+**Role:** Delayed spellsword cut · **Cast:** 1.5s · **Cooldown:** 9s · **Range:** 14 blocks · **Radius / width:** 0.65 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 50 |
+| II | 20 | — | 56 |
+| III | 24 | — | 62 |
+| IV | 28 | — | 68 |
+| V | 32 | — | 74 |
+
+**Base active phase:** 0.7s.
+
+**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the melee attack damage attribute at release, for levels I–V respectively.
+
+Spell ID: `resonant_arcana:rift_draw`. Inspect any rank in game with `/resonantarcana spell rift_draw <level>`.
 
 <a id="soul-wand"></a>
 ## Soul Wand
@@ -1622,6 +1742,28 @@ Blast a forward cone of enemies away. Aim sharply downward to launch yourself wi
 
 Spell ID: `resonant_arcana:soulblast`. Inspect any rank in game with `/resonantarcana spell soulblast <level>`.
 
+### Funeral Bell
+
+Charge a funeral bell. Two expanding sonic rings deal the listed damage; a third toll deals triple damage. Each ring strikes an enemy at most once, briefly slowing and pushing it. Walls block the waves.
+
+**Role:** Expanding pressure waves · **Cast:** 3s · **Cooldown:** 21s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 95 |
+| II | 10 | — | 105 |
+| III | 12 | — | 115 |
+| IV | 14 | — | 125 |
+| V | 16 | — | 135 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 3.1s.
+
+**Tolls:** rings start at release, 1.1 seconds and 2.2 seconds. The last ring deals triple damage: 24, 30, 36, 42, 48. Each enemy is hit at most once by each ring. The pressure waves expand from the release location; enemies can escape or take cover.
+
+Spell ID: `resonant_arcana:funeral_bell`. Inspect any rank in game with `/resonantarcana spell funeral_bell <level>`.
+
 <a id="venom-wand"></a>
 ## Venom Wand
 
@@ -1852,6 +1994,28 @@ Requires Bosses’Rise 2.1.2. Summon a spectral Kraken tentacle at a visible gro
 | V | 36 | — | 80 |
 
 Spell ID: `resonant_arcana:krakens_grasp`. Inspect any rank in game with `/resonantarcana spell krakens_grasp <level>`.
+
+### Kraken’s Wrath
+
+Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.
+
+**Role:** Boss magic / ultimate · **Cast:** 3.6s · **Cooldown:** 30s · **Range:** 20 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 110 |
+| II | 15 | — | 122 |
+| III | 18 | — | 134 |
+| IV | 21 | — | 146 |
+| V | 24 | — | 158 |
+
+**Delivery:** up to 2 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 7.5s.
+
+**Requires Bosses’Rise 2.1.2.** Four outer tentacles rise ten ticks apart, then a central tentacle. Outer impacts deal the table value at most once per enemy across the entire ring. The central slam deals triple damage at 5.3 seconds after release. All damage, targeting and cleanup use the addon’s normal rules.
+
+Spell ID: `resonant_arcana:krakens_wrath`. Inspect any rank in game with `/resonantarcana spell krakens_wrath <level>`.
 
 <a id="holy-wand"></a>
 ## Holy Wand
@@ -2108,6 +2272,26 @@ Grant visible nearby allies Resistance I and temporary health for 8–16 seconds
 
 Spell ID: `resonant_arcana:bulwark_chant`. Inspect any rank in game with `/resonantarcana spell bulwark_chant <level>`.
 
+### Last Stand
+
+Plant a radiant banner for six seconds. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.
+
+**Role:** Defensive rally · **Cast:** 1.3s · **Cooldown:** 20s · **Range:** 10 blocks · **Radius / width:** 6 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | 6 | 70 |
+| II | — | 7.5 | 78 |
+| III | — | 9 | 86 |
+| IV | — | 10.5 | 94 |
+| V | — | 12 | 102 |
+
+**Base active phase:** 6s.
+
+**Banner:** six seconds, fixed location, six-block ally radius. Grants Resistance I while defending the area and 4, 5, 6, 7, 8 temporary health once per ally. Re-entering does not refill absorption. Only allies still in range and visible at the end receive the table’s healing.
+
+Spell ID: `resonant_arcana:last_stand`. Inspect any rank in game with `/resonantarcana spell last_stand <level>`.
+
 <a id="frost-wand"></a>
 ## Frost Wand
 
@@ -2356,3 +2540,23 @@ Requires Bosses’Rise 2.1.2. Five ice spikes erupt in a line across a visible g
 | V | 20 | — | 60 |
 
 Spell ID: `resonant_arcana:ice_spike_eruption`. Inspect any rank in game with `/resonantarcana spell ice_spike_eruption <level>`.
+
+### Glacial Counter
+
+Guard for 0.9 seconds against one frontal, blockable hostile hit. The first 0.3 seconds block fully and return a 175% frost counter; later guards reduce damage by 70% and return a normal counter. Environmental damage and bypassing attacks are not blocked.
+
+**Role:** Reactive guard · **Cast:** instant · **Cooldown:** 8s · **Range:** 6 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 30 |
+| II | 15 | — | 34 |
+| III | 18 | — | 38 |
+| IV | 21 | — | 42 |
+| V | 24 | — | 46 |
+
+**Base active phase:** 0.9s.
+
+**Guard:** 0.9 seconds, consumed by one frontal blockable hostile hit. The first 0.3 seconds prevent all damage and deal a 175% counter: 21, 26.25, 31.5, 36.75, 42 damage. Later guards reduce incoming damage by 70% and deal the table value. Rear hits, environmental damage and attacks tagged to bypass shields do not trigger the counter.
+
+Spell ID: `resonant_arcana:glacial_counter`. Inspect any rank in game with `/resonantarcana spell glacial_counter <level>`.

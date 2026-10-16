@@ -24,559 +24,301 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
-import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.event.server.ServerSty×{¶‰Ëkºwµç\Š
+_[]H[œİ[˜Ù[Ùˆ\›[Ü”İ[™
+\™]\›ˆ˜[ÙNÂˆYŠ[]H[œİ[˜Ù[Ùˆ™]›Z[™XÜ˜YÛÜ›™[]Kœ^Y\‹”^Y\ˆİ\‰‰ŠP\˜Ø[˜PÛÛ™šYË””™Ù]
 
-/** Explicitly gated developer fixture: starts and stops only with -Dresonant_arcana.integrationTest=true. */
-public final class IntegrationChecks {
-    private static final List<String> checks=new ArrayList<>();
-    private static final List<WandNetwork.Visual> visuals=new ArrayList<>();
-    static void visual(WandNetwork.Visual message){if(visuals.size()<512)visuals.add(message);}
-    private IntegrationChecks() {}
-    public static boolean enabled(){return Boolean.getBoolean("resonant_arcana.integrationTest");}
-    public static void start(ServerStartedEvent event){if(enabled())event.getServer().execute(()->run(event.getServer()));}
-    private static void check(boolean condition,String name){if(!condition)throw new IllegalStateException(name);checks.add(name);}
-    private static void run(MinecraftServer server){
-        Map<String,Object> report=new LinkedHashMap<>();List<Map<String,Object>> results=new ArrayList<>();
-        try {
-            ServerLevel level=server.overworld();
-            // Iron's builds its server spell config during the player/datapack sync lifecycle.
-            io.redspace.ironsspellbooks.api.config.SpellConfigManager.onDatapackSync(new net.neoforged.neoforge.event.OnDatapackSyncEvent(server.getPlayerList(),null));
-            for(int x=-1;x<=1;x++)for(int z=-1;z<=2;z++)level.getChunk(x,z);
-            for(int x=-12;x<=12;x++)for(int z=-8;z<=24;z++){
-                level.setBlockAndUpdate(new BlockPos(x,80,z),Blocks.STONE.defaultBlockState());
-                for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,z),Blocks.AIR.defaultBlockState());
-            }
-            FakePlayer player=FakePlayerFactory.get(level,new GameProfile(UUID.fromString("6341cb70-4863-4d65-a614-1fd6719c50b8"),"WandTest"));
-            player.setGameMode(GameType.SURVIVAL);resetPlayer(player);
-            WandItem wand=ResonantArcana.ARCANE.get();ItemStack stack=wand.getDefaultInstance();
-            wand.select(stack,-1);check(wand.selection(stack)==wand.spells.size()-1,"previous selection wraps");
-            var custom=stack.get(DataComponents.CUSTOM_DATA).copyTag();custom.putString("external","preserved");stack.set(DataComponents.CUSTOM_DATA,CustomData.of(custom));
-            wand.select(stack,2);check(stack.get(DataComponents.CUSTOM_DATA).copyTag().getString("external").equals("preserved"),"selection preserves unrelated custom data");
-            ItemStack restored=ItemStack.parseOptional(server.registryAccess(),(CompoundTag)stack.save(server.registryAccess()));
-            check(wand.selected(restored)==Spell.CONFUSE,"selected spell survives item serialization");
-            RegistryFriendlyByteBuf buffer=new RegistryFriendlyByteBuf(Unpooled.buffer(),server.registryAccess());
-            try {
-                var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
-                buffer.clear();var selection=new WandNetwork.Select(ResonantArcana.ARCANE.getId(),11);WandNetwork.Select.CODEC.encode(buffer,selection);check(WandNetwork.Select.CODEC.decode(buffer).equals(selection),"wand selection packet round trip");
-                buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
-                buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_SCREAM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
-                WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
-                check(visual.valid(),"finite beam packet accepted");
-                check(!new WandNetwork.Visual(-1,0,0,0,0,0,0,0,1).valid(),"unknown visual spell rejected");
-                check(!new WandNetwork.Visual(0,999,0,0,0,0,0,0,1).valid(),"unknown visual stage rejected");
-                check(!new WandNetwork.Visual(0,0,Double.NaN,0,0,0,0,0,1).valid(),"nonfinite visual rejected");
-                check(!new WandNetwork.Visual(0,0,0,0,0,500,0,0,1).valid(),"unbounded beam rejected");
-                check(!new WandNetwork.Visual(0,0,0,0,0,0,0,0,Float.POSITIVE_INFINITY).valid(),"nonfinite effect size rejected");
-            }finally{buffer.release();}
-            check(ResonantArcana.ITEMS.getEntries().size()==10,"ten registered wands");
-            var catalog=EnumSet.noneOf(Spell.class);
-            for(var item:ResonantArcana.ITEMS.getEntries()){
-                check(item.getId().getNamespace().equals("resonant_arcana"),item.getId()+" uses the new namespace");
-                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();check(w.spells.size()>=12&&w.spells.size()<=14,item.getId()+" has a bounded expanded kit");
-                check(server.getRecipeManager().byKey(item.getId()).isPresent(),item.getId()+" has a loaded survival recipe");
-                for(int i=0;i<w.spells.size();i++){
-                    w.select(ws,i);check(w.selected(ws)==w.spells.get(i),item.getId()+" selection "+i);
-                    check(catalog.add(w.spells.get(i)),w.spells.get(i)+" has exactly one wand home");
-                }
+_XØ\İ\‹œÙ\™\‹š\Ôœ[İÙY
 
-            }
-            check(catalog.size()==Spell.enabledValues().length,"all catalog spells are obtainable");
-            var identityTag=new CompoundTag();identityTag.putInt("resonant_arcana_spell",999);identityTag.putString("resonant_arcana_spell_id","ARCANE_REPULSE");
-            var identityStack=wand.getDefaultInstance();identityStack.set(DataComponents.CUSTOM_DATA,CustomData.of(identityTag));
-            check(wand.selected(identityStack)==Spell.ARCANE_REPULSE,"stable spell ID takes priority over stale numeric slot");
-            for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.castAccentId(theme),SpellAudio.impactId(theme),SpellAudio.impactAccentId(theme),SpellAudio.sustainId(theme)))
-                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"sound exists: "+id);
-            for(Spell spell:Spell.enabledValues()){
-                String id=SpellAudio.chargeId(spell);
-                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"charge sound exists: "+spell);
-                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(SpellAudio.spellCastId(spell))),"release sound exists: "+spell);
-                check(!SpellAudio.castId(spell.theme).startsWith("resonant_arcana:"),"retired vacuum cast is not referenced: "+spell);
-            }
-            for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_SCREAM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
-                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"special soul sound exists: "+id);
-            visuals.clear();SpellVisuals.tick();
-            for(int i=0;i<100;i++)SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.FLIGHT,new Vec3(0,82,0),new Vec3(0,82,1),1);
-            check(visuals.size()==64,"detail visual traffic capped at 64 per tick");
-            for(int i=0;i<100;i++)SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
-            check(visuals.size()==96,"32 accent events reserved when detail budget is exhausted");
-            SpellVisuals.tick();SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
-            check(visuals.size()==97,"visual budgets recover on the next tick");
-            for(var shape:SpellVisuals.Shape.values())for(var theme:Spell.Theme.values()){
-            if(!SpellVisuals.packaged(shape,theme))continue;
-                String asset="/assets/resonant_arcana/effeks/"+shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc";
-                try(var input=IntegrationChecks.class.getResourceAsStream(asset)){
-                    check(input!=null&&new String(input.readNBytes(4),java.nio.charset.StandardCharsets.US_ASCII).equals("EFKE"),"native effect packaged: "+shape+"/"+theme);
-                }
-            }
-            for(Spell spell:Spell.enabledValues()){
-                SpellEngine.clear();resetPlayer(player);visuals.clear();
-                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.ARCANE.toStack());
-                if(spell.healing()>0)player.setHealth(5);
-                Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.ORBIT?3:spell.kind==Spell.Kind.BLADE_ARC?4:spell.kind==Spell.Kind.SWEEP||spell.kind==Spell.Kind.GAZE?5:spell.kind==Spell.Kind.PULSE?Math.min(5,spell.radius-1):spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
-                if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
-                check(SpellEngine.cast(player,spell),spell.name()+" starts");
-                check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
-                for(int t=0;t<100;t++)SpellEngine.tick();
-                boolean observed=switch(spell.kind){
-                    case HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
-                    case CLEANSE->spell==Spell.TOXIC_MOLT?player.getHealth()>5:player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
-                    case WARCRY->player.hasEffect(ArcanaEffects.WARCRY)&&zombie.getDeltaMovement().lengthSqr()>.1;
-                    case MARTIAL_BUFF->player.hasEffect(ArcanaEffects.ARCANE_EDGE)||player.hasEffect(ArcanaEffects.TEMPO)||player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
-                    case BUFF->player.getAbsorptionAmount()>0||player.hasEffect(MobEffects.INVISIBILITY);
-                    case BLINK->player.hasEffect(MobEffects.SLOW_FALLING)&&visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.LINK.ordinal()&&v.endZ()>1);
-                    case DASH->player.getDeltaMovement().lengthSqr()>.1;
-                    case LEAP->player.getDeltaMovement().y>0;
-                    case WARD->arrow.getDeltaMovement().z>0;
-                    case CONFUSE->zombie.hasEffect(MobEffects.BLINDNESS);
-                    case CAPTURE->zombie.hasEffect(MobEffects.MOVEMENT_SLOWDOWN);
-                    default->zombie.getHealth()<zombie.getMaxHealth();
-                };
-                check(observed,spell.name()+" has expected gameplay effect");
-                check(SpellEngine.activeCount()==0,spell.name()+" timed tasks expire");
-                check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
-                check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
-                SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
-                    case BOSS_ICE,BOSS_TENTACLE,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
-                    case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
-                    case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
-                    default -> SpellVisuals.Stage.LINK;
-                };
-                check(visuals.stream().anyMatch(v->v.stage()==expectedStage.ordinal()),spell+" has "+expectedStage+" visuals");
-                for(var visual:visuals){
-                    var emitted=Spell.values()[visual.spell()];var shape=SpellVisuals.shape(emitted,SpellVisuals.Stage.values()[visual.stage()]);
-                    check(SpellVisuals.packaged(shape,emitted.theme),emitted+" emitted effect exists: "+shape);
-                }
-                results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
-                if(arrow!=null)arrow.discard();zombie.discard();
-            }
-            SpellEngine.clear();resetPlayer(player);Zombie chainFirst=spawn(level,0,81,6),chainSecond=spawn(level,3,81,6);
-            check(SpellEngine.cast(player,Spell.CHAIN_LIGHTNING),"chain casts at first target");
-            check(chainFirst.getHealth()<20&&chainSecond.getHealth()<20,"chain damages two distinct visible targets");chainFirst.discard();chainSecond.discard();
-            for(Spell force:List.of(Spell.FORCE_PUSH,Spell.FORCE_PULL)){
-                SpellEngine.clear();resetPlayer(player);Zombie z=spawn(level,0,81,6);
-                check(SpellEngine.cast(player,force),force+" casts");
-                check(force==Spell.FORCE_PUSH?z.getDeltaMovement().z>0:z.getDeltaMovement().z<0,force+" correct movement direction");z.discard();
-            }
-            SpellEngine.clear();resetPlayer(player);Zombie moving=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.SOUL_SEEKER),"seeker acquires target");moving.setPos(2,81,6);
-            for(int t=0;t<60;t++)SpellEngine.tick();check(moving.getHealth()<20,"seeker follows target after sideways movement");moving.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie centre=spawn(level,0,81,6),edge=spawn(level,3,81,6);
-            check(SpellEngine.cast(player,Spell.GRAVITY_WELL),"well casts");SpellEngine.tick();
-            check(edge.getDeltaMovement().x<0,"gravity well pulls nearby target inward");centre.discard();edge.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie sonicFront=spawn(level,0,81,5),sonicBack=spawn(level,0,81,9),sonicFlank=spawn(level,6,81,3),sonicBehind=spawn(level,0,81,-5),sonicFar=spawn(level,0,81,16);
-            check(SpellEngine.cast(player,Spell.SONIC_SCREAM),"sonic scream begins charge");
-            for(int t=0;t<19;t++)SpellEngine.tick();
-            check(sonicFront.getHealth()==20&&sonicBack.getHealth()==20,"sonic scream does no damage during charge");
-            for(int t=0;t<8;t++)SpellEngine.tick();check(sonicFront.getHealth()==6&&sonicBack.getHealth()==6&&sonicFlank.getHealth()==6,"sonic scream fills a wide forward cone and hits once");
-            check(sonicBehind.getHealth()==20&&sonicFar.getHealth()==20,"sonic scream excludes rear and distant targets");
-            check(SpellEngine.activeCount()==0,"sonic charge task ends on release");sonicFront.discard();sonicBack.discard();sonicFlank.discard();sonicBehind.discard();sonicFar.discard();
-            SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie drain=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon casts on living target");
-            check(drain.getHealth()<20&&player.getHealth()>10&&player.getHealth()<=12,"siphon heals at most one heart after real damage");drain.discard();
-            SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie invulnerable=spawn(level,0,81,6);invulnerable.setInvulnerable(true);
-            check(SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon may attempt invulnerable target");
-            check(invulnerable.getHealth()==20&&player.getHealth()==10,"blocked damage gives no siphon healing");invulnerable.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie prisoner=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.SOUL_PRISON),"soul prison casts");SpellEngine.tick();
-            check(prisoner.hasEffect(MobEffects.DARKNESS)&&prisoner.hasEffect(MobEffects.MOVEMENT_SLOWDOWN),"soul prison applies darkness and restraint");prisoner.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie marked=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.SHADOW_CAGE),"dread mark arms");for(int t=0;t<39;t++)SpellEngine.tick();
-            check(marked.getHealth()==20,"dread mark waits two seconds before damage");SpellEngine.tick();
-            check(marked.getHealth()<20&&SpellEngine.activeCount()==0,"dread mark detonates and expires");marked.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie suspended=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.GRAVITY_CHOKE),"suspension starts");SpellEngine.tick();
-            check(suspended.getDeltaMovement().y>0&&suspended.hasEffect(MobEffects.SLOW_FALLING),"suspension lifts target and protects its landing");suspended.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie lanceA=spawn(level,0,81,5),lanceB=spawn(level,0,81,9);
-            check(SpellEngine.cast(player,Spell.BLOOD_LANCE),"blood lance casts");check(lanceA.getHealth()<20&&lanceB.getHealth()<20,"blood lance pierces two visible targets");lanceA.discard();lanceB.discard();
-            SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie sharedDrain=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.SANGUINE_DRAIN),"blood siphon casts");
-            check(player.getHealth()>10&&player.getHealth()<=12,"blood siphon heals after damage");
-            check(!SpellEngine.cast(player,Spell.SOUL_SIPHON),"blood and soul healing share cooldown");sharedDrain.discard();
-            SpellEngine.clear();resetPlayer(player);check(SpellEngine.cast(player,Spell.BLOOD_BLOCK),"blood ward casts for shared recovery test");
-            check(!SpellEngine.cast(player,Spell.ECHO_WARD),"blood and echo wards share cooldown");
-            SpellEngine.clear();resetPlayer(player);var pool=new net.minecraft.world.entity.animal.Cow(EntityType.COW,level);
-            pool.setPos(0,81,6);pool.setNoAi(true);pool.setNoGravity(true);level.addFreshEntity(pool);
-            check(SpellEngine.cast(player,Spell.MIASMA_FIELD),"miasma field casts");SpellEngine.tick();
-            check(pool.hasEffect(MobEffects.POISON),"miasma poisons target");pool.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie hex=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.WITHERING_HEX),"withering hex casts");check(hex.hasEffect(MobEffects.WITHER),"withering hex applies wither");hex.discard();
-            SpellEngine.clear();resetPlayer(player);check(SpellEngine.cast(player,Spell.ARCANE_VOLLEY),"arcane volley casts");
-            Zombie volleyA=spawn(level,0,81,3);for(int t=0;t<4;t++)SpellEngine.tick();check(volleyA.getHealth()<20,"volley first projectile hits");volleyA.discard();
-            Zombie volleyB=spawn(level,0,81,3);for(int t=0;t<6;t++)SpellEngine.tick();check(volleyB.getHealth()<20,"volley second projectile hits");volleyB.discard();
-            Zombie volleyC=spawn(level,0,81,3);for(int t=0;t<8;t++)SpellEngine.tick();check(volleyC.getHealth()<20,"volley third projectile hits");volleyC.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie outsideFire=spawn(level,0,81,7);
-            check(SpellEngine.cast(player,Spell.EMBER_VEIL),"ember veil casts for radius test");for(int t=0;t<60;t++)SpellEngine.tick();
-            check(outsideFire.getHealth()==20,"ember veil leaves distant target unharmed");outsideFire.discard();
-            // A real obstruction must stop both entity targeting and travelling spells.
-            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
-            check(SpellEngine.cast(player,Spell.SHADOW_CAGE),"mark arms before target takes cover");
-            for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
-            for(int t=0;t<40;t++)SpellEngine.tick();check(hidden.getHealth()==20,"taking cover cancels a pending dread mark");SpellEngine.clear();
-            check(!SpellEngine.cast(player,Spell.ARCANE_STRIKE),"targeted spell cannot select through solid wall");
-            check(!SpellEngine.cast(player,Spell.SOUL_SEEKER),"seeker cannot acquire through solid wall");
-            check(!SpellEngine.cast(player,Spell.CHAIN_LIGHTNING),"chain cannot start through solid wall");
-            check(!SpellEngine.cast(player,Spell.FORCE_PULL),"force pull cannot select through solid wall");
-            check(SpellEngine.cast(player,Spell.SPARK),"projectile can cast toward wall");for(int t=0;t<40;t++)SpellEngine.tick();
-            check(hidden.getHealth()==20,"solid wall blocks projectile damage");
-            SpellEngine.clear();check(SpellEngine.cast(player,Spell.SONIC_SCREAM),"sonic beam may charge toward a wall");
-            for(int t=0;t<20;t++)SpellEngine.tick();check(hidden.getHealth()==20,"solid wall stops sonic beam damage");
-            check(!SpellEngine.cast(player,Spell.SOUL_SIPHON),"siphon cannot acquire through wall");
-            check(!SpellEngine.cast(player,Spell.SHADOW_CAGE),"dread mark cannot acquire through wall");
-            check(SpellEngine.cast(player,Spell.BLOOD_LANCE),"blood lance may cast toward wall");check(hidden.getHealth()==20,"wall stops blood lance");
-            check(SpellEngine.cast(player,Spell.FLAME_THROWER),"flamethrower may cast toward wall");for(int t=0;t<40;t++)SpellEngine.tick();
-            check(hidden.getHealth()==20,"wall stops flamethrower damage");
-            check(level.getBlockState(new BlockPos(0,82,3)).is(Blocks.STONE),"spell impact preserves solid blocks");
-            for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());hidden.discard();
-            var team=level.getScoreboard().addPlayerTeam("wand_test_allies");team.setAllowFriendlyFire(false);
-            level.getScoreboard().addPlayerToTeam(player.getScoreboardName(),team);
-            Zombie ally=spawn(level,0,81,6);level.getScoreboard().addPlayerToTeam(ally.getScoreboardName(),team);
-            check(!SpellEngine.allowed(player,ally),"scoreboard friendly fire is respected");
-            SpellEngine.clear();check(!SpellEngine.cast(player,Spell.ARCANE_STRIKE),"allied target is rejected");
-            level.getScoreboard().removePlayerTeam(team);ally.discard();
-            SpellEngine.clear();resetPlayer(player);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.STICK));
-            SpellEngine.action(player,0);check(SpellEngine.activeCount()==0,"unarmed action packet is rejected");
-            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.ARCANE.toStack());
-            SpellEngine.action(player,99);check(SpellEngine.activeCount()==0,"invalid action packet is rejected");
-            var actionMagic=io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
-            if(actionMagic.getSyncedData()==null)actionMagic.setSyncedData(new io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData(player));
-            actionMagic.setMana(100);
-            SpellEngine.action(player,0);check(actionMagic.isCasting(),"held wand starts native Iron casting");
-            SpellEngine.action(player,1);check(wand.selection(player.getMainHandItem())==0,"multiple actions in one tick are rate limited");
-            IronsCompat.cancel(player);
-            SpellEngine.clear();player.setGameMode(GameType.SPECTATOR);SpellEngine.action(player,0);check(SpellEngine.activeCount()==0,"spectator casting is rejected");player.setGameMode(GameType.SURVIVAL);
-            SpellEngine.clear();resetPlayer(player);
-            for(Spell spell:List.of(Spell.SPARK,Spell.BLOOD_WAVE,Spell.POISON_WAVE,Spell.FLAME_WAVE,Spell.ASTRAL_COMET,Spell.FIRE_COMET,Spell.FIREBALL,Spell.ARCANE_REPULSE))check(SpellEngine.cast(player,spell),"concurrent cast "+spell);
-            check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
-            for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
-            check(server.getCommands().getDispatcher().execute("resonantarcana status",server.createCommandSourceStack())==1,"status command executes");
-            expansionChecks(level,player);martialChecks(level,player);bossChecks(level,player);
-            schoolChecks(level,player);
-            heavyChecks(level,player);
-            cannonChecks(level);
-            audioChecks(level);
-            IronsIntegrationChecks.run(level,IntegrationChecks::check);
-            report.put("success",true);report.put("checksPassed",checks.size());
-        } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
-        finally{
-            report.put("checks",checks);report.put("spells",results);report.put("clientRenderingTested",false);
-            try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){ResonantArcana.LOG.error("Could not write report",e);}
-            ResonantArcana.LOG.info("RESONANT_ARCANA_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
-        }
-    }
-    private static void bossChecks(ServerLevel level,FakePlayer player){
-        var optional=List.of(Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT);
-        for(var spell:optional){
-            check(spell.available()==BossesRiseCompat.available(),spell+" follows optional dependency availability");
-            check(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.containsKey(IronsCompat.id(spell))==BossesRiseCompat.available(),spell+" native registry follows optional dependency");
-        }
-        if(!BossesRiseCompat.available()){
-            for(var spell:optional){SpellEngine.clear();resetPlayer(player);check(!SpellEngine.cast(player,spell),spell+" safely rejects casting without dependency");}
-            return;
-        }
-        for(var spell:optional)for(int rank=1;rank<=5;rank++){
-            SpellEngine.clear();resetPlayer(player);Zombie victim=spawn(level,0,81,6);
-            victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(200);victim.setHealth(200);
-            victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
-            check(SpellEngine.castFromSpellbook(player,spell,spell.power(rank),level.damageSources().indirectMagic(player,player),spell.cooldown,false),spell+" rank "+rank+" begins");
-            if(spell==Spell.KRAKENS_GRASP){for(int t=0;t<45;t++)SpellEngine.tick();check(victim.getHealth()==200,"tentacle has a real rise and attack windup");}
-            for(int t=0;t<100;t++)SpellEngine.tick();
-            check(Math.abs(victim.getHealth()-(200-spell.damageAtLevel(rank)))<.01,spell+" uses native level damage exactly once at rank "+rank);
-            check(SpellEngine.activeCount()==0,spell+" releases expire");victim.discard();
-        }
-        SpellEngine.clear();resetPlayer(player);
-        var party=level.getScoreboard().addPlayerTeam("boss_spell_party");party.setAllowFriendlyFire(false);level.getScoreboard().addPlayerToTeam(player.getScoreboardName(),party);
-        Zombie friend=spawn(level,1,81,6),enemy=spawn(level,0,81,6);level.getScoreboard().addPlayerToTeam(friend.getScoreboardName(),party);
-        try{
-            for(var spell:optional){
-                SpellEngine.clear();friend.removeAllEffects();friend.setTicksFrozen(0);enemy.setHealth(20);enemy.invulnerableTime=0;
-                check(SpellEngine.cast(player,spell),spell+" party fixture begins");
-                // Exercise visual ticks directly: they must not call original boss damage/status routines.
-                var visualEntities=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,80,-8,12,90,24),e->e instanceof BossSpellVisual);
-                check(!visualEntities.isEmpty(),spell+" spawns installed-mod visual adapters");
-                for(var v:visualEntities){
-                    check(!v.save(new CompoundTag()),"optional visuals do not persist in world saves");
-                    check(!SpellEngine.allowed(player,v),"visual creatures cannot be targeted as enemies");
-                    for(int t=0;t<90;t++)v.tick();
-                }
-                check(friend.getHealth()==20&&friend.getActiveEffects().isEmpty()&&friend.getTicksFrozen()==0,"native visual ticks cannot hurt, slow or freeze allies");
-                for(int t=0;t<100;t++)SpellEngine.tick();
-                check(friend.getHealth()==20&&friend.getActiveEffects().isEmpty()&&friend.getTicksFrozen()==0,spell+" protects friendly targets from damage and status");
-                check(enemy.getHealth()<20,spell+" still affects enemies");
-                check(visualEntities.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),spell+" cleans up visuals");
-            }
-        }finally{level.getScoreboard().removePlayerTeam(party);friend.discard();enemy.discard();}
-        for(var spell:optional){
-            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
-            for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
-            SpellEngine.cast(player,spell);for(int t=0;t<100;t++)SpellEngine.tick();
-            check(hidden.getHealth()==20,spell+" respects blocking walls");hidden.discard();
-            for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
-        }
-        SpellEngine.clear();resetPlayer(player);SpellEngine.cast(player,Spell.KRAKENS_GRASP);
-        var visuals=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,80,-8,12,90,24),e->e instanceof BossSpellVisual&&!e.isRemoved());
-        SpellEngine.clear();check(visuals.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),"reset removes optional visuals immediately");
-    }
-    private static void martialChecks(ServerLevel level,FakePlayer player){
-        var attack=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE;
-        var speed=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED;
-        SpellEngine.clear();resetPlayer(player);
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.HOLY.toStack());
-        WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.HOLY.getId(),13));
-        check(ResonantArcana.HOLY.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"second-page selection accepted");
-        SpellEngine.tick();WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.HOLY.getId(),999));
-        check(ResonantArcana.HOLY.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"invalid page selection rejected");
-        SpellEngine.clear();resetPlayer(player);
-        double baseAttack=player.getAttributeValue(attack),baseSpeed=player.getAttributeValue(speed);
-        check(SpellEngine.cast(player,Spell.ARCANE_EDGE),"arcane edge starts");
-        check(Math.abs(player.getAttributeValue(attack)-baseAttack-2)<.001,"edge grants two flat attack at I");
-        check(Math.abs(player.getAttributeValue(speed)-baseSpeed*1.1)<.001,"edge grants ten percent attack speed at I");
-        SpellEngine.clear();SpellEngine.cast(player,Spell.ARCANE_EDGE);
-        check(Math.abs(player.getAttributeValue(attack)-baseAttack-2)<.001,"edge refresh does not stack");
-        player.removeAllEffects();check(Math.abs(player.getAttributeValue(attack)-baseAttack)<.001,"edge expiry removes attributes");
-        for(int rank=1;rank<=5;rank++){
-            SpellEngine.clear();resetPlayer(player);Zombie enemy=spawn(level,0,81,4),behind=spawn(level,0,81,-4);
-            double spellPower=player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER);
-            check(SpellEngine.castFromSpellbook(player,Spell.WARSCREAM,Spell.WARSCREAM.power(rank),level.damageSources().indirectMagic(player,player),400,false),"warscream rank casts "+rank);
-            check(Math.abs(player.getAttributeValue(attack)-baseAttack*(1.1+.05*(rank-1)))<.001,"warcry melee scaling "+rank);
-            check(Math.abs(player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER)-spellPower*(1.1+.05*(rank-1)))<.001,"warcry native spell scaling "+rank);
-            check(Math.abs(player.getAbsorptionAmount()-(4+rank-1))<.01,"warcry shield scaling "+rank);
-            check(enemy.getTarget()==player&&behind.getTarget()==player,"warcry radial hostile taunt "+rank);
-            enemy.setTarget(null);for(int i=0;i<10;i++)SpellEngine.tick();check(enemy.getTarget()==player,"taunt reasserts target");
-            for(int i=0;i<60;i++)SpellEngine.tick();enemy.setTarget(null);SpellEngine.tick();check(enemy.getTarget()==null&&SpellEngine.activeCount()==0,"taunt expires");
-            enemy.discard();behind.discard();
-        }
-        SpellEngine.clear();resetPlayer(player);
-        var party=level.getScoreboard().addPlayerTeam("martial_party");party.setAllowFriendlyFire(false);
-        level.getScoreboard().addPlayerToTeam(player.getScoreboardName(),party);
-        Zombie ally=spawn(level,1,81,3),outsider=spawn(level,-1,81,3);
-        level.getScoreboard().addPlayerToTeam(ally.getScoreboardName(),party);
-        try{
-            SpellEngine.cast(player,Spell.WARSCREAM);
-            check(ally.hasEffect(ArcanaEffects.WARCRY)&&ally.getAbsorptionAmount()==4,"warscream buffs visible teammates (effect="+ally.hasEffect(ArcanaEffects.WARCRY)+", absorption="+ally.getAbsorptionAmount()+")");
-            check(!outsider.hasEffect(ArcanaEffects.WARCRY)&&outsider.getAbsorptionAmount()==0,"warscream does not buff enemies");
-            check(ally.getTarget()==null&&ally.getDeltaMovement().lengthSqr()==0,"warscream protects friendly teammates from push and taunt");
-            SpellEngine.clear();SpellEngine.cast(player,Spell.WARSCREAM);check(ally.getAbsorptionAmount()==4,"party shields refresh without stacking");
-            SpellEngine.clear();SpellEngine.cast(player,Spell.BULWARK_CHANT);check(ally.hasEffect(MobEffects.DAMAGE_RESISTANCE),"bulwark protects nearby allies");
-            SpellEngine.clear();SpellEngine.cast(player,Spell.BATTLE_TEMPO);check(ally.hasEffect(ArcanaEffects.TEMPO)&&!outsider.hasEffect(ArcanaEffects.TEMPO),"tempo respects party allegiance");
-        }finally{level.getScoreboard().removePlayerTeam(party);ally.discard();outsider.discard();}
-        SpellEngine.clear();resetPlayer(player);Zombie front=spawn(level,0,81,4),rear=spawn(level,0,81,-4);
-        SpellEngine.cast(player,Spell.SOULBLAST);check(front.getHealth()<20&&front.getDeltaMovement().z>1&&rear.getHealth()==20,"soulblast forward cone repels only in front");front.discard();rear.discard();
-        SpellEngine.clear();resetPlayer(player);player.setXRot(90);SpellEngine.cast(player,Spell.SOULBLAST);
-        check(player.getDeltaMovement().y>1&&player.hasEffect(MobEffects.SLOW_FALLING),"downward soulblast launches with brief slow falling");
-        SpellEngine.clear();resetPlayer(player);player.startFallFlying();player.setDeltaMovement(0,0,1);SpellEngine.cast(player,Spell.SOULBLAST);
-        check(player.isFallFlying()&&player.getDeltaMovement().z>1.7&&player.getDeltaMovement().length()<=3,"soulblast boosts gliding without ending flight");player.stopFallFlying();
-        SpellEngine.clear();resetPlayer(player);player.setHealth(5);
-        Zombie a=spawn(level,0,81,3),b=spawn(level,1,81,3);a.setInvulnerable(true);b.setInvulnerable(true);
-        SpellEngine.cast(player,Spell.BLOOD_REND);check(player.getHealth()==5,"blood rend cannot heal from blocked damage");a.discard();b.discard();
-        SpellEngine.clear();resetPlayer(player);player.setHealth(5);a=spawn(level,0,81,3);b=spawn(level,1,81,3);
-        SpellEngine.cast(player,Spell.BLOOD_REND);check(player.getHealth()>5&&player.getHealth()<=8.001,"blood rend healing budget is shared by the entire cast");a.discard();b.discard();
-        SpellEngine.clear();resetPlayer(player);player.getAttribute(attack).setBaseValue(10);a=spawn(level,0,81,4);
-        SpellEngine.cast(player,Spell.CINDER_CLEAVE);check(Math.abs(a.getHealth()-9)<.01,"cleave includes half of melee attack damage");a.discard();player.getAttribute(attack).setBaseValue(baseAttack);
-        SpellEngine.clear();resetPlayer(player);Zombie blocked=spawn(level,0,81,4);
-        for(int x=-1;x<=1;x++)for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(x,y,2),Blocks.STONE.defaultBlockState());
-        SpellEngine.cast(player,Spell.RIME_THRUST);check(blocked.getHealth()==20,"rime thrust stops at a wall");
-        SpellEngine.clear();SpellEngine.cast(player,Spell.WARSCREAM);check(blocked.getTarget()==null&&blocked.getDeltaMovement().lengthSqr()==0,"warcry cannot taunt or push through walls");blocked.discard();
-        for(int x=-1;x<=1;x++)for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(x,y,2),Blocks.AIR.defaultBlockState());
-        SpellEngine.clear();resetPlayer(player);
-    }
-    private static void expansionChecks(ServerLevel level,FakePlayer player){
-        var wand=ResonantArcana.FROST.get();var stack=wand.getDefaultInstance();
-        var tag=new CompoundTag();tag.putString("external","keep");stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
-        check(wand.level(stack,Spell.FROST_NEEDLE)==1,"unmodified wands start at level I");
-        wand.learn(stack,Spell.FROST_NEEDLE,5);wand.select(stack,wand.spells.indexOf(Spell.FROST_NEEDLE));
-        check(wand.level(stack)==5,"wand remembers selected spell level V");
-        check(stack.get(DataComponents.CUSTOM_DATA).copyTag().getString("external").equals("keep"),"level upgrades preserve unrelated item data");
-        var restored=ItemStack.parseOptional(level.registryAccess(),(CompoundTag)stack.save(level.registryAccess()));
-        check(wand.level(restored,Spell.FROST_NEEDLE)==5,"wand rank survives serialization");
-        boolean rejected=false;try{wand.learn(stack,Spell.SOUL_CANNON,5);}catch(IllegalArgumentException expected){rejected=true;}check(rejected&&wand.level(stack,Spell.FROST_NEEDLE)==5,"foreign spell cannot replace own rank");
-        SpellEngine.clear();resetPlayer(player);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
-        var nativeSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.FROST_NEEDLE));
-        Zombie victim=spawn(level,0,81,6);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
-        SpellEngine.castFromSpellbook(player,Spell.FROST_NEEDLE,2,nativeSpell.getDamageSource(player),80,true);
-        for(int i=0;i<30;i++)SpellEngine.tick();
-        check(Math.abs(victim.getHealth()-12)<.01,"level V projectile deals twice level I direct damage (health="+victim.getHealth()+")");
-        check(victim.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)&&victim.getTicksFrozen()>0,"Frost attacks apply chill and freeze buildup");victim.discard();
-        SpellEngine.clear();resetPlayer(player);player.setHealth(5);
-        var healSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.MENDING_LIGHT));
-        check(SpellEngine.castFromSpellbook(player,Spell.MENDING_LIGHT,2,healSpell.getDamageSource(player),80,true),"level V remedy casts");
-        check(player.getHealth()==17,"level V remedy restores twelve health without equipment");
-        for(Spell execute:List.of(Spell.CRIMSON_HARVEST,Spell.SHATTER,Spell.MEMORY_FRACTURE)){
-            SpellEngine.clear();resetPlayer(player);victim=spawn(level,0,81,5);
-            if(execute==Spell.CRIMSON_HARVEST){victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);victim.setHealth(30);}
-            if(execute==Spell.SHATTER)victim.setTicksFrozen(150);
-            if(execute==Spell.MEMORY_FRACTURE)victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.DARKNESS,60));
-            float before=victim.getHealth();SpellEngine.cast(player,execute);
-            check(!victim.isAlive()||Math.abs(before-victim.getHealth()-execute.damage*1.5)<.01,execute+" gains its conditional fifty percent bonus");victim.discard();
-        }
-        SpellEngine.clear();resetPlayer(player);player.setHealth(5);victim=spawn(level,0,81,5);victim.setHealth(6);
-        SpellEngine.cast(player,Spell.CRIMSON_HARVEST);check(player.getHealth()==7,"crimson harvest restores two health after a killing hit");victim.discard();
-        SpellEngine.clear();resetPlayer(player);
-        var wardSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.DAWN_WARD));
-        SpellEngine.castFromSpellbook(player,Spell.DAWN_WARD,2,wardSpell.getDamageSource(player),240,true);
-        for(int t=0;t<159;t++)SpellEngine.tick();check(SpellEngine.activeCount()==1,"level V ward remains active for nearly eight seconds");
-        SpellEngine.tick();SpellEngine.tick();check(SpellEngine.activeCount()==0,"extended level V ward expires after eight seconds");
-        SpellEngine.clear();resetPlayer(player);player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.POISON,200));player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.WITHER,200));
-        check(SpellEngine.cast(player,Spell.TOXIC_MOLT),"toxic molt casts");
-        check(!player.hasEffect(MobEffects.POISON)&&!player.hasEffect(MobEffects.WITHER)&&player.hasEffect(MobEffects.MOVEMENT_SPEED),"toxic molt cleanses both toxins and adds mobility");
-        SpellEngine.clear();resetPlayer(player);player.setHealth(2);
-        check(!SpellEngine.canStart(player,Spell.SANGUINE_PACT),"blood pact cannot spend the caster's last heart");
-        SpellEngine.clear();resetPlayer(player);
-        for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(0,y,3),Blocks.STONE.defaultBlockState());
-        var destination=SpellActions.blinkDestination(player,Spell.ARCANE_STEP,8);
-        check(SpellEngine.cast(player,Spell.ARCANE_STEP),"blink finds a clear position before cover");
-        check(destination!=null&&destination.z>0&&destination.z<3&&level.noCollision(player,player.getBoundingBox().move(destination.subtract(player.position()))),"blink stops before walls with a collision-free destination");
-        for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(0,y,3),Blocks.AIR.defaultBlockState());
-        SpellEngine.clear();resetPlayer(player);
-    }
-    private static void schoolChecks(ServerLevel level,FakePlayer player){
-        check(Arrays.stream(Spell.Theme.values()).map(IronsCompat::school).distinct().count()==9,"all nine native Iron schools are represented");
-        check(Spell.SONIC_SCREAM.bookId().equals("sonic_scream")&&Spell.SONIC_SCREAM.title.equals("Sonic Scream"),"sonic scream uses its current spell ID");
-        for(Spell spell:List.of(Spell.DOOM,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT)){
-            SpellEngine.clear();resetPlayer(player);
-            Zombie a=spawn(level,0,81,6),b=spawn(level,0,81,10);
-            for(var z:List.of(a,b)){z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);}
-            check(SpellEngine.cast(player,spell),spell+" school test begins");
-            if(spell==Spell.DOOM){
-                for(int t=0;t<39;t++)SpellEngine.tick();
-                check(a.getHealth()==100&&b.getHealth()==100,"DOOM grows before it starts devouring");
-                check(b.getDeltaMovement().z<0,"DOOM drags a visible outer target inward");
-                SpellEngine.tick();check(a.getHealth()==28&&b.getHealth()==100,"DOOM devours its core before the outer collapse");
-            }
-            for(int t=0;t<100;t++)SpellEngine.tick();
-            check(Math.abs(a.getHealth()-(100-spell.damage))<.01&&Math.abs(b.getHealth()-(100-spell.damage))<.01,spell+" gives each target one full hit");
-            if(spell==Spell.GLACIAL_RUPTURE)check(a.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)&&a.getTicksFrozen()>=160,"ice front chills its targets");
-            check(SpellEngine.activeCount()==0,spell+" school task expires");a.discard();b.discard();
-            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
-            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
-            check(SpellEngine.cast(player,spell),spell+" casts at cover");for(int t=0;t<100;t++)SpellEngine.tick();
-            check(hidden.getHealth()==20,spell+" respects solid cover");hidden.discard();
-            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
-        }
-        SpellEngine.clear();resetPlayer(player);player.setHealth(5);
-        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.POISON,100,0));
-        var pet=new net.minecraft.world.entity.animal.Wolf(EntityType.WOLF,level);pet.setOwnerUUID(player.getUUID());pet.setPos(2,81,0);pet.setHealth(4);level.addFreshEntity(pet);
-        Zombie enemy=spawn(level,0,81,6);enemy.setHealth(5);
-        check(SpellEngine.cast(player,Spell.SANCTUARY),"sanctuary casts");
-        check(player.getHealth()==17&&!player.hasEffect(MobEffects.POISON),"sanctuary heals and cleanses its caster");
-        check(pet.getHealth()>4,"sanctuary restores an owned pet");check(enemy.getHealth()==5,"sanctuary does not heal hostile mobs");pet.discard();enemy.discard();
-        SpellEngine.clear();resetPlayer(player);player.setHealth(19);SpellEngine.cast(player,Spell.SANCTUARY);
-        check(player.getHealth()==player.getMaxHealth(),"sanctuary does not overheal");
-    }
-    private static void heavyChecks(ServerLevel level,FakePlayer player){
-        for(Spell spell:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON)){
-            SpellEngine.clear();resetPlayer(player);visuals.clear();
-            Zombie a=spawn(level,0,81,6),b=spawn(level,0,81,10);
-            for(var z:List.of(a,b)){
-                z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);
-            }
-            check(SpellEngine.cast(player,spell),spell+" heavy test starts");
-            if(spell.kind==Spell.Kind.COLLAPSE){
-                for(int t=0;t<30;t++)SpellEngine.tick();
-                check(a.getHealth()==100&&b.getHealth()==100,"collapse gathers without premature damage");
-                check(b.getDeltaMovement().z<0,"collapse pulls a visible enemy toward its centre");
-            }else if(spell.kind==Spell.Kind.METEOR){
-                for(int t=0;t<12;t++)SpellEngine.tick();
-                check(a.getHealth()==100,"meteor warning does not deal early damage");
-            }
-            for(int t=0;t<100;t++)SpellEngine.tick();
-            check(Math.abs(a.getHealth()-(100-spell.damage))<.01,spell+" deals one full base hit");
-            check(Math.abs(b.getHealth()-(100-spell.damage))<.01,spell+" hits a second visible enemy");
-            check(SpellEngine.activeCount()==0,spell+" heavy task expires");a.discard();b.discard();
-            // Full cover blocks all three attacks, including the final area detonation.
-            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
-            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
-            check(SpellEngine.cast(player,spell),spell+" may cast at solid cover");
-            for(int t=0;t<100;t++)SpellEngine.tick();
-            check(hidden.getHealth()==20,spell+" cannot damage through cover");
-            check(level.getBlockState(new BlockPos(0,82,3)).is(Blocks.STONE),spell+" leaves terrain intact");hidden.discard();
-            for(int x=-8;x<=8;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
-        }
-        for(var theme:Spell.Theme.values())check(net.minecraft.core.registries.BuiltInRegistries.PARTICLE_TYPE.containsValue(SpellParticles.particle(theme).getType()),"Iron particle is registered: "+theme);
-    }
-    private static void cannonChecks(ServerLevel level){
-        var player=new AudioPlayer(level,new GameProfile(UUID.fromString("ab438590-0c2e-4559-819e-31116824450f"),"CannonTest"));
-        player.setGameMode(GameType.SURVIVAL);resetPlayer(player);
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.SOUL.toStack());
-        SpellEngine.clear();visuals.clear();Zombie victim=spawn(level,0,81,20);
-        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon begins charge");
-        for(int t=0;t<39;t++)SpellEngine.tick();
-        check(victim.getHealth()==20,"cannon cannot damage during two second charge");
-        check(visuals.stream().noneMatch(v->v.stage()==SpellVisuals.Stage.FLIGHT.ordinal()),"cannon has no flight before release");
-        check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.CHARGE.ordinal()).count()==13,"cannon sends bounded inward charge cues");
-        SpellEngine.tick();check(victim.getHealth()==20,"cannon travels instead of instantly hitting distant target");
-        player.setYRot(90);for(int t=0;t<30;t++)SpellEngine.tick();
-        check(victim.getHealth()==4,"cannon deals sixteen damage once and keeps released direction");
-        var mini=visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.TRAIL_BURST.ordinal()).toList();
-        check(mini.size()==4,"cannon produces four separate mini bursts before twenty block target");
-        for(int i=1;i<mini.size();i++)check(Math.abs(mini.get(i).z()-mini.get(i-1).z()-4)<0.01,"cannon mini bursts are spaced four blocks apart");
-        check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).count()==1,"cannon has one final detonation");
-        check(SpellEngine.activeCount()==0,"cannon ends after short impact sound tail");
-        for(String id:List.of("entity.warden.sonic_charge","block.respawn_anchor.charge","entity.warden.heartbeat","entity.warden.sonic_boom","entity.warden.roar","entity.firework_rocket.blast","entity.generic.explode","entity.firework_rocket.twinkle_far","block.amethyst_block.resonate"))
-            check(player.heard.contains("minecraft:"+id),"cannon delivers audio layer: "+id);
-        victim.discard();SpellEngine.clear();resetPlayer(player);visuals.clear();
-        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon cancellation begins");
-        for(int t=0;t<12;t++)SpellEngine.tick();
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);SpellEngine.tick();
-        check(SpellEngine.activeCount()==0&&visuals.stream().noneMatch(v->v.stage()==SpellVisuals.Stage.FLIGHT.ordinal()),"putting wand away cancels cannon before firing");
-        SpellEngine.clear();resetPlayer(player);visuals.clear();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.SOUL.toStack());
-        level.getChunk(0,3);
-        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon can fire into empty sky");
-        for(int t=0;t<80;t++)SpellEngine.tick();
-        var impact=visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).toList();
-        check(impact.size()==1&&Math.abs(impact.getFirst().z()-48.95)<0.01,"cannon detonates once at maximum range");
-        check(SpellEngine.activeCount()==0,"empty cannon flight cannot leave a task behind");
-        SpellEngine.clear();resetPlayer(player);visuals.clear();Zombie hidden=spawn(level,0,81,6);
-        for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());
-        check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon can charge towards a wall");
-        for(int t=0;t<80;t++)SpellEngine.tick();
-        check(hidden.getHealth()==20,"cannon splash cannot damage through a solid wall");
-        check(level.getBlockState(new BlockPos(0,82,4)).is(Blocks.STONE),"cannon leaves terrain intact");
-        check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).count()==1,"wall stops cannon with a single impact");
-        for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.AIR.defaultBlockState());
-        hidden.discard();SpellEngine.clear();
-    }
-    private static void audioChecks(ServerLevel level){
-        boolean oldFeedback=ArcanaConfig.CASTER_IMPACTS.get();double oldVolume=ArcanaConfig.SOUND_VOLUME.get(),oldImpact=ArcanaConfig.IMPACT_VOLUME.get();
-        var player=new AudioPlayer(level,new GameProfile(UUID.fromString("52182f8d-8d17-4310-b1e1-34954061e635"),"AudioTest"));
-        player.setGameMode(GameType.SURVIVAL);
-        try{
-            ArcanaConfig.SOUND_VOLUME.set(1.0);ArcanaConfig.IMPACT_VOLUME.set(1.0);ArcanaConfig.CASTER_IMPACTS.set(true);
-            SpellEngine.clear();resetPlayer(player);Zombie distant=spawn(level,0,81,24);
-            check(SpellEngine.cast(player,Spell.SPARK),"audio test projectile casts");int casts=player.heard.size();
-            check(casts==2,"cast emits two distinct sound layers to its caster");
-            for(int t=0;t<32;t++)SpellEngine.tick();
-            check(distant.getHealth()<20,"audio test projectile reaches distant target");
-            check(player.heard.subList(casts,player.heard.size()).contains(SpellAudio.impactId(Spell.Theme.MAGIC)),"caster receives impact cue beyond normal sound range");
-            check(player.heard.size()==casts+2,"direct hit and burst do not double-play impact audio");distant.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.CASTER_IMPACTS.set(false);
-            Zombie positional=spawn(level,0,81,24);check(SpellEngine.cast(player,Spell.SPARK),"positional-only audio test casts");casts=player.heard.size();
-            for(int t=0;t<32;t++)SpellEngine.tick();
-            check(positional.getHealth()<20&&player.heard.size()==casts,"caster feedback option disables direct impact delivery");positional.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.CASTER_IMPACTS.set(true);ArcanaConfig.SOUND_VOLUME.set(0.0);
-            Zombie muted=spawn(level,0,81,6);check(SpellEngine.cast(player,Spell.SPARK),"muted audio test casts");for(int t=0;t<32;t++)SpellEngine.tick();
-            check(muted.getHealth()<20&&player.heard.isEmpty(),"soundVolume zero mutes casts and impacts without changing damage");muted.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.SOUND_VOLUME.set(1.0);ArcanaConfig.IMPACT_VOLUME.set(0.0);
-            Zombie noImpact=spawn(level,0,81,6);check(SpellEngine.cast(player,Spell.SPARK),"impact-volume audio test casts");casts=player.heard.size();
-            for(int t=0;t<32;t++)SpellEngine.tick();check(noImpact.getHealth()<20&&player.heard.size()==casts,"impactVolume zero preserves cast audio and mutes hits");noImpact.discard();
-            SpellEngine.clear();resetPlayer(player);player.heard.clear();ArcanaConfig.IMPACT_VOLUME.set(1.0);
-            Zombie a=spawn(level,0,81,3),b=spawn(level,2,81,4),c=spawn(level,-2,81,4);
-            check(SpellEngine.cast(player,Spell.SOUL_AURA),"area audio test casts");casts=player.heard.size();SpellEngine.tick();
-            check(a.getHealth()<20&&b.getHealth()<20&&c.getHealth()<20,"area audio test affects three targets");
-            check(player.heard.size()==casts+2,"area hit audio is limited to one layered impact per cast");a.discard();b.discard();c.discard();
-        }finally{
-            SpellEngine.clear();ArcanaConfig.CASTER_IMPACTS.set(oldFeedback);ArcanaConfig.SOUND_VOLUME.set(oldVolume);ArcanaConfig.IMPACT_VOLUME.set(oldImpact);
-        }
-    }
-    /** Records the server's direct audio calls; a connected graphical client is still needed for listening tests. */
-    private static final class AudioPlayer extends FakePlayer{
-        final List<String> heard=new ArrayList<>();
-        AudioPlayer(ServerLevel level,GameProfile profile){super(level,profile);}
-        @Override public void playNotifySound(net.minecraft.sounds.SoundEvent sound,net.minecraft.sounds.SoundSource source,float volume,float pitch){
-            if(volume>0)heard.add(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.getKey(sound).toString());
-            super.playNotifySound(sound,source,volume,pitch);
-        }
-    }
-    private static void resetPlayer(FakePlayer player){player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);player.setDeltaMovement(Vec3.ZERO);player.setHealth(player.getMaxHealth());player.removeAllEffects();}
-    private static Zombie spawn(ServerLevel level,double x,double y,double z){Zombie zombie=new Zombie(EntityType.ZOMBIE,level);zombie.setPos(x,y,z);zombie.setNoAi(true);zombie.setNoGravity(true);level.addFreshEntity(zombie);return zombie;}
-}
+_XØ\İ\‹˜Ø[’\›T^Y\Šİ\ŠJJ\™]\›ˆ˜[ÙNÂˆYŠ[]H[œİ[˜Ù[Ùˆ[XX›P[š[X[[YI‰˜Ø\İ\‹™Ù]URQ
+
+K™\]X[Ê[YK™Ù]İÛ™\•URQ
+
+JJ\™]\›ˆ˜[ÙNÂˆ˜\ˆX[OXØ\İ\‹™Ù]X[J
+NÂˆ™]\›ˆX[OO[[X[Kš\Ğ[İÑœšY[™Qš\™J
+_[]K™Ù]X[J
+HO]X[NÂˆBˆİ]XÈ\İ]š[™Ñ[]Oˆ™X\ŠÙ\™\”^Y\ˆ^Y\‹™XÌÈÜËİX›H˜Y]\Ê^Âˆ™]\›ˆ^Y\‹œÙ\™\“]™[
+
+K™Ù][]Y\ÓÙÛ\ÜÊ]š[™Ñ[]K˜Û\ÜË™]ÈPPŠÜËÜÊKš[™›]J˜Y]\ÊKKO˜[İÙY
+^Y\‹JI‰™K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+K™\İ[˜ÙUÔÜ\ŠÜÊO
+˜Y]\ÊÌJJŠ˜Y]\ÊÌJJNÂˆBˆİ]XÈ]š[™Ñ[]H\™Ù]
+Ù\™\”^Y\ˆØ\İ\‹™XÌÈİ\™XÌÈ[™İX›HX\™Ú[Š^Âˆ]š[™Ñ[]H™\İ[[[ÙİX›H\İ[˜ÙO\İ\™\İ[˜ÙUÔÜ\Š[™
+JÌNÂˆ›ÜŠ˜\ˆ[]N˜Ø\İ\‹œÙ\™\“]™[
+
+K™Ù][]Y\ÓÙÛ\ÜÊ]š[™Ñ[]K˜Û\ÜË™]ÈPPŠİ\[™
+Kš[™›]JX\™Ú[ŠÌJKKO˜[İÙY
+Ø\İ\‹JJJ^ÂˆPPˆ›ŞY[]K™Ù]›İ[™[™Ğ›Ş
+
+Kš[™›]JX\™Ú[ŠNİ˜\ˆÚ[X›Ş˜Û\
+İ\[™
+NÂˆİX›HX›Ş˜ÛÛZ[œÊİ\
+OÌœÚ[›X\
+İ\™\İ[˜ÙUÔÜ\ŠK›Ü‘[ÙJİX›K“PVÕSQJNÂˆYŠ\İ[˜ÙI‰˜Ø\İ\‹œÙ\™\“]™[
+
+K˜Û\
+™]ÈÛ\ÛÛ^
+İ\[]K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+KÛ\ÛÛ^›ØÚËÓÓQT‹Û\ÛÛ^‘›ZY““Ó‘KØ\İ\ŠJK™Ù]\J
+OOR]™\İ[•\K“RTÔÊ^Ù\İ[˜ÙOYÜ™\İ[Y[]NßBˆBˆ™]\›ˆ™\İ[ÂˆBˆİ]XÈ™XÌÈÛ\ØYY
+Ù\™\“]™[]™[™XÌÈİ\™XÌÈ\‹İX›H˜[™ÙK[]HØ\İ\Š^Âˆ™XÌÈ[™\İ\ÙİX›H˜]™[YLÂˆ›ÜŠİX›HKNÙ\˜[™ÙNÙ
+ÏKJ^Õ™XÌÈ\İ\˜Y
+\‹œØØ[J
+JNÚYŠ[]™[š\ĞÚ[šĞ]
+›ØÚÔÜË˜ÛÛZ[š[™Ê
+JJXœ™XZÎÙ[™\İ˜]™[YYßBˆYŠ˜[™ÙK]˜]™[YLJ^Õ™XÌÈ^Xİ\İ\˜Y
+\‹œØØ[J˜[™ÙJJNÚYŠ]™[š\ĞÚ[šĞ]
+›ØÚÔÜË˜ÛÛZ[š[™Ê^Xİ
+JJY[™Y^XİßBˆ™]\›ˆ]™[˜Û\
+™]ÈÛ\ÛÛ^
+İ\[™Û\ÛÛ^›ØÚËÓÓQT‹Û\ÛÛ^‘›ZY““Ó‘KØ\İ\ŠJK™Ù]ØØ][ÛŠ
+NÂˆBˆİ]XÈ›ÛÛX[ˆš\ÚX›JØ\İË™XÌÈİ\™XÌÈ[™
+^Ü™]\›ˆË›]™[˜Û\
+™]ÈÛ\ÛÛ^
+İ\[™Û\ÛÛ^›ØÚËÓÓQT‹Û\ÛÛ^‘›ZY““Ó‘KË˜Ø\İ\ŠJK™Ù]\J
+OOR]™\İ[•\K“RTÔÎßBˆİ]XÈ›ÚY]
+Ø\İË]š[™Ñ[]HšXİ[K™XÌÈœ›ÛK›ÛÛX[ˆÛ˜ÙJ^ÂˆYŠX[İÙY
+Ë˜Ø\İ\‹šXİ[J_
+Û˜ÙI‰ˆXËš]˜Y
+šXİ[K™Ù]URQ
+
+JJJ\™]\›ÂˆYŠËœÜ[™[XYÙOŒ
+^Âˆ›Ø]™Y›Ü™O]šXİ[K™Ù]X[
+
+NÂˆ›Ø]][\Y\LNÂˆYŠËœÜ[šÚ[™OTÜ[’Ú[™‘VPÕUJ^Âˆ›ÛÛX[ˆ^Ú]XËœÜ[OTÜ[Ô’STÓÓ—ÒT•‘TÕİšXİ[K™Ù]X[
+
+O]šXİ[K™Ù]X^X[
+
+J‹ŒÍY˜ËœÜ[OTÜ[“QSSÔ–WÑ”PÕT‘OİšXİ[Kš\ÑY™™Xİ
+[Ø‘Y™™XİË‘T’Ó‘TÔÊNšXİ[K™Ù]XÚÜÑœ›Ş™[Š
+OLM
+šXİ[K™Ù]Y™™Xİ
+[Ø‘Y™™XİË“SÕ‘SQS•ÔÓÕÑÕÓŠHO[[	‰šXİ[K™Ù]Y™™Xİ
+[Ø‘Y™™XİË“SÕ‘SQS•ÔÓÕÑÕÓŠK™Ù][\YšY\Š
+OLŠNÂˆYŠ^Ú]
+[][\Y\LKYÂˆBˆ›ÛÛX[ˆ\]šXİ[Kš\
+Ë˜›ÛÚÏO[[ØË›]™[™[XYÙTÛİ\˜Ù\Ê
+Kš[™\™XİXYÚXÊË˜Ø\İ\‹Ë˜Ø\İ\ŠN˜Ë˜›ÛÚËœÛİ\˜ÙJ
+K
+›Ø]
+J
+ËœÜ[™[XYÙJØËÙX\Û›Û\ÊJ›][\Y\Š\˜Ø[˜PÛÛ™šYË‘SPQÑK™Ù]
+
+JŠË˜›ÛÚÏO[[ÌN˜Ë˜›ÛÚËœİÙ\Š
+JJJNÂˆYŠ\
+^ÓX\X[Ü[Ë™˜Z[ŠËX]›X^
+™Y›Ü™K]šXİ[K™Ù]X[
+
+JJNÚ[\Xİ™YY˜XÚÊËšXİ[K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+JNÚYŠËœÜ[OTÜ[Ô’STÓÓ—ÒT•‘TÕ	‰ˆ]šXİ[Kš\Ğ[]™J
+JTÜ[Xİ[ÛœËšX[
+ËË˜Ø\İ\‹ŠNßBˆYŠËœÜ[šÚ[™OTÜ[’Ú[™”ÒTÓ‰‰š\	‰šXİ[K™Ù]X[
+
+O™Y›Ü™J^ÂˆË˜Ø\İ\‹šX[
+
+›Ø]
+JX]›Z[Š‹ŒŠ”Ü[Xİ[ÛœËœİÙ\ŠÊK
+™Y›Ü™K]šXİ[K™Ù]X[
+
+JJŒŠJ\˜Ø[˜PÛÛ™šYË’PSS‘Ë™Ù]
+
+JJNÂˆ™XÌÈœ›ÛTÛİ[]šXİ[K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+KÔÛİ[XË˜Ø\İ\‹™Ù]^YTÜÚ][ÛŠ
+NÂˆÜ[š\İX[ËœÙ[™
+Ë›]™[ËœÜ[Ü[š\İX[Ë”İYÙK“S’Ëœ›ÛTÛİ[ÔÛİ[JNÂˆ›ÜŠ[OLÚOLŒÚJÊÊ]˜Z[
+Ë›]™[œ›ÛTÛİ[›\œ
+ÔÛİ[KÌŒŒ
+KËœÜ[[YKŒÍJNÂˆBˆBˆYŠËœÜ[™[XYÙOOL
+Z[\Xİ™YY˜XÚÊËšXİ[K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+JNÂˆYŠËœÜ[OTÜ[•ÒUT’S‘×ÒV
+YY™™Xİ
+šXİ[K[Ø‘Y™™XİË•ÒUT‹Œ
+NÂˆYŠËœÜ[OTÜ[”ÓÕSÔ’TÓÓŠYY™™Xİ
+šXİ[K[Ø‘Y™™XİË‘T’Ó‘TÔËŒ
+NÂˆYŠËœÜ[[YOOTÜ[•[YK’PÑJ^ÙY™™Xİ
+šXİ[K[Ø‘Y™™XİË“SÕ‘SQS•ÔÓÕÑÕÓ‹
+NİšXİ[KœÙ]XÚÜÑœ›Ş™[ŠX]›Z[ŠšXİ[K™Ù]XÚÜÑœ›Ş™[Š
+JÍ
+JNßBˆYŠËœÜ[OTÜ[”SP“WÔ’S‘ÊYY™™Xİ
+šXİ[K[Ø‘Y™™XİË“SÕ‘SQS•ÔÓÕÑÕÓ‹JNÂˆYŠËœÜ[šÚ[™OTÜ[’Ú[™‘ÓPRSŠ^ÙY™™Xİ
+šXİ[K[Ø‘Y™™XİË“SÕ‘SQS•ÔÓÕÑÕÓ‹LÊNİšXİ[KœÙ]XÚÜÑœ›Ş™[ŠX]›X^
+MŒšXİ[K™Ù]XÚÜÑœ›Ş™[Š
+JJNßBˆYŠËœÜ[[YOOTÜ[•[YK‘’T‘J]šXİ[KšYÛš]Q›Ü”ÙXÛÛ™ÊÊNÂˆYŠËœÜ[[YOOTÜ[•[YK‘T’Ê^ÙY™™Xİ
+šXİ[K[Ø‘Y™™XİË•ÑPRÓ‘TÔËŒ
+NÚYŠËœÜ[OTÜ[“’QÒS
+YY™™Xİ
+šXİ[K[Ø‘Y™™XİË‘T’Ó‘TÔËŒ
+NßBˆYŠËœÜ[[YOOTÜ[•[YK”ÒTÓÓ‰‰˜ËœÜ[OTÜ[’ÔRÑS”×ÑÔTÔ	‰˜ËœÜ[OTÜ[’ÔRÑS”×ÕÔU
+YY™™Xİ
+šXİ[K[Ø‘Y™™XİË”ÒTÓÓ‹
+NÂˆİÚ]Ú
+ËœÜ[šÚ[™
+^ÂˆØ\ÙHÓÓ‘•TÑKOÙY™™Xİ
+šXİ[K[Ø‘Y™™XİËÓÓ‘•TÒSÓ‹L
+NÙY™™Xİ
+šXİ[K[Ø‘Y™™XİË“S‘‘TÔË
+NßBˆØ\ÙHÕS‹OÙY™™Xİ
+šXİ[K[Ø‘Y™™XİË“SÕ‘SQS•ÔÓÕÑÕÓ‹ŒJNÙY™™Xİ
+šXİ[K[Ø‘Y™™XİË•ÑPRÓ‘TÔËŒJNßBˆØ\ÙHTÒSOÕ™XÌÈ]šXİ[KœÜÚ][ÛŠ
+KœİX˜Xİ
+Ë˜Ø\İ\‹œÜÚ][ÛŠ
+JK›][\JKJK››Ü›X[^™J
+KœØØ[JËœÜ[šÚ[™OTÜ[’Ú[™”SËLNŒKŒÊNİšXİ[KœÙ][S[İ™[Y[
+˜Y
+ŒK
+JNİšXİ[Kš\X\šÙY]YNßBˆØ\ÙHUSÒOİšXİ[KœÙ][S[İ™[Y[
+šXİ[K™Ù][S[İ™[Y[
+
+K˜Y
+KŒK
+JNİšXİ[Kš\X\šÙY]YNßBˆØ\ÙHÕÑQTĞS““Ó‹ÓÓQUSÑK•T”ÕÒTÕT‹ÓRUKOÕ™XÌÈ[O]šXİ[KœÜÚ][ÛŠ
+KœİX˜Xİ
+œ›ÛJK›][\JKJK››Ü›X[^™J
+KœØØ[JJNİšXİ[Kœ\Ú
+[KŒË[KŠNİšXİ[Kš\X\šÙY]YNßBˆY˜][OßBˆBˆBˆİ]XÈ›ÚYY™™Xİ
+]š[™Ñ[]HK™]›Z[™XÜ˜Y˜ÛÜ™K’Û\™]›Z[™XÜ˜YÛÜ›™Y™™Xİ“[Ø‘Y™™XİˆY™™Xİ[XÚÜË[[\
+^ÙK˜YY™™Xİ
+™]È[Ø‘Y™™Xİ[œİ[˜ÙJY™™XİXÚÜË[\
+JNßBˆX›XÈİ]XÈ›ÚYİÚ]ÚY™™Xİ
+Ù\™\”^Y\ˆ^Y\‹Ü[•[YH[YJ^Âˆ˜Z[
+^Y\‹œÙ\™\“]™[
+
+K^Y\‹™Ù]^YTÜÚ][ÛŠ
+K˜Y
+^Y\‹™Ù]ÛÚĞ[™ÛJ
+KœØØ[JŠJK[YKŒMJNÂˆ^Y\‹œÙ\™\“]™[
+
+Kœ^TÛİ[™
+[^Y\‹˜›ØÚÔÜÚ][ÛŠ
+KÛİ[™]™[Ë•RWĞ•UÓ—ĞÓPÒË˜[YJ
+KÛİ[™Ûİ\˜ÙK”VQT”ËŒÍQ‹KŠNÂˆBˆİ]XÈ›ÚY˜Z[
+Ù\™\“]™[]™[™XÌÈÜËÜ[•[YH[YKİX›HÜ™XY
+^ÂˆYŠš\İX[Ú[ÊÊÏP\˜Ø[˜PÛÛ™šYË•’TÕPSĞ•QÑU™Ù]
+
+J\™]\›Âˆ[ÛÛÜ][YK˜ÛÛÜÕ™XİÜŒÙˆ™Ø[™]È™XİÜŒÙŠ
+
+ÛÛÜŒMŠIŒMJKÌMY‹
+
+ÛÛÜ
+IŒMJKÌMY‹
+ÛÛÜ‰ŒMJKÌMYŠNÂˆYŠ[YOOTÜ[•[YK“ÓÑ
+^Âˆ]™[œÙ[™\XÛ\Ê™]È\İÛÛÜ•˜[œÚ][Û“Ü[ÛœÊ™Ø‹™]È™XİÜŒÙŠŒNY‹ŒY‹ŒYŠKKŒYŠKÜËÜËKÜË‹\˜Ø[˜PÛÛ™šYË”T•PÓTË™Ù]
+
+KÜ™XYÜ™XYÜ™XY
+NÂˆËÈ™X[›ÛÙ›Ü]Èœ›ÛH\›Û‰ÜË˜]\ˆ[ˆ™YİÛ™H›ØÚÈXœš\Ë‚ˆ]™[œÙ[™\XÛ\ÊÜ[\XÛ\Ëœ\XÛJÜ[•[YK“ÓÑ
+KÜËÜËKÜË‹KÜ™XYÜ™XYÜ™XYŒMJNÂˆH[ÙHYŠ[YOOTÜ[•[YK”ÓÕS
+^Âˆ]™[œÙ[™\XÛ\Ê™]È\İÛÛÜ•˜[œÚ][Û“Ü[ÛœÊ™Ø‹™]È™XİÜŒÙŠŒY‹ŒL™‹ŒMÙŠKKŒMYŠKÜËÜËKÜË‹\˜Ø[˜PÛÛ™šYË”T•PÓTË™Ù]
+
+KÜ™XYÜ™XYÜ™XY
+NÂˆ]™[œÙ[™\XÛ\Ê\XÛU\\Ë”ĞÕS×ÔÓÕSÜËÜËKÜË‹KÜ™XYÜ™XYÜ™XYŒLŠNÂˆH[ÙHÂˆ]™[œÙ[™\XÛ\Ê™]È\İ\XÛSÜ[ÛœÊ™Ø‹KŒYŠKÜËÜËKÜË‹\˜Ø[˜PÛÛ™šYË”T•PÓTË™Ù]
+
+KÜ™XYÜ™XYÜ™XY
+NÂˆ˜\ˆXØÙ[\İÚ]Ú
+[YJ^ØØ\ÙH’T‘KO”\XÛU\\Ë‘“SQNØØ\ÙHT’ËO”\XÛU\\Ë”ÓÕSØØ\ÙHÔU’UKO”\XÛU\\Ë”‘U‘T”ÑWÔÔ•SØØ\ÙHÒTÓÓ‹O”\XÛU\\Ë”ÔÔ‘WĞ“ÔÔÓÓWĞRTØØ\ÙHS‘T‹O”\XÛU\\Ë‘SPÕ’P×ÔÔT’ÎÙY˜][O”\XÛU\\Ë‘SÒS•ßNÂˆ]™[œÙ[™\XÛ\ÊXØÙ[ÜËÜËKÜË‹KÜ™XYÜ™XYÜ™XYŒJNÂˆBˆB‚ˆš]˜]Hİ]XÈ›ÚYØ]™Uš\İX[
+Ø\İË™XÌÈÙ[\Š^Âˆ™XÌÈÚYOXË™\‹˜Ü›ÜÜÊ™]È™XÌÊK
+JNÚYŠÚYK›[™İÜ\Š
+OŒJ\ÚYO[™]È™XÌÊK
+NÜÚYO\ÚYK››Ü›X[^™J
+NÂˆ›ÜŠ[OKMÚOMÚJÊÊ^ÙİX›HZKÍŒÕ™XÌÈXÙ[\‹˜Y
+ÚYKœØØ[J
+˜ËœÜ[œ˜Y]\ÊJK˜Y
+
+K]
+
+JŒŒË
+Nİ˜Z[
+Ë›]™[ËœÜ[[YKŒJNßBˆBˆİ]XÈ›ÚYš[™ÊÙ\™\“]™[]™[™XÌÈÙ[\‹İX›H˜Y]\ËÜ[•[YH[YKİX›HÙ™œÙ]
+^Âˆ[Ûİ[SX]›Z[ŠX]›X^
+L‹
+[
+J˜Y]\ÊŒL
+JJNÂˆ›ÜŠ[OLÚOÛİ[ÚJÊÊ^ÙİX›HOZJ“X]”JŒ‹ØÛİ[
+ÛÙ™œÙ]İ˜Z[
+]™[Ù[\‹˜Y
+X]˜ÛÜÊJJœ˜Y]\ËX]œÚ[ŠJJœ˜Y]\ÊK[YKŒMJNßBˆBˆİ]XÈ›ÚY[\Xİ™YY˜XÚÊØ\İË™XÌÈÜÊ^ÂˆYŠËœÜ[šÚ[™OTÜ[’Ú[™ĞS““ÓŠ\™]\›ÂˆËÈÛ™H^Y\™Y]\ˆØ\İ]™\HZYÚXÚÜË[˜ÛY[™È\™XH[™ÚZ[ˆ]XÚÜË‚ˆYŠXÚÜËXË›\İ[\XİXÚÏ
+\™]\›ÂˆYŠËœÜ[šÚ[™OTÜ[’Ú[™“QUSÔ‰‰˜ËœÜ[šÚ[™OTÜ[’Ú[™”RS	‰˜ËœÜ[šÚ[™OTÜ[’Ú[™ÓÓTÑI‰˜ËœÜ[šÚ[™OTÜ[’Ú[™‘ÓÓJTÜ[š\İX[ËœÙ[™
+Ë›]™[ËœÜ[Ü[š\İX[Ë”İYÙK’UÜËÜËJNÂˆË›\İ[\XİXÚÏ]XÚÜÎÔÜ[]Y[Ëš[\Xİ
+Ë˜Ø\İ\‹ÜËËœÜ[
+NÂˆBˆİ]XÈ›ÚY\œİ
+Ø\İË™XÌÈÜÊ^ÂˆÙ\™\“]™[]™[XË›]™[ÔÜ[•[YH[YOXËœÜ[[YNÂˆÜ[š\İX[ËœÙ[™
+]™[ËœÜ[Ü[š\İX[Ë”İYÙK’STPÕÜËÜËX]˜Û[\
+ËœÜ[œ˜Y]\ËKŒ‹JJNÂˆYŠ[YOOTÜ[•[YK”ÓÕS
+TXÚÙ]\İšX]Ü‹œÙ[™Ô^Y\œÓ™X\Š]™[[ÜËÜËKÜË‹™]ÈØ[™™]ÛÜšË\œİ
+ÜËÜËKÜË‹[YK˜ÛÛÜŠJNÂˆ›ÜŠ[OLÚOLÚJÊÊ^ÙİX›HOZJ“X]”KÍİ˜Z[
+]™[ÜË˜Y
+X]˜ÛÜÊJJŒŒKX]œÚ[ŠJJŒ
+K[YKŒLŠNßBˆYŠ[YOOTÜ[•[YK”ÓÕS
+\š[™Ê]™[ÜËKŒK[YK
+NÂˆYŠ[YOOTÜ[•[YK“ÓÑ
+[]™[œÙ[™\XÛ\ÊÜ[\XÛ\Ëœ\XÛJÜ[•[YK“ÓÑ
+KÜËÜËKÜË‹ŒËŒËŒËŒN
+NÂˆYŠ[YOOTÜ[•[YK”ÓÕS
+^Âˆ]™[œÙ[™\XÛ\Ê™]È›ØÚÔ\XÛSÜ[ÛŠ\XÛU\\Ë“ĞÒË›ØÚÜËSQUTÕĞ“ĞÒË™Y˜][›ØÚÔİ]J
+JKÜËÜËKÜË‹ŒŒKŒKŒKŒMJNÂˆ]™[œÙ[™\XÛ\Ê\XÛU\\Ë”ĞÕS×ĞÒT‘ÑWÔÔÜËÜËKÜË‹ŒËŒËŒËŒJNÂˆ]™[œÙ[™\XÛ\Ê™]ÈÚšYZÔ\XÛSÜ[ÛŠ
+KÜËÜËKÜË‹K
+NÂˆBˆ[\Xİ™YY˜XÚÊËÜÊNÂˆB‚ˆš]˜]Hİ]XÈ›ÚYYÚš[™ÊØ\İË™XÌÈÜÊ^ÂˆÙ\™\“]™[]™[XË›]™[ÔÜ[•[YH[YOXËœÜ[[YNÂˆ™XÌÈ\İ\ÜË˜Y
+M‹
+NÂˆÜ[š\İX[ËœÙ[™
+]™[ËœÜ[Ü[š\İX[Ë”İYÙK”Õ’RÑK\İÜËJNÂˆ›ÜŠ[OLNÚOLÌÚJÊÊ^Õ™XÌÈ™^\ÜË˜Y
+X]œÚ[ŠJŒ‹ŒÌJJŒMKM‹ZJŒKX]˜ÛÜÊJŒKÊJŒMJNÙ›ÜŠ[LÚÎÚŠÊÊ]˜Z[
+]™[\İ›\œ
+™^‹ÌËŒ
+K[YKŒŠNÛ\İ[™^ßBˆ\œİ
+ËÜÊNÂˆBˆš]˜]Hİ]XÈ›ÚYÚZ[ŠØ\İË]š[™Ñ[]Hš\œİ
+^Âˆ]š[™Ñ[]HšXİ[OYš\œİÕ™XÌÈœ›ÛOXË˜Ø\İ\‹™Ù]^YTÜÚ][ÛŠ
+NÂˆ›ÜŠ[[\LÚ[\I‰šXİ[HO[[Ú[\
+ÊÊ^Âˆ™XÌÈ[™]šXİ[K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+NÂˆÜ[š\İX[ËœÙ[™
+Ë›]™[ËœÜ[Ü[š\İX[Ë”İYÙK“S’Ëœ›ÛK[™JNÂˆİX›H[™İYœ›ÛK™\İ[˜ÙUÊ[™
+NÚ[İ\ÏSX]›Z[ŠM‹X]›X^
+‹
+[
+J[™İ
+
+JJNÂˆ›ÜŠ[OLÚO\İ\ÎÚJÊÊ^ÙİX›HZKÊİX›J\İ\Îİ˜Z[
+Ë›]™[œ›ÛK›\œ
+[™
+K˜Y
+X]œÚ[ŠJŒ‹
+JŒŒL‹X]˜ÛÜÊJŒKÊJŒŒL‹
+KËœÜ[[YKŒMJNßBˆ]
+ËšXİ[K[™YJNØ\œİ
+Ë[™
+NÙœ›ÛOY[™Âˆ]š[™Ñ[]H™^[[ÙİX›HÛÜÙ\İXËœÜ[œ˜Y]\Ê˜ËœÜ[œ˜Y]\ÎÂˆ›ÜŠ˜\ˆØ[™Y]N›™X\ŠË˜Ø\İ\‹[™ËœÜ[œ˜Y]\ÊJ^ÂˆİX›HXØ[™Y]K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+K™\İ[˜ÙUÔÜ\Š[™
+NÂˆYŠXËš]˜ÛÛZ[œÊØ[™Y]K™Ù]URQ
+
+JI‰™ÛÜÙ\İ	‰š\ÚX›JË[™Ø[™Y]K™Ù]›İ[™[™Ğ›Ş
+
+K™Ù]Ù[\Š
+JJ^Û™^XØ[™Y]NØÛÜÙ\İYßBˆBˆšXİ[O[™^ÂˆBˆBˆš]˜]Hİ]XÈ›ÚYY\ÜØYÙJÙ\™\”^Y\ˆ^Y\‹İš[™È^
+^Ü^Y\‹™\Ü^PÛY[Y\ÜØYÙJÛÛ\Û™[›]\˜[
+^
+KYJNßBˆš]˜]Hİ]XÈš[˜[Û\ÜÈ›Û^P›ÛÂˆ™XÌÈÜÎÙš[˜[™XÌÈ\ÙİX›H\İ[˜ÙNÂˆ›Û^P›Û
+™XÌÈÜË™XÌÈ\Š^İ\ËœÜÏ\ÜÎİ\Ë™\Y\ßBˆBˆİ]XÈš[˜[Û\ÜÈØ\İÂˆš[˜[URQİÛ™\Ùš[˜[Ù\™\“]™[]™[Ùš[˜[Ü[Ü[Ùš[˜[™XÌÈ\Ùš[˜[]š[™Ñ[]H\™Ù]Ùš[˜[Ù]URQˆ][™]È\ÚÙ]Š
+NÙš[˜[\İ›Û^P›Ûˆ›ÛÏ[™]È\œ˜^S\İŠ
+NÂˆš[˜[\İÜ[Xİ[ÛœË”ÚİˆÚİÏ[™]È\œ˜^S\İŠ
+NÂˆš[˜[\İ[]Oˆ›ÜÜÕš\İX[Ï[™]È\œ˜^S\İŠ
+NÙš[˜[\İ™XÌÏˆ\\[Û”Ú[Ï[™]È\œ˜^S\İŠ
+NÂˆš[˜[\İ˜]˜K][•URQˆ][Y[™]È\œ˜^S\İŠ
+NÙ›Ø]ÙX\Û›Û\Ë˜Z[™YÂˆY˜[˜ÙYÜ[Ë”İ]HY˜[˜ÙYÂˆ›ÛÚĞØ\İ›ÛÚÎÙš[˜[Ù\™\”^Y\ˆ\İİÛ™\ÔÙ\™\”^Y\ˆØ\İ\Õ™XÌÈÜË[˜ÚÜ‹˜]™[Ú[YÙK\˜][Û‹[\XİYÙNÙİX›H\İ[˜ÙK™^\œİMÛÛ™È\İ[\XİXÚÏKLLÂˆØ\İ
+Ù\™\”^Y\ˆ^Y\‹Ü[Ü[™XÌÈİ\™XÌÈ\‹™XÌÈZ[K]š[™Ñ[]H\™Ù]
+^ÂˆİÛ™\\^Y\‹™Ù]URQ
+
+NÛ]™[\^Y\‹œÙ\™\“]™[
+
+NØØ\İ\\^Y\İ\İİÛ™\\^Y\İ\ËœÜ[\Ü[ÜÜÏ\İ\İ\Ë™\Y\İ˜]™[Y\Ø[˜ÚÜXZ[Nİ\Ë\™Ù]]\™Ù]ÂˆBˆBŸB

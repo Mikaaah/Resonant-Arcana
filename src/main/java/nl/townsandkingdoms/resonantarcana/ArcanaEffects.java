@@ -21,6 +21,9 @@ final class ArcanaEffects {
     static final net.minecraft.core.Holder<MobEffect> TEMPO=REGISTER.register("battle_tempo",()->new Beneficial(0x7bdfff)
         .addAttributeModifier(Attributes.ATTACK_SPEED,id("tempo_attack"),.025,Operation.ADD_MULTIPLIED_TOTAL)
         .addAttributeModifier(Attributes.MOVEMENT_SPEED,id("tempo_move"),.025,Operation.ADD_MULTIPLIED_TOTAL));
+    static final net.minecraft.core.Holder<MobEffect> GLACIAL_GUARD=REGISTER.register("glacial_guard",()->new Beneficial(0xa6e7ff));
+    static final net.minecraft.core.Holder<MobEffect> THUNDERBRAND=REGISTER.register("thunderbrand",()->new Beneficial(0x7bdfff));
+    static final net.minecraft.core.Holder<MobEffect> PHANTOM_FORMATION=REGISTER.register("phantom_formation",()->new Beneficial(0xb349f5));
     private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,path);}
     private static final class Beneficial extends MobEffect {Beneficial(int color){super(MobEffectCategory.BENEFICIAL,color);}}
     private ArcanaEffects(){}

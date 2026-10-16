@@ -20,12 +20,17 @@ public final class WandClient {
     public static final KeyMapping NEXT=new KeyMapping("key.resonant_arcana.next",InputConstants.Type.KEYSYM,GLFW.GLFW_KEY_V,"key.categories.resonant_arcana");
     public static final KeyMapping SELECT=new KeyMapping("key.resonant_arcana.select",InputConstants.Type.KEYSYM,GLFW.GLFW_KEY_X,"key.categories.resonant_arcana");
     private static int visualBursts;
+    private static boolean reversalAttackHeld,reversalCastHeld;
     private WandClient() {}
     @SubscribeEvent public static void input(InputEvent.InteractionKeyMappingTriggered e) {
         var mc=Minecraft.getInstance();
         if(mc.player==null||mc.screen!=null||!(mc.player.getMainHandItem().getItem() instanceof WandItem))return;
         if(e.isAttack()&&ArcanaConfig.MOUSE_CONTROLS.get()) {
-            e.setCanceled(true);e.setSwingHand(false);PacketDistributor.sendToServer(new WandNetwork.Action(0));
+            e.setCanceled(true);e.setSwingHand(false);
+            if(mc.player.getMainHandItem().getItem() instanceof WandItem wand&&wand.selected(mc.player.getMainHandItem())==Spell.CRIMSON_REVERSAL){
+                if(reversalAttackHeld)return;reversalAttackHeld=true;
+            }
+            PacketDistributor.sendToServer(new WandNetwork.Action(0));
         } else if(e.isUseItem()) {
             // Cancel both hands so block/offhand interaction cannot leak through the wand action.
             e.setCanceled(true);e.setSwingHand(false);
@@ -41,8 +46,13 @@ public final class WandClient {
         visualBursts=0;
         AaaEffects.tick();
         var mc=Minecraft.getInstance();
+        if(!mc.options.keyAttack.isDown())reversalAttackHeld=false;
+        if(!CAST.isDown())reversalCastHeld=false;
         while(SELECT.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem wand)mc.setScreen(new WandSelectScreen(wand,mc.player.getMainHandItem()));
-        while(CAST.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem)PacketDistributor.sendToServer(new WandNetwork.Action(0));
+        while(CAST.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem wand){
+            if(wand.selected(mc.player.getMainHandItem())==Spell.CRIMSON_REVERSAL){if(reversalCastHeld)continue;reversalCastHeld=true;}
+            PacketDistributor.sendToServer(new WandNetwork.Action(0));
+        }
         while(NEXT.consumeClick())if(mc.screen==null&&mc.player!=null&&mc.player.getMainHandItem().getItem() instanceof WandItem)PacketDistributor.sendToServer(new WandNetwork.Action(mc.player.isShiftKeyDown()?2:1));
     }
     @SubscribeEvent public static void hud(net.neoforged.neoforge.client.event.RenderGuiEvent.Post event){
