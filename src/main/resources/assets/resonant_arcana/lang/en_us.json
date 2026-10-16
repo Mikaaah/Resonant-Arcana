@@ -132,5 +132,16 @@
   "spell.resonant_arcana.glacial_prison": "Glacial Prison",
   "spell.resonant_arcana.crystal_barrage": "Crystal Barrage",
   "spell.resonant_arcana.absolute_zero": "Absolute Zero",
-  "key.resonant_arcana.select": "Choose wand spell"
+  "key.resonant_arcana.select": "Choose wand spell",
+  "spell.resonant_arcana.warscream": "Warscream",
+  "spell.resonant_arcana.soulblast": "Soulblast",
+  "spell.resonant_arcana.arcane_edge": "Arcane Edge",
+  "spell.resonant_arcana.bulwark_chant": "Bulwark Chant",
+  "spell.resonant_arcana.battle_tempo": "Battle Tempo",
+  "spell.resonant_arcana.cinder_cleave": "Cinder Cleave",
+  "spell.resonant_arcana.rime_thrust": "Rime Thrust",
+  "spell.resonant_arcana.blood_rend": "Blood Rend",
+  "effect.resonant_arcana.warcry": "Warcry",
+  "effect.resonant_arcana.arcane_edge": "Arcane Edge",
+  "effect.resonant_arcana.battle_tempo": "Battle Tempo"
 }

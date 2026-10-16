@@ -3,11 +3,11 @@ from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
 SCHOOL={'MAGIC':'Evocation','BLOOD':'Blood','FIRE':'Fire','DARK':'Ender','THUNDER':'Lightning','GRAVITY':'Ender','SOUL':'Eldritch','POISON':'Nature','HOLY':'Holy','ICE':'Ice'}
-SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER'}
+SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER','MARTIAL_BUFF','WARCRY'}
 def number(n):return f'{n:g}'
 def main():
     data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells']
-    lines=['# Spell reference','',f"**{len(spells)} spells · 10 wands · 12 spells per wand.**",'',
+    lines=['# Spell reference','',f"**{len(spells)} spells · 10 wands · 12–14 spells per wand.**",'',
     'Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.', '',
     'All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.', '',
     'Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.', '',
@@ -43,6 +43,14 @@ def main():
             if key in ('SANGUINE_PACT','BLESSING_OF_VIGOR','RESONANT_GUARD','FROZEN_AEGIS'):
                 shield=4 if key in ('SANGUINE_PACT','BLESSING_OF_VIGOR') else 6
                 lines +=['**Absorption at levels I–V:** '+', '.join(number(shield*(1+.25*i)) for i in range(5))+' health.','']
+            if s['kind'] in ('BLADE_ARC','BLADE_THRUST'):
+                lines +=['**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.','']
+            if key=='WARSCREAM':lines +=['**Ally damage:** +10%, +15%, +20%, +25%, +30% melee damage and native Iron’s spell power. **Temporary health:** 4, 5, 6, 7, 8. Taunts at most 32 visible hostile mobs, rechecking every half second for three seconds. Custom boss AI may override the target. Does not taunt animals, pets or players.','']
+            if key=='BULWARK_CHANT':lines +=['**Defence:** Resistance I and 4, 5, 6, 7, 8 temporary health.','']
+            if key=='ARCANE_EDGE':lines +=['**Attack damage:** +2, +2.5, +3, +3.5, +4. **Attack speed:** +10%, +12.5%, +15%, +17.5%, +20%.','']
+            if key=='BATTLE_TEMPO':lines +=['**Attack and movement speed:** +10%, +12.5%, +15%, +17.5%, +20%.','']
+            if key=='BLOOD_REND':lines +=['**Drain:** 40% of health actually removed, capped at 3, 3.75, 4.5, 5.25, 6 health per entire cast, before the healing configuration multiplier. Blocked damage gives no healing.','']
+            if key=='SOULBLAST':lines +=['**Aim modes:** while gliding, boost along your look direction (initial contribution 1.7–2.1 blocks/tick plus 30% of existing motion, final speed capped at 3). Otherwise, look down at least 40.6 degrees to launch upward at 1.05–1.45 blocks/tick and gain three seconds of Slow Falling. Forward casts hit a 120-degree cone and apply horizontal knockback, respecting knockback resistance. Mobility modes deal no damage and do not force Elytra flight. Slow Falling is brief, not permanent fall immunity.','']
             if s['kind']=='EXECUTE':lines +=['**Conditional direct damage at levels I–V:** '+', '.join(number(s['damage']*1.5*(1+.25*i)) for i in range(5))+'.','']
             lines +=[f"Spell ID: `resonant_arcana:{s['bookId']}`. Inspect any rank in game with `/resonantarcana spell {s['bookId']} <level>`.",'']
     (ROOT/'SPELLS.md').write_text('\n'.join(lines))

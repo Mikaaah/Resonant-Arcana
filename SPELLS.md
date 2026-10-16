@@ -1,6 +1,6 @@
 # Spell reference
 
-**120 spells · 10 wands · 12 spells per wand.**
+**128 spells · 10 wands · 12–14 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
@@ -14,16 +14,16 @@ Healing affects the caster, owned pets and scoreboard teammates. By default it a
 
 | Wand | School | Spell kit |
 | --- | --- | --- |
-| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step |
-| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest |
-| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath |
+| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge |
+| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend |
+| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave |
 | [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom |
-| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet |
+| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo |
 | [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear |
-| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture |
+| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast |
 | [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze |
-| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn |
-| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero |
+| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant |
+| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust |
 
 ## Shared recovery
 
@@ -244,6 +244,26 @@ Blink along your aim to a clear, loaded position. Range grows by 1 block per add
 
 Spell ID: `resonant_arcana:arcane_step`. Inspect any rank in game with `/resonantarcana spell arcane_step <level>`.
 
+### Arcane Edge
+
+Empower yourself with flat melee attack damage and faster attacks for 8–16 seconds. Refreshes the existing enchantment.
+
+**Role:** Weapon enchantment · **Cast:** 0.4s · **Cooldown:** 20s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 35 |
+| II | — | — | 40 |
+| III | — | — | 45 |
+| IV | — | — | 50 |
+| V | — | — | 55 |
+
+**Base active phase:** 8s. Duration at levels I–V without gear: 8s, 10s, 12s, 14s, 16s.
+
+**Attack damage:** +2, +2.5, +3, +3.5, +4. **Attack speed:** +10%, +12.5%, +15%, +17.5%, +20%.
+
+Spell ID: `resonant_arcana:arcane_edge`. Inspect any rank in game with `/resonantarcana spell arcane_edge <level>`.
+
 <a id="blood-wand"></a>
 ## Blood Wand
 
@@ -454,6 +474,26 @@ Strike an aimed enemy. Deal 50% more direct damage below 35% maximum health; a k
 **Conditional direct damage at levels I–V:** 18, 22.5, 27, 31.5, 36.
 
 Spell ID: `resonant_arcana:crimson_harvest`. Inspect any rank in game with `/resonantarcana spell crimson_harvest <level>`.
+
+### Blood Rend
+
+Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3–6 health for the entire cast.
+
+**Role:** Spellsword sustain · **Cast:** 0.5s · **Cooldown:** 7s · **Range:** 5 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 30 |
+| II | 7.5 | — | 35 |
+| III | 9 | — | 40 |
+| IV | 10.5 | — | 45 |
+| V | 12 | — | 50 |
+
+**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.
+
+**Drain:** 40% of health actually removed, capped at 3, 3.75, 4.5, 5.25, 6 health per entire cast, before the healing configuration multiplier. Blocked damage gives no healing.
+
+Spell ID: `resonant_arcana:blood_rend`. Inspect any rank in game with `/resonantarcana spell blood_rend <level>`.
 
 <a id="cinder-wand"></a>
 ## Cinder Wand
@@ -667,6 +707,24 @@ Exhale a broad cone of flame following your aim for 1.5 seconds. Three pulses ca
 **Base active phase:** 1.5s.
 
 Spell ID: `resonant_arcana:dragon_breath`. Inspect any rank in game with `/resonantarcana spell dragon_breath <level>`.
+
+### Cinder Cleave
+
+Sweep a burning crescent through a 120-degree cone. Damage includes half your melee attack attribute at release; ignites enemies.
+
+**Role:** Spellsword cleave · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 5 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 25 |
+| II | 7.5 | — | 30 |
+| III | 9 | — | 35 |
+| IV | 10.5 | — | 40 |
+| V | 12 | — | 45 |
+
+**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.
+
+Spell ID: `resonant_arcana:cinder_cleave`. Inspect any rank in game with `/resonantarcana spell cinder_cleave <level>`.
 
 <a id="dark-wand"></a>
 ## Dark Wand
@@ -1077,6 +1135,26 @@ Throw a travelling lightning orb that can ricochet between three visible enemies
 | V | 12 | — | 72 |
 
 Spell ID: `resonant_arcana:arc_ricochet`. Inspect any rank in game with `/resonantarcana spell arc_ricochet <level>`.
+
+### Battle Tempo
+
+A rallying rhythm grants visible nearby allies faster attacks and movement for 8–16 seconds.
+
+**Role:** Party haste · **Cast:** 0.4s · **Cooldown:** 20s · **Range:** 8 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 35 |
+| II | — | — | 40 |
+| III | — | — | 45 |
+| IV | — | — | 50 |
+| V | — | — | 55 |
+
+**Base active phase:** 8s. Duration at levels I–V without gear: 8s, 10s, 12s, 14s, 16s.
+
+**Attack and movement speed:** +10%, +12.5%, +15%, +17.5%, +20%.
+
+Spell ID: `resonant_arcana:battle_tempo`. Inspect any rank in game with `/resonantarcana spell battle_tempo <level>`.
 
 <a id="rift-wand"></a>
 ## Rift Wand
@@ -1501,6 +1579,24 @@ Strike an aimed enemy. If it is affected by Darkness, direct damage increases by
 **Conditional direct damage at levels I–V:** 15, 18.75, 22.5, 26.25, 30.
 
 Spell ID: `resonant_arcana:memory_fracture`. Inspect any rank in game with `/resonantarcana spell memory_fracture <level>`.
+
+### Soulblast
+
+Blast a forward cone of enemies away. Aim sharply downward to launch yourself with brief Slow Falling. While gliding, boost your Elytra along your aim instead.
+
+**Role:** Mobility / repulsion · **Cast:** instant · **Cooldown:** 5s · **Range:** 8 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 25 |
+| II | 7.5 | — | 30 |
+| III | 9 | — | 35 |
+| IV | 10.5 | — | 40 |
+| V | 12 | — | 45 |
+
+**Aim modes:** while gliding, boost along your look direction (initial contribution 1.7–2.1 blocks/tick plus 30% of existing motion, final speed capped at 3). Otherwise, look down at least 40.6 degrees to launch upward at 1.05–1.45 blocks/tick and gain three seconds of Slow Falling. Forward casts hit a 120-degree cone and apply horizontal knockback, respecting knockback resistance. Mobility modes deal no damage and do not force Elytra flight. Slow Falling is brief, not permanent fall immunity.
+
+Spell ID: `resonant_arcana:soulblast`. Inspect any rank in game with `/resonantarcana spell soulblast <level>`.
 
 <a id="venom-wand"></a>
 ## Venom Wand
@@ -1932,6 +2028,46 @@ Carry a healing hymn around yourself for four seconds. Four pulses each restore 
 
 Spell ID: `resonant_arcana:renewal_hymn`. Inspect any rank in game with `/resonantarcana spell renewal_hymn <level>`.
 
+### Warscream
+
+Roar with dragon fury: repel enemies, taunt nearby hostile mobs for 3 seconds, and grant visible allies bonus melee damage, spell power and temporary health.
+
+**Role:** Battle cry · **Cast:** 0.6s · **Cooldown:** 20s · **Range:** 8 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 45 |
+| II | — | — | 50 |
+| III | — | — | 55 |
+| IV | — | — | 60 |
+| V | — | — | 65 |
+
+**Base active phase:** 8s. Duration at levels I–V without gear: 8s, 10s, 12s, 14s, 16s.
+
+**Ally damage:** +10%, +15%, +20%, +25%, +30% melee damage and native Iron’s spell power. **Temporary health:** 4, 5, 6, 7, 8. Taunts at most 32 visible hostile mobs, rechecking every half second for three seconds. Custom boss AI may override the target. Does not taunt animals, pets or players.
+
+Spell ID: `resonant_arcana:warscream`. Inspect any rank in game with `/resonantarcana spell warscream <level>`.
+
+### Bulwark Chant
+
+Grant visible nearby allies Resistance I and temporary health for 8–16 seconds. Shields refresh rather than stack.
+
+**Role:** Party defence · **Cast:** 0.8s · **Cooldown:** 20s · **Range:** 8 blocks · **Radius / width:** 8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 40 |
+| II | — | — | 45 |
+| III | — | — | 50 |
+| IV | — | — | 55 |
+| V | — | — | 60 |
+
+**Base active phase:** 8s. Duration at levels I–V without gear: 8s, 10s, 12s, 14s, 16s.
+
+**Defence:** Resistance I and 4, 5, 6, 7, 8 temporary health.
+
+Spell ID: `resonant_arcana:bulwark_chant`. Inspect any rank in game with `/resonantarcana spell bulwark_chant <level>`.
+
 <a id="frost-wand"></a>
 ## Frost Wand
 
@@ -2146,3 +2282,21 @@ Establish a frozen domain for four seconds. Four pulses chill and freeze visible
 **Base active phase:** 4s.
 
 Spell ID: `resonant_arcana:absolute_zero`. Inspect any rank in game with `/resonantarcana spell absolute_zero <level>`.
+
+### Rime Thrust
+
+Drive a piercing frost thrust through enemies in a narrow line, stopping at walls. Damage includes half your melee attack attribute; heavily slows for 2 seconds.
+
+**Role:** Spellsword thrust · **Cast:** 0.4s · **Cooldown:** 6s · **Range:** 7 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 6 | — | 25 |
+| II | 7.5 | — | 30 |
+| III | 9 | — | 35 |
+| IV | 10.5 | — | 40 |
+| V | 12 | — | 45 |
+
+**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.
+
+Spell ID: `resonant_arcana:rime_thrust`. Inspect any rank in game with `/resonantarcana spell rime_thrust <level>`.

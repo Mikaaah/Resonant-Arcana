@@ -140,7 +140,7 @@ final class IronsCompat {
             if(castTime>0)info.add(Component.literal(String.format(Locale.ROOT,"Windup: %.2fs",getEffectiveCastTime(spellLevel,entity)/20.0)));
             if(spell.range>0)info.add(Component.literal("Base range: "+(int)spell.range+" blocks"));
             if(spell.duration()>0)info.add(Component.literal(String.format(Locale.ROOT,"Base duration: %.1fs",spell.duration()/20.0)));
-            return info;
+            info.addAll(SpellInfo.martial(spell,power));return info;
         }
     }
 }

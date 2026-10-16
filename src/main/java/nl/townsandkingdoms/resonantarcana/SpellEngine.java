@@ -37,9 +37,10 @@ public final class SpellEngine {
     public static int activeCount(){return ACTIVE.size();}
     public static void clear(){ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
-        if(action<0||action>14||!player.isAlive()||player.isSpectator())return;
+        if(action<0||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
         if(!(stack.getItem() instanceof WandItem wand))return;
+        if(action>=3&&action-3>=wand.spells.size())return;
         if(LAST_ACTION.getOrDefault(player.getUUID(),Long.MIN_VALUE)==ticks)return;
         LAST_ACTION.put(player.getUUID(),ticks);
         if(action==0){if(ArcanaConfig.WAND_CASTING.get())IronsCompat.castWand(player,wand.selected(stack),stack);else message(player,"Use your spellbook to cast");}
@@ -170,7 +171,7 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
+        if(c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
         if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
@@ -483,7 +484,8 @@ public final class SpellEngine {
         if(!entity.isAlive()||entity.isSpectator())return false;
         if(entity==caster)return true;
         if(entity instanceof TamableAnimal pet)return caster.getUUID().equals(pet.getOwnerUUID());
-        return entity instanceof net.minecraft.world.entity.player.Player&&(caster.getTeam()!=null&&caster.getTeam()==entity.getTeam()||ArcanaConfig.TEAMLESS_HEALING.get()&&caster.getTeam()==null&&entity.getTeam()==null);
+        return caster.getTeam()!=null&&caster.getTeam()==entity.getTeam()
+            ||entity instanceof net.minecraft.world.entity.player.Player&&ArcanaConfig.TEAMLESS_HEALING.get()&&caster.getTeam()==null&&entity.getTeam()==null;
     }
     private static void sanctuary(Cast c){
         Vec3 center=c.caster.position().add(0,.5,0);float amount=12*(c.book==null?1:c.book.power());
@@ -534,8 +536,8 @@ public final class SpellEngine {
                 boolean exploit=c.spell==Spell.CRIMSON_HARVEST?victim.getHealth()<=victim.getMaxHealth()*.35f:c.spell==Spell.MEMORY_FRACTURE?victim.hasEffect(MobEffects.DARKNESS):victim.getTicksFrozen()>=140||(victim.getEffect(MobEffects.MOVEMENT_SLOWDOWN)!=null&&victim.getEffect(MobEffects.MOVEMENT_SLOWDOWN).getAmplifier()>=2);
                 if(exploit)multiplier=1.5f;
             }
-            boolean hurt=victim.hurt(c.book==null?c.level.damageSources().indirectMagic(c.caster,c.caster):c.book.source(),(float)(c.spell.damage*multiplier*ArcanaConfig.DAMAGE.get()*(c.book==null?1:c.book.power())));
-            if(hurt){impactFeedback(c,victim.getBoundingBox().getCenter());if(c.spell==Spell.CRIMSON_HARVEST&&!victim.isAlive())SpellActions.heal(c,c.caster,2);}
+            boolean hurt=victim.hurt(c.book==null?c.level.damageSources().indirectMagic(c.caster,c.caster):c.book.source(),(float)((c.spell.damage+c.weaponBonus)*multiplier*ArcanaConfig.DAMAGE.get()*(c.book==null?1:c.book.power())));
+            if(hurt){MartialSpells.drain(c,Math.max(0,before-victim.getHealth()));impactFeedback(c,victim.getBoundingBox().getCenter());if(c.spell==Spell.CRIMSON_HARVEST&&!victim.isAlive())SpellActions.heal(c,c.caster,2);}
             if(c.spell.kind==Spell.Kind.SIPHON&&hurt&&victim.getHealth()<before){
                 c.caster.heal((float)(Math.min(2.0f*SpellActions.power(c),(before-victim.getHealth())*0.4f)*ArcanaConfig.HEALING.get()));
                 Vec3 fromSoul=victim.getBoundingBox().getCenter(),toSoul=c.caster.getEyePosition();
@@ -644,6 +646,7 @@ public final class SpellEngine {
     static final class Cast {
         final UUID owner;final ServerLevel level;final Spell spell;final Vec3 dir;final LivingEntity target;final Set<UUID> hit=new HashSet<>();final List<VolleyBolt> bolts=new ArrayList<>();
         final List<SpellActions.Shot> shots=new ArrayList<>();
+        final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;

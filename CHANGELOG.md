@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.14.0-alpha
+
+- Add Warscream: dragon roar, explosion ring, radial knockback, short hostile-mob taunt, party damage and temporary health.
+- Add Soulblast with forward repulsion, downward self-launch, and directional Elytra boost.
+- Add Arcane Edge, Bulwark Chant and Battle Tempo for spellsword and party support.
+- Add weapon-scaling Cinder Cleave, Rime Thrust and Blood Rend, each with levels I–V.
+- Expand to 128 spells and add wand selection pages with validated server-side slots.
+- Add original spell/effect icons and document damage, buffs, duration and mobility modes.
+
+
 ## 0.13.0-alpha
 
 - Move every addon registry, asset, translation and network ID to `resonant_arcana`.

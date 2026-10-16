@@ -19,6 +19,8 @@ final class SpellAudio {
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
+        case WARSCREAM->"entity.ender_dragon.growl";case SOULBLAST->"entity.warden.sonic_boom";
+        case CINDER_CLEAVE,BLOOD_REND,RIME_THRUST->irons("entity.generic.swing_blade");
         case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_SCREAM->"entity.enderman.stare";
         case DOOM->"entity.ender_dragon.growl";case SANCTUARY->irons("cast.generic.holy");
         case GLACIAL_RUPTURE->irons("spell.frostwave.prepare");case EVOKERS_EDICT->"entity.evoker.prepare_attack";
@@ -70,6 +72,8 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
+        case WARSCREAM->"entity.ender_dragon.growl";case SOULBLAST->"entity.warden.sonic_boom";
+        case CINDER_CLEAVE,BLOOD_REND,RIME_THRUST->irons("entity.generic.swing_blade");
         case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_SCREAM->"entity.enderman.scream";
         case DOOM->irons("spell.black_hole.cast");case SANCTUARY->irons("cast.generic.holy");
         case GLACIAL_RUPTURE->irons("cast.generic.ice");case EVOKERS_EDICT->"entity.evoker.cast_spell";

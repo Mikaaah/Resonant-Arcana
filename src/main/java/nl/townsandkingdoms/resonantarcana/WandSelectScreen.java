@@ -17,23 +17,33 @@ final class WandSelectScreen extends Screen {
     private final WandItem wand;
     private final ItemStack stack;
     private Spell hovered;
+    private int page;
     private int left,top,panelWidth,cardHeight,gridBottom;
-    WandSelectScreen(WandItem wand,ItemStack stack){super(Component.literal(SpellCatalogue.wand(wand.id).title()));this.wand=wand;this.stack=stack;}
+    WandSelectScreen(WandItem wand,ItemStack stack){super(Component.literal(SpellCatalogue.wand(wand.id).title()));this.wand=wand;this.stack=stack;this.page=Math.max(0,wand.spells.indexOf(wand.selected(stack)))/12;}
     @Override protected void init(){
         panelWidth=Math.min(660,width-24);left=(width-panelWidth)/2;top=12;
         cardHeight=Math.clamp((height-140)/3,32,52);int cardWidth=(panelWidth-30)/4;
-        for(int i=0;i<wand.spells.size();i++)addRenderableWidget(new Card(i,left+9+(i%4)*(cardWidth+4),top+34+(i/4)*(cardHeight+5),cardWidth,cardHeight));
+        clearWidgets();
+        for(int i=0;i<12&&page*12+i<wand.spells.size();i++)addRenderableWidget(new Card(page*12+i,left+9+(i%4)*(cardWidth+4),top+34+(i/4)*(cardHeight+5),cardWidth,cardHeight));
+        if(wand.spells.size()>12){
+            addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal("<"),b->turnPage(-1)).bounds(left+panelWidth-92,top+8,20,20).build());
+            addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal(">"),b->turnPage(1)).bounds(left+panelWidth-26,top+8,20,20).build());
+        }
         gridBottom=top+34+3*(cardHeight+5);
     }
     @Override public boolean isPauseScreen(){return false;}
+    private void turnPage(int delta){page=Math.floorMod(page+delta,(wand.spells.size()+11)/12);init();}
     private void choose(int slot){
+        if(slot<0||slot>=wand.spells.size())return;
         if(minecraft.player!=null&&minecraft.player.getMainHandItem().getItem()==wand)
             PacketDistributor.sendToServer(new WandNetwork.Select(BuiltInRegistries.ITEM.getKey(wand),slot));
         onClose();
     }
     @Override public boolean keyPressed(int key,int scan,int modifiers){
+        if(key==GLFW.GLFW_KEY_LEFT||key==GLFW.GLFW_KEY_PAGE_UP){turnPage(-1);return true;}
+        if(key==GLFW.GLFW_KEY_RIGHT||key==GLFW.GLFW_KEY_PAGE_DOWN){turnPage(1);return true;}
         int slot=key>=GLFW.GLFW_KEY_1&&key<=GLFW.GLFW_KEY_9?key-GLFW.GLFW_KEY_1:key==GLFW.GLFW_KEY_0?9:key==GLFW.GLFW_KEY_MINUS?10:key==GLFW.GLFW_KEY_EQUAL?11:-1;
-        if(slot>=0){choose(slot);return true;}return super.keyPressed(key,scan,modifiers);
+        if(slot>=0){choose(page*12+slot);return true;}return super.keyPressed(key,scan,modifiers);
     }
     @Override public void render(GuiGraphics g,int mouseX,int mouseY,float partialTick){
         if(minecraft.player==null||minecraft.player.getMainHandItem().getItem()!=wand){onClose();return;}
@@ -43,6 +53,7 @@ final class WandSelectScreen extends Screen {
         g.fill(left,top,left+panelWidth,top+2,color);
         g.drawString(font,title,left+10,top+9,0xFFEAF0FC,false);
         g.drawString(font,"Choose a spell  •  Keys 1–9, 0, −, =",left+10,top+22,0xFF9EAFC7,false);
+        if(wand.spells.size()>12)g.drawString(font,(page+1)+" / "+((wand.spells.size()+11)/12),left+panelWidth-67,top+14,0xFFFFFFFF,false);
         hovered=null;super.render(g,mouseX,mouseY,partialTick);
         Spell s=hovered==null?wand.selected(stack):hovered;int level=wand.level(stack,s);
         g.drawString(font,s.title+" "+WandItem.roman(level)+"  •  "+SpellInfo.school(s.theme)+" / "+s.role(),left+10,gridBottom+5,0xFF000000|s.theme.color,false);

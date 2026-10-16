@@ -4,11 +4,11 @@ license="MIT"
 issueTrackerURL="https://github.com/Mikaaah/Resonant-Arcana/issues"
 [[mods]]
 modId="resonant_arcana"
-version="0.13.0-alpha"
+version="0.14.0-alpha"
 displayName="Resonant Arcana"
 authors="Towns & Kingdoms"
 displayURL="https://github.com/Mikaaah/Resonant-Arcana"
-description='''Expressive elemental magic with ten craftable wands, 120 spells, level I–V progression, layered audio and optional AAAParticles effects. An Iron's Spells 'n Spellbooks addon. Experimental alpha.'''
+description='''Expressive elemental magic with ten craftable wands, 128 spells, level I–V progression, layered audio and optional AAAParticles effects. An Iron's Spells 'n Spellbooks addon. Experimental alpha.'''
 [[dependencies.resonant_arcana]]
 modId="neoforge"
 type="required"

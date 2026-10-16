@@ -39,7 +39,7 @@ public final class ResonantArcana {
     }
     public ResonantArcana(IEventBus bus,ModContainer container) {
         IronsCompat.register(bus);
-        ITEMS.register(bus);TABS.register(bus);container.registerConfig(ModConfig.Type.SERVER,ArcanaConfig.SERVER,"resonantarcana-server.toml");
+        ArcanaEffects.REGISTER.register(bus);ITEMS.register(bus);TABS.register(bus);container.registerConfig(ModConfig.Type.SERVER,ArcanaConfig.SERVER,"resonantarcana-server.toml");
         container.registerConfig(ModConfig.Type.CLIENT,ArcanaConfig.CLIENT,"resonantarcana-client.toml");
         SpellCatalogue.validateRegistry();
         bus.addListener(WandNetwork::register);
@@ -50,7 +50,7 @@ public final class ResonantArcana {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("resonantarcana");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.13.0-alpha: 10 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.14.0-alpha: 10 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);

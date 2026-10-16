@@ -18,7 +18,8 @@
         "LEAP",
         "ARCANE_VOLLEY",
         "EVOKERS_EDICT",
-        "ARCANE_STEP"
+        "ARCANE_STEP",
+        "ARCANE_EDGE"
       ]
     },
     {
@@ -37,7 +38,8 @@
         "BLOOD_REAP",
         "CRIMSON_TETHER",
         "SANGUINE_PACT",
-        "CRIMSON_HARVEST"
+        "CRIMSON_HARVEST",
+        "BLOOD_REND"
       ]
     },
     {
@@ -56,7 +58,8 @@
         "SOLAR_CATACLYSM",
         "CINDER_STEP",
         "PHOENIX_RUSH",
-        "DRAGON_BREATH"
+        "DRAGON_BREATH",
+        "CINDER_CLEAVE"
       ]
     },
     {
@@ -94,7 +97,8 @@
         "TEMPEST_SPEAR",
         "STORM_STEP",
         "THUNDERCLAP",
-        "ARC_RICOCHET"
+        "ARC_RICOCHET",
+        "BATTLE_TEMPO"
       ]
     },
     {
@@ -132,7 +136,8 @@
         "SOUL_CANNON",
         "WISP_LANTERN",
         "RESONANT_GUARD",
-        "MEMORY_FRACTURE"
+        "MEMORY_FRACTURE",
+        "SOULBLAST"
       ]
     },
     {
@@ -170,7 +175,9 @@
         "DAWN_WARD",
         "JUDGEMENT_RAY",
         "SERAPHIC_DESCENT",
-        "RENEWAL_HYMN"
+        "RENEWAL_HYMN",
+        "WARSCREAM",
+        "BULWARK_CHANT"
       ]
     },
     {
@@ -189,7 +196,8 @@
         "HAILSTORM",
         "GLACIAL_PRISON",
         "CRYSTAL_BARRAGE",
-        "ABSOLUTE_ZERO"
+        "ABSOLUTE_ZERO",
+        "RIME_THRUST"
       ]
     }
   ],
@@ -2593,6 +2601,166 @@
       "role": "Control",
       "description": "Establish a frozen domain for four seconds. Four pulses chill and freeze visible enemies in its area. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.",
       "bookId": "absolute_zero"
+    },
+    "WARSCREAM": {
+      "title": "Warscream",
+      "kind": "WARCRY",
+      "theme": "HOLY",
+      "damage": 0,
+      "radius": 8,
+      "range": 8,
+      "cooldown": 400,
+      "castTicks": 12,
+      "mana": 45,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 160,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Battle cry",
+      "description": "Roar with dragon fury: repel enemies, taunt nearby hostile mobs for 3 seconds, and grant visible allies bonus melee damage, spell power and temporary health.",
+      "bookId": "warscream"
+    },
+    "SOULBLAST": {
+      "title": "Soulblast",
+      "kind": "SOULBLAST",
+      "theme": "SOUL",
+      "damage": 6,
+      "radius": 3,
+      "range": 8,
+      "cooldown": 100,
+      "castTicks": 0,
+      "mana": 25,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Mobility / repulsion",
+      "description": "Blast a forward cone of enemies away. Aim sharply downward to launch yourself with brief Slow Falling. While gliding, boost your Elytra along your aim instead.",
+      "bookId": "soulblast"
+    },
+    "ARCANE_EDGE": {
+      "title": "Arcane Edge",
+      "kind": "MARTIAL_BUFF",
+      "theme": "MAGIC",
+      "damage": 0,
+      "radius": 0,
+      "range": 0,
+      "cooldown": 400,
+      "castTicks": 8,
+      "mana": 35,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 160,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Weapon enchantment",
+      "description": "Empower yourself with flat melee attack damage and faster attacks for 8\u201316 seconds. Refreshes the existing enchantment.",
+      "bookId": "arcane_edge"
+    },
+    "BULWARK_CHANT": {
+      "title": "Bulwark Chant",
+      "kind": "MARTIAL_BUFF",
+      "theme": "HOLY",
+      "damage": 0,
+      "radius": 8,
+      "range": 8,
+      "cooldown": 400,
+      "castTicks": 16,
+      "mana": 40,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 160,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Party defence",
+      "description": "Grant visible nearby allies Resistance I and temporary health for 8\u201316 seconds. Shields refresh rather than stack.",
+      "bookId": "bulwark_chant"
+    },
+    "BATTLE_TEMPO": {
+      "title": "Battle Tempo",
+      "kind": "MARTIAL_BUFF",
+      "theme": "THUNDER",
+      "damage": 0,
+      "radius": 8,
+      "range": 8,
+      "cooldown": 400,
+      "castTicks": 8,
+      "mana": 35,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 160,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Party haste",
+      "description": "A rallying rhythm grants visible nearby allies faster attacks and movement for 8\u201316 seconds.",
+      "bookId": "battle_tempo"
+    },
+    "CINDER_CLEAVE": {
+      "title": "Cinder Cleave",
+      "kind": "BLADE_ARC",
+      "theme": "FIRE",
+      "damage": 6,
+      "radius": 3,
+      "range": 5,
+      "cooldown": 100,
+      "castTicks": 8,
+      "mana": 25,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Spellsword cleave",
+      "description": "Sweep a burning crescent through a 120-degree cone. Damage includes half your melee attack attribute at release; ignites enemies.",
+      "bookId": "cinder_cleave"
+    },
+    "RIME_THRUST": {
+      "title": "Rime Thrust",
+      "kind": "BLADE_THRUST",
+      "theme": "ICE",
+      "damage": 6,
+      "radius": 1,
+      "range": 7,
+      "cooldown": 120,
+      "castTicks": 8,
+      "mana": 25,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Spellsword thrust",
+      "description": "Drive a piercing frost thrust through enemies in a narrow line, stopping at walls. Damage includes half your melee attack attribute; heavily slows for 2 seconds.",
+      "bookId": "rime_thrust"
+    },
+    "BLOOD_REND": {
+      "title": "Blood Rend",
+      "kind": "BLADE_ARC",
+      "theme": "BLOOD",
+      "damage": 6,
+      "radius": 3,
+      "range": 5,
+      "cooldown": 140,
+      "castTicks": 10,
+      "mana": 30,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Spellsword sustain",
+      "description": "Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3\u20136 health for the entire cast.",
+      "bookId": "blood_rend"
     }
   }
 }

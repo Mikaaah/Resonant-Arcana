@@ -43,11 +43,11 @@ public final class WandNetwork {
         }
     }
     static void select(ServerPlayer player,Select message){
-        if(message.slot>=0&&message.slot<12&&player.getMainHandItem().getItem() instanceof WandItem
+        if(message.slot>=0&&player.getMainHandItem().getItem() instanceof WandItem wand&&message.slot<wand.spells.size()
             &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("9");
+        var r=e.registrar("10");
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer player)SpellEngine.action(player,msg.action);
         }));

@@ -72,7 +72,7 @@ public final class IntegrationChecks {
             var catalog=EnumSet.noneOf(Spell.class);
             for(var item:ResonantArcana.ITEMS.getEntries()){
                 check(item.getId().getNamespace().equals("resonant_arcana"),item.getId()+" uses the new namespace");
-                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();check(w.spells.size()==12,item.getId()+" has twelve spells");
+                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();check(w.spells.size()>=12&&w.spells.size()<=14,item.getId()+" has a bounded expanded kit");
                 check(server.getRecipeManager().byKey(item.getId()).isPresent(),item.getId()+" has a loaded survival recipe");
                 for(int i=0;i<w.spells.size();i++){
                     w.select(ws,i);check(w.selected(ws)==w.spells.get(i),item.getId()+" selection "+i);
@@ -112,7 +112,7 @@ public final class IntegrationChecks {
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.ARCANE.toStack());
                 if(spell.healing()>0)player.setHealth(5);
-                Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.ORBIT?3:spell.kind==Spell.Kind.SWEEP||spell.kind==Spell.Kind.GAZE?5:spell.kind==Spell.Kind.PULSE?Math.min(5,spell.radius-1):spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
+                Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.ORBIT?3:spell.kind==Spell.Kind.BLADE_ARC?4:spell.kind==Spell.Kind.SWEEP||spell.kind==Spell.Kind.GAZE?5:spell.kind==Spell.Kind.PULSE?Math.min(5,spell.radius-1):spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
                 if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
                 check(SpellEngine.cast(player,spell),spell.name()+" starts");
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
@@ -120,6 +120,8 @@ public final class IntegrationChecks {
                 boolean observed=switch(spell.kind){
                     case HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
                     case CLEANSE->spell==Spell.TOXIC_MOLT?player.getHealth()>5:player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
+                    case WARCRY->player.hasEffect(ArcanaEffects.WARCRY)&&zombie.getDeltaMovement().lengthSqr()>.1;
+                    case MARTIAL_BUFF->player.hasEffect(ArcanaEffects.ARCANE_EDGE)||player.hasEffect(ArcanaEffects.TEMPO)||player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
                     case BUFF->player.getAbsorptionAmount()>0||player.hasEffect(MobEffects.INVISIBILITY);
                     case BLINK->player.hasEffect(MobEffects.SLOW_FALLING)&&visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.LINK.ordinal()&&v.endZ()>1);
                     case DASH->player.getDeltaMovement().lengthSqr()>.1;
@@ -134,8 +136,8 @@ public final class IntegrationChecks {
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
-                    case PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
+                    case SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
+                    case WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
                     case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -248,7 +250,7 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("resonantarcana status",server.createCommandSourceStack())==1,"status command executes");
-            expansionChecks(level,player);
+            expansionChecks(level,player);martialChecks(level,player);
             schoolChecks(level,player);
             heavyChecks(level,player);
             cannonChecks(level);
@@ -261,6 +263,69 @@ public final class IntegrationChecks {
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){ResonantArcana.LOG.error("Could not write report",e);}
             ResonantArcana.LOG.info("RESONANT_ARCANA_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
         }
+    }
+    private static void martialChecks(ServerLevel level,FakePlayer player){
+        var attack=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE;
+        var speed=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED;
+        SpellEngine.clear();resetPlayer(player);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.HOLY.toStack());
+        WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.HOLY.getId(),13));
+        check(ResonantArcana.HOLY.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"second-page selection accepted");
+        SpellEngine.tick();WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.HOLY.getId(),999));
+        check(ResonantArcana.HOLY.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"invalid page selection rejected");
+        SpellEngine.clear();resetPlayer(player);
+        double baseAttack=player.getAttributeValue(attack),baseSpeed=player.getAttributeValue(speed);
+        check(SpellEngine.cast(player,Spell.ARCANE_EDGE),"arcane edge starts");
+        check(Math.abs(player.getAttributeValue(attack)-baseAttack-2)<.001,"edge grants two flat attack at I");
+        check(Math.abs(player.getAttributeValue(speed)-baseSpeed*1.1)<.001,"edge grants ten percent attack speed at I");
+        SpellEngine.clear();SpellEngine.cast(player,Spell.ARCANE_EDGE);
+        check(Math.abs(player.getAttributeValue(attack)-baseAttack-2)<.001,"edge refresh does not stack");
+        player.removeAllEffects();check(Math.abs(player.getAttributeValue(attack)-baseAttack)<.001,"edge expiry removes attributes");
+        for(int rank=1;rank<=5;rank++){
+            SpellEngine.clear();resetPlayer(player);Zombie enemy=spawn(level,0,81,4),behind=spawn(level,0,81,-4);
+            double spellPower=player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER);
+            check(SpellEngine.castFromSpellbook(player,Spell.WARSCREAM,Spell.WARSCREAM.power(rank),level.damageSources().indirectMagic(player,player),400,false),"warscream rank casts "+rank);
+            check(Math.abs(player.getAttributeValue(attack)-baseAttack*(1.1+.05*(rank-1)))<.001,"warcry melee scaling "+rank);
+            check(Math.abs(player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER)-spellPower*(1.1+.05*(rank-1)))<.001,"warcry native spell scaling "+rank);
+            check(Math.abs(player.getAbsorptionAmount()-(4+rank-1))<.01,"warcry shield scaling "+rank);
+            check(enemy.getTarget()==player&&behind.getTarget()==player,"warcry radial hostile taunt "+rank);
+            enemy.setTarget(null);for(int i=0;i<10;i++)SpellEngine.tick();check(enemy.getTarget()==player,"taunt reasserts target");
+            for(int i=0;i<60;i++)SpellEngine.tick();enemy.setTarget(null);SpellEngine.tick();check(enemy.getTarget()==null&&SpellEngine.activeCount()==0,"taunt expires");
+            enemy.discard();behind.discard();
+        }
+        SpellEngine.clear();resetPlayer(player);
+        var party=level.getScoreboard().addPlayerTeam("martial_party");party.setAllowFriendlyFire(false);
+        level.getScoreboard().addPlayerToTeam(player.getScoreboardName(),party);
+        Zombie ally=spawn(level,1,81,3),outsider=spawn(level,-1,81,3);
+        level.getScoreboard().addPlayerToTeam(ally.getScoreboardName(),party);
+        try{
+            SpellEngine.cast(player,Spell.WARSCREAM);
+            check(ally.hasEffect(ArcanaEffects.WARCRY)&&ally.getAbsorptionAmount()==4,"warscream buffs visible teammates (effect="+ally.hasEffect(ArcanaEffects.WARCRY)+", absorption="+ally.getAbsorptionAmount()+")");
+            check(!outsider.hasEffect(ArcanaEffects.WARCRY)&&outsider.getAbsorptionAmount()==0,"warscream does not buff enemies");
+            check(ally.getTarget()==null&&ally.getDeltaMovement().lengthSqr()==0,"warscream protects friendly teammates from push and taunt");
+            SpellEngine.clear();SpellEngine.cast(player,Spell.WARSCREAM);check(ally.getAbsorptionAmount()==4,"party shields refresh without stacking");
+            SpellEngine.clear();SpellEngine.cast(player,Spell.BULWARK_CHANT);check(ally.hasEffect(MobEffects.DAMAGE_RESISTANCE),"bulwark protects nearby allies");
+            SpellEngine.clear();SpellEngine.cast(player,Spell.BATTLE_TEMPO);check(ally.hasEffect(ArcanaEffects.TEMPO)&&!outsider.hasEffect(ArcanaEffects.TEMPO),"tempo respects party allegiance");
+        }finally{level.getScoreboard().removePlayerTeam(party);ally.discard();outsider.discard();}
+        SpellEngine.clear();resetPlayer(player);Zombie front=spawn(level,0,81,4),rear=spawn(level,0,81,-4);
+        SpellEngine.cast(player,Spell.SOULBLAST);check(front.getHealth()<20&&front.getDeltaMovement().z>1&&rear.getHealth()==20,"soulblast forward cone repels only in front");front.discard();rear.discard();
+        SpellEngine.clear();resetPlayer(player);player.setXRot(90);SpellEngine.cast(player,Spell.SOULBLAST);
+        check(player.getDeltaMovement().y>1&&player.hasEffect(MobEffects.SLOW_FALLING),"downward soulblast launches with brief slow falling");
+        SpellEngine.clear();resetPlayer(player);player.startFallFlying();player.setDeltaMovement(0,0,1);SpellEngine.cast(player,Spell.SOULBLAST);
+        check(player.isFallFlying()&&player.getDeltaMovement().z>1.7&&player.getDeltaMovement().length()<=3,"soulblast boosts gliding without ending flight");player.stopFallFlying();
+        SpellEngine.clear();resetPlayer(player);player.setHealth(5);
+        Zombie a=spawn(level,0,81,3),b=spawn(level,1,81,3);a.setInvulnerable(true);b.setInvulnerable(true);
+        SpellEngine.cast(player,Spell.BLOOD_REND);check(player.getHealth()==5,"blood rend cannot heal from blocked damage");a.discard();b.discard();
+        SpellEngine.clear();resetPlayer(player);player.setHealth(5);a=spawn(level,0,81,3);b=spawn(level,1,81,3);
+        SpellEngine.cast(player,Spell.BLOOD_REND);check(player.getHealth()>5&&player.getHealth()<=8.001,"blood rend healing budget is shared by the entire cast");a.discard();b.discard();
+        SpellEngine.clear();resetPlayer(player);player.getAttribute(attack).setBaseValue(10);a=spawn(level,0,81,4);
+        SpellEngine.cast(player,Spell.CINDER_CLEAVE);check(Math.abs(a.getHealth()-9)<.01,"cleave includes half of melee attack damage");a.discard();player.getAttribute(attack).setBaseValue(baseAttack);
+        SpellEngine.clear();resetPlayer(player);Zombie blocked=spawn(level,0,81,4);
+        for(int x=-1;x<=1;x++)for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(x,y,2),Blocks.STONE.defaultBlockState());
+        SpellEngine.cast(player,Spell.RIME_THRUST);check(blocked.getHealth()==20,"rime thrust stops at a wall");
+        SpellEngine.clear();SpellEngine.cast(player,Spell.WARSCREAM);check(blocked.getTarget()==null&&blocked.getDeltaMovement().lengthSqr()==0,"warcry cannot taunt or push through walls");blocked.discard();
+        for(int x=-1;x<=1;x++)for(int y=81;y<=84;y++)level.setBlockAndUpdate(new BlockPos(x,y,2),Blocks.AIR.defaultBlockState());
+        SpellEngine.clear();resetPlayer(player);
     }
     private static void expansionChecks(ServerLevel level,FakePlayer player){
         var wand=ResonantArcana.FROST.get();var stack=wand.getDefaultInstance();

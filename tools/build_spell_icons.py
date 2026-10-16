@@ -14,10 +14,21 @@ def main():
         ident=catalogue['spells'][name]['bookId']
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind in ('BLINK','DASH'):
+        if kind=='WARCRY':
+            d.arc((14,18,114,114),190,350,fill=c,width=9)
+            for a in range(7):
+                angle=a*math.pi/3.5;line([(64+math.cos(angle)*27,64+math.sin(angle)*27),(64+math.cos(angle)*49,64+math.sin(angle)*49)],6)
+            d.polygon([(39,70),(57,37),(84,30),(77,63),(98,78),(65,85)],fill=white)
+        elif kind=='SOULBLAST':
+            d.ellipse((13,48,36,77),fill=white)
+            for i in range(3):d.arc((24+i*19,19-i*3,63+i*19,109+i*3),285,75,fill=c,width=7)
+        elif kind=='BLADE_THRUST':
+            d.polygon([(21,107),(53,61),(96,17),(111,14),(109,30),(66,74)],fill=c)
+            line([(31,98),(104,22)],5,white);line([(34,64),(64,93)],7)
+        elif kind in ('BLINK','DASH'):
             for i in range(3):line([(18+i*23,94-i*14),(45+i*23,64-i*14),(31+i*23,43-i*14)],8)
             line([(72,99),(108,63),(83,49)],5,white)
-        elif kind in ('SWEEP','EXECUTE'):
+        elif kind in ('SWEEP','EXECUTE','BLADE_ARC'):
             for i in range(3):d.arc((10+i*8,15+i*6,116-i*4,112-i*8),205,345,fill=white if i==0 else c,width=8-i)
             line([(36,91),(89,28)],6)
         elif kind=='SERPENT':
@@ -28,7 +39,7 @@ def main():
         elif kind=='RAIN':
             for x,y in ((25,45),(55,24),(89,43),(46,86),(91,92)):line([(x+8,y-18),(x-5,y+16)],7)
             d.arc((16,82,114,120),180,355,fill=white,width=5)
-        elif kind in ('BUFF','CLEANSE','REMEDY','HYMN'):
+        elif kind in ('BUFF','CLEANSE','REMEDY','HYMN','MARTIAL_BUFF'):
             d.polygon([(64,15),(105,35),(98,82),(64,114),(30,82),(23,35)],outline=c,width=7)
             line([(64,40),(64,85)],9,white);line([(43,62),(85,62)],9,white)
         elif kind=='TOTEM':

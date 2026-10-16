@@ -25,7 +25,7 @@ final class SpellCatalogue {
             var wands=new LinkedHashMap<String,WandDefinition>();
             for(var entry:root.getAsJsonArray("wands")){
                 WandDefinition d=gson.fromJson(entry,WandDefinition.class);
-                if(d.id()==null||d.title()==null||d.spells()==null||d.spells().size()!=12||wands.put(d.id(),d)!=null)
+                if(d.id()==null||d.title()==null||d.spells()==null||(d.spells().isEmpty()||d.spells().size()>36)||wands.put(d.id(),d)!=null)
                     throw new IllegalStateException("Invalid wand definition");
             }
             SPELLS=Collections.unmodifiableMap(spells);WANDS=Collections.unmodifiableMap(wands);

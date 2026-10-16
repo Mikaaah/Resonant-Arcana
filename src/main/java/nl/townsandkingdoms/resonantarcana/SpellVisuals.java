@@ -13,6 +13,10 @@ final class SpellVisuals {
     static void tick() { details=0; accents=0; SpellParticles.tick(); }
 
     static Shape shape(Spell spell, Stage stage) {
+        if(spell.kind==Spell.Kind.WARCRY&&stage==Stage.AREA)return Shape.PULSE;
+        if(spell.kind==Spell.Kind.MARTIAL_BUFF&&stage==Stage.AREA)return Shape.WARD;
+        if(spell.kind==Spell.Kind.BLADE_ARC&&stage==Stage.AREA)return Shape.SLASH;
+        if(spell==Spell.SOULBLAST&&stage==Stage.FLIGHT)return Shape.SCREAM_FRONT;
         if(spell==Spell.SOUL_CANNON)return switch(stage){
             case CAST,CHARGE -> Shape.CANNON_CHARGE;
             case FLIGHT,LINK -> Shape.CANNON_HEAD;

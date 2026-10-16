@@ -20,6 +20,17 @@ final class SpellInfo {
         if(s.range>0)out.add(Component.literal("Range: "+format(s.range)+" blocks"));
         if(s.radius>0)out.add(Component.literal("Radius / half-width: "+format(s.radius)+" blocks"));
         if(s.duration()>0)out.add(Component.literal(String.format(Locale.ROOT,"Base duration: %.1fs",s.duration()/20.0)));
+        out.addAll(martial(s,s.power(level)));return out;
+    }
+    static List<MutableComponent> martial(Spell s,float power){
+        var out=new ArrayList<MutableComponent>();int rank=Math.clamp(Math.round((power-1)*4),0,4);
+        if(s.kind==Spell.Kind.BLADE_ARC||s.kind==Spell.Kind.BLADE_THRUST)out.add(Component.literal(String.format(Locale.ROOT,"Plus %.0f%% of melee attack damage at release",50*power)));
+        if(s==Spell.WARSCREAM)out.add(Component.literal("Melee damage and spell power: +"+(10+rank*5)+"% • Taunt: 3s"));
+        if(s==Spell.WARSCREAM||s==Spell.BULWARK_CHANT)out.add(Component.literal(String.format(Locale.ROOT,"Temporary health: %.1f",4*Math.clamp(power,1,2))));
+        if(s==Spell.ARCANE_EDGE)out.add(Component.literal(String.format(Locale.ROOT,"Melee damage: +%.1f • Attack speed: +%.1f%%",2+rank*.5,10+rank*2.5)));
+        if(s==Spell.BATTLE_TEMPO)out.add(Component.literal(String.format(Locale.ROOT,"Attack and movement speed: +%.1f%%",10+rank*2.5)));
+        if(s==Spell.BLOOD_REND)out.add(Component.literal(String.format(Locale.ROOT,"Healing cap per cast: %.1f health",3*power)));
+        if(s.kind==Spell.Kind.MARTIAL_BUFF||s.kind==Spell.Kind.WARCRY)out.add(Component.literal(String.format(Locale.ROOT,"Buff duration: %.1fs",s.duration()/20f*Math.clamp(power,1,2))));
         return out;
     }
     private static String format(double n){return n==(int)n?Integer.toString((int)n):Double.toString(n);}
