@@ -19,6 +19,6 @@ Please remove private credentials, tokens and addresses from logs.
 - Update [SPELLS.md](SPELLS.md), [CONFIGURATION.md](CONFIGURATION.md) and [CHANGELOG.md](CHANGELOG.md) when relevant.
 - Test on the supported NeoForge/Java 21 environment when possible and list anything untested.
 - Do not bundle Iron's Spells or other mods' source, textures or audio.
-- **Do not rename the existing `kingdomwands` registry namespace casually.** Current saves depend on those identifiers. A rename requires an explicit migration and compatibility plan.
+- **Preserve the current `resonant_arcana` registry namespace and existing IDs.** Version 0.13 introduced a clean namespace break from the previous addon, without legacy aliases or automatic migration. See the [installation notes](README.md#installation); any future identifier change needs an explicit compatibility plan.
 
 To build, use Java 21 and follow the [README build instructions](README.md#building). 
