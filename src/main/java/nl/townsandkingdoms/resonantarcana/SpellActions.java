@@ -16,7 +16,7 @@ final class SpellActions {
         Spell.Kind.PIERCING_ORB,Spell.Kind.ORBIT,Spell.Kind.TOTEM,Spell.Kind.RAIN,Spell.Kind.GAZE,
         Spell.Kind.REMEDY,Spell.Kind.CLEANSE,Spell.Kind.PILLAR,Spell.Kind.HYMN,Spell.Kind.SERPENT,Spell.Kind.DOMAIN,Spell.Kind.CONE_CHANNEL);
     private SpellActions(){}
-    static boolean handles(Spell.Kind kind){return KINDS.contains(kind)||MartialSpells.handles(kind);}
+    static boolean handles(Spell.Kind kind){return BossesRiseCompat.handles(kind)||KINDS.contains(kind)||MartialSpells.handles(kind);}
     static float power(Cast c){return c.book==null?1:c.book.power();}
     static int supportDuration(Cast c,int base){return Math.max(1,(int)(base*Math.clamp(power(c),1,2)));}
     static Vec3 blinkDestination(ServerPlayer player,Spell spell,double range){
@@ -30,10 +30,12 @@ final class SpellActions {
         return null;
     }
     static boolean canStart(ServerPlayer p,Spell s){
+        if(BossesRiseCompat.optional(s)&&!BossesRiseCompat.canStart(p,s))return false;
         if(s==Spell.SANGUINE_PACT&&p.getHealth()<=2)return false;
         return s.kind!=Spell.Kind.BLINK||blinkDestination(p,s,s.range)!=null;
     }
     static boolean begin(Cast c){
+        if(BossesRiseCompat.handles(c.spell.kind))return BossesRiseCompat.begin(c);
         if(MartialSpells.handles(c.spell.kind))return MartialSpells.begin(c);
         switch(c.spell.kind){
             case BLINK -> {
@@ -73,6 +75,7 @@ final class SpellActions {
         return true;
     }
     static boolean tick(Cast c){
+        if(BossesRiseCompat.handles(c.spell.kind))return BossesRiseCompat.tick(c);
         if(MartialSpells.handles(c.spell.kind))return MartialSpells.tick(c);
         switch(c.spell.kind){
             case FAN -> {return fan(c);}

@@ -78,7 +78,8 @@
         "DUSK_CLEAVE",
         "DREAD_EFFIGY",
         "VEIL_OF_NIGHT",
-        "NIGHT_BLOOM"
+        "NIGHT_BLOOM",
+        "HELVARS_RIFT"
       ]
     },
     {
@@ -156,7 +157,8 @@
         "TOXIC_MOLT",
         "SPORE_TOTEM",
         "CORROSIVE_RAIN",
-        "GORGON_GAZE"
+        "GORGON_GAZE",
+        "KRAKENS_GRASP"
       ]
     },
     {
@@ -197,7 +199,8 @@
         "GLACIAL_PRISON",
         "CRYSTAL_BARRAGE",
         "ABSOLUTE_ZERO",
-        "RIME_THRUST"
+        "RIME_THRUST",
+        "ICE_SPIKE_ERUPTION"
       ]
     }
   ],
@@ -2761,6 +2764,66 @@
       "role": "Spellsword sustain",
       "description": "Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3\u20136 health for the entire cast.",
       "bookId": "blood_rend"
+    },
+    "KRAKENS_GRASP": {
+      "title": "Kraken\u2019s Grasp",
+      "kind": "BOSS_TENTACLE",
+      "theme": "POISON",
+      "damage": 18,
+      "radius": 4,
+      "range": 18,
+      "cooldown": 280,
+      "castTicks": 24,
+      "mana": 60,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Boss magic / control",
+      "description": "Requires Bosses\u2019Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.",
+      "bookId": "krakens_grasp"
+    },
+    "ICE_SPIKE_ERUPTION": {
+      "title": "Ice Spike Eruption",
+      "kind": "BOSS_ICE",
+      "theme": "ICE",
+      "damage": 10,
+      "radius": 1.8,
+      "range": 16,
+      "cooldown": 180,
+      "castTicks": 16,
+      "mana": 40,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Boss magic / eruption",
+      "description": "Requires Bosses\u2019Rise 2.1.2. Five ice spikes erupt in a line across a visible ground location. Each enemy can take one hit per cast. Slows and chills enemies without freezing allies.",
+      "bookId": "ice_spike_eruption"
+    },
+    "HELVARS_RIFT": {
+      "title": "Helvar\u2019s Rift",
+      "kind": "BOSS_RIFT",
+      "theme": "DARK",
+      "damage": 14,
+      "radius": 1,
+      "range": 28,
+      "cooldown": 160,
+      "castTicks": 18,
+      "mana": 40,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Boss magic / projectile",
+      "description": "Requires Bosses\u2019Rise 2.1.2. Launch a rift projectile with Helvar\u2019s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.",
+      "bookId": "helvars_rift"
     }
   }
 }

@@ -47,7 +47,7 @@ final class SpellCatalogue {
         if(ids.size()!=Spell.values().length||SPELLS.size()!=ids.size())throw new IllegalStateException("Catalogue and spell registry differ");
     }
     record WandDefinition(String id,String title,String theme,List<String> spells){
-        Spell[] catalogue(){return spells.stream().map(Spell::valueOf).toArray(Spell[]::new);}
+        Spell[] catalogue(){return spells.stream().map(Spell::valueOf).filter(Spell::available).toArray(Spell[]::new);}
     }
     record Definition(String title,String kind,String theme,float damage,double radius,double range,int cooldown,
                       int castTicks,int mana,int manaStep,int maxLevel,float healing,int duration,int interval,

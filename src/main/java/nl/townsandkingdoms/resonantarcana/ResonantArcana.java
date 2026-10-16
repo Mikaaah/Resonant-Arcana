@@ -35,10 +35,10 @@ public final class ResonantArcana {
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
         TABS.register("wands",()->CreativeModeTab.builder().title(Component.literal("Resonant Arcana"))
-            .icon(()->ARCANE.toStack()).displayItems((params,out)->{ITEMS.getEntries().forEach(entry->out.accept(entry.get()));for(var spell:Spell.values())out.accept(IronsCompat.scroll(spell));}).build());
+            .icon(()->ARCANE.toStack()).displayItems((params,out)->{ITEMS.getEntries().forEach(entry->out.accept(entry.get()));for(var spell:Spell.enabledValues())out.accept(IronsCompat.scroll(spell));}).build());
     }
     public ResonantArcana(IEventBus bus,ModContainer container) {
-        IronsCompat.register(bus);
+        BossesRiseCompat.register(bus);IronsCompat.register(bus);
         ArcanaEffects.REGISTER.register(bus);ITEMS.register(bus);TABS.register(bus);container.registerConfig(ModConfig.Type.SERVER,ArcanaConfig.SERVER,"resonantarcana-server.toml");
         container.registerConfig(ModConfig.Type.CLIENT,ArcanaConfig.CLIENT,"resonantarcana-client.toml");
         SpellCatalogue.validateRegistry();
@@ -50,7 +50,7 @@ public final class ResonantArcana {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("resonantarcana");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.14.0-alpha: 10 wands, "+Spell.values().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.15.0-alpha: 10 wands, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);
@@ -60,7 +60,7 @@ public final class ResonantArcana {
             for(var line:SpellInfo.details(wand.selected(stack),wand.level(stack)))c.getSource().sendSuccess(()->line,false);return 1;
         }));
         var spells=Commands.literal("spell");var scrolls=Commands.literal("scroll").requires(c->c.hasPermission(2));
-        for(Spell spell:Spell.values()){
+        for(Spell spell:Spell.enabledValues()){
             spells.then(Commands.literal(spell.bookId()).executes(c->{for(var line:SpellInfo.details(spell,1))c.getSource().sendSuccess(()->line,false);return 1;})
                 .then(Commands.argument("level",com.mojang.brigadier.arguments.IntegerArgumentType.integer(1,spell.levelCap())).executes(c->{int level=com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c,"level");for(var line:SpellInfo.details(spell,level))c.getSource().sendSuccess(()->line,false);return 1;})));
             scrolls.then(Commands.literal(spell.bookId()).then(Commands.argument("level",com.mojang.brigadier.arguments.IntegerArgumentType.integer(1,spell.levelCap())).executes(c->{

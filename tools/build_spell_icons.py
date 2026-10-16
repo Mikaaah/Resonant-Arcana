@@ -14,7 +14,19 @@ def main():
         ident=catalogue['spells'][name]['bookId']
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind=='WARCRY':
+        if kind=='BOSS_TENTACLE':
+            points=[(19,107),(25,82),(42,75),(70,75),(88,60),(90,40),(76,26),(57,30),(52,44),(62,50)]
+            line(points,19);line(points,6,white)
+            for x,y in [(32,86),(53,85),(78,77),(98,55),(91,30)]:d.ellipse((x-4,y-4,x+4,y+4),fill=white)
+            d.arc((12,93,117,121),180,355,fill='#4ee9ef',width=6)
+        elif kind=='BOSS_ICE':
+            for x,y in [(25,45),(51,17),(79,31),(104,55)]:
+                d.polygon([(x-12,108),(x,y),(x+11,108)],fill=c)
+                line([(x,y+11),(x-4,99)],4,white)
+        elif kind=='BOSS_RIFT':
+            d.ellipse((25,13,99,114),outline=c,width=10);d.ellipse((38,26,86,103),outline=white,width=4)
+            line([(10,100),(42,77),(75,55),(116,25)],10);line([(50,71),(109,31)],4,white)
+        elif kind=='WARCRY':
             d.arc((14,18,114,114),190,350,fill=c,width=9)
             for a in range(7):
                 angle=a*math.pi/3.5;line([(64+math.cos(angle)*27,64+math.sin(angle)*27),(64+math.cos(angle)*49,64+math.sin(angle)*49)],6)

@@ -1,6 +1,6 @@
 # Spell reference
 
-**128 spells · 10 wands · 12–14 spells per wand.**
+**128 core spells + 3 optional Bosses’Rise spells · 10 wands · 12–14 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
@@ -10,6 +10,14 @@ Craft a wand to access its level-I kit. To upgrade an individual spell, hold a m
 
 Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. No spell edits terrain or intentionally loads new chunks.
 
+## Optional Bosses’Rise spells
+
+Bosses’Rise **2.1.2** adds Kraken’s Grasp (Venom / Nature), Ice Spike Eruption (Frost / Ice), and Helvar’s Rift (Dark / Ender). Without that mod, the three spells are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
+
+Visual-only entities reference the installed mod’s models, animations and textures. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
+
+Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
+
 ## Wand index
 
 | Wand | School | Spell kit |
@@ -17,13 +25,13 @@ Healing affects the caster, owned pets and scoreboard teammates. By default it a
 | [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge |
 | [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend |
 | [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave |
-| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom |
+| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift |
 | [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo |
 | [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear |
 | [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast |
-| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze |
+| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp |
 | [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant |
-| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust |
+| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption |
 
 ## Shared recovery
 
@@ -935,6 +943,22 @@ Place a shadow trap. After a half-second arming period, an enemy within two bloc
 
 Spell ID: `resonant_arcana:night_bloom`. Inspect any rank in game with `/resonantarcana spell night_bloom <level>`.
 
+### Helvar’s Rift
+
+Requires Bosses’Rise 2.1.2. Launch a rift projectile with Helvar’s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.
+
+**Role:** Boss magic / projectile · **Cast:** 0.9s · **Cooldown:** 8s · **Range:** 28 blocks · **Radius / width:** 1 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 14 | — | 40 |
+| II | 17.5 | — | 45 |
+| III | 21 | — | 50 |
+| IV | 24.5 | — | 55 |
+| V | 28 | — | 60 |
+
+Spell ID: `resonant_arcana:helvars_rift`. Inspect any rank in game with `/resonantarcana spell helvars_rift <level>`.
+
 <a id="thunder-wand"></a>
 ## Thunder Wand
 
@@ -1813,6 +1837,22 @@ Fix visible enemies in a wide forward cone with a petrifying gaze, applying heav
 
 Spell ID: `resonant_arcana:gorgon_gaze`. Inspect any rank in game with `/resonantarcana spell gorgon_gaze <level>`.
 
+### Kraken’s Grasp
+
+Requires Bosses’Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.
+
+**Role:** Boss magic / control · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 18 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 18 | — | 60 |
+| II | 22.5 | — | 65 |
+| III | 27 | — | 70 |
+| IV | 31.5 | — | 75 |
+| V | 36 | — | 80 |
+
+Spell ID: `resonant_arcana:krakens_grasp`. Inspect any rank in game with `/resonantarcana spell krakens_grasp <level>`.
+
 <a id="holy-wand"></a>
 ## Holy Wand
 
@@ -2300,3 +2340,19 @@ Drive a piercing frost thrust through enemies in a narrow line, stopping at wall
 **Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.
 
 Spell ID: `resonant_arcana:rime_thrust`. Inspect any rank in game with `/resonantarcana spell rime_thrust <level>`.
+
+### Ice Spike Eruption
+
+Requires Bosses’Rise 2.1.2. Five ice spikes erupt in a line across a visible ground location. Each enemy can take one hit per cast. Slows and chills enemies without freezing allies.
+
+**Role:** Boss magic / eruption · **Cast:** 0.8s · **Cooldown:** 9s · **Range:** 16 blocks · **Radius / width:** 1.8 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 40 |
+| II | 12.5 | — | 45 |
+| III | 15 | — | 50 |
+| IV | 17.5 | — | 55 |
+| V | 20 | — | 60 |
+
+Spell ID: `resonant_arcana:ice_spike_eruption`. Inspect any rank in game with `/resonantarcana spell ice_spike_eruption <level>`.

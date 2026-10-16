@@ -7,12 +7,16 @@ SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER','MARTIAL_BUFF
 def number(n):return f'{n:g}'
 def main():
     data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells']
-    lines=['# Spell reference','',f"**{len(spells)} spells · 10 wands · 12–14 spells per wand.**",'',
+    lines=['# Spell reference','',f"**128 core spells + 3 optional Bosses’Rise spells · 10 wands · 12–14 spells per wand.**",'',
     'Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.', '',
     'All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.', '',
     'Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.', '',
     'Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. No spell edits terrain or intentionally loads new chunks.', '',
-    '## Wand index','', '| Wand | School | Spell kit |','| --- | --- | --- |']
+    "## Optional Bosses’Rise spells",'',
+    "Bosses’Rise **2.1.2** adds Kraken’s Grasp (Venom / Nature), Ice Spike Eruption (Frost / Ice), and Helvar’s Rift (Dark / Ender). Without that mod, the three spells are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.", '',
+    "Visual-only entities reference the installed mod’s models, animations and textures. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.", '',
+    "Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.", '',
+    '## Wand index' ,'', '| Wand | School | Spell kit |','| --- | --- | --- |']
     for w in data['wands']:
         lines.append(f"| [{w['title']}](#{w['id'].replace('_','-')}) | {SCHOOL[w['theme']]} | "+', '.join(spells[n]['title'] for n in w['spells'])+' |')
     lines+=['','## Shared recovery','',

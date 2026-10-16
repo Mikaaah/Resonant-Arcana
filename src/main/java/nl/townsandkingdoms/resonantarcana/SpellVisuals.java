@@ -13,6 +13,8 @@ final class SpellVisuals {
     static void tick() { details=0; accents=0; SpellParticles.tick(); }
 
     static Shape shape(Spell spell, Stage stage) {
+        if(spell.kind==Spell.Kind.BOSS_TENTACLE&&stage==Stage.AREA)return Shape.FIELD;
+        if(spell.kind==Spell.Kind.BOSS_ICE&&stage==Stage.AREA)return Shape.NOVA;
         if(spell.kind==Spell.Kind.WARCRY&&stage==Stage.AREA)return Shape.PULSE;
         if(spell.kind==Spell.Kind.MARTIAL_BUFF&&stage==Stage.AREA)return Shape.WARD;
         if(spell.kind==Spell.Kind.BLADE_ARC&&stage==Stage.AREA)return Shape.SLASH;

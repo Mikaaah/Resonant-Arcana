@@ -143,5 +143,8 @@
   "spell.resonant_arcana.blood_rend": "Blood Rend",
   "effect.resonant_arcana.warcry": "Warcry",
   "effect.resonant_arcana.arcane_edge": "Arcane Edge",
-  "effect.resonant_arcana.battle_tempo": "Battle Tempo"
+  "effect.resonant_arcana.battle_tempo": "Battle Tempo",
+  "spell.resonant_arcana.krakens_grasp": "Kraken\u2019s Grasp",
+  "spell.resonant_arcana.ice_spike_eruption": "Ice Spike Eruption",
+  "spell.resonant_arcana.helvars_rift": "Helvar\u2019s Rift"
 }

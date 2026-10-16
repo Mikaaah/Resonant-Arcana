@@ -19,6 +19,9 @@ final class SpellAudio {
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
+        case KRAKENS_GRASP->"block_factorys_bosses:item.undying_tentacle.spawn_tentacles";
+        case ICE_SPIKE_ERUPTION->"block_factorys_bosses:item.ice_gauntlet.blast_1";
+        case HELVARS_RIFT->"block_factorys_bosses:entity.barrage_rift.rift_fireball";
         case WARSCREAM->"entity.ender_dragon.growl";case SOULBLAST->"entity.warden.sonic_boom";
         case CINDER_CLEAVE,BLOOD_REND,RIME_THRUST->irons("entity.generic.swing_blade");
         case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_SCREAM->"entity.enderman.stare";
@@ -72,6 +75,9 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
+        case KRAKENS_GRASP->"block_factorys_bosses:item.undying_tentacle.spawn_tentacles";
+        case ICE_SPIKE_ERUPTION->"block_factorys_bosses:item.ice_gauntlet.blast_1";
+        case HELVARS_RIFT->"block_factorys_bosses:entity.barrage_rift.rift_fireball";
         case WARSCREAM->"entity.ender_dragon.growl";case SOULBLAST->"entity.warden.sonic_boom";
         case CINDER_CLEAVE,BLOOD_REND,RIME_THRUST->irons("entity.generic.swing_blade");
         case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_SCREAM->"entity.enderman.scream";

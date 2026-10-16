@@ -53,3 +53,9 @@ The packaged `assets/resonant_arcana/catalogue.json` defines the addon’s basel
 All registered addon IDs now use `resonant_arcana`. Arcane, Cinder and Rift wands use `arcane_wand`, `cinder_wand` and `rift_wand`. Old registries, item selections and learned spell ranks are not migrated; obtain new wands and scrolls and reinscribe spellbooks. Key bindings also use the new namespace and may need rebinding. If you customized individual spells through Iron’s configuration, apply those overrides to their new `resonant_arcana` IDs.
 
 The server/client configuration filenames introduced in 0.12 stay `resonantarcana-server.toml` and `resonantarcana-client.toml`.
+
+## Optional Bosses’Rise spells
+
+The adapter activates only for Bosses’Rise **2.1.2**. Both sides must have matching mod installations. Other versions leave the adapter disabled. Without Bosses’Rise, its three spells and visual entity types are not registered; core spells retain their IDs and behavior. Manage the three spells’ normal level, enablement and balance settings through Iron’s native spell configuration. Existing Resonant Arcana damage, cooldown, healing, PvP and active-cast limits still apply.
+
+Ground spells require a loaded, visible solid surface within the bounded ground search. Temporary visual entities never save into chunks and are removed when their cast ends or the caster leaves. The addon does not copy, modify or redistribute Bosses’Rise assets.

@@ -23,7 +23,7 @@ final class IronsIntegrationChecks {
         player.setGameMode(GameType.SURVIVAL);player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);
         MagicData data=MagicData.getPlayerMagicData(player);
         if(data.getSyncedData()==null)data.setSyncedData(new io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData(player));
-        for(Spell spell:Spell.values()){
+        for(Spell spell:Spell.enabledValues()){
             var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(spell));
             check.accept(registered.getSpellResource().getNamespace().equals("resonant_arcana"),"spell uses the new namespace: "+spell);
             check.accept(registered instanceof IronsCompat.ArcanaSpell,"Iron spell registered: "+spell);
@@ -86,7 +86,8 @@ final class IronsIntegrationChecks {
         level.addNewPlayer(player);
         try{
             upgradeChecks(level,check,player,data,manager);
-            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_SCREAM,Spell.PRISMATIC_RUIN,Spell.SERAPHIC_DESCENT,Spell.GRAVITY_STAMP,Spell.JUDGEMENT_RAY,Spell.ICE_SERPENT,Spell.HAILSTORM,Spell.CONSECRATION,Spell.CRIMSON_TETHER,Spell.DRAGON_BREATH,Spell.NIGHT_BLOOM)){
+            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_SCREAM,Spell.PRISMATIC_RUIN,Spell.SERAPHIC_DESCENT,Spell.GRAVITY_STAMP,Spell.JUDGEMENT_RAY,Spell.ICE_SERPENT,Spell.HAILSTORM,Spell.CONSECRATION,Spell.CRIMSON_TETHER,Spell.DRAGON_BREATH,Spell.NIGHT_BLOOM,Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT)){
+                if(!selected.available())continue;
                 SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
                 player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);player.setHealth(selected==Spell.SANCTUARY?5:20);
                 var wand=ResonantArcana.ITEMS.getEntries().stream().map(e->(WandItem)e.get()).filter(w->w.spells.contains(selected)).findFirst().orElseThrow();
@@ -117,6 +118,16 @@ final class IronsIntegrationChecks {
                 for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
                 check.accept(untouched.getHealth()==20&&data.getMana()==100&&SpellEngine.activeCount()==0,"cancelled heavy spell has no residual damage or mana cost: "+selected);untouched.discard();
             }
+            for(Spell selected:List.of(Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT)){
+                if(!selected.available())continue;
+                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+                player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);Zombie untouched=target(level,6);
+                var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
+                check.accept(registered.attemptInitiateCast(ItemStack.EMPTY,1,level,player,CastSource.SPELLBOOK,false,"test"),"boss spellbook cast begins: "+selected);
+                manager.tick(level);SpellEngine.tick();IronsCompat.cancel(player);
+                for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
+                check.accept(untouched.getHealth()==20&&data.getMana()==100&&SpellEngine.activeCount()==0,"interrupted boss spell spends no mana and leaves no attacks: "+selected);untouched.discard();
+            }
             SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
             ItemStack stack=ResonantArcana.CINDER.toStack();ResonantArcana.CINDER.get().select(stack,0);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
             Zombie victim=target(level,6);SpellEngine.action(player,0);manager.tick(level);SpellEngine.tick();
@@ -128,7 +139,7 @@ final class IronsIntegrationChecks {
             SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(0);
             ResonantArcana.CINDER.get().select(stack,0);SpellEngine.action(player,0);
             check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"wand cannot bypass Iron mana gate");
-            for(Spell selected:Spell.values()){
+            for(Spell selected:Spell.enabledValues()){
                 var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
                 check.accept(registered.getCastTime(1)==selected.castTicks(),"spell cast tier is applied: "+selected);
                 check.accept(registered.getMaxLevel()==1||registered.getSpellPower(registered.getMaxLevel(),player)>registered.getSpellPower(1,player),"spell tiers increase power: "+selected);

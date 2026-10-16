@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.14.0-alpha'
+version = '0.15.0-alpha'
 group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -80,4 +80,10 @@ dependencies {
     } else {
         compileOnly('io.redspace:irons_spellbooks:1.21.1-3.16.3') { transitive = false }
     }
+}
+
+// Optional at runtime; supplied API JARs are needed only to compile the isolated adapter.
+dependencies {
+    compileOnly files(providers.gradleProperty('bossesRiseJar').orElse('libs/bossesrise-2.1.2.jar').get())
+    compileOnly files(providers.gradleProperty('geckolibJar').orElse('libs/geckolib-4.8.2.jar').get())
 }

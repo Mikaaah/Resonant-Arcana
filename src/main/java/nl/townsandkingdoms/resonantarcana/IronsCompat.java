@@ -22,9 +22,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 final class IronsCompat {
     private static final DeferredRegister<AbstractSpell> SPELLS=DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY,ResonantArcana.ID);
     static void register(IEventBus bus){
-        for(Spell spell:Spell.values())SPELLS.register(spell.bookId(),()->new ArcanaSpell(spell));
+        for(Spell spell:Spell.enabledValues())SPELLS.register(spell.bookId(),()->new ArcanaSpell(spell));
         SPELLS.register(bus);
-        ResonantArcana.LOG.info("Registering {} Resonant Arcana spells with Iron's Spellbooks",Spell.values().length);
+        ResonantArcana.LOG.info("Registering {} Resonant Arcana spells with Iron's Spellbooks",Spell.enabledValues().length);
     }
     static net.minecraft.world.item.ItemStack scroll(Spell spell){return scroll(spell,1);}
     static net.minecraft.world.item.ItemStack scroll(Spell spell,int level){

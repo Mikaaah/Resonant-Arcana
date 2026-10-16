@@ -5,12 +5,18 @@
 [![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-5B8731?style=flat-square)](https://github.com/Mikaaah/Resonant-Arcana)
 [![NeoForge](https://img.shields.io/badge/Loader-NeoForge-D97724?style=flat-square)](https://neoforged.net/)
 [![Alpha](https://img.shields.io/badge/Release-Alpha-F59E0B?style=flat-square)](CHANGELOG.md)
-[![10 Wands · 128 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20128%20Spells-7756B4?style=flat-square)](SPELLS.md)
+[![10 Wands · 128 + 3 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20128%20%2B%203%20Spells-7756B4?style=flat-square)](SPELLS.md)
 [![MIT License](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
 
-An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **128 spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
+An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **128 core spells**, plus **three optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.14.0-alpha](downloads/resonant-arcana-0.14.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.15.0-alpha](downloads/resonant-arcana-0.15.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
+## Optional Bosses’Rise integration
+
+Install **Bosses’Rise 2.1.2** on both client and server to add **Kraken’s Grasp**, **Ice Spike Eruption**, and **Helvar’s Rift**. These are native Iron’s spells with levels I–V. Their models, animations and sounds come from the installed Bosses’Rise mod; no third-party assets are included in this addon. Without it, the original 128-spell kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
+
+Boss attacks are adapted for player use: visual entities cannot run native boss attacks, and our shared engine handles damage, ally protection, PvP and walls. Kraken’s Grasp is a delayed tentacle slam with slowing, rather than an enemy-grabbing mechanic. See [spell details and timing](SPELLS.md#optional-bossesrise-spells).
 
 ## Ten complete spell kits
 
@@ -101,7 +107,13 @@ The kits draw on RPG movement, control and support roles, including [Wynncraft�
 
 ## Building
 
-Use Java 21 and run `./gradlew build` or `gradlew.bat build`. Output is written to `build/libs/`. For an offline build, supply `-PironsSpellbooksJar=/path/to/irons_spellbooks-1.21.1-3.16.3.jar`; the dependency is compile-only and is never bundled.
+Use Java 21. Supply local compile-only copies of Bosses’Rise 2.1.2 and GeckoLib 4.8.2, then run:
+
+```sh
+./gradlew build -PbossesRiseJar=/path/to/bossesrise.jar -PgeckolibJar=/path/to/geckolib.jar
+```
+
+On Windows use `gradlew.bat` with the same properties. Optionally supply `-PironsSpellbooksJar=/path/to/irons_spellbooks.jar` for a local Iron’s API copy. Dependency JARs are used only to compile and are never included in the addon. Output is written to `build/libs/`. For an offline build, supply `-PironsSpellbooksJar=/path/to/irons_spellbooks-1.21.1-3.16.3.jar`; the dependency is compile-only and is never bundled.
 
 The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.json` supplies runtime defaults. `tools/build_docs.py`, `tools/build_spell_icons.py` and `tools/build_wands.py` regenerate the public spell guide, icons, wand sprites and recipes. Original Effekseer assets can be rebuilt with `tools/build_effects.py`; Pillow and Effekseer 1.80.7 are required for artwork and particle exports. `verifyEffects` checks the effect manifest and packaged texture paths during the build.
 

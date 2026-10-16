@@ -35,7 +35,7 @@ public final class SpellEngine {
     private static int visualPoints;
     private SpellEngine() {}
     public static int activeCount(){return ACTIVE.size();}
-    public static void clear(){ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
+    public static void clear(){ACTIVE.forEach(BossesRiseCompat::cleanup);ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
         if(action<0||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
@@ -56,7 +56,7 @@ public final class SpellEngine {
         return cast(player,spell,new BookCast(Math.clamp(power,0,10),source,Math.max(1,cooldown),prepared));
     }
     static boolean canStart(ServerPlayer player,Spell spell){
-        if(!player.isAlive()||player.isSpectator()||ACTIVE.size()>=ArcanaConfig.MAX_ACTIVE.get()||ACTIVE.stream().filter(c->c.owner.equals(player.getUUID())).count()>=ArcanaConfig.PER_PLAYER_LIMIT.get())return false;
+        if(!spell.available()||!player.isAlive()||player.isSpectator()||ACTIVE.size()>=ArcanaConfig.MAX_ACTIVE.get()||ACTIVE.stream().filter(c->c.owner.equals(player.getUUID())).count()>=ArcanaConfig.PER_PLAYER_LIMIT.get())return false;
         if(COOLDOWNS.getOrDefault(player.getUUID(),Map.of()).getOrDefault(spell.cooldownKey(),0L)>ticks)return false;
         Vec3 start=player.getEyePosition();
         if(!SpellActions.canStart(player,spell))return false;
@@ -76,7 +76,8 @@ public final class SpellEngine {
         if(spell==Spell.SOUL_CANNON&&elapsed%8==0)SpellAudio.cannonCharge(player,center,(float)progress);
     }
     private static boolean cast(ServerPlayer player,Spell spell,BookCast book) {
-        if(!player.isAlive()||player.isSpectator())return false;
+        if(BossesRiseCompat.optional(spell)&&!BossesRiseCompat.canStart(player,spell))return false;
+        if(!spell.available()||!player.isAlive()||player.isSpectator())return false;
         var cooldowns=COOLDOWNS.computeIfAbsent(player.getUUID(),id->new HashMap<>());
         long left=cooldowns.getOrDefault(spell.cooldownKey(),0L)-ticks;
         if(left>0){message(player,spell.title+": "+String.format(Locale.ROOT,"%.1f",left/20.0)+"s");return false;}
@@ -159,9 +160,9 @@ public final class SpellEngine {
             ServerPlayer owner=c.level.getServer().getPlayerList().getPlayer(c.owner);
             // Fake players are only allowed through the explicitly gated integration fixture.
             if(owner==null&&IntegrationChecks.enabled())owner=c.testOwner;
-            if(owner==null||!owner.isAlive()||owner.isSpectator()||owner.serverLevel()!=c.level||c.age++>=c.duration||!c.level.hasChunkAt(BlockPos.containing(c.pos))){it.remove();continue;}
+            if(owner==null||!owner.isAlive()||owner.isSpectator()||owner.serverLevel()!=c.level||c.age++>=c.duration||!c.level.hasChunkAt(BlockPos.containing(c.pos))){BossesRiseCompat.cleanup(c);it.remove();continue;}
             c.caster=owner;
-            if(!advance(c))it.remove();
+            if(!advance(c)){BossesRiseCompat.cleanup(c);it.remove();}
         }
         if(ticks%200==0){
             COOLDOWNS.values().forEach(map->map.entrySet().removeIf(e->e.getValue()<=ticks));
@@ -171,7 +172,7 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
+        if(!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
         if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
@@ -481,7 +482,7 @@ public final class SpellEngine {
         burst(c,end);
     }
     static boolean healingAlly(ServerPlayer caster,LivingEntity entity){
-        if(!entity.isAlive()||entity.isSpectator())return false;
+        if(entity instanceof BossSpellVisual||!entity.isAlive()||entity.isSpectator())return false;
         if(entity==caster)return true;
         if(entity instanceof TamableAnimal pet)return caster.getUUID().equals(pet.getOwnerUUID());
         return caster.getTeam()!=null&&caster.getTeam()==entity.getTeam()
@@ -502,6 +503,7 @@ public final class SpellEngine {
         for(LivingEntity entity:near(c.caster,pos,radius))if(visible(c,pos,entity.getBoundingBox().getCenter()))hit(c,entity,pos,once);
     }
     public static boolean allowed(ServerPlayer caster,Entity entity){
+        if(entity instanceof BossSpellVisual)return false;
         if(entity==caster||!entity.isAlive()||entity.isSpectator()||entity instanceof ArmorStand)return false;
         if(entity instanceof net.minecraft.world.entity.player.Player other&&(!ArcanaConfig.PVP.get()||!caster.server.isPvpAllowed()||!caster.canHarmPlayer(other)))return false;
         if(entity instanceof TamableAnimal tame&&caster.getUUID().equals(tame.getOwnerUUID()))return false;
@@ -553,7 +555,7 @@ public final class SpellEngine {
         if(c.spell.kind==Spell.Kind.DOMAIN){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,50,3);victim.setTicksFrozen(Math.max(160,victim.getTicksFrozen()));}
         if(c.spell.theme==Spell.Theme.FIRE)victim.igniteForSeconds(3);
         if(c.spell.theme==Spell.Theme.DARK){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
-        if(c.spell.theme==Spell.Theme.POISON)effect(victim,MobEffects.POISON,80,0);
+        if(c.spell.theme==Spell.Theme.POISON&&c.spell!=Spell.KRAKENS_GRASP)effect(victim,MobEffects.POISON,80,0);
         switch(c.spell.kind){
             case CONFUSE->{effect(victim,MobEffects.CONFUSION,100,0);effect(victim,MobEffects.BLINDNESS,40,0);}
             case STUN->{effect(victim,MobEffects.MOVEMENT_SLOWDOWN,60,5);effect(victim,MobEffects.WEAKNESS,60,1);}
@@ -646,6 +648,7 @@ public final class SpellEngine {
     static final class Cast {
         final UUID owner;final ServerLevel level;final Spell spell;final Vec3 dir;final LivingEntity target;final Set<UUID> hit=new HashSet<>();final List<VolleyBolt> bolts=new ArrayList<>();
         final List<SpellActions.Shot> shots=new ArrayList<>();
+        final List<Entity> bossVisuals=new ArrayList<>();final List<Vec3> eruptionPoints=new ArrayList<>();
         final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){

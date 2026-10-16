@@ -80,13 +80,13 @@ public final class IntegrationChecks {
                 }
 
             }
-            check(catalog.size()==Spell.values().length,"all catalog spells are obtainable");
+            check(catalog.size()==Spell.enabledValues().length,"all catalog spells are obtainable");
             var identityTag=new CompoundTag();identityTag.putInt("resonant_arcana_spell",999);identityTag.putString("resonant_arcana_spell_id","ARCANE_REPULSE");
             var identityStack=wand.getDefaultInstance();identityStack.set(DataComponents.CUSTOM_DATA,CustomData.of(identityTag));
             check(wand.selected(identityStack)==Spell.ARCANE_REPULSE,"stable spell ID takes priority over stale numeric slot");
             for(Spell.Theme theme:Spell.Theme.values())for(String id:List.of(SpellAudio.castId(theme),SpellAudio.castAccentId(theme),SpellAudio.impactId(theme),SpellAudio.impactAccentId(theme),SpellAudio.sustainId(theme)))
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"sound exists: "+id);
-            for(Spell spell:Spell.values()){
+            for(Spell spell:Spell.enabledValues()){
                 String id=SpellAudio.chargeId(spell);
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"charge sound exists: "+spell);
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(SpellAudio.spellCastId(spell))),"release sound exists: "+spell);
@@ -108,7 +108,7 @@ public final class IntegrationChecks {
                     check(input!=null&&new String(input.readNBytes(4),java.nio.charset.StandardCharsets.US_ASCII).equals("EFKE"),"native effect packaged: "+shape+"/"+theme);
                 }
             }
-            for(Spell spell:Spell.values()){
+            for(Spell spell:Spell.enabledValues()){
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.ARCANE.toStack());
                 if(spell.healing()>0)player.setHealth(5);
@@ -136,8 +136,8 @@ public final class IntegrationChecks {
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
-                    case SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
-                    case WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
+                    case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
+                    case BOSS_ICE,BOSS_TENTACLE,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
                     case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -250,7 +250,7 @@ public final class IntegrationChecks {
             check(!SpellEngine.cast(player,Spell.FLAME_SHOCK_WAVE),"per-player active spell limit is enforced");
             for(int t=0;t<100;t++)SpellEngine.tick();check(SpellEngine.activeCount()==0,"concurrent tasks clean up");
             check(server.getCommands().getDispatcher().execute("resonantarcana status",server.createCommandSourceStack())==1,"status command executes");
-            expansionChecks(level,player);martialChecks(level,player);
+            expansionChecks(level,player);martialChecks(level,player);bossChecks(level,player);
             schoolChecks(level,player);
             heavyChecks(level,player);
             cannonChecks(level);
@@ -263,6 +263,59 @@ public final class IntegrationChecks {
             try{Path path=Path.of("../validation/server-integration.json");Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(report));}catch(Exception e){ResonantArcana.LOG.error("Could not write report",e);}
             ResonantArcana.LOG.info("RESONANT_ARCANA_INTEGRATION {}",report.get("success"));SpellEngine.clear();server.halt(false);
         }
+    }
+    private static void bossChecks(ServerLevel level,FakePlayer player){
+        var optional=List.of(Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT);
+        for(var spell:optional){
+            check(spell.available()==BossesRiseCompat.available(),spell+" follows optional dependency availability");
+            check(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.containsKey(IronsCompat.id(spell))==BossesRiseCompat.available(),spell+" native registry follows optional dependency");
+        }
+        if(!BossesRiseCompat.available()){
+            for(var spell:optional){SpellEngine.clear();resetPlayer(player);check(!SpellEngine.cast(player,spell),spell+" safely rejects casting without dependency");}
+            return;
+        }
+        for(var spell:optional)for(int rank=1;rank<=5;rank++){
+            SpellEngine.clear();resetPlayer(player);Zombie victim=spawn(level,0,81,6);
+            victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(200);victim.setHealth(200);
+            victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
+            check(SpellEngine.castFromSpellbook(player,spell,spell.power(rank),level.damageSources().indirectMagic(player,player),spell.cooldown,false),spell+" rank "+rank+" begins");
+            if(spell==Spell.KRAKENS_GRASP){for(int t=0;t<45;t++)SpellEngine.tick();check(victim.getHealth()==200,"tentacle has a real rise and attack windup");}
+            for(int t=0;t<100;t++)SpellEngine.tick();
+            check(Math.abs(victim.getHealth()-(200-spell.damageAtLevel(rank)))<.01,spell+" uses native level damage exactly once at rank "+rank);
+            check(SpellEngine.activeCount()==0,spell+" releases expire");victim.discard();
+        }
+        SpellEngine.clear();resetPlayer(player);
+        var party=level.getScoreboard().addPlayerTeam("boss_spell_party");party.setAllowFriendlyFire(false);level.getScoreboard().addPlayerToTeam(player.getScoreboardName(),party);
+        Zombie friend=spawn(level,1,81,6),enemy=spawn(level,0,81,6);level.getScoreboard().addPlayerToTeam(friend.getScoreboardName(),party);
+        try{
+            for(var spell:optional){
+                SpellEngine.clear();friend.removeAllEffects();friend.setTicksFrozen(0);enemy.setHealth(20);enemy.invulnerableTime=0;
+                check(SpellEngine.cast(player,spell),spell+" party fixture begins");
+                // Exercise visual ticks directly: they must not call original boss damage/status routines.
+                var visualEntities=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,80,-8,12,90,24),e->e instanceof BossSpellVisual);
+                check(!visualEntities.isEmpty(),spell+" spawns installed-mod visual adapters");
+                for(var v:visualEntities){
+                    check(!v.save(new CompoundTag()),"optional visuals do not persist in world saves");
+                    check(!SpellEngine.allowed(player,v),"visual creatures cannot be targeted as enemies");
+                    for(int t=0;t<90;t++)v.tick();
+                }
+                check(friend.getHealth()==20&&friend.getActiveEffects().isEmpty()&&friend.getTicksFrozen()==0,"native visual ticks cannot hurt, slow or freeze allies");
+                for(int t=0;t<100;t++)SpellEngine.tick();
+                check(friend.getHealth()==20&&friend.getActiveEffects().isEmpty()&&friend.getTicksFrozen()==0,spell+" protects friendly targets from damage and status");
+                check(enemy.getHealth()<20,spell+" still affects enemies");
+                check(visualEntities.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),spell+" cleans up visuals");
+            }
+        }finally{level.getScoreboard().removePlayerTeam(party);friend.discard();enemy.discard();}
+        for(var spell:optional){
+            SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);
+            for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.STONE.defaultBlockState());
+            SpellEngine.cast(player,spell);for(int t=0;t<100;t++)SpellEngine.tick();
+            check(hidden.getHealth()==20,spell+" respects blocking walls");hidden.discard();
+            for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
+        }
+        SpellEngine.clear();resetPlayer(player);SpellEngine.cast(player,Spell.KRAKENS_GRASP);
+        var visuals=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,80,-8,12,90,24),e->e instanceof BossSpellVisual&&!e.isRemoved());
+        SpellEngine.clear();check(visuals.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),"reset removes optional visuals immediately");
     }
     private static void martialChecks(ServerLevel level,FakePlayer player){
         var attack=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE;

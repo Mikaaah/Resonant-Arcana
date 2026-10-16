@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.15.0-alpha
+
+- Add optional Bosses’Rise 2.1.2 integration with Kraken’s Grasp, Ice Spike Eruption and Helvar’s Rift, each at levels I–V.
+- Reuse installed boss models, animations and sounds through non-damaging visual adapters; native boss combat routines never execute.
+- Keep damage, statuses, PvP, friendly-fire and line-of-sight checks in the shared spell engine.
+- Hide optional spells, scrolls, commands and visual entity types when the supported dependency is absent.
+- Add original icons, timing documentation and explicit compile-only dependency instructions.
+
+
 ## 0.14.0-alpha
 
 - Add Warscream: dragon roar, explosion ring, radial knockback, short hostile-mob taunt, party damage and temporary health.
