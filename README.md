@@ -1,5 +1,11 @@
 # Resonant Arcana
 
+[![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-5B8731?style=flat-square)](https://github.com/Mikaaah/Resonant-Arcana)
+[![NeoForge](https://img.shields.io/badge/Loader-NeoForge-D97724?style=flat-square)](https://neoforged.net/)
+[![Alpha](https://img.shields.io/badge/Release-Alpha-F59E0B?style=flat-square)](CHANGELOG.md)
+[![10 Wands · 120 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20120%20Spells-7756B4?style=flat-square)](SPELLS.md)
+[![MIT License](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
+
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **120 spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
 [Download 0.13.0-alpha](downloads/resonant-arcana-0.13.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
