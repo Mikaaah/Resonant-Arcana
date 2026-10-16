@@ -12,7 +12,7 @@ Healing affects the caster, owned pets and scoreboard teammates. By default it a
 
 ## Optional Bosses’Rise spells
 
-Bosses’Rise **2.1.2** adds Kraken’s Grasp (Venom / Nature), Ice Spike Eruption (Frost / Ice), and Helvar’s Rift (Dark / Ender). Without that mod, the three spells are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
+Bosses’Rise **2.1.2** adds Kraken’s Grasp and Kraken’s Wrath (Venom / Nature), Ice Spike Eruption (Frost / Ice), and Helvar’s Rift (Dark / Ender). Without that mod, the four spells are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
 
 Visual-only entities reference the installed mod’s models, animations and textures. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
 

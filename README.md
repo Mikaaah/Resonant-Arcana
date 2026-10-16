@@ -8,6 +8,8 @@
 [![10 Wands · 137 + 4 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20137%20%2B%204%20Spells-7756B4?style=flat-square)](SPELLS.md)
 [![MIT License](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
 
+📚 **[Browse the documentation wiki](wiki/Home.md)** · [Wand & spell index](wiki/Wand-Index.md) · [Installation](wiki/Getting-Started.md)
+
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **four optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
 [Download 0.16.0-alpha](downloads/resonant-arcana-0.16.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
@@ -55,7 +57,7 @@ Layered **Iron’s and vanilla sound events** provide preparation, release and i
 
 ## Progression
 
-**127 spells have levels I–V.** DOOM remains a single-level Legendary spell. Without equipment, direct damage and healing scale to 100%, 125%, 150%, 175%, and 200% of their level-I values. Mana costs increase with rank; high ranks can require more than the default mana pool, so mana-capacity equipment matters. Some utility spells improve duration, absorption or blink range; their effect amplifiers and other limits are documented in the [spell reference](SPELLS.md).
+**Core spells have levels I–V except DOOM.** DOOM remains a single-level Legendary spell. Without equipment, direct damage and healing scale to 100%, 125%, 150%, 175%, and 200% of their level-I values. Mana costs increase with rank; high ranks can require more than the default mana pool, so mana-capacity equipment matters. Some utility spells improve duration, absorption or blink range; their effect amplifiers and other limits are documented in the [spell reference](SPELLS.md).
 
 Craft a wand with **two sticks, two Arcane Essence and its school ingredient**. Recipes unlock when you acquire Arcane Essence; recipe viewers show the exact pattern. Ingredients range from amethyst and blaze powder to echo shards and blue ice.
 

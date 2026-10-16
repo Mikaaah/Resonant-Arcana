@@ -44,7 +44,7 @@ Keys are rebound under **Controls → Resonant Arcana**. `/arcana_visuals` repor
 
 ## Individual spells
 
-All 120 spells register through Iron’s native spell API. Use Iron’s spell configuration for individual enablement, maximum level, cooldown, school and crafting rules. Resonant Arcana’s server multipliers apply in addition to those rules. Scroll upgrades cannot exceed either the catalogue’s level cap or the server’s configured maximum.
+All core spells register through Iron’s native spell API. Use Iron’s spell configuration for individual enablement, maximum level, cooldown, school and crafting rules. Resonant Arcana’s server multipliers apply in addition to those rules. Scroll upgrades cannot exceed either the catalogue’s level cap or the server’s configured maximum.
 
 The packaged `assets/resonant_arcana/catalogue.json` defines the addon’s baseline spell damage, mana, timing and descriptions. It is a validated build resource, **not a hot-reloaded datapack or a per-world configuration file**. Maintain a source fork and rebuild if you want to change these defaults. The spell guide is generated from the same resource.
 
@@ -56,7 +56,7 @@ The server/client configuration filenames introduced in 0.12 stay `resonantarcan
 
 ## Optional Bosses’Rise spells
 
-The adapter activates only for Bosses’Rise **2.1.2**. Both sides must have matching mod installations. Other versions leave the adapter disabled. Without Bosses’Rise, its three spells and visual entity types are not registered; core spells retain their IDs and behavior. Manage the three spells’ normal level, enablement and balance settings through Iron’s native spell configuration. Existing Resonant Arcana damage, cooldown, healing, PvP and active-cast limits still apply.
+The adapter activates only for Bosses’Rise **2.1.2**. Both sides must have matching mod installations. Other versions leave the adapter disabled. Without Bosses’Rise, its four spells and visual entity types are not registered; core spells retain their IDs and behavior. Manage these optional spells’ normal level, enablement and balance settings through Iron’s native spell configuration. Existing Resonant Arcana damage, cooldown, healing, PvP and active-cast limits still apply.
 
 Ground spells require a loaded, visible solid surface within the bounded ground search. Temporary visual entities never save into chunks and are removed when their cast ends or the caster leaves. The addon does not copy, modify or redistribute Bosses’Rise assets.
 
