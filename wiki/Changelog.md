@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.17.0-alpha
+
+- Expand Bosses’Rise support to twelve spells across all five bosses, including Helvar’s Swordfall using the original Knight Sword item.
+- Add Kraken’s Undertow, Yeti’s Glacial Wall, Helvar’s Fracture, Sandworm’s Eruption and Quicksand, and Dragon’s Guard and Pyre.
+- Use original installed boss entities, textures, sounds and particles, including the red Kraken tentacle; keep damage and ally protection in the shared spell engine.
+- Limit AAAParticles to 24 spell-circle effects; use vanilla, Iron’s or Bosses’Rise visuals for other effects.
+- Show a real banner for Last Stand and split the creative inventory into Wands and Scrolls tabs.
+- Refresh the spell catalogue, icons, documentation and wiki for 149 spells, preserving existing spell identifiers.
+- Clear stale resource output during packaging and verify that the JAR contains exactly the current effect manifest.
+- Pass Java 21 compilation and Gradle build checks; in-game visual testing and fresh dedicated-server checks remain pending.
+
 ## 0.16.0-alpha
 
 - Add Glacial Counter, Rift Draw, Crimson Reversal, Thunderbrand, Last Stand, Ashen Rebirth, Phantom Formation, Funeral Bell and Spellbreaker.
@@ -164,6 +175,4 @@
 
 - Initial release with Empire, Blood and Celcrius wands and 26 spells.
 
----
-
-[← Wiki Home](Home.md) · [Canonical changelog](https://github.com/Mikaaah/Resonant-Arcana/blob/main/CHANGELOG.md)
+[← Wiki Home](Home.md)

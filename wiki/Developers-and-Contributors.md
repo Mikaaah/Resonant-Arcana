@@ -14,15 +14,15 @@ The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.
 
 ## Validation
 
-0.16.0-alpha passed **6,270 dedicated-server checks without Bosses’Rise** and **6,547 with Bosses’Rise 2.1.2**. The build also validates the texture paths of all 222 packaged effects. In-game visuals, sound balance, controls and custom combat-mod interactions still need modpack playtesting.
+0.16.0-alpha passed **6,270 dedicated-server checks without Bosses’Rise** and **6,547 with Bosses’Rise 2.1.2**. Those check counts belong to the previously published build. 0.17.0-alpha passes Java 21 compilation and Gradle validation of 24 packaged effects; fresh dedicated-server checks remain pending. In-game visuals, sound balance, controls and custom combat-mod interactions still need modpack playtesting.
 
 ## Contributing
 
-Found a bug or want to improve the project? Read the [contribution guide](CONTRIBUTING.md) for reporting details, testing expectations and pull requests.
+Found a bug or want to improve the project? Read the [contribution guide](../CONTRIBUTING.md) for reporting details, testing expectations and pull requests.
 
 ## Credits and license
 
-By Towns & Kingdoms. [MIT license](LICENSE).
+By Towns & Kingdoms. [MIT license](../LICENSE).
 
 See the [full contribution guidelines](https://github.com/Mikaaah/Resonant-Arcana/blob/main/CONTRIBUTING.md), [source code](https://github.com/Mikaaah/Resonant-Arcana) and [issue tracker](https://github.com/Mikaaah/Resonant-Arcana/issues).
 

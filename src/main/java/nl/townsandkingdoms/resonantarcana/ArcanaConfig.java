@@ -36,8 +36,8 @@ final class ArcanaConfig {
         MOUSE_CONTROLS=c.comment("Enable classic left-click casting. Disable if a combat mod owns attack inputs; the cast key still works.").define("leftClickCasting",true);c.pop();
         c.push("display");WAND_HUD=c.comment("Show the selected wand spell above the hotbar.").define("showWandHud",true);c.pop();
         c.push("particles");
-        AAA_PARTICLES=c.comment("Use AAAParticles when installed. Native Iron's and vanilla effects remain available.").define("enableAaaParticles",true);
-        AAA_BUDGET=c.comment("Maximum new native particle emitters per client tick.").defineInRange("maxAaaEffectsPerTick",32,8,96);c.pop();CLIENT=c.build();
+        AAA_PARTICLES=c.comment("Use AAAParticles for selected spell circles only. Other visuals use vanilla and Iron's particles.").define("enableAaaParticles",true);
+        AAA_BUDGET=c.comment("Maximum circle emitters per client tick. Other spell visuals use vanilla and Iron's particles.").defineInRange("maxAaaEffectsPerTick",8,1,32);c.pop();CLIENT=c.build();
     }
     private ArcanaConfig(){}
 }

@@ -1,4 +1,4 @@
-## Frost Wand
+# Frost Wand
 
 **Ice school.** Saved item ID: `resonant_arcana:frost_wand`.
 
@@ -266,6 +266,20 @@ Guard for 0.9 seconds against one frontal, blockable hostile hit. The first 0.3 
 
 Spell ID: `resonant_arcana:glacial_counter`. Inspect any rank in game with `/resonantarcana spell glacial_counter <level>`.
 
----
+### Yeti’s Glacial Wall
 
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the aimed ground to form a temporary wall of ice. Each enemy takes at most one hit and is slowed and chilled; no blocks are changed.
+
+**Role:** Yeti / ice barrier · **Cast:** 1s · **Cooldown:** 11s · **Range:** 16 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 50 |
+| II | 11.25 | — | 55 |
+| III | 13.5 | — | 60 |
+| IV | 15.75 | — | 65 |
+| V | 18 | — | 70 |
+
+Spell ID: `resonant_arcana:yetis_glacial_wall`. Inspect any rank in game with `/resonantarcana spell yetis_glacial_wall <level>`.
+
+[← Wiki Home](Home.md)

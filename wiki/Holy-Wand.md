@@ -1,4 +1,4 @@
-## Holy Wand
+# Holy Wand
 
 **Holy school.** Saved item ID: `resonant_arcana:holy_wand`.
 
@@ -254,7 +254,7 @@ Spell ID: `resonant_arcana:bulwark_chant`. Inspect any rank in game with `/reson
 
 ### Last Stand
 
-Plant a radiant banner for six seconds. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.
+Plant a temporary golden banner for six seconds, surrounded by a radiant ward circle. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.
 
 **Role:** Defensive rally · **Cast:** 1.3s · **Cooldown:** 20s · **Range:** 10 blocks · **Radius / width:** 6 blocks.
 
@@ -272,8 +272,4 @@ Plant a radiant banner for six seconds. Nearby allies gain Resistance I and one 
 
 Spell ID: `resonant_arcana:last_stand`. Inspect any rank in game with `/resonantarcana spell last_stand <level>`.
 
-<a id="frost-wand"></a>
-
----
-
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+[← Wiki Home](Home.md)

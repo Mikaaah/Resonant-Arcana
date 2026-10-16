@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.16.0-alpha'
+version = '0.17.0-alpha'
 group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -23,6 +23,8 @@ neoForge {
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 21 }
 tasks.named('jar') { from('LICENSE') }
+// Copy tasks retain removed files; clear resource output before a changed resource set is copied.
+tasks.named('processResources') { doFirst { delete destinationDir } }
 
 // Validate the paths consumed by Minecraft, rather than resolving them on the build machine.
 tasks.register('verifyEffects') {
@@ -71,6 +73,21 @@ tasks.register('verifyEffects') {
     }
 }
 tasks.named('check') { dependsOn 'verifyEffects' }
+
+tasks.register('verifyPackagedEffects') {
+    dependsOn tasks.named('jar')
+    inputs.file(tasks.named('jar').flatMap { it.archiveFile })
+    inputs.file('src/main/resources/assets/resonant_arcana/effeks/manifest.json')
+    doLast {
+        def expected = new groovy.json.JsonSlurper().parse(file('src/main/resources/assets/resonant_arcana/effeks/manifest.json')).effects as Set
+        def packaged = zipTree(tasks.named('jar').get().archiveFile.get().asFile).matching {
+            include 'assets/resonant_arcana/effeks/*.efkefc'
+        }.files.collect { it.name } as Set
+        if (packaged != expected) throw new GradleException('JAR contains missing or stale particle effects')
+        logger.lifecycle("Verified packaged JAR contains exactly ${packaged.size()} particle effects.")
+    }
+}
+tasks.named('check') { dependsOn 'verifyPackagedEffects' }
 
 repositories { maven { url = 'https://code.redspace.io/releases' } }
 dependencies {

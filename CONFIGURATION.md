@@ -37,8 +37,8 @@ Visual budgets affect presentation; they never select targets or change damage. 
 | --- | ---: | --- | --- |
 | `controls.leftClickCasting` | `true` | boolean | Enable left-click wand casting. Disable for combat-mod input conflicts; the cast key remains available. |
 | `display.showWandHud` | `true` | boolean | Show the selected spell and rank above the hotbar. |
-| `particles.enableAaaParticles` | `true` | boolean | Use the extra AAAParticles effects when the optional mod is installed. |
-| `particles.maxAaaEffectsPerTick` | `32` | 8–96 | Maximum new AAAParticles emitters on this client per tick. |
+| `particles.enableAaaParticles` | `true` | boolean | Use AAAParticles for selected spell circles only. Other spell visuals remain vanilla and Iron’s particles. |
+| `particles.maxAaaEffectsPerTick` | `8` | 1–32 | Maximum new circle emitters per client tick. |
 
 Keys are rebound under **Controls → Resonant Arcana**. `/arcana_visuals` reports optional renderer status and loaded effect counts; `/arcana_visuals test` plays a short local test.
 
@@ -56,7 +56,7 @@ The server/client configuration filenames introduced in 0.12 stay `resonantarcan
 
 ## Optional Bosses’Rise spells
 
-The adapter activates only for Bosses’Rise **2.1.2**. Both sides must have matching mod installations. Other versions leave the adapter disabled. Without Bosses’Rise, its four spells and visual entity types are not registered; core spells retain their IDs and behavior. Manage these optional spells’ normal level, enablement and balance settings through Iron’s native spell configuration. Existing Resonant Arcana damage, cooldown, healing, PvP and active-cast limits still apply.
+The adapter activates only for Bosses’Rise **2.1.2**. Both sides must have matching mod installations. Other versions leave the adapter disabled. Without Bosses’Rise, its twelve spells and visual entity types are not registered; core spells retain their IDs and behavior. Manage the twelve spells’ normal level, enablement and balance settings through Iron’s native spell configuration. Existing Resonant Arcana damage, cooldown, healing, PvP and active-cast limits still apply.
 
 Ground spells require a loaded, visible solid surface within the bounded ground search. Temporary visual entities never save into chunks and are removed when their cast ends or the caster leaves. The addon does not copy, modify or redistribute Bosses’Rise assets.
 

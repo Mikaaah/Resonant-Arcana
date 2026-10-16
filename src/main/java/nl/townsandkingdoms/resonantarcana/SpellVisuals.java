@@ -117,11 +117,18 @@ final class SpellVisuals {
     static boolean packaged(Shape shape,Spell.Theme theme){
         return ASSETS.contains(shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc");
     }
+    static boolean usesAaa(Spell spell,Stage stage){
+        if(stage!=Stage.AREA||BossesRiseCompat.optional(spell))return false;
+        return switch(shape(spell,stage)){
+            case FIELD,WARD,DOMAIN,TRAP,DOOM_WELL,HORIZON_WELL->true;
+            default->false;
+        };
+    }
     static int assetCount(){return ASSETS.size();}
     static void send(ServerLevel level, Spell spell, Stage stage, Vec3 pos, Vec3 end, double size) {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
         if(detail ? details++>=ArcanaConfig.DETAIL_BUDGET.get() : accents++>=ArcanaConfig.ACCENT_BUDGET.get())return;
-        SpellParticles.emit(level,spell,stage,pos,end,size);
+        if(!BossesRiseCompat.optional(spell))SpellParticles.emit(level,spell,stage,pos,end,size);
         var message=new WandNetwork.Visual(spell.ordinal(),stage.ordinal(),pos.x,pos.y,pos.z,end.x,end.y,end.z,(float)Math.clamp(size,0.1,16));
         if(IntegrationChecks.enabled())IntegrationChecks.visual(message);
         // Long beams are sent around their midpoint so both ends can be seen by observers.

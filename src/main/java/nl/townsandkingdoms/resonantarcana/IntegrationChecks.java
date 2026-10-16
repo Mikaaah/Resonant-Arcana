@@ -108,6 +108,8 @@ public final class IntegrationChecks {
                     check(input!=null&&new String(input.readNBytes(4),java.nio.charset.StandardCharsets.US_ASCII).equals("EFKE"),"native effect packaged: "+shape+"/"+theme);
                 }
             }
+            check(SpellVisuals.assetCount()==24,"only the 24 circular AAAParticles effects are packaged");
+            for(Spell spell:Spell.values())if(BossesRiseCompat.optional(spell))check(!SpellVisuals.usesAaa(spell,SpellVisuals.Stage.AREA),spell+" uses Bosses'Rise visuals without AAAParticles");
             for(Spell spell:Spell.enabledValues()){
                 if(AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
@@ -138,7 +140,7 @@ public final class IntegrationChecks {
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
                     case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
-                    case BOSS_ICE,BOSS_TENTACLE,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
+                    case BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
                     case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -146,7 +148,8 @@ public final class IntegrationChecks {
                 check(visuals.stream().anyMatch(v->v.stage()==expectedStage.ordinal()),spell+" has "+expectedStage+" visuals");
                 for(var visual:visuals){
                     var emitted=Spell.values()[visual.spell()];var shape=SpellVisuals.shape(emitted,SpellVisuals.Stage.values()[visual.stage()]);
-                    check(SpellVisuals.packaged(shape,emitted.theme),emitted+" emitted effect exists: "+shape);
+                    var stage=SpellVisuals.Stage.values()[visual.stage()];
+                    if(SpellVisuals.usesAaa(emitted,stage))check(SpellVisuals.packaged(shape,emitted.theme),emitted+" circular effect exists: "+shape);
                 }
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
                 if(arrow!=null)arrow.discard();zombie.discard();
@@ -267,7 +270,8 @@ public final class IntegrationChecks {
         }
     }
     private static void bossChecks(ServerLevel level,FakePlayer player){
-        var optional=List.of(Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT);
+        var optional=List.of(Spell.KRAKENS_GRASP,Spell.KRAKENS_UNDERTOW,Spell.ICE_SPIKE_ERUPTION,Spell.YETIS_GLACIAL_WALL,Spell.HELVARS_RIFT,Spell.HELVARS_FRACTURE,Spell.HELVARS_SWORDFALL,
+            Spell.SANDWORMS_ERUPTION,Spell.SANDWORMS_QUICKSAND,Spell.DRAGONS_GUARD,Spell.DRAGONS_PYRE);
         for(var spell:optional){
             check(spell.available()==BossesRiseCompat.available(),spell+" follows optional dependency availability");
             check(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.containsKey(IronsCompat.id(spell))==BossesRiseCompat.available(),spell+" native registry follows optional dependency");
@@ -282,8 +286,10 @@ public final class IntegrationChecks {
             victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
             check(SpellEngine.castFromSpellbook(player,spell,spell.power(rank),level.damageSources().indirectMagic(player,player),spell.cooldown,false),spell+" rank "+rank+" begins");
             if(spell==Spell.KRAKENS_GRASP){for(int t=0;t<45;t++)SpellEngine.tick();check(victim.getHealth()==200,"tentacle has a real rise and attack windup");}
+            if(spell==Spell.HELVARS_SWORDFALL){for(int t=0;t<23;t++)SpellEngine.tick();check(victim.getHealth()==200,"Helvar sword deals no damage before impact");}
             for(int t=0;t<100;t++)SpellEngine.tick();
-            check(Math.abs(victim.getHealth()-(200-spell.damageAtLevel(rank)))<.01,spell+" uses native level damage exactly once at rank "+rank);
+            int hits=spell==Spell.DRAGONS_GUARD?3:1;
+            check(Math.abs(victim.getHealth()-(200-spell.damageAtLevel(rank)*hits))<.01,spell+" uses native level damage "+hits+" time(s) at rank "+rank);
             check(SpellEngine.activeCount()==0,spell+" releases expire");victim.discard();
         }
         SpellEngine.clear();resetPlayer(player);

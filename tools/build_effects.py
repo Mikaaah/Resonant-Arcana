@@ -19,7 +19,7 @@ PALETTES = {
     'gravity': (0xCF58E8, 0xF6A5FF), 'soul': (0x24D7CB, 0xAA70EF),
     'holy': (0xFFE5A1, 0xFFFBEA), 'ice': (0x81D9FF, 0xE4FAFF),
 }
-SHAPES = 'cast orb comet wave impact nova pulse field vortex ward cage curse beam drain lightning flame charge cannon_charge cannon_head cannon_burst cannon_impact pyre_charge pyre_fall pyre_impact tempest_charge tempest_beam tempest_impact horizon_charge horizon_well horizon_impact scream_front scream_impact doom_charge doom_well doom_impact sanctuary_charge sanctuary_field sanctuary_bloom glacier_charge glacier_front glacier_impact fang_charge fang_row fang_impact slash orbit totem rain trap serpent blessing domain fusion_charge fusion_orb fusion_impact'.split()
+SHAPES = 'field ward domain trap doom_well horizon_well'.split()
 
 
 SPECIAL_THEMES = {
@@ -529,6 +529,8 @@ def main():
         shutil.copy2(exported,ASSETS/exported.name)
         return theme
     manifest={'schemaVersion':1,'effects':sorted(f'{shape}_{theme}.efkefc' for theme in PALETTES for shape in SHAPES if packaged(shape,theme))}
+    for stale in ASSETS.glob('*.efkefc'):
+        if stale.name not in manifest['effects']:stale.unlink()
     (ASSETS/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     completed={theme:0 for theme in args.theme}
     with ThreadPoolExecutor(max_workers=max(1,min(8,args.jobs))) as pool:

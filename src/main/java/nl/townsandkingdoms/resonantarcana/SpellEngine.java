@@ -35,7 +35,7 @@ public final class SpellEngine {
     private static int visualPoints;
     private SpellEngine() {}
     public static int activeCount(){return ACTIVE.size();}
-    public static void clear(){ACTIVE.forEach(BossesRiseCompat::cleanup);ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
+    public static void clear(){ACTIVE.forEach(SpellEngine::cleanup);AdvancedSpells.clear();ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
         if(action<0||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
@@ -65,6 +65,10 @@ public final class SpellEngine {
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
         Vec3 center=clipLoaded(player.serverLevel(),eye,dir,spell==Spell.DOOM?3:2,player).add(0,spell==Spell.DOOM?1.8:-0.18,0);
+        if(BossesRiseCompat.optional(spell)){
+            if(elapsed%4==0)BossesRiseBridge.castCue(player.serverLevel(),spell,center);
+            return;
+        }
         if(elapsed%3==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,center,center.add(dir),0.45+progress);
         for(int i=0;i<3;i++){
             double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=spell==Spell.SOUL_CANNON?new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7)):SpellParticles.chargeOffset(spell.theme,angle,progress);
@@ -92,7 +96,8 @@ public final class SpellEngine {
         boolean timed=true;
         Vec3 side=direction.cross(new Vec3(0,1,0));if(side.lengthSqr()<.01)side=new Vec3(1,0,0);side=side.normalize();
         Vec3 muzzle=clipLoaded(level,start,direction,1.5,player).add(side.scale(.35)).add(0,-.3,0);
-        for(int i=0;i<9;i++){
+        if(BossesRiseCompat.optional(spell))BossesRiseBridge.castCue(level,spell,muzzle);
+        else for(int i=0;i<9;i++){
             double t=i/8.0,a=t*Math.PI*1.35;
             trail(level,muzzle.add(side.scale(Math.cos(a)*.35)).add(0,Math.sin(a)*.25,0).add(direction.scale(t*.6)),spell.theme,.02);
         }
@@ -154,15 +159,16 @@ public final class SpellEngine {
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE->true;default->false;};}
+    private static void cleanup(Cast c){BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
         for(Iterator<Cast> it=ACTIVE.iterator();it.hasNext();){Cast c=it.next();
             ServerPlayer owner=c.level.getServer().getPlayerList().getPlayer(c.owner);
             // Fake players are only allowed through the explicitly gated integration fixture.
             if(owner==null&&IntegrationChecks.enabled())owner=c.testOwner;
-            if(owner==null||!owner.isAlive()||owner.isSpectator()||owner.serverLevel()!=c.level||c.age++>=c.duration||!c.level.hasChunkAt(BlockPos.containing(c.pos))){BossesRiseCompat.cleanup(c);it.remove();continue;}
+            if(owner==null||!owner.isAlive()||owner.isSpectator()||owner.serverLevel()!=c.level||c.age++>=c.duration||!c.level.hasChunkAt(BlockPos.containing(c.pos))){cleanup(c);it.remove();continue;}
             c.caster=owner;
-            if(!advance(c)){BossesRiseCompat.cleanup(c);it.remove();}
+            if(!advance(c)){cleanup(c);it.remove();}
         }
         if(ticks%200==0){
             COOLDOWNS.values().forEach(map->map.entrySet().removeIf(e->e.getValue()<=ticks));
@@ -502,9 +508,10 @@ public final class SpellEngine {
     static void area(Cast c,Vec3 pos,double radius,boolean once){
         for(LivingEntity entity:near(c.caster,pos,radius))if(visible(c,pos,entity.getBoundingBox().getCenter()))hit(c,entity,pos,once);
     }
-    public static boolean allowed(ServerPlayer caster,Entity entity){
+    public static boolean allowed(ServerPlayer caster,Entity entity){return entity.isAlive()&&allegianceAllows(caster,entity);}
+    static boolean allegianceAllows(ServerPlayer caster,Entity entity){
         if(entity instanceof BossSpellVisual)return false;
-        if(entity==caster||!entity.isAlive()||entity.isSpectator()||entity instanceof ArmorStand)return false;
+        if(entity==caster||entity.isSpectator()||entity instanceof ArmorStand)return false;
         if(entity instanceof net.minecraft.world.entity.player.Player other&&(!ArcanaConfig.PVP.get()||!caster.server.isPvpAllowed()||!caster.canHarmPlayer(other)))return false;
         if(entity instanceof TamableAnimal tame&&caster.getUUID().equals(tame.getOwnerUUID()))return false;
         var team=caster.getTeam();
@@ -555,7 +562,7 @@ public final class SpellEngine {
         if(c.spell.kind==Spell.Kind.DOMAIN){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,50,3);victim.setTicksFrozen(Math.max(160,victim.getTicksFrozen()));}
         if(c.spell.theme==Spell.Theme.FIRE)victim.igniteForSeconds(3);
         if(c.spell.theme==Spell.Theme.DARK){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
-        if(c.spell.theme==Spell.Theme.POISON&&c.spell!=Spell.KRAKENS_GRASP)effect(victim,MobEffects.POISON,80,0);
+        if(c.spell.theme==Spell.Theme.POISON&&!BossesRiseCompat.optional(c.spell))effect(victim,MobEffects.POISON,80,0);
         switch(c.spell.kind){
             case CONFUSE->{effect(victim,MobEffects.CONFUSION,100,0);effect(victim,MobEffects.BLINDNESS,40,0);}
             case STUN->{effect(victim,MobEffects.MOVEMENT_SLOWDOWN,60,5);effect(victim,MobEffects.WEAKNESS,60,1);}
@@ -650,6 +657,7 @@ public final class SpellEngine {
         final List<SpellActions.Shot> shots=new ArrayList<>();
         final List<Entity> bossVisuals=new ArrayList<>();final List<Vec3> eruptionPoints=new ArrayList<>();
         final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
+        AdvancedSpells.State advanced;
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;

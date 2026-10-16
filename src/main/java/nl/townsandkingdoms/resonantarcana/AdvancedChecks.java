@@ -37,8 +37,10 @@ final class AdvancedChecks {
                 check.accept(close(200-target.getHealth(),18*power),"rebirth detonation scales: "+rank);target.discard();
                 reset(p);p.setXRot(60);p.setHealth(5);cast(p,Spell.LAST_STAND,rank,check);
                 check.accept(close(p.getAbsorptionAmount(),4*power)&&p.hasEffect(MobEffects.DAMAGE_RESISTANCE),"last stand grants scaled shield and resistance: "+rank);
+                BlockPos banner=findBanner(level,p.blockPosition());check.accept(banner!=null,"last stand plants a temporary yellow banner: "+rank);
                 p.setAbsorptionAmount(1);advance(30);check.accept(close(p.getAbsorptionAmount(),1),"banner does not refill spent shield: "+rank);advance(91);
                 check.accept(close(p.getHealth(),5+6*power),"last stand final heal scales: "+rank);
+                if(banner!=null)check.accept(level.getBlockState(banner).isAir(),"last stand removes its temporary banner on expiry: "+rank);
                 reset(p);target=enemy(level,0,3);cast(p,Spell.GLACIAL_COUNTER,rank,check);advance(3,target);p.hurt(level.damageSources().mobAttack(target),5);
                 check.accept(p.getHealth()==20&&close(200-target.getHealth(),12*power*1.75f),"perfect guard blocks and counters: "+rank+" player="+p.getHealth()+" target="+target.getHealth()+" guard="+p.hasEffect(ArcanaEffects.GLACIAL_GUARD));target.discard();
                 reset(p);target=enemy(level,0,3);cast(p,Spell.GLACIAL_COUNTER,rank,check);advance(8,target);p.hurt(level.damageSources().mobAttack(target),5);
@@ -129,6 +131,10 @@ final class AdvancedChecks {
         }finally{level.getScoreboard().removePlayerTeam(party);}
     }
     private static void reset(FakePlayer p){SpellEngine.clear();p.setPos(0,81,0);p.setYRot(0);p.setXRot(0);p.setHealth(20);p.invulnerableTime=0;p.removeAllEffects();p.setAbsorptionAmount(0);p.setDeltaMovement(Vec3.ZERO);p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,net.minecraft.world.item.ItemStack.EMPTY);}
+    private static BlockPos findBanner(ServerLevel level,BlockPos origin){
+        for(int x=-8;x<=8;x++)for(int y=-2;y<=2;y++)for(int z=-8;z<=8;z++){BlockPos p=origin.offset(x,y,z);if(level.getBlockState(p).is(Blocks.YELLOW_BANNER))return p.immutable();}
+        return null;
+    }
     private static void cast(FakePlayer p,Spell s,int rank,BiConsumer<Boolean,String> check){check.accept(SpellEngine.castFromSpellbook(p,s,s.power(rank),p.serverLevel().damageSources().indirectMagic(p,p),s.cooldown,true),"advanced cast starts: "+s+" / "+rank);}
     private static void advance(int ticks,Zombie... enemies){for(int i=0;i<ticks;i++){for(var e:enemies)e.invulnerableTime=0;SpellEngine.tick();}}
     private static Zombie enemy(ServerLevel level,double x,double z){var e=new Zombie(EntityType.ZOMBIE,level);e.setNoAi(true);e.getAttribute(Attributes.MAX_HEALTH).setBaseValue(200);e.getAttribute(Attributes.ARMOR).setBaseValue(0);e.setHealth(200);e.setPos(x,81,z);level.addFreshEntity(e);return e;}

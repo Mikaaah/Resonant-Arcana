@@ -1,18 +1,19 @@
 """Draw the original spellbook icons from the spell catalogue (Pillow required)."""
 from pathlib import Path
-import re,json,math,random
+import re,json,math,random,sys
 from PIL import Image,ImageDraw,ImageFilter
 ROOT=Path(__file__).resolve().parents[1]
 PALETTES={'MAGIC':'#c570ff','BLOOD':'#ee365d','POISON':'#87e745','FIRE':'#ff8b32','THUNDER':'#7de8ff','DARK':'#9b6be8','GRAVITY':'#ed8aff','SOUL':'#48e9d9','HOLY':'#ffe5a1','ICE':'#a6e7ff'}
 
-def main():
+def main(only=None):
     catalogue=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text())
     spells=[(name,entry['title'],entry['kind'],entry['theme']) for name,entry in catalogue['spells'].items()]
     folder=ROOT/'src/main/resources/assets/resonant_arcana/textures/gui/spell_icons';folder.mkdir(parents=True,exist_ok=True)
     langfile=ROOT/'src/main/resources/assets/resonant_arcana/lang/en_us.json';lang=json.loads(langfile.read_text())
     for index,(name,title,kind,theme) in enumerate(spells):
         ident=catalogue['spells'][name]['bookId']
-        im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
+        if only and ident not in only:continue
+        im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c='#ab3036' if kind in ('BOSS_TENTACLE','BOSS_WRATH') else '#c49b60' if kind=='BOSS_SAND' else PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
         if kind=='BOSS_TENTACLE':
             points=[(19,107),(25,82),(42,75),(70,75),(88,60),(90,40),(76,26),(57,30),(52,44),(62,50)]
@@ -23,9 +24,24 @@ def main():
             for x,y in [(25,45),(51,17),(79,31),(104,55)]:
                 d.polygon([(x-12,108),(x,y),(x+11,108)],fill=c)
                 line([(x,y+11),(x-4,99)],4,white)
+        elif kind=='BOSS_SWORD':
+            d.polygon([(66,115),(49,58),(64,47),(79,58)],fill='#c8cadb',outline=white)
+            line([(30,50),(97,50)],9,'#51365c');line([(64,48),(64,18)],11,'#79526c')
+            d.ellipse((58,8,70,24),fill=white)
+            for x in (25,45,85,105):line([(x,17),(x-5,34)],4)
+            d.arc((15,94,113,117),190,350,fill=c,width=5)
         elif kind=='BOSS_RIFT':
             d.ellipse((25,13,99,114),outline=c,width=10);d.ellipse((38,26,86,103),outline=white,width=4)
             line([(10,100),(42,77),(75,55),(116,25)],10);line([(50,71),(109,31)],4,white)
+        elif kind=='BOSS_SAND':
+            for x,y in [(30,66),(60,34),(92,59)]:
+                d.polygon([(x-14,105),(x-11,y+11),(x,y),(x+12,y+11),(x+16,105)],fill=c)
+                line([(x,y+14),(x-3,90)],3,white)
+            d.arc((11,86,117,115),180,355,fill=white,width=4)
+        elif kind=='BOSS_DRAGON':
+            d.polygon([(64,12),(85,48),(100,39),(92,76),(77,109),(49,113),(30,84),(40,52)],fill=c)
+            d.polygon([(66,29),(61,72),(78,64),(68,98),(48,95),(54,66)],fill=white)
+            line([(24,107),(105,107)],4)
         elif kind=='COUNTER':
             d.polygon([(64,12),(108,32),(99,83),(64,116),(29,83),(20,32)],outline=c,width=9)
             for i in range(3):line([(36+i*18,48),(64,79),(91-i*18,48)],5,white)
@@ -166,6 +182,6 @@ def main():
     lang['key.resonant_arcana.select']='Choose wand spell'
     lang.pop('subtitles.resonant_arcana.cast',None)
     lang.pop('subtitles.resonant_arcana.impact',None)
-    langfile.write_text(json.dumps(lang,indent=2)+'\n');print('Generated',len(spells),'spell icons and translations.')
+    langfile.write_text(json.dumps(lang,indent=2)+'\n');print('Generated',len(only) if only else len(spells),'spell icons and translations.')
 
-if __name__=='__main__':main()
+if __name__=='__main__':main(set(sys.argv[1:]))

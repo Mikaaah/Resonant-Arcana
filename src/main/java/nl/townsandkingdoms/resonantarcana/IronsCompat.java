@@ -36,6 +36,7 @@ final class IronsCompat {
         MagicData data=MagicData.getPlayerMagicData(player);
         if(data.isCasting())return false; // Holding the attack key must not repeatedly cancel a windup.
         var nativeSpell=SpellRegistry.REGISTRY.get(id(spell));
+        if(!nativeSpell.isEnabled())return false;
         int rank=stack.getItem() instanceof WandItem wand?Math.min(wand.level(stack,spell),nativeSpell.getMaxLevel()):1;
         ISpellContainer.createImbuedContainer(nativeSpell,rank,stack);
         return nativeSpell.attemptInitiateCast(stack,rank,player.serverLevel(),player,CastSource.SPELLBOOK,true,
@@ -86,9 +87,25 @@ final class IronsCompat {
             defaults=new DefaultConfig().setMinRarity(spell==Spell.DOOM?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
                 .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(true).build();
         }
+        @Override public boolean attemptInitiateCast(net.minecraft.world.item.ItemStack stack,int rank,Level level,Player player,CastSource source,boolean triggerCooldown,String slot){
+            if(spell==Spell.CRIMSON_REVERSAL&&!level.isClientSide()&&player instanceof ServerPlayer p){
+                var data=MagicData.getPlayerMagicData(p);
+                if(data.getPlayerRecasts().hasRecastForSpell(getSpellId())){
+                    if(data.isCasting()||!canBeCastedBy(rank,source,data,p).isSuccess()||!checkPreCastConditions(level,rank,p,data))return false;
+                    var event=new io.redspace.ironsspellbooks.api.events.SpellPreCastEvent(p,getSpellId(),rank,getSchoolType(),source);
+                    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);if(event.isCanceled())return false;
+                    castSpell(level,rank,p,source,triggerCooldown);return true;
+                }
+            }
+            return super.attemptInitiateCast(stack,rank,level,player,source,triggerCooldown,slot);
+        }
         @Override public ResourceLocation getSpellResource(){return id(spell);}
         @Override public DefaultConfig getDefaultConfig(){return defaults;}
         @Override public int getSpellCooldown(){return Math.max(1,(int)Math.ceil(super.getSpellCooldown()*ArcanaConfig.COOLDOWNS.get()));}
+        @Override public int getRecastCount(int level,LivingEntity entity){return spell==Spell.CRIMSON_REVERSAL?2:0;}
+        @Override public int getEffectiveCastTime(int level,LivingEntity entity){
+            return spell==Spell.CRIMSON_REVERSAL&&entity!=null&&MagicData.getPlayerMagicData(entity).getPlayerRecasts().hasRecastForSpell(getSpellId())?0:super.getEffectiveCastTime(level,entity);
+        }
         @Override public CastType getCastType(){return castTime>0?CastType.LONG:CastType.INSTANT;}
         @Override public MutableComponent getDisplayName(Player player){return Component.literal(spell.title);}
         @Override public boolean requiresLearning(){return false;}
@@ -112,10 +129,14 @@ final class IronsCompat {
                 io.redspace.ironsspellbooks.player.ClientSpellCastHelper.setSuppressRightClicks(true);
         }
         @Override public boolean checkPreCastConditions(Level level,int spellLevel,LivingEntity entity,MagicData data){
+            if(!isEnabled())return false;
+            if(spell==Spell.CRIMSON_REVERSAL&&entity instanceof ServerPlayer player&&data.getPlayerRecasts().hasRecastForSpell(getSpellId())){
+                var recast=data.getPlayerRecasts().getRecastInstance(getSpellId());return recast.getCastData() instanceof ReversalData anchor&&anchor.safe(player);
+            }
             return entity instanceof ServerPlayer player&&SpellEngine.canStart(player,spell);
         }
         @Override public void onServerPreCast(Level level,int spellLevel,LivingEntity entity,MagicData data){
-            if(castTime>0&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
+            if(castTime>0&&!(spell==Spell.CRIMSON_REVERSAL&&data.getPlayerRecasts().hasRecastForSpell(getSpellId()))&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
         }
         @Override public void onServerCastTick(Level level,int spellLevel,LivingEntity entity,MagicData data){
             if(castTime>0&&entity instanceof ServerPlayer player){
@@ -125,9 +146,14 @@ final class IronsCompat {
         }
         @Override public void onCast(Level level,int spellLevel,LivingEntity entity,CastSource source,MagicData data){
             if(entity instanceof ServerPlayer player){
+                if(spell==Spell.CRIMSON_REVERSAL&&data.getPlayerRecasts().hasRecastForSpell(getSpellId())){
+                    var recast=data.getPlayerRecasts().getRecastInstance(getSpellId());if(recast.getCastData() instanceof ReversalData anchor)anchor.returnPlayer(player);return;
+                }
+                ReversalData anchor=spell==Spell.CRIMSON_REVERSAL?new ReversalData(player):null;
                 int cooldown=Utils.applyCooldownReduction(getSpellCooldown(),player);
                 if(castTime>0&&spell!=Spell.SOUL_CANNON&&spell!=Spell.SONIC_SCREAM)SpellAudio.cast(player,spell);
-                SpellEngine.castFromSpellbook(player,spell,getSpellPower(spellLevel,player)/100f,getDamageSource(player),cooldown,castTime>0);
+                boolean success=SpellEngine.castFromSpellbook(player,spell,getSpellPower(spellLevel,player)/100f,getDamageSource(player),cooldown,castTime>0);
+                if(success&&anchor!=null)data.getPlayerRecasts().addRecast(new io.redspace.ironsspellbooks.capabilities.magic.RecastInstance(getSpellId(),spellLevel,2,60,source,anchor),data);
             }
         }
         @Override public List<MutableComponent> getUniqueInfo(int spellLevel,LivingEntity entity){

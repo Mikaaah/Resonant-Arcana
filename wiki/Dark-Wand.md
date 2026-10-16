@@ -1,4 +1,4 @@
-## Dark Wand
+# Dark Wand
 
 **Ender school.** Saved item ID: `resonant_arcana:dark_wand`.
 
@@ -222,8 +222,36 @@ Requires Bosses’Rise 2.1.2. Launch a rift projectile with Helvar’s own model
 
 Spell ID: `resonant_arcana:helvars_rift`. Inspect any rank in game with `/resonantarcana spell helvars_rift <level>`.
 
-<a id="thunder-wand"></a>
+### Helvar’s Fracture
 
----
+Requires Bosses’Rise 2.1.2. Helvar’s rift projectile breaks against the first enemy or wall, releasing an area burst that weakens visible enemies. Terrain remains intact.
 
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+**Role:** Helvar / rift burst · **Cast:** 1.3s · **Cooldown:** 12s · **Range:** 24 blocks · **Radius / width:** 3.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 60 |
+| II | 12.5 | — | 66 |
+| III | 15 | — | 72 |
+| IV | 17.5 | — | 78 |
+| V | 20 | — | 84 |
+
+Spell ID: `resonant_arcana:helvars_fracture`. Inspect any rank in game with `/resonantarcana spell helvars_fracture <level>`.
+
+### Helvar’s Swordfall
+
+Requires Bosses’Rise 2.1.2. Summon Helvar’s actual Knight Sword over visible solid ground. It falls and strikes after 1.2 seconds, damaging and weakening nearby enemies. Allies and terrain are protected.
+
+**Role:** Helvar / falling sword · **Cast:** 1.3s · **Cooldown:** 12s · **Range:** 18 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 60 |
+| II | 20 | — | 66 |
+| III | 24 | — | 72 |
+| IV | 28 | — | 78 |
+| V | 32 | — | 84 |
+
+Spell ID: `resonant_arcana:helvars_swordfall`. Inspect any rank in game with `/resonantarcana spell helvars_swordfall <level>`.
+
+[← Wiki Home](Home.md)

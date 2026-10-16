@@ -1,8 +1,6 @@
 # Spell Mechanics
 
-## Spell rules and scaling
-
-**137 core spells + 4 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
+**137 core spells + 12 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
@@ -28,12 +26,6 @@ Healing and cleansing spells share a recovery group. Blood Ward, Echo Ward and D
 
 Windup is the native Iron’s cast bar. Some spells also have a release phase: Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
 
-<a id="arcane-wand"></a>
 
-## Explore more
-
-- [All wands and spells](Wand-Index.md)
-- [Multiplayer & Compatibility](Multiplayer-and-Compatibility.md)
-- [Configuration](Configuration.md)
 
 [← Wiki Home](Home.md)

@@ -63,7 +63,9 @@
         "PHOENIX_RUSH",
         "DRAGON_BREATH",
         "CINDER_CLEAVE",
-        "ASHEN_REBIRTH"
+        "ASHEN_REBIRTH",
+        "DRAGONS_GUARD",
+        "DRAGONS_PYRE"
       ]
     },
     {
@@ -83,7 +85,9 @@
         "DREAD_EFFIGY",
         "VEIL_OF_NIGHT",
         "NIGHT_BLOOM",
-        "HELVARS_RIFT"
+        "HELVARS_RIFT",
+        "HELVARS_FRACTURE",
+        "HELVARS_SWORDFALL"
       ]
     },
     {
@@ -124,7 +128,9 @@
         "PRISMATIC_RUIN",
         "GRAVITY_STAMP",
         "SPATIAL_SHEAR",
-        "RIFT_DRAW"
+        "RIFT_DRAW",
+        "SANDWORMS_ERUPTION",
+        "SANDWORMS_QUICKSAND"
       ]
     },
     {
@@ -166,7 +172,8 @@
         "CORROSIVE_RAIN",
         "GORGON_GAZE",
         "KRAKENS_GRASP",
-        "KRAKENS_WRATH"
+        "KRAKENS_WRATH",
+        "KRAKENS_UNDERTOW"
       ]
     },
     {
@@ -210,7 +217,8 @@
         "ABSOLUTE_ZERO",
         "RIME_THRUST",
         "ICE_SPIKE_ERUPTION",
-        "GLACIAL_COUNTER"
+        "GLACIAL_COUNTER",
+        "YETIS_GLACIAL_WALL"
       ]
     }
   ],
@@ -2792,7 +2800,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Boss magic / control",
-      "description": "Requires Bosses’Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.",
+      "description": "Requires Bosses’Rise 2.1.2. Summon the Kraken’s red tentacle at a visible ground location. After rising, it slams nearby enemies and slows them for 3 seconds. Protects allies; does not grab or move bosses.",
       "bookId": "krakens_grasp"
     },
     "ICE_SPIKE_ERUPTION": {
@@ -2852,8 +2860,168 @@
       "interval": 0,
       "pulses": 2,
       "role": "Boss magic / ultimate",
-      "description": "Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.",
+      "description": "Requires Bosses’Rise 2.1.2. Four red Kraken tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.",
       "bookId": "krakens_wrath"
+    },
+    "KRAKENS_UNDERTOW": {
+      "title": "Kraken’s Undertow",
+      "kind": "BOSS_TENTACLE",
+      "theme": "POISON",
+      "damage": 12,
+      "radius": 5,
+      "range": 18,
+      "cooldown": 320,
+      "castTicks": 26,
+      "mana": 65,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Kraken / water control",
+      "description": "Requires Bosses’Rise 2.1.2. A Kraken tentacle rises at a visible ground location. Its undertow pulls nearby enemies toward the water before one heavy slam. Uses the Kraken’s red model and texture; allies and bosses are not pulled.",
+      "bookId": "krakens_undertow"
+    },
+    "YETIS_GLACIAL_WALL": {
+      "title": "Yeti’s Glacial Wall",
+      "kind": "BOSS_ICE",
+      "theme": "ICE",
+      "damage": 9,
+      "radius": 2,
+      "range": 16,
+      "cooldown": 220,
+      "castTicks": 20,
+      "mana": 50,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Yeti / ice barrier",
+      "description": "Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the aimed ground to form a temporary wall of ice. Each enemy takes at most one hit and is slowed and chilled; no blocks are changed.",
+      "bookId": "yetis_glacial_wall"
+    },
+    "HELVARS_FRACTURE": {
+      "title": "Helvar’s Fracture",
+      "kind": "BOSS_RIFT",
+      "theme": "DARK",
+      "damage": 10,
+      "radius": 3.5,
+      "range": 24,
+      "cooldown": 240,
+      "castTicks": 26,
+      "mana": 60,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Helvar / rift burst",
+      "description": "Requires Bosses’Rise 2.1.2. Helvar’s rift projectile breaks against the first enemy or wall, releasing an area burst that weakens visible enemies. Terrain remains intact.",
+      "bookId": "helvars_fracture"
+    },
+    "HELVARS_SWORDFALL": {
+      "title": "Helvar’s Swordfall",
+      "kind": "BOSS_SWORD",
+      "theme": "DARK",
+      "damage": 16,
+      "radius": 3,
+      "range": 18,
+      "cooldown": 240,
+      "castTicks": 26,
+      "mana": 60,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Helvar / falling sword",
+      "description": "Requires Bosses’Rise 2.1.2. Summon Helvar’s actual Knight Sword over visible solid ground. It falls and strikes after 1.2 seconds, damaging and weakening nearby enemies. Allies and terrain are protected.",
+      "bookId": "helvars_swordfall"
+    },
+    "SANDWORMS_ERUPTION": {
+      "title": "Sandworm’s Eruption",
+      "kind": "BOSS_SAND",
+      "theme": "GRAVITY",
+      "damage": 11,
+      "radius": 2,
+      "range": 18,
+      "cooldown": 220,
+      "castTicks": 20,
+      "mana": 50,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 0,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Sandworm / eruption",
+      "description": "Requires Bosses’Rise 2.1.2. The Sandworm’s own sand columns emerge in a row toward the aimed ground. The rising columns strike enemies once per cast; terrain stays intact.",
+      "bookId": "sandworms_eruption"
+    },
+    "SANDWORMS_QUICKSAND": {
+      "title": "Sandworm’s Quicksand",
+      "kind": "BOSS_SAND",
+      "theme": "GRAVITY",
+      "damage": 8,
+      "radius": 4.5,
+      "range": 16,
+      "cooldown": 300,
+      "castTicks": 24,
+      "mana": 65,
+      "manaStep": 6,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 60,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Sandworm / control",
+      "description": "Requires Bosses’Rise 2.1.2. A sand column marks a quicksand zone. Visible enemies in the zone are slowed and drawn inward before one final eruption. Bosses and allies are never pulled.",
+      "bookId": "sandworms_quicksand"
+    },
+    "DRAGONS_GUARD": {
+      "title": "Dragon’s Guard",
+      "kind": "BOSS_DRAGON",
+      "theme": "FIRE",
+      "damage": 7,
+      "radius": 4,
+      "range": 16,
+      "cooldown": 280,
+      "castTicks": 24,
+      "mana": 60,
+      "manaStep": 5,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 80,
+      "interval": 0,
+      "pulses": 3,
+      "role": "Infernal Dragon / guard",
+      "description": "Requires Bosses’Rise 2.1.2. Summon a visual of the Infernal Dragon’s flaming guard at a visible ground location. Three timed fire pulses strike nearby enemies; the guard has no combat AI, loot or terrain effects.",
+      "bookId": "dragons_guard"
+    },
+    "DRAGONS_PYRE": {
+      "title": "Dragon’s Pyre",
+      "kind": "BOSS_DRAGON",
+      "theme": "FIRE",
+      "damage": 16,
+      "radius": 4.5,
+      "range": 18,
+      "cooldown": 360,
+      "castTicks": 32,
+      "mana": 85,
+      "manaStep": 8,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 65,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Infernal Dragon / detonation",
+      "description": "Requires Bosses’Rise 2.1.2. Three of the Infernal Dragon’s flaming guards surround the aimed ground, then ignite a single heavy fire burst. Their visual entities cannot attack or damage allies themselves.",
+      "bookId": "dragons_pyre"
     },
     "GLACIAL_COUNTER": {
       "title": "Glacial Counter",
@@ -2952,7 +3120,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Defensive rally",
-      "description": "Plant a radiant banner for six seconds. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.",
+      "description": "Plant a temporary golden banner for six seconds, surrounded by a radiant ward circle. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.",
       "bookId": "last_stand"
     },
     "ASHEN_REBIRTH": {

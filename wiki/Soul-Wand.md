@@ -1,4 +1,4 @@
-## Soul Wand
+# Soul Wand
 
 **Eldritch school.** Saved item ID: `resonant_arcana:soul_wand`.
 
@@ -250,8 +250,4 @@ Charge a funeral bell. Two expanding sonic rings deal the listed damage; a third
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect any rank in game with `/resonantarcana spell funeral_bell <level>`.
 
-<a id="venom-wand"></a>
-
----
-
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+[← Wiki Home](Home.md)

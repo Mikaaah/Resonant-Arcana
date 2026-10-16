@@ -1,4 +1,4 @@
-## Rift Wand
+# Rift Wand
 
 **Ender school.** Saved item ID: `resonant_arcana:rift_wand`.
 
@@ -228,8 +228,38 @@ Draw a thin distortion along your aim. After a 0.6-second warning, a piercing sl
 
 Spell ID: `resonant_arcana:rift_draw`. Inspect any rank in game with `/resonantarcana spell rift_draw <level>`.
 
-<a id="soul-wand"></a>
+### Sandworm’s Eruption
 
----
+Requires Bosses’Rise 2.1.2. The Sandworm’s own sand columns emerge in a row toward the aimed ground. The rising columns strike enemies once per cast; terrain stays intact.
 
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+**Role:** Sandworm / eruption · **Cast:** 1s · **Cooldown:** 11s · **Range:** 18 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 11 | — | 50 |
+| II | 13.75 | — | 55 |
+| III | 16.5 | — | 60 |
+| IV | 19.25 | — | 65 |
+| V | 22 | — | 70 |
+
+Spell ID: `resonant_arcana:sandworms_eruption`. Inspect any rank in game with `/resonantarcana spell sandworms_eruption <level>`.
+
+### Sandworm’s Quicksand
+
+Requires Bosses’Rise 2.1.2. A sand column marks a quicksand zone. Visible enemies in the zone are slowed and drawn inward before one final eruption. Bosses and allies are never pulled.
+
+**Role:** Sandworm / control · **Cast:** 1.2s · **Cooldown:** 15s · **Range:** 16 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 65 |
+| II | 10 | — | 71 |
+| III | 12 | — | 77 |
+| IV | 14 | — | 83 |
+| V | 16 | — | 89 |
+
+**Base active phase:** 3s.
+
+Spell ID: `resonant_arcana:sandworms_quicksand`. Inspect any rank in game with `/resonantarcana spell sandworms_quicksand <level>`.
+
+[← Wiki Home](Home.md)

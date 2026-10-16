@@ -1,4 +1,4 @@
-## Thunder Wand
+# Thunder Wand
 
 **Lightning school.** Saved item ID: `resonant_arcana:thunder_wand`.
 
@@ -238,8 +238,4 @@ Enchant your weapon for ten seconds. Every third successful player melee hit rel
 
 Spell ID: `resonant_arcana:thunderbrand`. Inspect any rank in game with `/resonantarcana spell thunderbrand <level>`.
 
-<a id="rift-wand"></a>
-
----
-
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+[← Wiki Home](Home.md)

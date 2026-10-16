@@ -1,4 +1,4 @@
-## Cinder Wand
+# Cinder Wand
 
 **Fire school.** Saved item ID: `resonant_arcana:cinder_wand`.
 
@@ -248,8 +248,42 @@ Burst forward along a clear path as a phoenix, leaving a burning silhouette. Aft
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect any rank in game with `/resonantarcana spell ashen_rebirth <level>`.
 
-<a id="dark-wand"></a>
+### Dragon’s Guard
 
----
+Requires Bosses’Rise 2.1.2. Summon a visual of the Infernal Dragon’s flaming guard at a visible ground location. Three timed fire pulses strike nearby enemies; the guard has no combat AI, loot or terrain effects.
 
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+**Role:** Infernal Dragon / guard · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 16 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 7 | — | 60 |
+| II | 8.75 | — | 65 |
+| III | 10.5 | — | 70 |
+| IV | 12.25 | — | 75 |
+| V | 14 | — | 80 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `resonant_arcana:dragons_guard`. Inspect any rank in game with `/resonantarcana spell dragons_guard <level>`.
+
+### Dragon’s Pyre
+
+Requires Bosses’Rise 2.1.2. Three of the Infernal Dragon’s flaming guards surround the aimed ground, then ignite a single heavy fire burst. Their visual entities cannot attack or damage allies themselves.
+
+**Role:** Infernal Dragon / detonation · **Cast:** 1.6s · **Cooldown:** 18s · **Range:** 18 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 85 |
+| II | 20 | — | 93 |
+| III | 24 | — | 101 |
+| IV | 28 | — | 109 |
+| V | 32 | — | 117 |
+
+**Base active phase:** 3.25s.
+
+Spell ID: `resonant_arcana:dragons_pyre`. Inspect any rank in game with `/resonantarcana spell dragons_pyre <level>`.
+
+[← Wiki Home](Home.md)

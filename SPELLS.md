@@ -1,6 +1,6 @@
 # Spell reference
 
-**137 core spells + 4 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
+**137 core spells + 12 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
@@ -12,9 +12,9 @@ Healing affects the caster, owned pets and scoreboard teammates. By default it a
 
 ## Optional Bosses’Rise spells
 
-Bosses’Rise **2.1.2** adds Kraken’s Grasp and Kraken’s Wrath (Venom / Nature), Ice Spike Eruption (Frost / Ice), and Helvar’s Rift (Dark / Ender). Without that mod, the four spells are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
+Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrath and Undertow. Yeti: Ice Spike Eruption and Glacial Wall. Underworld Knight (Helvar): Rift, Fracture and Swordfall. Sandworm: Eruption and Quicksand. Infernal Dragon: Guard and Pyre. Without that mod, they are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
 
-Visual-only entities reference the installed mod’s models, animations and textures. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
+Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s flaming guard. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
 
 Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
 
@@ -24,14 +24,14 @@ Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 second
 | --- | --- | --- |
 | [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge, Phantom Formation, Spellbreaker |
 | [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend, Crimson Reversal |
-| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth |
-| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift |
+| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth, Dragon’s Guard, Dragon’s Pyre |
+| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift, Helvar’s Fracture, Helvar’s Swordfall |
 | [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo, Thunderbrand |
-| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear, Rift Draw |
+| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear, Rift Draw, Sandworm’s Eruption, Sandworm’s Quicksand |
 | [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast, Funeral Bell |
-| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp, Kraken’s Wrath |
+| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp, Kraken’s Wrath, Kraken’s Undertow |
 | [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant, Last Stand |
-| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption, Glacial Counter |
+| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption, Glacial Counter, Yeti’s Glacial Wall |
 
 ## Shared recovery
 
@@ -814,6 +814,44 @@ Burst forward along a clear path as a phoenix, leaving a burning silhouette. Aft
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect any rank in game with `/resonantarcana spell ashen_rebirth <level>`.
 
+### Dragon’s Guard
+
+Requires Bosses’Rise 2.1.2. Summon a visual of the Infernal Dragon’s flaming guard at a visible ground location. Three timed fire pulses strike nearby enemies; the guard has no combat AI, loot or terrain effects.
+
+**Role:** Infernal Dragon / guard · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 16 blocks · **Radius / width:** 4 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 7 | — | 60 |
+| II | 8.75 | — | 65 |
+| III | 10.5 | — | 70 |
+| IV | 12.25 | — | 75 |
+| V | 14 | — | 80 |
+
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
+
+**Base active phase:** 4s.
+
+Spell ID: `resonant_arcana:dragons_guard`. Inspect any rank in game with `/resonantarcana spell dragons_guard <level>`.
+
+### Dragon’s Pyre
+
+Requires Bosses’Rise 2.1.2. Three of the Infernal Dragon’s flaming guards surround the aimed ground, then ignite a single heavy fire burst. Their visual entities cannot attack or damage allies themselves.
+
+**Role:** Infernal Dragon / detonation · **Cast:** 1.6s · **Cooldown:** 18s · **Range:** 18 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 85 |
+| II | 20 | — | 93 |
+| III | 24 | — | 101 |
+| IV | 28 | — | 109 |
+| V | 32 | — | 117 |
+
+**Base active phase:** 3.25s.
+
+Spell ID: `resonant_arcana:dragons_pyre`. Inspect any rank in game with `/resonantarcana spell dragons_pyre <level>`.
+
 <a id="dark-wand"></a>
 ## Dark Wand
 
@@ -1038,6 +1076,38 @@ Requires Bosses’Rise 2.1.2. Launch a rift projectile with Helvar’s own model
 | V | 28 | — | 60 |
 
 Spell ID: `resonant_arcana:helvars_rift`. Inspect any rank in game with `/resonantarcana spell helvars_rift <level>`.
+
+### Helvar’s Fracture
+
+Requires Bosses’Rise 2.1.2. Helvar’s rift projectile breaks against the first enemy or wall, releasing an area burst that weakens visible enemies. Terrain remains intact.
+
+**Role:** Helvar / rift burst · **Cast:** 1.3s · **Cooldown:** 12s · **Range:** 24 blocks · **Radius / width:** 3.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 60 |
+| II | 12.5 | — | 66 |
+| III | 15 | — | 72 |
+| IV | 17.5 | — | 78 |
+| V | 20 | — | 84 |
+
+Spell ID: `resonant_arcana:helvars_fracture`. Inspect any rank in game with `/resonantarcana spell helvars_fracture <level>`.
+
+### Helvar’s Swordfall
+
+Requires Bosses’Rise 2.1.2. Summon Helvar’s actual Knight Sword over visible solid ground. It falls and strikes after 1.2 seconds, damaging and weakening nearby enemies. Allies and terrain are protected.
+
+**Role:** Helvar / falling sword · **Cast:** 1.3s · **Cooldown:** 12s · **Range:** 18 blocks · **Radius / width:** 3 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 16 | — | 60 |
+| II | 20 | — | 66 |
+| III | 24 | — | 72 |
+| IV | 28 | — | 78 |
+| V | 32 | — | 84 |
+
+Spell ID: `resonant_arcana:helvars_swordfall`. Inspect any rank in game with `/resonantarcana spell helvars_swordfall <level>`.
 
 <a id="thunder-wand"></a>
 ## Thunder Wand
@@ -1511,6 +1581,40 @@ Draw a thin distortion along your aim. After a 0.6-second warning, a piercing sl
 
 Spell ID: `resonant_arcana:rift_draw`. Inspect any rank in game with `/resonantarcana spell rift_draw <level>`.
 
+### Sandworm’s Eruption
+
+Requires Bosses’Rise 2.1.2. The Sandworm’s own sand columns emerge in a row toward the aimed ground. The rising columns strike enemies once per cast; terrain stays intact.
+
+**Role:** Sandworm / eruption · **Cast:** 1s · **Cooldown:** 11s · **Range:** 18 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 11 | — | 50 |
+| II | 13.75 | — | 55 |
+| III | 16.5 | — | 60 |
+| IV | 19.25 | — | 65 |
+| V | 22 | — | 70 |
+
+Spell ID: `resonant_arcana:sandworms_eruption`. Inspect any rank in game with `/resonantarcana spell sandworms_eruption <level>`.
+
+### Sandworm’s Quicksand
+
+Requires Bosses’Rise 2.1.2. A sand column marks a quicksand zone. Visible enemies in the zone are slowed and drawn inward before one final eruption. Bosses and allies are never pulled.
+
+**Role:** Sandworm / control · **Cast:** 1.2s · **Cooldown:** 15s · **Range:** 16 blocks · **Radius / width:** 4.5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 65 |
+| II | 10 | — | 71 |
+| III | 12 | — | 77 |
+| IV | 14 | — | 83 |
+| V | 16 | — | 89 |
+
+**Base active phase:** 3s.
+
+Spell ID: `resonant_arcana:sandworms_quicksand`. Inspect any rank in game with `/resonantarcana spell sandworms_quicksand <level>`.
+
 <a id="soul-wand"></a>
 ## Soul Wand
 
@@ -1981,7 +2085,7 @@ Spell ID: `resonant_arcana:gorgon_gaze`. Inspect any rank in game with `/resonan
 
 ### Kraken’s Grasp
 
-Requires Bosses’Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.
+Requires Bosses’Rise 2.1.2. Summon the Kraken’s red tentacle at a visible ground location. After rising, it slams nearby enemies and slows them for 3 seconds. Protects allies; does not grab or move bosses.
 
 **Role:** Boss magic / control · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 18 blocks · **Radius / width:** 4 blocks.
 
@@ -1997,7 +2101,7 @@ Spell ID: `resonant_arcana:krakens_grasp`. Inspect any rank in game with `/reson
 
 ### Kraken’s Wrath
 
-Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.
+Requires Bosses’Rise 2.1.2. Four red Kraken tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.
 
 **Role:** Boss magic / ultimate · **Cast:** 3.6s · **Cooldown:** 30s · **Range:** 20 blocks · **Radius / width:** 4 blocks.
 
@@ -2016,6 +2120,22 @@ Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed gr
 **Requires Bosses’Rise 2.1.2.** Four outer tentacles rise ten ticks apart, then a central tentacle. Outer impacts deal the table value at most once per enemy across the entire ring. The central slam deals triple damage at 5.3 seconds after release. All damage, targeting and cleanup use the addon’s normal rules.
 
 Spell ID: `resonant_arcana:krakens_wrath`. Inspect any rank in game with `/resonantarcana spell krakens_wrath <level>`.
+
+### Kraken’s Undertow
+
+Requires Bosses’Rise 2.1.2. A Kraken tentacle rises at a visible ground location. Its undertow pulls nearby enemies toward the water before one heavy slam. Uses the Kraken’s red model and texture; allies and bosses are not pulled.
+
+**Role:** Kraken / water control · **Cast:** 1.3s · **Cooldown:** 16s · **Range:** 18 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 65 |
+| II | 15 | — | 71 |
+| III | 18 | — | 77 |
+| IV | 21 | — | 83 |
+| V | 24 | — | 89 |
+
+Spell ID: `resonant_arcana:krakens_undertow`. Inspect any rank in game with `/resonantarcana spell krakens_undertow <level>`.
 
 <a id="holy-wand"></a>
 ## Holy Wand
@@ -2274,7 +2394,7 @@ Spell ID: `resonant_arcana:bulwark_chant`. Inspect any rank in game with `/reson
 
 ### Last Stand
 
-Plant a radiant banner for six seconds. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.
+Plant a temporary golden banner for six seconds, surrounded by a radiant ward circle. Nearby allies gain Resistance I and one grant of temporary health. The final pulse heals allies still defending the area. Re-entering does not refill the shield.
 
 **Role:** Defensive rally · **Cast:** 1.3s · **Cooldown:** 20s · **Range:** 10 blocks · **Radius / width:** 6 blocks.
 
@@ -2560,3 +2680,19 @@ Guard for 0.9 seconds against one frontal, blockable hostile hit. The first 0.3 
 **Guard:** 0.9 seconds, consumed by one frontal blockable hostile hit. The first 0.3 seconds prevent all damage and deal a 175% counter: 21, 26.25, 31.5, 36.75, 42 damage. Later guards reduce incoming damage by 70% and deal the table value. Rear hits, environmental damage and attacks tagged to bypass shields do not trigger the counter.
 
 Spell ID: `resonant_arcana:glacial_counter`. Inspect any rank in game with `/resonantarcana spell glacial_counter <level>`.
+
+### Yeti’s Glacial Wall
+
+Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the aimed ground to form a temporary wall of ice. Each enemy takes at most one hit and is slowed and chilled; no blocks are changed.
+
+**Role:** Yeti / ice barrier · **Cast:** 1s · **Cooldown:** 11s · **Range:** 16 blocks · **Radius / width:** 2 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 50 |
+| II | 11.25 | — | 55 |
+| III | 13.5 | — | 60 |
+| IV | 15.75 | — | 65 |
+| V | 18 | — | 70 |
+
+Spell ID: `resonant_arcana:yetis_glacial_wall`. Inspect any rank in game with `/resonantarcana spell yetis_glacial_wall <level>`.

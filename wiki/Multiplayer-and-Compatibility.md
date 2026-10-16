@@ -16,7 +16,7 @@ Effects use different shapes as well as school colours: sweeping crescents, orbi
 
 Layered **Iron’s and vanilla sound events** provide preparation, release and impact cues. Personal impact feedback lets the caster hear distant hits; nearby players hear positional audio. No parent-mod audio files are bundled.
 
-**AAAParticles is optional.** Installing it adds 222 packaged native effects; Iron’s particles and vanilla trails remain available without it. The addon includes no native renderer or extra particle-mod dependency.
+**AAAParticles is optional and limited to 24 spell-circle effects.** Other visuals use vanilla, Iron’s or Bosses’Rise particles and entities. Bosses’Rise spells do not use AAAParticles.
 
 ## Optional content
 

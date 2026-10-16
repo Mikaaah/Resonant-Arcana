@@ -1,4 +1,4 @@
-## Blood Wand
+# Blood Wand
 
 **Blood school.** Saved item ID: `resonant_arcana:blood_wand`.
 
@@ -248,8 +248,4 @@ Blink forward with a blood slash along the clear path, adding half your melee at
 
 Spell ID: `resonant_arcana:crimson_reversal`. Inspect any rank in game with `/resonantarcana spell crimson_reversal <level>`.
 
-<a id="cinder-wand"></a>
-
----
-
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+[← Wiki Home](Home.md)

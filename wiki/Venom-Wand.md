@@ -1,4 +1,4 @@
-## Venom Wand
+# Venom Wand
 
 **Nature school.** Saved item ID: `resonant_arcana:venom_wand`.
 
@@ -214,7 +214,7 @@ Spell ID: `resonant_arcana:gorgon_gaze`. Inspect any rank in game with `/resonan
 
 ### Kraken’s Grasp
 
-Requires Bosses’Rise 2.1.2. Summon a spectral Kraken tentacle at a visible ground location. After rising, it slams nearby enemies, dealing Nature damage and slowing them for 3 seconds. Protects allies; does not grab or move bosses.
+Requires Bosses’Rise 2.1.2. Summon the Kraken’s red tentacle at a visible ground location. After rising, it slams nearby enemies and slows them for 3 seconds. Protects allies; does not grab or move bosses.
 
 **Role:** Boss magic / control · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 18 blocks · **Radius / width:** 4 blocks.
 
@@ -230,7 +230,7 @@ Spell ID: `resonant_arcana:krakens_grasp`. Inspect any rank in game with `/reson
 
 ### Kraken’s Wrath
 
-Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.
+Requires Bosses’Rise 2.1.2. Four red Kraken tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.
 
 **Role:** Boss magic / ultimate · **Cast:** 3.6s · **Cooldown:** 30s · **Range:** 20 blocks · **Radius / width:** 4 blocks.
 
@@ -250,8 +250,20 @@ Requires Bosses’Rise 2.1.2. Four spectral tentacles strike around the aimed gr
 
 Spell ID: `resonant_arcana:krakens_wrath`. Inspect any rank in game with `/resonantarcana spell krakens_wrath <level>`.
 
-<a id="holy-wand"></a>
+### Kraken’s Undertow
 
----
+Requires Bosses’Rise 2.1.2. A Kraken tentacle rises at a visible ground location. Its undertow pulls nearby enemies toward the water before one heavy slam. Uses the Kraken’s red model and texture; allies and bosses are not pulled.
 
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+**Role:** Kraken / water control · **Cast:** 1.3s · **Cooldown:** 16s · **Range:** 18 blocks · **Radius / width:** 5 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 65 |
+| II | 15 | — | 71 |
+| III | 18 | — | 77 |
+| IV | 21 | — | 83 |
+| V | 24 | — | 89 |
+
+Spell ID: `resonant_arcana:krakens_undertow`. Inspect any rank in game with `/resonantarcana spell krakens_undertow <level>`.
+
+[← Wiki Home](Home.md)

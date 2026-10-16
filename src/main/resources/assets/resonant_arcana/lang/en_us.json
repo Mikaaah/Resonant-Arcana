@@ -1,4 +1,6 @@
 {
+  "itemGroup.resonant_arcana.wands": "Resonant Arcana: Wands",
+  "itemGroup.resonant_arcana.scrolls": "Resonant Arcana: Scrolls",
   "item.resonant_arcana.arcane_wand": "Arcane Wand",
   "item.resonant_arcana.blood_wand": "Blood Wand",
   "item.resonant_arcana.cinder_wand": "Cinder Wand",
@@ -159,5 +161,13 @@
   "spell.resonant_arcana.spellbreaker": "Spellbreaker",
   "effect.resonant_arcana.glacial_guard": "Glacial Guard",
   "effect.resonant_arcana.thunderbrand": "Thunderbrand",
-  "effect.resonant_arcana.phantom_formation": "Phantom Formation"
+  "effect.resonant_arcana.phantom_formation": "Phantom Formation",
+  "spell.resonant_arcana.krakens_undertow": "Kraken\u2019s Undertow",
+  "spell.resonant_arcana.yetis_glacial_wall": "Yeti\u2019s Glacial Wall",
+  "spell.resonant_arcana.helvars_fracture": "Helvar\u2019s Fracture",
+  "spell.resonant_arcana.sandworms_eruption": "Sandworm\u2019s Eruption",
+  "spell.resonant_arcana.sandworms_quicksand": "Sandworm\u2019s Quicksand",
+  "spell.resonant_arcana.dragons_guard": "Dragon\u2019s Guard",
+  "spell.resonant_arcana.dragons_pyre": "Dragon\u2019s Pyre",
+  "spell.resonant_arcana.helvars_swordfall": "Helvar\u2019s Swordfall"
 }

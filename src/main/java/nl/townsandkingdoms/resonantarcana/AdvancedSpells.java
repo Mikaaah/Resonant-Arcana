@@ -3,6 +3,7 @@ package nl.townsandkingdoms.resonantarcana;
 import static nl.townsandkingdoms.resonantarcana.SpellEngine.*;
 import java.util.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
@@ -11,6 +12,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.NeoForge;
@@ -54,7 +57,7 @@ final class AdvancedSpells {
                 return true;
             }
             case BANNER -> {
-                c.pos=ground(c,c.anchor);if(c.pos==null)c.pos=c.caster.position();c.duration=c.spell.duration();rally(c,s);return true;
+                c.pos=ground(c,c.anchor);if(c.pos==null)c.pos=c.caster.position();c.duration=c.spell.duration();s.bannerPos=placeBanner(c);rally(c,s);return true;
             }
             case BELL -> {c.pos=c.caster.position().add(0,.7,0);c.duration=c.spell.duration();return true;}
             case BREAKER -> {breaker(c);return false;}
@@ -84,7 +87,7 @@ final class AdvancedSpells {
                 if(c.age==16){area(c,c.pos.add(0,.5,0),c.spell.radius,true);burst(c,c.pos.add(0,1,0));sound(c,c.pos,"entity.phantom.flap",1.5f,.6f);return false;}
             }
             case BANNER -> {
-                if(c.age%10==1){rally(c,s);bannerVisual(c);}
+                if(c.age%20==1){rally(c,s);bannerVisual(c);}
                 if(c.age==c.duration){SpellActions.healArea(c,c.pos,c.spell.radius,c.spell.healing(),false);burst(c,c.pos.add(0,2,0));sound(c,c.pos,"block.beacon.activate",1,.8f);return false;}
             }
             case BELL -> {
@@ -155,6 +158,10 @@ final class AdvancedSpells {
     private static net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> marker(Spell spell){return spell==Spell.GLACIAL_COUNTER?ArcanaEffects.GLACIAL_GUARD:spell==Spell.THUNDERBRAND?ArcanaEffects.THUNDERBRAND:ArcanaEffects.PHANTOM_FORMATION;}
     static void clear(){GUARDS.clear();BRANDS.clear();FORMATIONS.clear();procDepth=0;}
     static void cleanup(Cast c){
+        if(c.advanced!=null&&c.spell.kind==Spell.Kind.BANNER&&c.advanced.bannerPos!=null){
+            BlockPos pos=c.advanced.bannerPos;
+            if(c.level.hasChunkAt(pos)&&c.level.getBlockState(pos).is(Blocks.YELLOW_BANNER))c.level.setBlock(pos,Blocks.AIR.defaultBlockState(),3);
+        }
         if(c.advanced!=null&&(c.spell==Spell.GLACIAL_COUNTER||c.spell==Spell.THUNDERBRAND||c.spell==Spell.PHANTOM_FORMATION)){
             var map=states(c.spell);if(map.remove(c.owner,c.advanced))c.caster.removeEffect(marker(c.spell));
         }
@@ -169,8 +176,17 @@ final class AdvancedSpells {
         }
     }
     private static void bannerVisual(Cast c){
-        areaVisual(c,c.pos,1.7);for(int i=0;i<=10;i++)trail(c.level,c.pos.add(0,i*.25,0),c.spell.theme,.01);
-        for(int x=0;x<5;x++)for(int y=0;y<3;y++)trail(c.level,c.pos.add(x*.22,2.4-y*.2,Math.sin(c.age*.2+x*.3)*.1),c.spell.theme,.015);
+        c.level.sendParticles(ParticleTypes.END_ROD,c.pos.x,c.pos.y+1.8,c.pos.z,1,.18,.45,.18,.005);
+        c.level.sendParticles(ParticleTypes.HAPPY_VILLAGER,c.pos.x,c.pos.y+2.2,c.pos.z,2,.35,.35,.35,.01);
+        areaVisual(c,c.pos,1.7);
+    }
+    private static BlockPos placeBanner(Cast c){
+        BlockPos pos=BlockPos.containing(c.pos);
+        if(!c.level.hasChunkAt(pos)||!c.level.getBlockState(pos).isAir()||!c.level.getBlockState(pos.below()).isFaceSturdy(c.level,pos.below(),Direction.UP))return null;
+        var stack=Items.YELLOW_BANNER.getDefaultInstance();
+        if(!c.level.mayInteract(c.caster,pos)||!c.caster.mayUseItemAt(pos,Direction.UP,stack))return null;
+        var state=Blocks.YELLOW_BANNER.defaultBlockState();
+        return state.canSurvive(c.level,pos)&&c.level.setBlock(pos,state,3)?pos.immutable():null;
     }
     private static void buffVisual(Cast c,State s){
         if(c.spell==Spell.PHANTOM_FORMATION){
@@ -228,12 +244,12 @@ final class AdvancedSpells {
             if(p!=null&&visible(c,c.caster.getEyePosition(),p.add(0,.7,0))){c.eruptionPoints.add(p);spawnTentacle(c,p);}else c.eruptionPoints.add(null);
         }
         if(c.age>=47&&c.age<=77&&(c.age-47)%10==0){
-            int i=(c.age-47)/10;Vec3 p=c.eruptionPoints.get(i);if(p!=null){area(c,p.add(0,.7,0),2.5,true);burst(c,p.add(0,1,0));sound(c,p,BossesRiseCompat.MOD+":item.undying_tentacle.smash_ground",1,.8f);}
+            int i=(c.age-47)/10;Vec3 p=c.eruptionPoints.get(i);if(p!=null){area(c,p.add(0,.7,0),2.5,true);BossesRiseBridge.tentacleImpact(c.level,p);sound(c,p,BossesRiseCompat.MOD+":item.undying_tentacle.smash_ground",1,.8f);}
         }
         if(c.age==60)spawnTentacle(c,c.pos);
         if(c.age==106){
             c.hit.clear();for(var v:near(c.caster,c.pos,c.spell.radius))if(visible(c,c.pos.add(0,.7,0),v.getBoundingBox().getCenter()))scaledHit(c,v,c.pos,3,true);
-            burst(c,c.pos.add(0,1,0));sound(c,c.pos,BossesRiseCompat.MOD+":item.undying_tentacle.smash_ground",1.7f,.55f);
+            BossesRiseBridge.tentacleImpact(c.level,c.pos);sound(c,c.pos,BossesRiseCompat.MOD+":item.undying_tentacle.smash_ground",1.7f,.55f);
         }
         if(c.age%8==1){c.level.sendParticles(ParticleTypes.SPLASH,c.pos.x,c.pos.y+.2,c.pos.z,12,2,.2,2,.1);areaVisual(c,c.pos,2);}
         return c.age<149;
@@ -242,6 +258,6 @@ final class AdvancedSpells {
     private static void areaVisual(Cast c,Vec3 p,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,p,p,Math.min(4,size));}
     private static void line(Cast c,Vec3 a,Vec3 b,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,a,b,size);}
     private static void sound(Cast c,Vec3 p,String id,float volume,float pitch){SpellAudio.world(c.level,p,id,volume,pitch);}
-    static final class State {final Cast c;boolean done;int charges;float weapon;final Set<UUID> buffed=new HashSet<>();final List<Blade> blades=new ArrayList<>();State(Cast c){this.c=c;}}
+    static final class State {final Cast c;boolean done;int charges;float weapon;BlockPos bannerPos;final Set<UUID> buffed=new HashSet<>();final List<Blade> blades=new ArrayList<>();State(Cast c){this.c=c;}}
     private static final class Blade {Vec3 pos;final Vec3 dir;int age;double distance;Blade(Vec3 p,Vec3 d){pos=p;dir=d;}}
 }

@@ -1,4 +1,4 @@
-## Arcane Wand
+# Arcane Wand
 
 **Evocation school.** Saved item ID: `resonant_arcana:arcane_wand`.
 
@@ -260,8 +260,4 @@ Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hosti
 
 Spell ID: `resonant_arcana:spellbreaker`. Inspect any rank in game with `/resonantarcana spell spellbreaker <level>`.
 
-<a id="blood-wand"></a>
-
----
-
-[← All wands](Wand-Index.md) · [Spell mechanics](Spell-Mechanics.md) · [Wiki Home](Home.md)
+[← Wiki Home](Home.md)

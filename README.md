@@ -5,14 +5,14 @@
 [![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-5B8731?style=flat-square)](https://github.com/Mikaaah/Resonant-Arcana)
 [![NeoForge](https://img.shields.io/badge/Loader-NeoForge-D97724?style=flat-square)](https://neoforged.net/)
 [![Alpha](https://img.shields.io/badge/Release-Alpha-F59E0B?style=flat-square)](CHANGELOG.md)
-[![10 Wands · 137 + 4 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20137%20%2B%204%20Spells-7756B4?style=flat-square)](SPELLS.md)
+[![10 Wands · 137 + 12 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20137%20%2B%2012%20Spells-7756B4?style=flat-square)](SPELLS.md)
 [![MIT License](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
 
 📚 **[Browse the documentation wiki](wiki/Home.md)** · [Wand & spell index](wiki/Wand-Index.md) · [Installation](wiki/Getting-Started.md)
 
-An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **four optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
+An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **twelve optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.16.0-alpha](downloads/resonant-arcana-0.16.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.17.0-alpha](downloads/resonant-arcana-0.17.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## New in 0.16
 
@@ -22,7 +22,7 @@ Reactive guards, melee-triggered lightning and spectral swords connect spells wi
 
 ## Optional Bosses’Rise integration
 
-Install **Bosses’Rise 2.1.2** on both client and server to add **Kraken’s Grasp**, **Ice Spike Eruption**, and **Helvar’s Rift**, and **Kraken’s Wrath**. These are native Iron’s spells with levels I–V. Their models, animations and sounds come from the installed Bosses’Rise mod; no third-party assets are included in this addon. Without it, the 137-spell core kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
+Install **Bosses’Rise 2.1.2** on both client and server to add twelve spells from all five bosses: **Kraken** (Grasp, Wrath, Undertow), **Yeti** (Ice Spike Eruption, Glacial Wall), **Underworld Knight / Helvar** (Rift, Fracture, Swordfall), **Sandworm** (Eruption, Quicksand), and **Infernal Dragon** (Guard, Pyre). These are native Iron’s spells with levels I–V. Their visual entities use the installed mod’s models, items and textures, including the red Kraken tentacle, Helvar’s Knight Sword, Sandworm columns and Dragon’s flaming guard. No third-party assets are bundled. Without Bosses’Rise, the 137-spell core kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
 
 Boss attacks are adapted for player use: visual entities cannot run native boss attacks, and our shared engine handles damage, ally protection, PvP and walls. Kraken’s Grasp is a delayed tentacle slam with slowing, rather than an enemy-grabbing mechanic. See [spell details and timing](SPELLS.md#optional-bossesrise-spells).
 
@@ -31,6 +31,8 @@ Boss attacks are adapted for player use: visual entities cannot run native boss 
 New in 0.14: **Warscream**, **Soulblast**, three spellsword attacks and three weapon/party buffs. Expanded wand kits use pages: click the arrow buttons or press Left/Right; number shortcuts select a spell on the current page.
 
 Each wand carries **12–16 spells**. Use a wand directly or inscribe the same spells into an existing Iron’s spellbook. Mana, casting bars, interruption, cooldowns, school attributes and player animations use Iron’s native systems.
+
+The creative inventory has separate **Wands** and **Scrolls** tabs. Scrolls are grouped in wand order, with optional Bosses’Rise spells shown only when that mod is installed.
 
 | Wand | Iron’s school | Play style |
 | --- | --- | --- |
@@ -53,7 +55,7 @@ Effects use different shapes as well as school colours: sweeping crescents, orbi
 
 Layered **Iron’s and vanilla sound events** provide preparation, release and impact cues. Personal impact feedback lets the caster hear distant hits; nearby players hear positional audio. No parent-mod audio files are bundled.
 
-**AAAParticles is optional.** Installing it adds 222 packaged native effects; Iron’s particles and vanilla trails remain available without it. The addon includes no native renderer or extra particle-mod dependency.
+**AAAParticles is optional and limited to spell circles.** Only 24 circle effects are packaged; projectiles, impacts, buffs, banners, and Bosses’Rise spells use vanilla, Iron’s, or Bosses’Rise’s own particles and entities. You can disable AAAParticles while keeping those effects.
 
 ## Progression
 
@@ -127,7 +129,7 @@ The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.
 
 ## Validation
 
-0.16.0-alpha passed **6,270 dedicated-server checks without Bosses’Rise** and **6,547 with Bosses’Rise 2.1.2**. The build also validates the texture paths of all 222 packaged effects. In-game visuals, sound balance, controls and custom combat-mod interactions still need modpack playtesting.
+The previously published 0.16.0-alpha JAR passed **6,270 dedicated-server checks without Bosses’Rise** and **6,547 with Bosses’Rise 2.1.2**; that JAR packaged 222 effects. The current source, including Helvar’s Swordfall, passes Java compilation and the Gradle build with all 24 packaged effects validated. This test build still needs fresh dedicated-server checks and in-game client testing before release.
 
 ## Contributing
 

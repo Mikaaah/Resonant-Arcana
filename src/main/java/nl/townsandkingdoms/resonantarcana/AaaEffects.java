@@ -34,7 +34,7 @@ final class AaaEffects {
                 Vec3 end=eye.add(mc.player.getLookAngle().scale(5));
                 var clip=mc.level.clip(new net.minecraft.world.level.ClipContext(eye,end,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,mc.player));
                 Vec3 point=clip.getLocation().lerp(eye,0.1);
-                visual(new WandNetwork.Visual(Spell.AMETHYST_NOVA.ordinal(),SpellVisuals.Stage.IMPACT.ordinal(),point.x,point.y,point.z,point.x,point.y,point.z,1.8f),false);
+                visual(new WandNetwork.Visual(Spell.GLACIAL_COUNTER.ordinal(),SpellVisuals.Stage.AREA.ordinal(),point.x,point.y,point.z,point.x,point.y,point.z,1.8f),false);
             }
             if(--testTicks==0)diagnostics();
         }
@@ -44,6 +44,8 @@ final class AaaEffects {
     private static void visual(WandNetwork.Visual message,boolean packet) {
         if(packet)received++;
         if(!message.valid()||!ArcanaConfig.AAA_PARTICLES.get())return;
+        var spell=Spell.values()[message.spell()];var stage=SpellVisuals.Stage.values()[message.stage()];
+        if(!SpellVisuals.usesAaa(spell,stage))return;
         var mc=Minecraft.getInstance();
         if(mc.level==null||mc.player==null||spawned>=ArcanaConfig.AAA_BUDGET.get())return;
         Vec3 start=new Vec3(message.x(),message.y(),message.z()),end=new Vec3(message.endX(),message.endY(),message.endZ());
@@ -53,7 +55,6 @@ final class AaaEffects {
         if(mc.player.distanceToSqr(nearest)>96*96)return;
         if(!checked)initialize();
         if(!available)return;
-        var spell=Spell.values()[message.spell()];var stage=SpellVisuals.Stage.values()[message.stage()];
         var shape=SpellVisuals.shape(spell,stage);
         float size=message.size(),sx=size,sy=size,sz=size;
         boolean directional=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE||stage==SpellVisuals.Stage.CAST||stage==SpellVisuals.Stage.FLIGHT||stage==SpellVisuals.Stage.CHARGE||shape==SpellVisuals.Shape.FANG_ROW||shape==SpellVisuals.Shape.SCREAM_IMPACT||shape==SpellVisuals.Shape.SLASH||shape==SpellVisuals.Shape.ORBIT;
@@ -143,7 +144,7 @@ final class AaaEffects {
             say("Test unavailable: AAAParticles must be installed and aaaParticles must be true.");return;
         }
         testTicks=60;
-        say("Testing cyan/amethyst bursts in front of you for three seconds; no server packets required.");
+        say("Testing the Glacial Counter circle in front of you for three seconds; no server packets required.");
     }
 
     private static void initialize() {
@@ -171,7 +172,7 @@ final class AaaEffects {
                 say(lastError);return;
             }
             available=true;
-            ResonantArcana.LOG.info("AAAParticles full spell visuals enabled");
+            ResonantArcana.LOG.info("AAAParticles circle visuals enabled");
         }catch(ReflectiveOperationException|LinkageError error){
             lastError=error.toString();
             say("AAAParticles API unavailable: "+lastError);
