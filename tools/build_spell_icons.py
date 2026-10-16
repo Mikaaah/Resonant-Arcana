@@ -6,12 +6,12 @@ ROOT=Path(__file__).resolve().parents[1]
 PALETTES={'MAGIC':'#c570ff','BLOOD':'#ee365d','POISON':'#87e745','FIRE':'#ff8b32','THUNDER':'#7de8ff','DARK':'#9b6be8','GRAVITY':'#ed8aff','SOUL':'#48e9d9','HOLY':'#ffe5a1','ICE':'#a6e7ff'}
 
 def main():
-    catalogue=json.loads((ROOT/'src/main/resources/assets/kingdomwands/catalogue.json').read_text())
+    catalogue=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text())
     spells=[(name,entry['title'],entry['kind'],entry['theme']) for name,entry in catalogue['spells'].items()]
-    folder=ROOT/'src/main/resources/assets/kingdomwands/textures/gui/spell_icons';folder.mkdir(parents=True,exist_ok=True)
-    langfile=ROOT/'src/main/resources/assets/kingdomwands/lang/en_us.json';lang=json.loads(langfile.read_text())
+    folder=ROOT/'src/main/resources/assets/resonant_arcana/textures/gui/spell_icons';folder.mkdir(parents=True,exist_ok=True)
+    langfile=ROOT/'src/main/resources/assets/resonant_arcana/lang/en_us.json';lang=json.loads(langfile.read_text())
     for index,(name,title,kind,theme) in enumerate(spells):
-        ident={'EMPIRE_SPARK':'arcane_strike','EMPIRE_COMET':'astral_comet','EMPIRE_PULSE':'arcane_repulse'}.get(name,name.lower())
+        ident=catalogue['spells'][name]['bookId']
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c=PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
         if kind in ('BLINK','DASH'):
@@ -107,10 +107,10 @@ def main():
             x,y=rng.randint(15,112),rng.randint(18,110);d.ellipse((x,y,x+4,y+4),fill=c)
         glow=im.filter(ImageFilter.GaussianBlur(4));im=Image.alpha_composite(glow,im)
         im.resize((32,32),Image.Resampling.LANCZOS).save(folder/(ident+'.png'))
-        lang['spell.kingdomwands.'+ident]=title
-    lang['key.kingdomwands.select']='Choose wand spell'
-    lang.pop('subtitles.kingdomwands.cast',None)
-    lang.pop('subtitles.kingdomwands.impact',None)
+        lang['spell.resonant_arcana.'+ident]=title
+    lang['key.resonant_arcana.select']='Choose wand spell'
+    lang.pop('subtitles.resonant_arcana.cast',None)
+    lang.pop('subtitles.resonant_arcana.impact',None)
     langfile.write_text(json.dumps(lang,indent=2)+'\n');print('Generated',len(spells),'spell icons and translations.')
 
 if __name__=='__main__':main()

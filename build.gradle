@@ -2,8 +2,8 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.12.0-alpha'
-group = 'nl.townsandkingdoms.kingdomwands'
+version = '0.13.0-alpha'
+group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 java.withSourcesJar()
@@ -15,18 +15,18 @@ neoForge {
             programArgument '--nogui'
             jvmArgument '-Xmx2G'
             gameDirectory = file('run')
-            systemProperty 'kingdomwands.integrationTest', System.getProperty('kingdomwands.integrationTest', 'false')
+            systemProperty 'resonant_arcana.integrationTest', System.getProperty('resonant_arcana.integrationTest', 'false')
         }
         client { client(); gameDirectory = file('run-client') }
     }
-    mods { kingdomwands { sourceSet sourceSets.main } }
+    mods { resonant_arcana { sourceSet sourceSets.main } }
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 21 }
 tasks.named('jar') { from('LICENSE') }
 
 // Validate the paths consumed by Minecraft, rather than resolving them on the build machine.
 tasks.register('verifyEffects') {
-    def effects = file('src/main/resources/assets/kingdomwands/effeks')
+    def effects = file('src/main/resources/assets/resonant_arcana/effeks')
     inputs.dir(effects)
     doLast {
         def assets = fileTree(effects).matching { include '*.efkefc' }.files
@@ -81,13 +81,3 @@ dependencies {
         compileOnly('io.redspace:irons_spellbooks:1.21.1-3.16.3') { transitive = false }
     }
 }
-
-// Retired synthesized audio is replaced by Iron's and vanilla sound events.
-tasks.named('processResources') {
-    doFirst {
-        delete file('build/resources/main/assets/kingdomwands/sounds')
-        delete file('build/resources/main/assets/kingdomwands/sounds.json')
-    }
-    exclude 'assets/kingdomwands/sounds/**', 'assets/kingdomwands/sounds.json'
-}
-tasks.named('jar') { exclude 'assets/kingdomwands/sounds/**', 'assets/kingdomwands/sounds.json' }

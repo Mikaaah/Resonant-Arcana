@@ -1,12 +1,12 @@
 # Configuration
 
-Resonant Arcana 0.12 separates authoritative server rules from local client preferences. Files are generated on first launch.
+Resonant Arcana 0.13 separates authoritative server rules from local client preferences. Files are generated on first launch.
 
 - **Server:** `<world>/serverconfig/resonantarcana-server.toml`. These values synchronize to joining clients. On a dedicated server, `<world>` is the configured level folder.
 - **New-world defaults:** copy the server file to `defaultconfigs/resonantarcana-server.toml` before creating a world. This does not overwrite existing worlds.
 - **Client:** `config/resonantarcana-client.toml`. Each player controls their own display, mouse input and optional AAAParticles settings.
 
-Stop the game or server before editing. Restart after changes. The old `config/kingdomwands-common.toml` is no longer read; transfer desired values using the mapping below.
+Stop the game or server before editing. Restart after changes. Existing `resonantarcana-server.toml` and `resonantarcana-client.toml` settings from 0.12 can still be used. The namespace change does not migrate saved items or spells.
 
 ## Server settings
 
@@ -40,30 +40,16 @@ Visual budgets affect presentation; they never select targets or change damage. 
 | `particles.enableAaaParticles` | `true` | boolean | Use the extra AAAParticles effects when the optional mod is installed. |
 | `particles.maxAaaEffectsPerTick` | `32` | 8–96 | Maximum new AAAParticles emitters on this client per tick. |
 
-Keys are rebound under **Controls → Resonant Arcana**. `/kwvisuals` reports optional renderer status and loaded effect counts; `/kwvisuals test` plays a short local test.
+Keys are rebound under **Controls → Resonant Arcana**. `/arcana_visuals` reports optional renderer status and loaded effect counts; `/arcana_visuals test` plays a short local test.
 
 ## Individual spells
 
 All 120 spells register through Iron’s native spell API. Use Iron’s spell configuration for individual enablement, maximum level, cooldown, school and crafting rules. Resonant Arcana’s server multipliers apply in addition to those rules. Scroll upgrades cannot exceed either the catalogue’s level cap or the server’s configured maximum.
 
-The packaged `assets/kingdomwands/catalogue.json` defines the addon’s baseline spell damage, mana, timing and descriptions. It is a validated build resource, **not a hot-reloaded datapack or a per-world configuration file**. Maintain a source fork and rebuild if you want to change these defaults. The spell guide is generated from the same resource.
+The packaged `assets/resonant_arcana/catalogue.json` defines the addon’s baseline spell damage, mana, timing and descriptions. It is a validated build resource, **not a hot-reloaded datapack or a per-world configuration file**. Maintain a source fork and rebuild if you want to change these defaults. The spell guide is generated from the same resource.
 
-## Migration from 0.11 and earlier
+## Namespace break in 0.13
 
-| Old flat key | New key |
-| --- | --- |
-| `enableWandCasting` | Server `casting.enableWands` |
-| `allowPvp` | Server `combat.allowPvp` |
-| `classicMouseCasting` | Client `controls.leftClickCasting` |
-| `damageMultiplier` | Server `balance.damageMultiplier` |
-| `cooldownMultiplier` | Server `balance.cooldownMultiplier` |
-| `soundVolume` | Server `audio.volume` |
-| `impactVolume` | Server `audio.impactVolume` |
-| `casterImpactFeedback` | Server `audio.personalImpactFeedback` |
-| `aaaParticles` | Client `particles.enableAaaParticles` |
-| `maxAaaEffectsPerTick` | Client `particles.maxAaaEffectsPerTick` |
-| `particleDensity` | Server `visuals.trailDensity` |
-| `maxParticlePointsPerTick` | Server `visuals.trailPointsPerTick` |
-| `maxActiveSpells` | Server `casting.maxActiveSpells` |
+All registered addon IDs now use `resonant_arcana`. Arcane, Cinder and Rift wands use `arcane_wand`, `cinder_wand` and `rift_wand`. Old registries, item selections and learned spell ranks are not migrated; obtain new wands and scrolls and reinscribe spellbooks. Key bindings also use the new namespace and may need rebinding. If you customized individual spells through Iron’s configuration, apply those overrides to their new `resonant_arcana` IDs.
 
-The migration does not delete your previous file. Existing wands keep stable spell selections and saved IDs. New rank data is stored per spell on each wand; existing wands begin at level I.
+The server/client configuration filenames introduced in 0.12 stay `resonantarcana-server.toml` and `resonantarcana-client.toml`.

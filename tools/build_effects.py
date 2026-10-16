@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / 'src/main/resources/assets/kingdomwands/effeks'
+ASSETS = ROOT / 'src/main/resources/assets/resonant_arcana/effeks'
 PALETTES = {
     'magic': (0xB349F5, 0xFFD57D), 'blood': (0xD91C42, 0xFF6280),
     'poison': (0x68DB39, 0xCEE95D), 'fire': (0xFF6515, 0xFFD35C),

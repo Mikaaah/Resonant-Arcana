@@ -14,12 +14,12 @@ Healing affects the caster, owned pets and scoreboard teammates. By default it a
 
 | Wand | School | Spell kit |
 | --- | --- | --- |
-| [Arcane Wand](#empire-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step |
+| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step |
 | [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest |
-| [Cinder Wand](#celcrius-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath |
+| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath |
 | [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom |
 | [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet |
-| [Rift Wand](#mephi-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear |
+| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear |
 | [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture |
 | [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze |
 | [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn |
@@ -41,10 +41,10 @@ Healing and cleansing spells share a recovery group. Blood Ward, Echo Ward and D
 
 Windup is the native Iron’s cast bar. Some spells also have a release phase: Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
 
-<a id="empire-wand"></a>
+<a id="arcane-wand"></a>
 ## Arcane Wand
 
-**Evocation school.** Saved item ID: `kingdomwands:empire_wand`.
+**Evocation school.** Saved item ID: `resonant_arcana:arcane_wand`.
 
 ### Spark
 
@@ -60,7 +60,7 @@ A travelling projectile that stops at walls.
 | IV | 5.25 | — | 24 |
 | V | 6 | — | 27 |
 
-Spell ID: `kingdomwands:spark`. Inspect any rank in game with `/resonantarcana spell spark <level>`.
+Spell ID: `resonant_arcana:spark`. Inspect any rank in game with `/resonantarcana spell spark <level>`.
 
 ### Arcane Strike
 
@@ -76,7 +76,7 @@ Strike the living target you aim at.
 | IV | 8.75 | — | 33 |
 | V | 10 | — | 37 |
 
-Spell ID: `kingdomwands:arcane_strike`. Inspect any rank in game with `/resonantarcana spell arcane_strike <level>`.
+Spell ID: `resonant_arcana:arcane_strike`. Inspect any rank in game with `/resonantarcana spell arcane_strike <level>`.
 
 ### Mind Haze
 
@@ -92,7 +92,7 @@ Briefly blind and disorient your target.
 | IV | — | — | 27 |
 | V | — | — | 30 |
 
-Spell ID: `kingdomwands:confuse`. Inspect any rank in game with `/resonantarcana spell confuse <level>`.
+Spell ID: `resonant_arcana:confuse`. Inspect any rank in game with `/resonantarcana spell confuse <level>`.
 
 ### Stun
 
@@ -108,7 +108,7 @@ Slow and weaken your target.
 | IV | 1.75 | — | 32 |
 | V | 2 | — | 36 |
 
-Spell ID: `kingdomwands:stun`. Inspect any rank in game with `/resonantarcana spell stun <level>`.
+Spell ID: `resonant_arcana:stun`. Inspect any rank in game with `/resonantarcana spell stun <level>`.
 
 ### Arcane Bind
 
@@ -126,7 +126,7 @@ Hold a target briefly; cover breaks the tether.
 
 **Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
 
-Spell ID: `kingdomwands:capture`. Inspect any rank in game with `/resonantarcana spell capture <level>`.
+Spell ID: `resonant_arcana:capture`. Inspect any rank in game with `/resonantarcana spell capture <level>`.
 
 ### Astral Comet
 
@@ -142,7 +142,7 @@ A slow projectile with an area impact.
 | IV | 24.5 | — | 72 |
 | V | 28 | — | 81 |
 
-Spell ID: `kingdomwands:astral_comet`. Inspect any rank in game with `/resonantarcana spell astral_comet <level>`.
+Spell ID: `resonant_arcana:astral_comet`. Inspect any rank in game with `/resonantarcana spell astral_comet <level>`.
 
 ### Arcane Repulse
 
@@ -158,7 +158,7 @@ An expanding shock ring around you.
 | IV | 14 | — | 57 |
 | V | 16 | — | 64 |
 
-Spell ID: `kingdomwands:arcane_repulse`. Inspect any rank in game with `/resonantarcana spell arcane_repulse <level>`.
+Spell ID: `resonant_arcana:arcane_repulse`. Inspect any rank in game with `/resonantarcana spell arcane_repulse <level>`.
 
 ### Launch
 
@@ -174,7 +174,7 @@ Launch your target upwards.
 | IV | 3.5 | — | 28 |
 | V | 4 | — | 31 |
 
-Spell ID: `kingdomwands:launch`. Inspect any rank in game with `/resonantarcana spell launch <level>`.
+Spell ID: `resonant_arcana:launch`. Inspect any rank in game with `/resonantarcana spell launch <level>`.
 
 ### Leap
 
@@ -190,7 +190,7 @@ Propel yourself forwards and upwards.
 | IV | — | — | 25 |
 | V | — | — | 28 |
 
-Spell ID: `kingdomwands:leap`. Inspect any rank in game with `/resonantarcana spell leap <level>`.
+Spell ID: `resonant_arcana:leap`. Inspect any rank in game with `/resonantarcana spell leap <level>`.
 
 ### Arcane Volley
 
@@ -210,7 +210,7 @@ Fire three staggered arcane projectiles.
 
 **Base active phase:** 2.2s.
 
-Spell ID: `kingdomwands:arcane_volley`. Inspect any rank in game with `/resonantarcana spell arcane_volley <level>`.
+Spell ID: `resonant_arcana:arcane_volley`. Inspect any rank in game with `/resonantarcana spell arcane_volley <level>`.
 
 ### Evoker's Edict
 
@@ -226,7 +226,7 @@ Send three staggered rows of spectral fangs along your aim. Each enemy takes one
 | IV | 45.5 | — | 110 |
 | V | 52 | — | 120 |
 
-Spell ID: `kingdomwands:evokers_edict`. Inspect any rank in game with `/resonantarcana spell evokers_edict <level>`.
+Spell ID: `resonant_arcana:evokers_edict`. Inspect any rank in game with `/resonantarcana spell evokers_edict <level>`.
 
 ### Arcane Step
 
@@ -242,12 +242,12 @@ Blink along your aim to a clear, loaded position. Range grows by 1 block per add
 | IV | — | — | 36 |
 | V | — | — | 40 |
 
-Spell ID: `kingdomwands:arcane_step`. Inspect any rank in game with `/resonantarcana spell arcane_step <level>`.
+Spell ID: `resonant_arcana:arcane_step`. Inspect any rank in game with `/resonantarcana spell arcane_step <level>`.
 
 <a id="blood-wand"></a>
 ## Blood Wand
 
-**Blood school.** Saved item ID: `kingdomwands:blood_wand`.
+**Blood school.** Saved item ID: `resonant_arcana:blood_wand`.
 
 ### Blood Wave
 
@@ -263,7 +263,7 @@ A wide travelling arc, hitting each enemy once.
 | IV | 8.75 | — | 36 |
 | V | 10 | — | 40 |
 
-Spell ID: `kingdomwands:blood_wave`. Inspect any rank in game with `/resonantarcana spell blood_wave <level>`.
+Spell ID: `resonant_arcana:blood_wave`. Inspect any rank in game with `/resonantarcana spell blood_wave <level>`.
 
 ### Crimson Strike
 
@@ -279,7 +279,7 @@ Strike the living target you aim at.
 | IV | 8.75 | — | 33 |
 | V | 10 | — | 37 |
 
-Spell ID: `kingdomwands:blood_spark`. Inspect any rank in game with `/resonantarcana spell blood_spark <level>`.
+Spell ID: `resonant_arcana:blood_spark`. Inspect any rank in game with `/resonantarcana spell blood_spark <level>`.
 
 ### Crimson Rupture
 
@@ -295,7 +295,7 @@ An area burst centred on your aim.
 | IV | 21 | — | 73 |
 | V | 24 | — | 82 |
 
-Spell ID: `kingdomwands:blood_explode`. Inspect any rank in game with `/resonantarcana spell blood_explode <level>`.
+Spell ID: `resonant_arcana:blood_explode`. Inspect any rank in game with `/resonantarcana spell blood_explode <level>`.
 
 ### Hemorrhagic Shock
 
@@ -311,7 +311,7 @@ Slow and weaken your target.
 | IV | 3.5 | — | 34 |
 | V | 4 | — | 38 |
 
-Spell ID: `kingdomwands:blood_stun`. Inspect any rank in game with `/resonantarcana spell blood_stun <level>`.
+Spell ID: `resonant_arcana:blood_stun`. Inspect any rank in game with `/resonantarcana spell blood_stun <level>`.
 
 ### Blood Ward
 
@@ -329,7 +329,7 @@ Deflect incoming hostile projectiles for 4 seconds at level I. Higher spell powe
 
 **Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
 
-Spell ID: `kingdomwands:blood_block`. Inspect any rank in game with `/resonantarcana spell blood_block <level>`.
+Spell ID: `resonant_arcana:blood_block`. Inspect any rank in game with `/resonantarcana spell blood_block <level>`.
 
 ### Sanguine Drain
 
@@ -345,7 +345,7 @@ Damage a visible aimed target and restore 40% of health actually removed, capped
 | IV | 8.75 | — | 43 |
 | V | 10 | — | 48 |
 
-Spell ID: `kingdomwands:sanguine_drain`. Inspect any rank in game with `/resonantarcana spell sanguine_drain <level>`.
+Spell ID: `resonant_arcana:sanguine_drain`. Inspect any rank in game with `/resonantarcana spell sanguine_drain <level>`.
 
 ### Blood Lance
 
@@ -361,7 +361,7 @@ An instant piercing line through visible enemies.
 | IV | 15.75 | — | 56 |
 | V | 18 | — | 63 |
 
-Spell ID: `kingdomwands:blood_lance`. Inspect any rank in game with `/resonantarcana spell blood_lance <level>`.
+Spell ID: `resonant_arcana:blood_lance`. Inspect any rank in game with `/resonantarcana spell blood_lance <level>`.
 
 ### Blood Needles
 
@@ -379,7 +379,7 @@ Release five divergent blood needles. Damage is per projectile; projectiles stop
 
 **Delivery:** up to 5 projectiles; the table gives the value for each one.
 
-Spell ID: `kingdomwands:blood_needles`. Inspect any rank in game with `/resonantarcana spell blood_needles <level>`.
+Spell ID: `resonant_arcana:blood_needles`. Inspect any rank in game with `/resonantarcana spell blood_needles <level>`.
 
 ### Blood Reap
 
@@ -395,7 +395,7 @@ Sweep a crimson crescent across a 120-degree forward arc. Each visible enemy is 
 | IV | 15.75 | — | 52 |
 | V | 18 | — | 58 |
 
-Spell ID: `kingdomwands:blood_reap`. Inspect any rank in game with `/resonantarcana spell blood_reap <level>`.
+Spell ID: `resonant_arcana:blood_reap`. Inspect any rank in game with `/resonantarcana spell blood_reap <level>`.
 
 ### Crimson Tether
 
@@ -415,7 +415,7 @@ Tether an aimed enemy for 3 seconds, gently pulling it and dealing three damage 
 
 **Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
 
-Spell ID: `kingdomwands:crimson_tether`. Inspect any rank in game with `/resonantarcana spell crimson_tether <level>`.
+Spell ID: `resonant_arcana:crimson_tether`. Inspect any rank in game with `/resonantarcana spell crimson_tether <level>`.
 
 ### Sanguine Pact
 
@@ -435,7 +435,7 @@ Spend 2 health to gain 4 absorption health and Strength I for 6 seconds at level
 
 **Absorption at levels I–V:** 4, 5, 6, 7, 8 health.
 
-Spell ID: `kingdomwands:sanguine_pact`. Inspect any rank in game with `/resonantarcana spell sanguine_pact <level>`.
+Spell ID: `resonant_arcana:sanguine_pact`. Inspect any rank in game with `/resonantarcana spell sanguine_pact <level>`.
 
 ### Crimson Harvest
 
@@ -453,12 +453,12 @@ Strike an aimed enemy. Deal 50% more direct damage below 35% maximum health; a k
 
 **Conditional direct damage at levels I–V:** 18, 22.5, 27, 31.5, 36.
 
-Spell ID: `kingdomwands:crimson_harvest`. Inspect any rank in game with `/resonantarcana spell crimson_harvest <level>`.
+Spell ID: `resonant_arcana:crimson_harvest`. Inspect any rank in game with `/resonantarcana spell crimson_harvest <level>`.
 
-<a id="celcrius-wand"></a>
+<a id="cinder-wand"></a>
 ## Cinder Wand
 
-**Fire school.** Saved item ID: `kingdomwands:celcrius_wand`.
+**Fire school.** Saved item ID: `resonant_arcana:cinder_wand`.
 
 ### Fire Comet
 
@@ -474,7 +474,7 @@ A slow projectile with an area impact. Fire hits ignite for three seconds.
 | IV | 21 | — | 72 |
 | V | 24 | — | 81 |
 
-Spell ID: `kingdomwands:fire_comet`. Inspect any rank in game with `/resonantarcana spell fire_comet <level>`.
+Spell ID: `resonant_arcana:fire_comet`. Inspect any rank in game with `/resonantarcana spell fire_comet <level>`.
 
 ### Cinder Vortex
 
@@ -494,7 +494,7 @@ A stationary vortex dealing repeated area damage. Fire hits ignite for three sec
 
 **Base active phase:** 2s.
 
-Spell ID: `kingdomwands:fire_twister`. Inspect any rank in game with `/resonantarcana spell fire_twister <level>`.
+Spell ID: `resonant_arcana:fire_twister`. Inspect any rank in game with `/resonantarcana spell fire_twister <level>`.
 
 ### Flame Wave
 
@@ -510,7 +510,7 @@ A wide travelling arc, hitting each enemy once. Fire hits ignite for three secon
 | IV | 8.75 | — | 36 |
 | V | 10 | — | 40 |
 
-Spell ID: `kingdomwands:flame_wave`. Inspect any rank in game with `/resonantarcana spell flame_wave <level>`.
+Spell ID: `resonant_arcana:flame_wave`. Inspect any rank in game with `/resonantarcana spell flame_wave <level>`.
 
 ### Cinder Surge
 
@@ -526,7 +526,7 @@ An expanding shock ring around you. Fire hits ignite for three seconds.
 | IV | 15.75 | — | 65 |
 | V | 18 | — | 73 |
 
-Spell ID: `kingdomwands:flame_shock_wave`. Inspect any rank in game with `/resonantarcana spell flame_shock_wave <level>`.
+Spell ID: `resonant_arcana:flame_shock_wave`. Inspect any rank in game with `/resonantarcana spell flame_shock_wave <level>`.
 
 ### Flamethrower
 
@@ -546,7 +546,7 @@ A short stream following your current aim. Fire hits ignite for three seconds.
 
 **Base active phase:** 1.5s.
 
-Spell ID: `kingdomwands:flame_thrower`. Inspect any rank in game with `/resonantarcana spell flame_thrower <level>`.
+Spell ID: `resonant_arcana:flame_thrower`. Inspect any rank in game with `/resonantarcana spell flame_thrower <level>`.
 
 ### Fireball
 
@@ -562,7 +562,7 @@ A travelling projectile that stops at walls. Fire hits ignite for three seconds.
 | IV | 10.5 | — | 40 |
 | V | 12 | — | 45 |
 
-Spell ID: `kingdomwands:fireball`. Inspect any rank in game with `/resonantarcana spell fireball <level>`.
+Spell ID: `resonant_arcana:fireball`. Inspect any rank in game with `/resonantarcana spell fireball <level>`.
 
 ### Ignite
 
@@ -578,7 +578,7 @@ Strike the living target you aim at. Fire hits ignite for three seconds.
 | IV | 3.5 | — | 26 |
 | V | 4 | — | 29 |
 
-Spell ID: `kingdomwands:ignite`. Inspect any rank in game with `/resonantarcana spell ignite <level>`.
+Spell ID: `resonant_arcana:ignite`. Inspect any rank in game with `/resonantarcana spell ignite <level>`.
 
 ### Ember Veil
 
@@ -598,7 +598,7 @@ A damaging aura that moves with you. Fire hits ignite for three seconds.
 
 **Base active phase:** 3s.
 
-Spell ID: `kingdomwands:ember_veil`. Inspect any rank in game with `/resonantarcana spell ember_veil <level>`.
+Spell ID: `resonant_arcana:ember_veil`. Inspect any rank in game with `/resonantarcana spell ember_veil <level>`.
 
 ### Solar Cataclysm
 
@@ -614,7 +614,7 @@ Charge for three seconds, mark your aim, then drop a blazing meteor. Ceilings li
 | IV | 56 | — | 120 |
 | V | 64 | — | 130 |
 
-Spell ID: `kingdomwands:solar_cataclysm`. Inspect any rank in game with `/resonantarcana spell solar_cataclysm <level>`.
+Spell ID: `resonant_arcana:solar_cataclysm`. Inspect any rank in game with `/resonantarcana spell solar_cataclysm <level>`.
 
 ### Cinder Step
 
@@ -630,7 +630,7 @@ Blink through a safe line of sight in a burst of embers. Range grows by 1 block 
 | IV | — | — | 43 |
 | V | — | — | 48 |
 
-Spell ID: `kingdomwands:cinder_step`. Inspect any rank in game with `/resonantarcana spell cinder_step <level>`.
+Spell ID: `resonant_arcana:cinder_step`. Inspect any rank in game with `/resonantarcana spell cinder_step <level>`.
 
 ### Phoenix Rush
 
@@ -646,7 +646,7 @@ Launch forwards in a rising rush and hit nearby enemies in a four-block launch b
 | IV | 21 | — | 72 |
 | V | 24 | — | 81 |
 
-Spell ID: `kingdomwands:phoenix_rush`. Inspect any rank in game with `/resonantarcana spell phoenix_rush <level>`.
+Spell ID: `resonant_arcana:phoenix_rush`. Inspect any rank in game with `/resonantarcana spell phoenix_rush <level>`.
 
 ### Dragon Breath
 
@@ -666,12 +666,12 @@ Exhale a broad cone of flame following your aim for 1.5 seconds. Three pulses ca
 
 **Base active phase:** 1.5s.
 
-Spell ID: `kingdomwands:dragon_breath`. Inspect any rank in game with `/resonantarcana spell dragon_breath <level>`.
+Spell ID: `resonant_arcana:dragon_breath`. Inspect any rank in game with `/resonantarcana spell dragon_breath <level>`.
 
 <a id="dark-wand"></a>
 ## Dark Wand
 
-**Ender school.** Saved item ID: `kingdomwands:dark_wand`.
+**Ender school.** Saved item ID: `resonant_arcana:dark_wand`.
 
 ### Shadow Bolt
 
@@ -687,7 +687,7 @@ A travelling projectile that stops at walls. Ender shadow hits weaken for three 
 | IV | 8.75 | — | 32 |
 | V | 10 | — | 36 |
 
-Spell ID: `kingdomwands:shadow_bolt`. Inspect any rank in game with `/resonantarcana spell shadow_bolt <level>`.
+Spell ID: `resonant_arcana:shadow_bolt`. Inspect any rank in game with `/resonantarcana spell shadow_bolt <level>`.
 
 ### Umbral Seeker
 
@@ -703,7 +703,7 @@ A projectile that follows your selected target. Ender shadow hits weaken for thr
 | IV | 10.5 | — | 42 |
 | V | 12 | — | 47 |
 
-Spell ID: `kingdomwands:soul_seeker`. Inspect any rank in game with `/resonantarcana spell soul_seeker <level>`.
+Spell ID: `resonant_arcana:soul_seeker`. Inspect any rank in game with `/resonantarcana spell soul_seeker <level>`.
 
 ### Umbral Wave
 
@@ -719,7 +719,7 @@ A wide travelling arc, hitting each enemy once. Ender shadow hits weaken for thr
 | IV | 8.75 | — | 36 |
 | V | 10 | — | 40 |
 
-Spell ID: `kingdomwands:dark_wave`. Inspect any rank in game with `/resonantarcana spell dark_wave <level>`.
+Spell ID: `resonant_arcana:dark_wave`. Inspect any rank in game with `/resonantarcana spell dark_wave <level>`.
 
 ### Nightfall
 
@@ -735,7 +735,7 @@ An area burst centred on your aim. Ender shadow hits weaken for three seconds.
 | IV | 21 | — | 73 |
 | V | 24 | — | 82 |
 
-Spell ID: `kingdomwands:nightfall`. Inspect any rank in game with `/resonantarcana spell nightfall <level>`.
+Spell ID: `resonant_arcana:nightfall`. Inspect any rank in game with `/resonantarcana spell nightfall <level>`.
 
 ### Dread Mark
 
@@ -753,7 +753,7 @@ Curse a target; detonate after two seconds. Cover breaks the curse. Ender shadow
 
 **Base active phase:** 2s.
 
-Spell ID: `kingdomwands:shadow_cage`. Inspect any rank in game with `/resonantarcana spell shadow_cage <level>`.
+Spell ID: `resonant_arcana:shadow_cage`. Inspect any rank in game with `/resonantarcana spell shadow_cage <level>`.
 
 ### Umbral Veil
 
@@ -773,7 +773,7 @@ A damaging aura that moves with you. Ender shadow hits weaken for three seconds.
 
 **Base active phase:** 3s.
 
-Spell ID: `kingdomwands:soul_aura`. Inspect any rank in game with `/resonantarcana spell soul_aura <level>`.
+Spell ID: `resonant_arcana:soul_aura`. Inspect any rank in game with `/resonantarcana spell soul_aura <level>`.
 
 ### DOOM
 
@@ -787,7 +787,7 @@ Grow a vast black hole. It drags visible enemies inward, devours its core, then 
 
 **Base active phase:** 4.5s.
 
-Spell ID: `kingdomwands:doom`. Inspect any rank in game with `/resonantarcana spell doom <level>`.
+Spell ID: `resonant_arcana:doom`. Inspect any rank in game with `/resonantarcana spell doom <level>`.
 
 ### Umbral Step
 
@@ -803,7 +803,7 @@ Blink to a clear position and become invisible for one second. Higher levels ext
 | IV | — | — | 48 |
 | V | — | — | 54 |
 
-Spell ID: `kingdomwands:umbral_step`. Inspect any rank in game with `/resonantarcana spell umbral_step <level>`.
+Spell ID: `resonant_arcana:umbral_step`. Inspect any rank in game with `/resonantarcana spell umbral_step <level>`.
 
 ### Dusk Cleave
 
@@ -819,7 +819,7 @@ Carve a shadow crescent across the space in front of you, weakening enemies hit 
 | IV | 17.5 | — | 57 |
 | V | 20 | — | 64 |
 
-Spell ID: `kingdomwands:dusk_cleave`. Inspect any rank in game with `/resonantarcana spell dusk_cleave <level>`.
+Spell ID: `resonant_arcana:dusk_cleave`. Inspect any rank in game with `/resonantarcana spell dusk_cleave <level>`.
 
 ### Dread Effigy
 
@@ -839,7 +839,7 @@ Place a spectral effigy at your aim for four seconds. Four pulses damage and wea
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:dread_effigy`. Inspect any rank in game with `/resonantarcana spell dread_effigy <level>`.
+Spell ID: `resonant_arcana:dread_effigy`. Inspect any rank in game with `/resonantarcana spell dread_effigy <level>`.
 
 ### Veil of Night
 
@@ -857,7 +857,7 @@ Gain invisibility and Speed I for six seconds at level I. Spell power extends th
 
 **Base active phase:** 6s. Duration at levels I–V without gear: 6s, 7.5s, 9s, 10.5s, 12s.
 
-Spell ID: `kingdomwands:veil_of_night`. Inspect any rank in game with `/resonantarcana spell veil_of_night <level>`.
+Spell ID: `resonant_arcana:veil_of_night`. Inspect any rank in game with `/resonantarcana spell veil_of_night <level>`.
 
 ### Night Bloom
 
@@ -875,12 +875,12 @@ Place a shadow trap. After a half-second arming period, an enemy within two bloc
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:night_bloom`. Inspect any rank in game with `/resonantarcana spell night_bloom <level>`.
+Spell ID: `resonant_arcana:night_bloom`. Inspect any rank in game with `/resonantarcana spell night_bloom <level>`.
 
 <a id="thunder-wand"></a>
 ## Thunder Wand
 
-**Lightning school.** Saved item ID: `kingdomwands:thunder_wand`.
+**Lightning school.** Saved item ID: `resonant_arcana:thunder_wand`.
 
 ### Thunder Bolt
 
@@ -896,7 +896,7 @@ A travelling projectile that stops at walls.
 | IV | 10.5 | — | 35 |
 | V | 12 | — | 39 |
 
-Spell ID: `kingdomwands:thunder_bolt`. Inspect any rank in game with `/resonantarcana spell thunder_bolt <level>`.
+Spell ID: `resonant_arcana:thunder_bolt`. Inspect any rank in game with `/resonantarcana spell thunder_bolt <level>`.
 
 ### Chain Lightning
 
@@ -912,7 +912,7 @@ Jump between up to five visible targets.
 | IV | 10.5 | — | 50 |
 | V | 12 | — | 56 |
 
-Spell ID: `kingdomwands:chain_lightning`. Inspect any rank in game with `/resonantarcana spell chain_lightning <level>`.
+Spell ID: `resonant_arcana:chain_lightning`. Inspect any rank in game with `/resonantarcana spell chain_lightning <level>`.
 
 ### Thunder Wave
 
@@ -928,7 +928,7 @@ A wide travelling arc, hitting each enemy once.
 | IV | 8.75 | — | 36 |
 | V | 10 | — | 40 |
 
-Spell ID: `kingdomwands:thunder_wave`. Inspect any rank in game with `/resonantarcana spell thunder_wave <level>`.
+Spell ID: `resonant_arcana:thunder_wave`. Inspect any rank in game with `/resonantarcana spell thunder_wave <level>`.
 
 ### Storm Call
 
@@ -948,7 +948,7 @@ Call repeated lightning strikes over an area.
 
 **Base active phase:** 4.8s.
 
-Spell ID: `kingdomwands:storm_call`. Inspect any rank in game with `/resonantarcana spell storm_call <level>`.
+Spell ID: `resonant_arcana:storm_call`. Inspect any rank in game with `/resonantarcana spell storm_call <level>`.
 
 ### Thunder Pulse
 
@@ -964,7 +964,7 @@ An expanding shock ring around you.
 | IV | 17.5 | — | 67 |
 | V | 20 | — | 75 |
 
-Spell ID: `kingdomwands:thunder_pulse`. Inspect any rank in game with `/resonantarcana spell thunder_pulse <level>`.
+Spell ID: `resonant_arcana:thunder_pulse`. Inspect any rank in game with `/resonantarcana spell thunder_pulse <level>`.
 
 ### Static Shock
 
@@ -980,7 +980,7 @@ Slow and weaken your target.
 | IV | 5.25 | — | 34 |
 | V | 6 | — | 38 |
 
-Spell ID: `kingdomwands:static_shock`. Inspect any rank in game with `/resonantarcana spell static_shock <level>`.
+Spell ID: `resonant_arcana:static_shock`. Inspect any rank in game with `/resonantarcana spell static_shock <level>`.
 
 ### Lightning
 
@@ -996,7 +996,7 @@ Call a lightning strike at your aim.
 | IV | 12.25 | — | 50 |
 | V | 14 | — | 56 |
 
-Spell ID: `kingdomwands:lightning`. Inspect any rank in game with `/resonantarcana spell lightning <level>`.
+Spell ID: `resonant_arcana:lightning`. Inspect any rank in game with `/resonantarcana spell lightning <level>`.
 
 ### Smite
 
@@ -1012,7 +1012,7 @@ Call a lightning strike at your aim.
 | IV | 31.5 | — | 95 |
 | V | 36 | — | 105 |
 
-Spell ID: `kingdomwands:smite`. Inspect any rank in game with `/resonantarcana spell smite <level>`.
+Spell ID: `resonant_arcana:smite`. Inspect any rank in game with `/resonantarcana spell smite <level>`.
 
 ### Tempest Spear
 
@@ -1028,7 +1028,7 @@ Charge for 2.5 seconds, then fire a piercing storm lance. Solid cover stops the 
 | IV | 52.5 | — | 115 |
 | V | 60 | — | 125 |
 
-Spell ID: `kingdomwands:tempest_spear`. Inspect any rank in game with `/resonantarcana spell tempest_spear <level>`.
+Spell ID: `resonant_arcana:tempest_spear`. Inspect any rank in game with `/resonantarcana spell tempest_spear <level>`.
 
 ### Storm Step
 
@@ -1044,7 +1044,7 @@ Surge forwards and upwards with lightning afterimages. Slow Falling protects the
 | IV | — | — | 41 |
 | V | — | — | 46 |
 
-Spell ID: `kingdomwands:storm_step`. Inspect any rank in game with `/resonantarcana spell storm_step <level>`.
+Spell ID: `resonant_arcana:storm_step`. Inspect any rank in game with `/resonantarcana spell storm_step <level>`.
 
 ### Thunderclap
 
@@ -1060,7 +1060,7 @@ Release a broad thunder crescent and knock visible enemies away. Each target is 
 | IV | 19.25 | — | 66 |
 | V | 22 | — | 74 |
 
-Spell ID: `kingdomwands:thunderclap`. Inspect any rank in game with `/resonantarcana spell thunderclap <level>`.
+Spell ID: `resonant_arcana:thunderclap`. Inspect any rank in game with `/resonantarcana spell thunderclap <level>`.
 
 ### Arc Ricochet
 
@@ -1076,12 +1076,12 @@ Throw a travelling lightning orb that can ricochet between three visible enemies
 | IV | 10.5 | — | 64 |
 | V | 12 | — | 72 |
 
-Spell ID: `kingdomwands:arc_ricochet`. Inspect any rank in game with `/resonantarcana spell arc_ricochet <level>`.
+Spell ID: `resonant_arcana:arc_ricochet`. Inspect any rank in game with `/resonantarcana spell arc_ricochet <level>`.
 
-<a id="mephi-wand"></a>
+<a id="rift-wand"></a>
 ## Rift Wand
 
-**Ender school.** Saved item ID: `kingdomwands:mephi_wand`.
+**Ender school.** Saved item ID: `resonant_arcana:rift_wand`.
 
 ### Rift Bolt
 
@@ -1097,7 +1097,7 @@ A travelling projectile that stops at walls.
 | IV | 8.75 | — | 33 |
 | V | 10 | — | 37 |
 
-Spell ID: `kingdomwands:gravity_bolt`. Inspect any rank in game with `/resonantarcana spell gravity_bolt <level>`.
+Spell ID: `resonant_arcana:gravity_bolt`. Inspect any rank in game with `/resonantarcana spell gravity_bolt <level>`.
 
 ### Rift Well
 
@@ -1117,7 +1117,7 @@ Draw nearby enemies into a gravity well.
 
 **Base active phase:** 4.8s.
 
-Spell ID: `kingdomwands:gravity_well`. Inspect any rank in game with `/resonantarcana spell gravity_well <level>`.
+Spell ID: `resonant_arcana:gravity_well`. Inspect any rank in game with `/resonantarcana spell gravity_well <level>`.
 
 ### Force Push
 
@@ -1133,7 +1133,7 @@ Push the target away from you.
 | IV | 3.5 | — | 27 |
 | V | 4 | — | 30 |
 
-Spell ID: `kingdomwands:force_push`. Inspect any rank in game with `/resonantarcana spell force_push <level>`.
+Spell ID: `resonant_arcana:force_push`. Inspect any rank in game with `/resonantarcana spell force_push <level>`.
 
 ### Force Pull
 
@@ -1149,7 +1149,7 @@ Pull the target towards you.
 | IV | 3.5 | — | 27 |
 | V | 4 | — | 30 |
 
-Spell ID: `kingdomwands:force_pull`. Inspect any rank in game with `/resonantarcana spell force_pull <level>`.
+Spell ID: `resonant_arcana:force_pull`. Inspect any rank in game with `/resonantarcana spell force_pull <level>`.
 
 ### Suspension
 
@@ -1167,7 +1167,7 @@ Lift a target briefly, followed by a gentle descent.
 
 **Base active phase:** 2s.
 
-Spell ID: `kingdomwands:gravity_choke`. Inspect any rank in game with `/resonantarcana spell gravity_choke <level>`.
+Spell ID: `resonant_arcana:gravity_choke`. Inspect any rank in game with `/resonantarcana spell gravity_choke <level>`.
 
 ### Singularity
 
@@ -1183,7 +1183,7 @@ An area burst centred on your aim.
 | IV | 31.5 | — | 100 |
 | V | 36 | — | 110 |
 
-Spell ID: `kingdomwands:singularity`. Inspect any rank in game with `/resonantarcana spell singularity <level>`.
+Spell ID: `resonant_arcana:singularity`. Inspect any rank in game with `/resonantarcana spell singularity <level>`.
 
 ### Event Horizon
 
@@ -1201,7 +1201,7 @@ Charge for 3.2 seconds, then pull visible enemies inward for 1.5 seconds before 
 
 **Base active phase:** 1.5s.
 
-Spell ID: `kingdomwands:event_horizon`. Inspect any rank in game with `/resonantarcana spell event_horizon <level>`.
+Spell ID: `resonant_arcana:event_horizon`. Inspect any rank in game with `/resonantarcana spell event_horizon <level>`.
 
 ### Rift Blink
 
@@ -1217,7 +1217,7 @@ Blink along a clear path without crossing solid cover or loading terrain. Higher
 | IV | — | — | 43 |
 | V | — | — | 48 |
 
-Spell ID: `kingdomwands:rift_blink`. Inspect any rank in game with `/resonantarcana spell rift_blink <level>`.
+Spell ID: `resonant_arcana:rift_blink`. Inspect any rank in game with `/resonantarcana spell rift_blink <level>`.
 
 ### Orbital Blades
 
@@ -1237,7 +1237,7 @@ Orbit three spatial blades around yourself for three seconds. Enemies can take o
 
 **Base active phase:** 3s.
 
-Spell ID: `kingdomwands:orbital_blades`. Inspect any rank in game with `/resonantarcana spell orbital_blades <level>`.
+Spell ID: `resonant_arcana:orbital_blades`. Inspect any rank in game with `/resonantarcana spell orbital_blades <level>`.
 
 ### Prismatic Ruin
 
@@ -1253,7 +1253,7 @@ Merge opposing energies into a slow, broad spatial orb. It passes through enemie
 | IV | 70 | — | 130 |
 | V | 80 | — | 140 |
 
-Spell ID: `kingdomwands:prismatic_ruin`. Inspect any rank in game with `/resonantarcana spell prismatic_ruin <level>`.
+Spell ID: `resonant_arcana:prismatic_ruin`. Inspect any rank in game with `/resonantarcana spell prismatic_ruin <level>`.
 
 ### Gravity Stamp
 
@@ -1271,7 +1271,7 @@ Mark your aim for one second, then crush visible enemies with a vertical spatial
 
 **Base active phase:** 1s.
 
-Spell ID: `kingdomwands:gravity_stamp`. Inspect any rank in game with `/resonantarcana spell gravity_stamp <level>`.
+Spell ID: `resonant_arcana:gravity_stamp`. Inspect any rank in game with `/resonantarcana spell gravity_stamp <level>`.
 
 ### Spatial Shear
 
@@ -1287,12 +1287,12 @@ Cut a wide crescent through nearby space, striking each visible enemy in front o
 | IV | 21 | — | 66 |
 | V | 24 | — | 74 |
 
-Spell ID: `kingdomwands:spatial_shear`. Inspect any rank in game with `/resonantarcana spell spatial_shear <level>`.
+Spell ID: `resonant_arcana:spatial_shear`. Inspect any rank in game with `/resonantarcana spell spatial_shear <level>`.
 
 <a id="soul-wand"></a>
 ## Soul Wand
 
-**Eldritch school.** Saved item ID: `kingdomwands:soul_wand`.
+**Eldritch school.** Saved item ID: `resonant_arcana:soul_wand`.
 
 ### Echo Bolt
 
@@ -1308,7 +1308,7 @@ A travelling projectile that stops at walls.
 | IV | 8.75 | — | 32 |
 | V | 10 | — | 36 |
 
-Spell ID: `kingdomwands:echo_bolt`. Inspect any rank in game with `/resonantarcana spell echo_bolt <level>`.
+Spell ID: `resonant_arcana:echo_bolt`. Inspect any rank in game with `/resonantarcana spell echo_bolt <level>`.
 
 ### Sculk Wave
 
@@ -1324,7 +1324,7 @@ A wide travelling arc, hitting each enemy once.
 | IV | 8.75 | — | 36 |
 | V | 10 | — | 40 |
 
-Spell ID: `kingdomwands:sculk_wave`. Inspect any rank in game with `/resonantarcana spell sculk_wave <level>`.
+Spell ID: `resonant_arcana:sculk_wave`. Inspect any rank in game with `/resonantarcana spell sculk_wave <level>`.
 
 ### Sonic Scream
 
@@ -1340,7 +1340,7 @@ Charge for one second, then unleash a deafening, wide sonic scream over 12 block
 | IV | 24.5 | — | 85 |
 | V | 28 | — | 95 |
 
-Spell ID: `kingdomwands:sonic_boom`. Inspect any rank in game with `/resonantarcana spell sonic_boom <level>`.
+Spell ID: `resonant_arcana:sonic_scream`. Inspect any rank in game with `/resonantarcana spell sonic_scream <level>`.
 
 ### Soul Siphon
 
@@ -1356,7 +1356,7 @@ Damage a visible aimed target and restore 40% of health actually removed, capped
 | IV | 8.75 | — | 43 |
 | V | 10 | — | 48 |
 
-Spell ID: `kingdomwands:soul_siphon`. Inspect any rank in game with `/resonantarcana spell soul_siphon <level>`.
+Spell ID: `resonant_arcana:soul_siphon`. Inspect any rank in game with `/resonantarcana spell soul_siphon <level>`.
 
 ### Soul Prison
 
@@ -1376,7 +1376,7 @@ Restrain and damage your target briefly.
 
 **Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
 
-Spell ID: `kingdomwands:soul_prison`. Inspect any rank in game with `/resonantarcana spell soul_prison <level>`.
+Spell ID: `resonant_arcana:soul_prison`. Inspect any rank in game with `/resonantarcana spell soul_prison <level>`.
 
 ### Shrieking Pulse
 
@@ -1392,7 +1392,7 @@ An expanding shock ring around you.
 | IV | 15.75 | — | 65 |
 | V | 18 | — | 73 |
 
-Spell ID: `kingdomwands:shrieking_pulse`. Inspect any rank in game with `/resonantarcana spell shrieking_pulse <level>`.
+Spell ID: `resonant_arcana:shrieking_pulse`. Inspect any rank in game with `/resonantarcana spell shrieking_pulse <level>`.
 
 ### Amethyst Nova
 
@@ -1408,7 +1408,7 @@ An area burst centred on your aim.
 | IV | 24.5 | — | 85 |
 | V | 28 | — | 95 |
 
-Spell ID: `kingdomwands:amethyst_nova`. Inspect any rank in game with `/resonantarcana spell amethyst_nova <level>`.
+Spell ID: `resonant_arcana:amethyst_nova`. Inspect any rank in game with `/resonantarcana spell amethyst_nova <level>`.
 
 ### Echo Ward
 
@@ -1426,7 +1426,7 @@ Deflect incoming hostile projectiles for 4 seconds at level I. Higher spell powe
 
 **Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
 
-Spell ID: `kingdomwands:echo_ward`. Inspect any rank in game with `/resonantarcana spell echo_ward <level>`.
+Spell ID: `resonant_arcana:echo_ward`. Inspect any rank in game with `/resonantarcana spell echo_ward <level>`.
 
 ### Soul Cannon
 
@@ -1442,7 +1442,7 @@ Charge for two seconds, then launch a massive echo blast. Switch away to cancel 
 | IV | 28 | — | 120 |
 | V | 32 | — | 130 |
 
-Spell ID: `kingdomwands:soul_cannon`. Inspect any rank in game with `/resonantarcana spell soul_cannon <level>`.
+Spell ID: `resonant_arcana:soul_cannon`. Inspect any rank in game with `/resonantarcana spell soul_cannon <level>`.
 
 ### Wisp Lantern
 
@@ -1462,7 +1462,7 @@ Place a soul lantern for four seconds. Four echo pulses damage visible enemies n
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:wisp_lantern`. Inspect any rank in game with `/resonantarcana spell wisp_lantern <level>`.
+Spell ID: `resonant_arcana:wisp_lantern`. Inspect any rank in game with `/resonantarcana spell wisp_lantern <level>`.
 
 ### Resonant Guard
 
@@ -1482,7 +1482,7 @@ Gain 6 absorption health and Resistance I for five seconds at level I. Spell pow
 
 **Absorption at levels I–V:** 6, 7.5, 9, 10.5, 12 health.
 
-Spell ID: `kingdomwands:resonant_guard`. Inspect any rank in game with `/resonantarcana spell resonant_guard <level>`.
+Spell ID: `resonant_arcana:resonant_guard`. Inspect any rank in game with `/resonantarcana spell resonant_guard <level>`.
 
 ### Memory Fracture
 
@@ -1500,12 +1500,12 @@ Strike an aimed enemy. If it is affected by Darkness, direct damage increases by
 
 **Conditional direct damage at levels I–V:** 15, 18.75, 22.5, 26.25, 30.
 
-Spell ID: `kingdomwands:memory_fracture`. Inspect any rank in game with `/resonantarcana spell memory_fracture <level>`.
+Spell ID: `resonant_arcana:memory_fracture`. Inspect any rank in game with `/resonantarcana spell memory_fracture <level>`.
 
 <a id="venom-wand"></a>
 ## Venom Wand
 
-**Nature school.** Saved item ID: `kingdomwands:venom_wand`.
+**Nature school.** Saved item ID: `resonant_arcana:venom_wand`.
 
 ### Venom Sting
 
@@ -1521,7 +1521,7 @@ Strike the living target you aim at. Nature hits poison for four seconds.
 | IV | 3.5 | — | 26 |
 | V | 4 | — | 29 |
 
-Spell ID: `kingdomwands:poison_spark`. Inspect any rank in game with `/resonantarcana spell poison_spark <level>`.
+Spell ID: `resonant_arcana:poison_spark`. Inspect any rank in game with `/resonantarcana spell poison_spark <level>`.
 
 ### Poison Wave
 
@@ -1537,7 +1537,7 @@ A wide travelling arc, hitting each enemy once. Nature hits poison for four seco
 | IV | 3.5 | — | 28 |
 | V | 4 | — | 31 |
 
-Spell ID: `kingdomwands:poison_wave`. Inspect any rank in game with `/resonantarcana spell poison_wave <level>`.
+Spell ID: `resonant_arcana:poison_wave`. Inspect any rank in game with `/resonantarcana spell poison_wave <level>`.
 
 ### Venom Bolt
 
@@ -1553,7 +1553,7 @@ A travelling projectile that stops at walls. Nature hits poison for four seconds
 | IV | 5.25 | — | 26 |
 | V | 6 | — | 29 |
 
-Spell ID: `kingdomwands:venom_bolt`. Inspect any rank in game with `/resonantarcana spell venom_bolt <level>`.
+Spell ID: `resonant_arcana:venom_bolt`. Inspect any rank in game with `/resonantarcana spell venom_bolt <level>`.
 
 ### Miasma Field
 
@@ -1573,7 +1573,7 @@ Leave a poisonous cloud for nearly five seconds. Nature hits poison for four sec
 
 **Base active phase:** 4.8s.
 
-Spell ID: `kingdomwands:miasma_field`. Inspect any rank in game with `/resonantarcana spell miasma_field <level>`.
+Spell ID: `resonant_arcana:miasma_field`. Inspect any rank in game with `/resonantarcana spell miasma_field <level>`.
 
 ### Withering Hex
 
@@ -1589,7 +1589,7 @@ Inflict poison and wither on an aimed target. Nature hits poison for four second
 | IV | 5.25 | — | 40 |
 | V | 6 | — | 45 |
 
-Spell ID: `kingdomwands:withering_hex`. Inspect any rank in game with `/resonantarcana spell withering_hex <level>`.
+Spell ID: `resonant_arcana:withering_hex`. Inspect any rank in game with `/resonantarcana spell withering_hex <level>`.
 
 ### Thorn Lash
 
@@ -1605,7 +1605,7 @@ Catch an aimed enemy with a thorn tether, pull it towards you and poison it. Nat
 | IV | 7 | — | 48 |
 | V | 8 | — | 54 |
 
-Spell ID: `kingdomwands:thorn_lash`. Inspect any rank in game with `/resonantarcana spell thorn_lash <level>`.
+Spell ID: `resonant_arcana:thorn_lash`. Inspect any rank in game with `/resonantarcana spell thorn_lash <level>`.
 
 ### Viper Fangs
 
@@ -1623,7 +1623,7 @@ Release five venom fangs in a spreading fan. Each projectile can poison the enem
 
 **Delivery:** up to 5 projectiles; the table gives the value for each one.
 
-Spell ID: `kingdomwands:viper_fangs`. Inspect any rank in game with `/resonantarcana spell viper_fangs <level>`.
+Spell ID: `resonant_arcana:viper_fangs`. Inspect any rank in game with `/resonantarcana spell viper_fangs <level>`.
 
 ### Bramble Ring
 
@@ -1639,7 +1639,7 @@ Expand a ring of thorns around yourself. Each visible enemy is damaged once, poi
 | IV | 8.75 | — | 64 |
 | V | 10 | — | 72 |
 
-Spell ID: `kingdomwands:bramble_ring`. Inspect any rank in game with `/resonantarcana spell bramble_ring <level>`.
+Spell ID: `resonant_arcana:bramble_ring`. Inspect any rank in game with `/resonantarcana spell bramble_ring <level>`.
 
 ### Toxic Molt
 
@@ -1657,7 +1657,7 @@ Shed poison and wither, restore 4 health at level I and gain Speed I for four se
 
 **Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
 
-Spell ID: `kingdomwands:toxic_molt`. Inspect any rank in game with `/resonantarcana spell toxic_molt <level>`.
+Spell ID: `resonant_arcana:toxic_molt`. Inspect any rank in game with `/resonantarcana spell toxic_molt <level>`.
 
 ### Spore Totem
 
@@ -1677,7 +1677,7 @@ Plant a spectral spore totem for four seconds. Four pulses poison and damage vis
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:spore_totem`. Inspect any rank in game with `/resonantarcana spell spore_totem <level>`.
+Spell ID: `resonant_arcana:spore_totem`. Inspect any rank in game with `/resonantarcana spell spore_totem <level>`.
 
 ### Corrosive Rain
 
@@ -1697,7 +1697,7 @@ Call an acid cloud at your aim. Five falling pulses damage and poison visible en
 
 **Base active phase:** 4.05s.
 
-Spell ID: `kingdomwands:corrosive_rain`. Inspect any rank in game with `/resonantarcana spell corrosive_rain <level>`.
+Spell ID: `resonant_arcana:corrosive_rain`. Inspect any rank in game with `/resonantarcana spell corrosive_rain <level>`.
 
 ### Gorgon Gaze
 
@@ -1715,12 +1715,12 @@ Fix visible enemies in a wide forward cone with a petrifying gaze, applying heav
 
 **Base active phase:** 2s. Duration at levels I–V without gear: 2s, 2.5s, 3s, 3.5s, 4s.
 
-Spell ID: `kingdomwands:gorgon_gaze`. Inspect any rank in game with `/resonantarcana spell gorgon_gaze <level>`.
+Spell ID: `resonant_arcana:gorgon_gaze`. Inspect any rank in game with `/resonantarcana spell gorgon_gaze <level>`.
 
 <a id="holy-wand"></a>
 ## Holy Wand
 
-**Holy school.** Saved item ID: `kingdomwands:holy_wand`.
+**Holy school.** Saved item ID: `resonant_arcana:holy_wand`.
 
 ### Sanctuary
 
@@ -1736,7 +1736,7 @@ Restore up to 12 health to yourself and eligible allies within eight blocks; cle
 | IV | — | 21 | 110 |
 | V | — | 24 | 120 |
 
-Spell ID: `kingdomwands:sanctuary`. Inspect any rank in game with `/resonantarcana spell sanctuary <level>`.
+Spell ID: `resonant_arcana:sanctuary`. Inspect any rank in game with `/resonantarcana spell sanctuary <level>`.
 
 ### Luminous Dart
 
@@ -1752,7 +1752,7 @@ Fire a quick dart of holy light. It stops at solid cover.
 | IV | 7 | — | 25 |
 | V | 8 | — | 28 |
 
-Spell ID: `kingdomwands:luminous_dart`. Inspect any rank in game with `/resonantarcana spell luminous_dart <level>`.
+Spell ID: `resonant_arcana:luminous_dart`. Inspect any rank in game with `/resonantarcana spell luminous_dart <level>`.
 
 ### Mending Light
 
@@ -1768,7 +1768,7 @@ Restore 6 health at level I to the most injured eligible ally within eight block
 | IV | — | 10.5 | 50 |
 | V | — | 12 | 56 |
 
-Spell ID: `kingdomwands:mending_light`. Inspect any rank in game with `/resonantarcana spell mending_light <level>`.
+Spell ID: `resonant_arcana:mending_light`. Inspect any rank in game with `/resonantarcana spell mending_light <level>`.
 
 ### Blessing of Vigor
 
@@ -1788,7 +1788,7 @@ Gain 4 absorption health and Speed I for six seconds at level I. Spell power inc
 
 **Absorption at levels I–V:** 4, 5, 6, 7, 8 health.
 
-Spell ID: `kingdomwands:blessing_of_vigor`. Inspect any rank in game with `/resonantarcana spell blessing_of_vigor <level>`.
+Spell ID: `resonant_arcana:blessing_of_vigor`. Inspect any rank in game with `/resonantarcana spell blessing_of_vigor <level>`.
 
 ### Consecration
 
@@ -1808,7 +1808,7 @@ Place a consecrated beacon for four seconds. Each of four pulses damages enemies
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:consecration`. Inspect any rank in game with `/resonantarcana spell consecration <level>`.
+Spell ID: `resonant_arcana:consecration`. Inspect any rank in game with `/resonantarcana spell consecration <level>`.
 
 ### Radiant Sweep
 
@@ -1824,7 +1824,7 @@ Sweep a radiant crescent through visible enemies in front of you.
 | IV | 14 | — | 48 |
 | V | 16 | — | 54 |
 
-Spell ID: `kingdomwands:radiant_sweep`. Inspect any rank in game with `/resonantarcana spell radiant_sweep <level>`.
+Spell ID: `resonant_arcana:radiant_sweep`. Inspect any rank in game with `/resonantarcana spell radiant_sweep <level>`.
 
 ### Pilgrim Step
 
@@ -1840,7 +1840,7 @@ Move along your aim in a flash of light, stopping before obstacles. Higher level
 | IV | — | — | 41 |
 | V | — | — | 46 |
 
-Spell ID: `kingdomwands:pilgrim_step`. Inspect any rank in game with `/resonantarcana spell pilgrim_step <level>`.
+Spell ID: `resonant_arcana:pilgrim_step`. Inspect any rank in game with `/resonantarcana spell pilgrim_step <level>`.
 
 ### Absolution
 
@@ -1858,7 +1858,7 @@ Cleanse poison, wither, blindness and darkness from eligible allies within eight
 
 **Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
 
-Spell ID: `kingdomwands:absolution`. Inspect any rank in game with `/resonantarcana spell absolution <level>`.
+Spell ID: `resonant_arcana:absolution`. Inspect any rank in game with `/resonantarcana spell absolution <level>`.
 
 ### Dawn Ward
 
@@ -1876,7 +1876,7 @@ Deflect hostile incoming projectiles for four seconds at level I. Spell power ex
 
 **Base active phase:** 4s. Duration at levels I–V without gear: 4s, 5s, 6s, 7s, 8s.
 
-Spell ID: `kingdomwands:dawn_ward`. Inspect any rank in game with `/resonantarcana spell dawn_ward <level>`.
+Spell ID: `resonant_arcana:dawn_ward`. Inspect any rank in game with `/resonantarcana spell dawn_ward <level>`.
 
 ### Judgement Ray
 
@@ -1892,7 +1892,7 @@ Charge a piercing ray of holy light, striking each visible enemy on its line onc
 | IV | 38.5 | — | 100 |
 | V | 44 | — | 110 |
 
-Spell ID: `kingdomwands:judgement_ray`. Inspect any rank in game with `/resonantarcana spell judgement_ray <level>`.
+Spell ID: `resonant_arcana:judgement_ray`. Inspect any rank in game with `/resonantarcana spell judgement_ray <level>`.
 
 ### Seraphic Descent
 
@@ -1910,7 +1910,7 @@ Mark your aim for one second, then deliver a pillar of light. It damages enemies
 
 **Base active phase:** 1s.
 
-Spell ID: `kingdomwands:seraphic_descent`. Inspect any rank in game with `/resonantarcana spell seraphic_descent <level>`.
+Spell ID: `resonant_arcana:seraphic_descent`. Inspect any rank in game with `/resonantarcana spell seraphic_descent <level>`.
 
 ### Renewal Hymn
 
@@ -1930,12 +1930,12 @@ Carry a healing hymn around yourself for four seconds. Four pulses each restore 
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:renewal_hymn`. Inspect any rank in game with `/resonantarcana spell renewal_hymn <level>`.
+Spell ID: `resonant_arcana:renewal_hymn`. Inspect any rank in game with `/resonantarcana spell renewal_hymn <level>`.
 
 <a id="frost-wand"></a>
 ## Frost Wand
 
-**Ice school.** Saved item ID: `kingdomwands:frost_wand`.
+**Ice school.** Saved item ID: `resonant_arcana:frost_wand`.
 
 ### Glacial Rupture
 
@@ -1951,7 +1951,7 @@ Send a broad glacial front forwards, damaging and chilling each visible enemy on
 | IV | 49 | — | 115 |
 | V | 56 | — | 125 |
 
-Spell ID: `kingdomwands:glacial_rupture`. Inspect any rank in game with `/resonantarcana spell glacial_rupture <level>`.
+Spell ID: `resonant_arcana:glacial_rupture`. Inspect any rank in game with `/resonantarcana spell glacial_rupture <level>`.
 
 ### Frost Needle
 
@@ -1967,7 +1967,7 @@ Fire a fast ice needle that chills its target and stops at solid cover. Ice hits
 | IV | 7 | — | 25 |
 | V | 8 | — | 28 |
 
-Spell ID: `kingdomwands:frost_needle`. Inspect any rank in game with `/resonantarcana spell frost_needle <level>`.
+Spell ID: `resonant_arcana:frost_needle`. Inspect any rank in game with `/resonantarcana spell frost_needle <level>`.
 
 ### Ice Serpent
 
@@ -1983,7 +1983,7 @@ Send a low, weaving ice serpent horizontally along your aim. It chills each enem
 | IV | 12.25 | — | 52 |
 | V | 14 | — | 58 |
 
-Spell ID: `kingdomwands:ice_serpent`. Inspect any rank in game with `/resonantarcana spell ice_serpent <level>`.
+Spell ID: `resonant_arcana:ice_serpent`. Inspect any rank in game with `/resonantarcana spell ice_serpent <level>`.
 
 ### Rime Nova
 
@@ -1999,7 +1999,7 @@ Expand a frozen ring around yourself, chilling and damaging each visible enemy o
 | IV | 15.75 | — | 68 |
 | V | 18 | — | 76 |
 
-Spell ID: `kingdomwands:rime_nova`. Inspect any rank in game with `/resonantarcana spell rime_nova <level>`.
+Spell ID: `resonant_arcana:rime_nova`. Inspect any rank in game with `/resonantarcana spell rime_nova <level>`.
 
 ### Cryo Lance
 
@@ -2015,7 +2015,7 @@ Fire a precise piercing ice lance through visible enemies. Solid cover blocks it
 | IV | 17.5 | — | 59 |
 | V | 20 | — | 66 |
 
-Spell ID: `kingdomwands:cryo_lance`. Inspect any rank in game with `/resonantarcana spell cryo_lance <level>`.
+Spell ID: `resonant_arcana:cryo_lance`. Inspect any rank in game with `/resonantarcana spell cryo_lance <level>`.
 
 ### Frozen Aegis
 
@@ -2035,7 +2035,7 @@ Gain 6 absorption health and Resistance I for five seconds at level I. Spell pow
 
 **Absorption at levels I–V:** 6, 7.5, 9, 10.5, 12 health.
 
-Spell ID: `kingdomwands:frozen_aegis`. Inspect any rank in game with `/resonantarcana spell frozen_aegis <level>`.
+Spell ID: `resonant_arcana:frozen_aegis`. Inspect any rank in game with `/resonantarcana spell frozen_aegis <level>`.
 
 ### Glacier Step
 
@@ -2051,7 +2051,7 @@ Blink safely in a burst of snowflakes. Higher levels increase the range without 
 | IV | — | — | 41 |
 | V | — | — | 46 |
 
-Spell ID: `kingdomwands:glacier_step`. Inspect any rank in game with `/resonantarcana spell glacier_step <level>`.
+Spell ID: `resonant_arcana:glacier_step`. Inspect any rank in game with `/resonantarcana spell glacier_step <level>`.
 
 ### Shatter
 
@@ -2069,7 +2069,7 @@ Strike an aimed enemy. Direct damage increases by 50% at 140 freezing ticks or S
 
 **Conditional direct damage at levels I–V:** 15, 18.75, 22.5, 26.25, 30.
 
-Spell ID: `kingdomwands:shatter`. Inspect any rank in game with `/resonantarcana spell shatter <level>`.
+Spell ID: `resonant_arcana:shatter`. Inspect any rank in game with `/resonantarcana spell shatter <level>`.
 
 ### Hailstorm
 
@@ -2089,7 +2089,7 @@ Call a hail cloud at your aim. Five pulses damage and chill visible enemies over
 
 **Base active phase:** 4.05s.
 
-Spell ID: `kingdomwands:hailstorm`. Inspect any rank in game with `/resonantarcana spell hailstorm <level>`.
+Spell ID: `resonant_arcana:hailstorm`. Inspect any rank in game with `/resonantarcana spell hailstorm <level>`.
 
 ### Glacial Prison
 
@@ -2107,7 +2107,7 @@ Hold an aimed enemy in spectral ice for three seconds at level I. Cover, distanc
 
 **Base active phase:** 3s. Duration at levels I–V without gear: 3s, 3.75s, 4.5s, 5.25s, 6s.
 
-Spell ID: `kingdomwands:glacial_prison`. Inspect any rank in game with `/resonantarcana spell glacial_prison <level>`.
+Spell ID: `resonant_arcana:glacial_prison`. Inspect any rank in game with `/resonantarcana spell glacial_prison <level>`.
 
 ### Crystal Barrage
 
@@ -2125,7 +2125,7 @@ Release five divergent crystal projectiles. Damage is per projectile; their impa
 
 **Delivery:** up to 5 projectiles; the table gives the value for each one.
 
-Spell ID: `kingdomwands:crystal_barrage`. Inspect any rank in game with `/resonantarcana spell crystal_barrage <level>`.
+Spell ID: `resonant_arcana:crystal_barrage`. Inspect any rank in game with `/resonantarcana spell crystal_barrage <level>`.
 
 ### Absolute Zero
 
@@ -2145,4 +2145,4 @@ Establish a frozen domain for four seconds. Four pulses chill and freeze visible
 
 **Base active phase:** 4s.
 
-Spell ID: `kingdomwands:absolute_zero`. Inspect any rank in game with `/resonantarcana spell absolute_zero <level>`.
+Spell ID: `resonant_arcana:absolute_zero`. Inspect any rank in game with `/resonantarcana spell absolute_zero <level>`.

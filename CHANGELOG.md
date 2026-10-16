@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0-alpha
+
+- Move every addon registry, asset, translation and network ID to `resonant_arcana`.
+- Rename the main class and Java package to Resonant Arcana.
+- Use current Arcane, Cinder and Rift wand IDs; remove legacy command aliases and selection migration code.
+- Clean break: previous items, scrolls, spellbook entries and saved wand ranks are not migrated.
+- Keep the existing server/client configuration filenames.
+
 ## 0.12.0-alpha
 
 - Expand every wand to 12 spells: 120 spells across ten complete kits.

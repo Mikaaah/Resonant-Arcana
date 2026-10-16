@@ -14,7 +14,7 @@ GEMS={'MAGIC':'amethyst_shard','BLOOD':'redstone','FIRE':'blaze_powder','DARK':'
 
 def write(path,data):path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(data,indent=2)+'\n')
 def main():
-    wands=json.loads((RES/'assets/kingdomwands/catalogue.json').read_text())['wands']
+    wands=json.loads((RES/'assets/resonant_arcana/catalogue.json').read_text())['wands']
     for wand in wands:
         theme=wand['theme'];c,light,wood=COLOURS[theme]
         im=Image.new('RGBA',(64,64));d=ImageDraw.Draw(im)
@@ -57,10 +57,10 @@ def main():
         else:
             for x,y,r in ((36,21,7),(49,21,7),(43,13,11)):crystal(x,y,r)
             line([(32,30),(44,36),(56,26)],light,3)
-        folder=RES/'assets/kingdomwands/textures/item';folder.mkdir(parents=True,exist_ok=True);im.save(folder/(wand['id']+'.png'))
-        write(RES/f"assets/kingdomwands/models/item/{wand['id']}.json",{'parent':'minecraft:item/handheld','textures':{'layer0':'kingdomwands:item/'+wand['id']}})
-        write(RES/f"data/kingdomwands/recipe/{wand['id']}.json",{'type':'minecraft:crafting_shaped','category':'equipment','pattern':[' AG',' SA','S  '],
-          'key':{'A':{'item':'irons_spellbooks:arcane_essence'},'G':{'item':'minecraft:'+GEMS[theme]},'S':{'item':'minecraft:stick'}},'result':{'id':'kingdomwands:'+wand['id'],'count':1}})
-        write(RES/f"data/kingdomwands/advancement/recipes/{wand['id']}.json",{'parent':'minecraft:recipes/root','criteria':{'has_essence':{'trigger':'minecraft:inventory_changed','conditions':{'items':[{'items':'irons_spellbooks:arcane_essence'}]}},'has_the_recipe':{'trigger':'minecraft:recipe_unlocked','conditions':{'recipe':'kingdomwands:'+wand['id']}}},'requirements':[['has_essence','has_the_recipe']],'rewards':{'recipes':['kingdomwands:'+wand['id']]}})
+        folder=RES/'assets/resonant_arcana/textures/item';folder.mkdir(parents=True,exist_ok=True);im.save(folder/(wand['id']+'.png'))
+        write(RES/f"assets/resonant_arcana/models/item/{wand['id']}.json",{'parent':'minecraft:item/handheld','textures':{'layer0':'resonant_arcana:item/'+wand['id']}})
+        write(RES/f"data/resonant_arcana/recipe/{wand['id']}.json",{'type':'minecraft:crafting_shaped','category':'equipment','pattern':[' AG',' SA','S  '],
+          'key':{'A':{'item':'irons_spellbooks:arcane_essence'},'G':{'item':'minecraft:'+GEMS[theme]},'S':{'item':'minecraft:stick'}},'result':{'id':'resonant_arcana:'+wand['id'],'count':1}})
+        write(RES/f"data/resonant_arcana/advancement/recipes/{wand['id']}.json",{'parent':'minecraft:recipes/root','criteria':{'has_essence':{'trigger':'minecraft:inventory_changed','conditions':{'items':[{'items':'irons_spellbooks:arcane_essence'}]}},'has_the_recipe':{'trigger':'minecraft:recipe_unlocked','conditions':{'recipe':'resonant_arcana:'+wand['id']}}},'requirements':[['has_essence','has_the_recipe']],'rewards':{'recipes':['resonant_arcana:'+wand['id']]}})
     print(f'Generated {len(wands)} wand sprites, models, recipes and recipe unlocks.')
 if __name__=='__main__':main()

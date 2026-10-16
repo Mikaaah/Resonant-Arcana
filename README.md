@@ -2,7 +2,7 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **120 spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.12.0-alpha](downloads/resonant-arcana-0.12.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.13.0-alpha](downloads/resonant-arcana-0.13.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## Ten complete spell kits
 
@@ -10,16 +10,16 @@ Each wand carries **12 spells**. Use a wand directly or inscribe the same spells
 
 | Wand | Iron’s school | Play style |
 | --- | --- | --- |
-| ![Arcane](src/main/resources/assets/kingdomwands/textures/item/empire_wand.png) Arcane | Evocation | Bolts, displacement, bindings, volleys and spectral fang rows |
-| ![Blood](src/main/resources/assets/kingdomwands/textures/item/blood_wand.png) Blood | Blood | Needles, crimson crescents, life drain, tethers and conditional executions |
-| ![Cinder](src/main/resources/assets/kingdomwands/textures/item/celcrius_wand.png) Cinder | Fire | Firestorms, dragon breath, rising rushes and falling meteors |
-| ![Dark](src/main/resources/assets/kingdomwands/textures/item/dark_wand.png) Dark | Ender | Curses, invisibility, shadow traps, effigies and DOOM |
-| ![Thunder](src/main/resources/assets/kingdomwands/textures/item/thunder_wand.png) Thunder | Lightning | Chains, ricochets, thunderclaps and piercing storm lances |
-| ![Rift](src/main/resources/assets/kingdomwands/textures/item/mephi_wand.png) Rift | Ender | Gravity wells, orbiting blades, spatial cuts and Prismatic Ruin |
-| ![Soul](src/main/resources/assets/kingdomwands/textures/item/soul_wand.png) Soul | Eldritch | Sculk, echo blasts, soul lanterns, sonic pressure and Soul Cannon |
-| ![Venom](src/main/resources/assets/kingdomwands/textures/item/venom_wand.png) Venom | Nature | Poison fans, thorns, spore totems, acid rain and cleansing mobility |
-| ![Holy](src/main/resources/assets/kingdomwands/textures/item/holy_wand.png) Holy | Holy | Healing, blessings, consecration, cleansing, wards and judgement rays |
-| ![Frost](src/main/resources/assets/kingdomwands/textures/item/frost_wand.png) Frost | Ice | Ice serpents, hail, freezing domains, crystal fans and shatter combos |
+| ![Arcane](src/main/resources/assets/resonant_arcana/textures/item/arcane_wand.png) Arcane | Evocation | Bolts, displacement, bindings, volleys and spectral fang rows |
+| ![Blood](src/main/resources/assets/resonant_arcana/textures/item/blood_wand.png) Blood | Blood | Needles, crimson crescents, life drain, tethers and conditional executions |
+| ![Cinder](src/main/resources/assets/resonant_arcana/textures/item/cinder_wand.png) Cinder | Fire | Firestorms, dragon breath, rising rushes and falling meteors |
+| ![Dark](src/main/resources/assets/resonant_arcana/textures/item/dark_wand.png) Dark | Ender | Curses, invisibility, shadow traps, effigies and DOOM |
+| ![Thunder](src/main/resources/assets/resonant_arcana/textures/item/thunder_wand.png) Thunder | Lightning | Chains, ricochets, thunderclaps and piercing storm lances |
+| ![Rift](src/main/resources/assets/resonant_arcana/textures/item/rift_wand.png) Rift | Ender | Gravity wells, orbiting blades, spatial cuts and Prismatic Ruin |
+| ![Soul](src/main/resources/assets/resonant_arcana/textures/item/soul_wand.png) Soul | Eldritch | Sculk, echo blasts, soul lanterns, sonic pressure and Soul Cannon |
+| ![Venom](src/main/resources/assets/resonant_arcana/textures/item/venom_wand.png) Venom | Nature | Poison fans, thorns, spore totems, acid rain and cleansing mobility |
+| ![Holy](src/main/resources/assets/resonant_arcana/textures/item/holy_wand.png) Holy | Holy | Healing, blessings, consecration, cleansing, wards and judgement rays |
+| ![Frost](src/main/resources/assets/resonant_arcana/textures/item/frost_wand.png) Frost | Ice | Ice serpents, hail, freezing domains, crystal fans and shatter combos |
 
 ## Charge, release, impact
 
@@ -64,18 +64,18 @@ Selection never casts a spell. The picker, wand tooltip and selected-spell HUD s
 | `/resonantarcana status` | Show version and active spell count |
 | `/resonantarcana give <wand_id>` | Give a wand; operator permission required |
 | `/resonantarcana scroll <spell_id> <level>` | Give a native scroll at that rank; operator permission required |
-| `/kwvisuals` | Report the optional AAAParticles renderer and loaded effects |
-| `/kwvisuals test` | Play a short local visual test |
+| `/arcana_visuals` | Report the optional AAAParticles renderer and loaded effects |
+| `/arcana_visuals test` | Play a short local visual test |
 
-`arcane_wand`, `cinder_wand` and `rift_wand` are accepted by the give command. Saved registry IDs remain compatible with previous versions.
+Wand IDs use their current names, such as `resonant_arcana:arcane_wand`, `resonant_arcana:cinder_wand` and `resonant_arcana:rift_wand`.
 
 ## Installation
 
 Requires **Java 21**, **Minecraft 1.21.1**, **NeoForge 21.1.219 or later within 21.1.x**, and **Iron’s Spells ’n Spellbooks 1.21.1-3.16.3** with its own dependencies. AAAParticles **2.3.3** is the tested optional version.
 
-Install the same Resonant Arcana version on **client and server**. Remove older Resonant Arcana / Kingdom Wands JARs first. The `kingdomwands` namespace remains unchanged so existing items, scrolls and spell selections remain usable. Existing wands start at level I and gain the expanded kit.
+Install the same Resonant Arcana version on **client and server**. Version **0.13 is a clean namespace break**: all addon IDs now use `resonant_arcana`. Remove the previous addon JAR. Older wands, scrolls, spellbook entries and key bindings are not migrated. Obtain new items and reinscribe spells using the new IDs. There are no legacy registry aliases.
 
-This release moves configuration to **world serverconfig** and a separate **local client file**. The previous common file is no longer read. See the [configuration guide and migration table](CONFIGURATION.md) before transferring custom settings. Servers can disable direct wand casting for a spellbook-only pack.
+Settings remain in the world’s **serverconfig** and each client’s local config file. See the [configuration guide](CONFIGURATION.md). Servers can disable direct wand casting for a spellbook-only pack.
 
 ## Multiplayer and compatibility
 
@@ -93,7 +93,7 @@ The kits draw on RPG movement, control and support roles, including [Wynncraft�
 
 Use Java 21 and run `./gradlew build` or `gradlew.bat build`. Output is written to `build/libs/`. For an offline build, supply `-PironsSpellbooksJar=/path/to/irons_spellbooks-1.21.1-3.16.3.jar`; the dependency is compile-only and is never bundled.
 
-The validated catalogue at `src/main/resources/assets/kingdomwands/catalogue.json` supplies runtime defaults. `tools/build_docs.py`, `tools/build_spell_icons.py` and `tools/build_wands.py` regenerate the public spell guide, icons, wand sprites and recipes. Original Effekseer assets can be rebuilt with `tools/build_effects.py`; Pillow and Effekseer 1.80.7 are required for artwork and particle exports. `verifyEffects` checks the effect manifest and packaged texture paths during the build.
+The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.json` supplies runtime defaults. `tools/build_docs.py`, `tools/build_spell_icons.py` and `tools/build_wands.py` regenerate the public spell guide, icons, wand sprites and recipes. Original Effekseer assets can be rebuilt with `tools/build_effects.py`; Pillow and Effekseer 1.80.7 are required for artwork and particle exports. `verifyEffects` checks the effect manifest and packaged texture paths during the build.
 
 ## Credits and license
 

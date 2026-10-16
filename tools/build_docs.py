@@ -6,7 +6,7 @@ SCHOOL={'MAGIC':'Evocation','BLOOD':'Blood','FIRE':'Fire','DARK':'Ender','THUNDE
 SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER'}
 def number(n):return f'{n:g}'
 def main():
-    data=json.loads((ROOT/'src/main/resources/assets/kingdomwands/catalogue.json').read_text());spells=data['spells']
+    data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells']
     lines=['# Spell reference','',f"**{len(spells)} spells · 10 wands · 12 spells per wand.**",'',
     'Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.', '',
     'All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.', '',
@@ -26,7 +26,7 @@ def main():
     '## Heavy cast timing','',
     'Windup is the native Iron’s cast bar. Some spells also have a release phase: Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.', '']
     for w in data['wands']:
-        lines +=[f"<a id=\"{w['id'].replace('_','-')}\"></a>",f"## {w['title']}",'',f"**{SCHOOL[w['theme']]} school.** Saved item ID: `kingdomwands:{w['id']}`.",'']
+        lines +=[f"<a id=\"{w['id'].replace('_','-')}\"></a>",f"## {w['title']}",'',f"**{SCHOOL[w['theme']]} school.** Saved item ID: `resonant_arcana:{w['id']}`.",'']
         for key in w['spells']:
             s=spells[key];lines +=[f"### {s['title']}",'',s['description'],'',
             f"**Role:** {s['role']} · **Cast:** {number(s['castTicks']/20)+'s' if s['castTicks'] else 'instant'} · **Cooldown:** {number(s['cooldown']/20)}s · **Range:** {number(s['range'])} blocks · **Radius / width:** {number(s['radius'])} blocks.",'',
@@ -44,7 +44,7 @@ def main():
                 shield=4 if key in ('SANGUINE_PACT','BLESSING_OF_VIGOR') else 6
                 lines +=['**Absorption at levels I–V:** '+', '.join(number(shield*(1+.25*i)) for i in range(5))+' health.','']
             if s['kind']=='EXECUTE':lines +=['**Conditional direct damage at levels I–V:** '+', '.join(number(s['damage']*1.5*(1+.25*i)) for i in range(5))+'.','']
-            lines +=[f"Spell ID: `kingdomwands:{s['bookId']}`. Inspect any rank in game with `/resonantarcana spell {s['bookId']} <level>`.",'']
+            lines +=[f"Spell ID: `resonant_arcana:{s['bookId']}`. Inspect any rank in game with `/resonantarcana spell {s['bookId']} <level>`.",'']
     (ROOT/'SPELLS.md').write_text('\n'.join(lines))
     print(f"Documented {len(spells)} spells from catalogue.json.")
 if __name__=='__main__':main()
