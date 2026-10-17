@@ -77,6 +77,18 @@ final class SpellAudio {
         case THUNDER->"block.conduit.ambient.short";case DARK->"block.portal.ambient";
         case SOUL->"entity.warden.heartbeat";case GRAVITY->"block.beacon.ambient";case MAGIC->"block.amethyst_block.chime";
     };}
+    static String sustainId(Spell spell){return switch(spell){
+        case WISP_LANTERN -> "block.amethyst_block.chime";
+        case DREAD_EFFIGY -> "block.soul_sand.step";
+        case SPORE_TOTEM -> "block.brewing_stand.brew";
+        case CONSECRATION,LAST_STAND -> "block.beacon.ambient";
+        case CORROSIVE_RAIN -> "weather.rain";
+        case HAILSTORM,ABSOLUTE_ZERO -> "block.powder_snow.step";
+        case RENEWAL_HYMN -> "block.amethyst_block.resonate";
+        case ORBITAL_BLADES,PHANTOM_FORMATION -> "entity.player.attack.sweep";
+        case CRIMSON_TETHER -> "block.bubble_column.whirlpool_inside";
+        default -> sustainId(spell.theme);
+    };}
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
@@ -109,7 +121,9 @@ final class SpellAudio {
         case CRIMSON_TETHER->irons("cast.blood_step");case SANGUINE_PACT->irons("heartstop_cast");
         case CRIMSON_HARVEST->irons("entity.devour_jaw.bite");
         case VEIL_OF_NIGHT->irons("cast.abyssal_shroud");case NIGHT_BLOOM->irons("spell.blight.begin");
-        case DREAD_EFFIGY,WISP_LANTERN,SPORE_TOTEM->irons("spell.firefly_swarm.prepare");
+        case DREAD_EFFIGY->"block.soul_soil.place";
+        case WISP_LANTERN->"block.lantern.place";
+        case SPORE_TOTEM->"block.fungus.place";
         case ORBITAL_BLADES->irons("spell.summon_swords.cast");
         case PRISMATIC_RUIN->irons("spell.soulfire_ray.cast");case GRAVITY_STAMP->irons("spell.gravity_fissure.charge");
         case RESONANT_GUARD->irons("spell.echoing_strikes.cast");case MEMORY_FRACTURE->irons("entity.echoing_strike.echoing_strike");
@@ -144,6 +158,7 @@ final class SpellAudio {
         float gain=(float)(weight*ArcanaConfig.IMPACT_VOLUME.get());
         boolean direct=ArcanaConfig.CASTER_IMPACTS.get();
         String primary=switch(spell){
+            case WARSCREAM->"entity.warden.step";
             case SONIC_SCREAM->"entity.warden.sonic_boom";
             case JUDGEMENT_RAY,SERAPHIC_DESCENT->irons("entity.sunbeam.impact");
             case PRISMATIC_RUIN->irons("force_impact");case SHATTER->irons("entity.ice_block.impact");

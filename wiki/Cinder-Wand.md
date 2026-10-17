@@ -4,7 +4,7 @@
 
 ### Fire Comet
 
-A slow projectile with an area impact. Fire hits ignite for three seconds.
+Hurl a slow ember comet with a burning wake. Its first collision releases an area detonation and ignites enemies hit for three seconds.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 6s · **Range:** 44 blocks · **Radius / width:** 4.5 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:fire_comet`. Inspect any rank in game with `/resonant
 
 ### Cinder Vortex
 
-A stationary vortex dealing repeated area damage. Fire hits ignite for three seconds.
+Raise a stationary ember funnel at your aim for two seconds. Four half-second pulses can damage visible enemies inside and refresh three seconds of burning.
 
 **Role:** Sustain · **Cast:** 1.25s · **Cooldown:** 6s · **Range:** 30 blocks · **Radius / width:** 3 blocks.
 
@@ -40,7 +40,7 @@ Spell ID: `resonant_arcana:fire_twister`. Inspect any rank in game with `/resona
 
 ### Flame Wave
 
-A wide travelling arc, hitting each enemy once. Fire hits ignite for three seconds.
+Drive a broad wall of flickering embers forwards. Its advancing front hits each visible enemy once and ignites them for three seconds.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
 
@@ -56,7 +56,7 @@ Spell ID: `resonant_arcana:flame_wave`. Inspect any rank in game with `/resonant
 
 ### Cinder Surge
 
-An expanding shock ring around you. Fire hits ignite for three seconds.
+Send an expanding ember ring across the ground around you. Its advancing rim damages each visible enemy once, pushes them away and ignites them for three seconds.
 
 **Role:** Attack · **Cast:** 0.8s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
 
@@ -72,7 +72,7 @@ Spell ID: `resonant_arcana:flame_shock_wave`. Inspect any rank in game with `/re
 
 ### Flamethrower
 
-A short stream following your current aim. Fire hits ignite for three seconds.
+Channel a narrow stream of flame following your current aim for 1.5 seconds. Six quarter-second pulses can hit enemies intersecting the stream; solid cover stops it. Hits ignite for three seconds.
 
 **Role:** Sustain · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 12 blocks · **Radius / width:** 1.4 blocks.
 
@@ -92,7 +92,7 @@ Spell ID: `resonant_arcana:flame_thrower`. Inspect any rank in game with `/reson
 
 ### Fireball
 
-A travelling projectile that stops at walls. Fire hits ignite for three seconds.
+Throw a compact fireball with a coiling ember trail. Its first collision releases a small area burst and ignites enemies hit for three seconds.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 2.5s · **Range:** 40 blocks · **Radius / width:** 2 blocks.
 
@@ -108,7 +108,7 @@ Spell ID: `resonant_arcana:fireball`. Inspect any rank in game with `/resonantar
 
 ### Ignite
 
-Strike the living target you aim at. Fire hits ignite for three seconds.
+Kindle one visible aimed enemy directly. Deal the listed impact damage and set it burning for three seconds; ordinary fire immunity still applies.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 2.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -124,7 +124,7 @@ Spell ID: `resonant_arcana:ignite`. Inspect any rank in game with `/resonantarca
 
 ### Ember Veil
 
-A damaging aura that moves with you. Fire hits ignite for three seconds.
+Carry a low ring of embers for three seconds. Three one-second pulses damage visible nearby enemies and ignite them for three seconds.
 
 **Role:** Sustain · **Cast:** 0.5s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 5 blocks.
 

@@ -4,7 +4,7 @@
 
 ### Thunder Bolt
 
-A travelling projectile that stops at walls.
+Fire a compact electric bolt with a jagged spark wake. The first enemy or solid surface stops it and releases a small electric impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.5s · **Range:** 40 blocks · **Radius / width:** 1.5 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:thunder_bolt`. Inspect any rank in game with `/resona
 
 ### Chain Lightning
 
-Jump between up to five visible targets.
+Connect up to five distinct visible enemies with jagged lightning links. Each jump chooses a nearby eligible enemy; cover and the jump radius can end the chain early.
 
 **Role:** Attack · **Cast:** 0.6s · **Cooldown:** 6s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -36,7 +36,7 @@ Spell ID: `resonant_arcana:chain_lightning`. Inspect any rank in game with `/res
 
 ### Thunder Wave
 
-A wide travelling arc, hitting each enemy once.
+Send a broad, crackling electric front forwards. Each enemy crossed by its moving rim takes one hit.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 30 blocks · **Radius / width:** 2.5 blocks.
 
@@ -52,7 +52,7 @@ Spell ID: `resonant_arcana:thunder_wave`. Inspect any rank in game with `/resona
 
 ### Storm Call
 
-Call repeated lightning strikes over an area.
+Establish a lightning storm at your aim for 4.8 seconds. Five one-second pulses damage visible enemies; additional lightning columns show the active storm area.
 
 **Role:** Sustain · **Cast:** 1.6s · **Cooldown:** 12s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -72,7 +72,7 @@ Spell ID: `resonant_arcana:storm_call`. Inspect any rank in game with `/resonant
 
 ### Thunder Pulse
 
-An expanding shock ring around you.
+Unleash an expanding electric ring from your feet. The moving rim damages and pushes each visible enemy once, with sparks tracing its current reach.
 
 **Role:** Attack · **Cast:** 0.7s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
 
@@ -88,7 +88,7 @@ Spell ID: `resonant_arcana:thunder_pulse`. Inspect any rank in game with `/reson
 
 ### Static Shock
 
-Slow and weaken your target.
+Overload one visible aimed enemy with static. One direct hit applies Slowness VI and Weakness II for three seconds; it is a slowing debuff rather than an AI freeze.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 4s · **Range:** 28 blocks · **Radius / width:** 1 blocks.
 
@@ -104,7 +104,7 @@ Spell ID: `resonant_arcana:static_shock`. Inspect any rank in game with `/resona
 
 ### Lightning
 
-Call a lightning strike at your aim.
+Call a vertical lightning strike onto your aim, damaging eligible visible enemies near the strike point. Uses addon damage rather than a terrain-igniting vanilla lightning entity.
 
 **Role:** Attack · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 32 blocks · **Radius / width:** 2 blocks.
 
@@ -120,7 +120,7 @@ Spell ID: `resonant_arcana:lightning`. Inspect any rank in game with `/resonanta
 
 ### Smite
 
-Call a lightning strike at your aim.
+Mark your aim with holy light, then deliver a vertical judgement strike. Visible enemies within its impact radius take the listed damage; allies are protected.
 
 **Role:** Attack · **Cast:** 1.4s · **Cooldown:** 10s · **Range:** 32 blocks · **Radius / width:** 5 blocks.
 

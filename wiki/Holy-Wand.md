@@ -72,7 +72,7 @@ Spell ID: `resonant_arcana:blessing_of_vigor`. Inspect any rank in game with `/r
 
 ### Consecration
 
-Place a consecrated beacon for four seconds. Each of four pulses damages enemies and restores 1 health at level I to eligible allies in its area.
+Place a quartz altar topped with an end rod for four seconds. Each of four pulses damages enemies and restores 1 health at level I to eligible allies in its area. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Healing · **Cast:** 1.2s · **Cooldown:** 12s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -214,21 +214,21 @@ Spell ID: `resonant_arcana:renewal_hymn`. Inspect any rank in game with `/resona
 
 ### Warscream
 
-Roar with dragon fury: repel enemies, taunt nearby hostile mobs for 3 seconds, and grant visible allies bonus melee damage, spell power and temporary health.
+Unleash three ground-shaking roars over eight blocks. Each pulse damages visible enemies; the roar draws them closer and taunts hostile mobs. You and nearby eligible allies gain Resistance I. Taunt and defense last 3/4/5/6/7 seconds at levels I–V.
 
 **Role:** Battle cry · **Cast:** 0.6s · **Cooldown:** 20s · **Range:** 8 blocks · **Radius / width:** 8 blocks.
 
 | Level | Direct damage | Healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | — | — | 45 |
-| II | — | — | 50 |
-| III | — | — | 55 |
-| IV | — | — | 60 |
-| V | — | — | 65 |
+| I | 3 | — | 45 |
+| II | 3.75 | — | 50 |
+| III | 4.5 | — | 55 |
+| IV | 5.25 | — | 60 |
+| V | 6 | — | 65 |
 
-**Base active phase:** 8s. Duration at levels I–V without gear: 8s, 10s, 12s, 14s, 16s.
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
 
-**Ally damage:** +10%, +15%, +20%, +25%, +30% melee damage and native Iron’s spell power. **Temporary health:** 4, 5, 6, 7, 8. Taunts at most 32 visible hostile mobs, rechecking every half second for three seconds. Custom boss AI may override the target. Does not taunt animals, pets or players.
+**Roar:** three damage pulses at 0.05, 0.65 and 1.25 seconds after release, in an eight-block radius. Pulls eligible visible enemies inward, respecting knockback resistance. **Defense and taunt at ranks I–V:** 3, 4, 5, 6, 7 seconds. Grants Resistance I to the caster and visible eligible allies. Taunts at most 32 hostile mobs, rechecking every half second. Custom boss AI may override the target; animals, pets and players are not taunted.
 
 Spell ID: `resonant_arcana:warscream`. Inspect any rank in game with `/resonantarcana spell warscream <level>`.
 

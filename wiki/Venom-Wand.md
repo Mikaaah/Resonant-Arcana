@@ -4,7 +4,7 @@
 
 ### Venom Sting
 
-Strike the living target you aim at. Nature hits poison for four seconds.
+Burst an acid bubble on one visible aimed enemy, dealing direct damage and applying Poison I for four seconds.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 2.5s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:poison_spark`. Inspect any rank in game with `/resona
 
 ### Poison Wave
 
-A wide travelling arc, hitting each enemy once. Nature hits poison for four seconds.
+Roll a low green acid wave forwards. Each enemy crossed by its broad front takes one direct hit and Poison I for four seconds.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.5s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
 
@@ -36,7 +36,7 @@ Spell ID: `resonant_arcana:poison_wave`. Inspect any rank in game with `/resonan
 
 ### Venom Bolt
 
-A travelling projectile that stops at walls. Nature hits poison for four seconds.
+Spit a travelling acid orb with a spore-speckled wake. Its first collision releases a small impact that damages enemies and applies Poison I for four seconds.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.75s · **Range:** 32 blocks · **Radius / width:** 1.5 blocks.
 
@@ -52,7 +52,7 @@ Spell ID: `resonant_arcana:venom_bolt`. Inspect any rank in game with `/resonant
 
 ### Miasma Field
 
-Leave a poisonous cloud for nearly five seconds. Nature hits poison for four seconds.
+Leave a low poisonous cloud at your aim for 4.8 seconds. Five one-second pulses damage visible enemies inside and refresh Poison I for four seconds.
 
 **Role:** Sustain · **Cast:** 0.75s · **Cooldown:** 9s · **Range:** 24 blocks · **Radius / width:** 4.5 blocks.
 
@@ -156,7 +156,7 @@ Spell ID: `resonant_arcana:toxic_molt`. Inspect any rank in game with `/resonant
 
 ### Spore Totem
 
-Plant a spectral spore totem for four seconds. Four pulses poison and damage visible enemies near it. Nature hits poison for four seconds.
+Plant a mushroom totem with a glowing shroomlight cap for four seconds. Four pulses poison and damage visible enemies near it. Nature hits poison for four seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 

@@ -8,7 +8,7 @@ All spells have five levels except **DOOM**, which has one Legendary level. Base
 
 Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.
 
-Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. No spell edits terrain or intentionally loads new chunks.
+Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. Spells do not intentionally load new chunks or damage terrain. Last Stand temporarily places and later removes its own banner; lantern and totem centrepieces use temporary display entities without replacing world blocks.
 
 ## Optional Bosses’Rise spells
 
@@ -17,6 +17,12 @@ Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrat
 Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s blazing projectiles. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
 
 Kraken tentacle roots are buried 1.25 blocks below the surface, and Wrath’s outer tentacles face inward. Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
+
+## Visual presentation
+
+Native vanilla and Iron’s particles layer distinct projectile wakes, beams, rain, restraints, vortex interiors and impacts. Persistent areas use ground-following boundary rings; decorative particles have a separate allowance. Last Stand shows its full six-block defense radius. Wisp Lantern, Dread Effigy, Spore Totem and Consecration place temporary physical centrepieces on visible ground. Spell effects and centrepieces expire with the cast.
+
+The readability and bounded-detail approach is inspired by [Wynncraft’s official Spellbound combat notes](https://wynncraft.com/updates/2.0). Geometry and implementation are original; no Wynncraft assets are included.
 
 ## Wand index
 
@@ -56,7 +62,7 @@ Windup is the native Iron’s cast bar. Some spells also have a release phase: S
 
 ### Spark
 
-A travelling projectile that stops at walls.
+Loose a compact arcane spark along your aim. It stops at the first enemy or solid surface, releasing a small arcane impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 0.6s · **Range:** 32 blocks · **Radius / width:** 1 blocks.
 
@@ -72,7 +78,7 @@ Spell ID: `resonant_arcana:spark`. Inspect any rank in game with `/resonantarcan
 
 ### Arcane Strike
 
-Strike the living target you aim at.
+Focus arcane energy directly on one visible aimed enemy. A woven link identifies the struck target; terrain blocks targeting.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 1.75s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
 
@@ -88,7 +94,7 @@ Spell ID: `resonant_arcana:arcane_strike`. Inspect any rank in game with `/reson
 
 ### Mind Haze
 
-Briefly blind and disorient your target.
+Wrap one visible aimed enemy in a spiralling hex. Apply Nausea for five seconds and Blindness for two seconds, with one direct hit.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -104,7 +110,7 @@ Spell ID: `resonant_arcana:confuse`. Inspect any rank in game with `/resonantarc
 
 ### Stun
 
-Slow and weaken your target.
+Bind one visible aimed enemy with arcane sparks. Apply Slowness VI and Weakness II for three seconds, with one direct hit; immune enemies may resist the effects.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -120,7 +126,7 @@ Spell ID: `resonant_arcana:stun`. Inspect any rank in game with `/resonantarcana
 
 ### Arcane Bind
 
-Hold a target briefly; cover breaks the tether.
+Wind an arcane cage around one aimed enemy for three seconds at level I. Suppress movement and melee damage while the link holds. Cover, range or displacement of more than four blocks breaks it.
 
 **Role:** Control · **Cast:** 0.6s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -138,7 +144,7 @@ Spell ID: `resonant_arcana:capture`. Inspect any rank in game with `/resonantarc
 
 ### Astral Comet
 
-A slow projectile with an area impact.
+Launch a slow astral comet with a bright core and trailing star motes. It bursts around the first enemy or solid surface reached, damaging visible enemies in the impact area.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 6s · **Range:** 48 blocks · **Radius / width:** 4.5 blocks.
 
@@ -154,7 +160,7 @@ Spell ID: `resonant_arcana:astral_comet`. Inspect any rank in game with `/resona
 
 ### Arcane Repulse
 
-An expanding shock ring around you.
+Release an expanding arcane pressure ring from your feet. Enemies touched by the advancing rim take one hit and are pushed away; walls block the hit.
 
 **Role:** Attack · **Cast:** 0.5s · **Cooldown:** 6s · **Range:** 0 blocks · **Radius / width:** 7 blocks.
 
@@ -170,7 +176,7 @@ Spell ID: `resonant_arcana:arcane_repulse`. Inspect any rank in game with `/reso
 
 ### Launch
 
-Launch your target upwards.
+Send a rising arcane strike into one visible aimed enemy, adding upward velocity. This lifts the target; it does not grant the enemy fall protection.
 
 **Role:** Mobility · **Cast:** instant · **Cooldown:** 3.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -186,7 +192,7 @@ Spell ID: `resonant_arcana:launch`. Inspect any rank in game with `/resonantarca
 
 ### Leap
 
-Propel yourself forwards and upwards.
+Vault forwards and upwards in an arcane wake. This is a movement spell with no direct damage; choose a safe landing.
 
 **Role:** Mobility · **Cast:** instant · **Cooldown:** 4s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
 
@@ -202,7 +208,7 @@ Spell ID: `resonant_arcana:leap`. Inspect any rank in game with `/resonantarcana
 
 ### Arcane Volley
 
-Fire three staggered arcane projectiles.
+Fire three arcane bolts staggered 0.3 seconds apart. Each bolt follows your aim when it leaves, stops at cover and releases its own small impact; normal damage immunity still applies.
 
 **Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 32 blocks · **Radius / width:** 1 blocks.
 
@@ -319,7 +325,7 @@ Spell ID: `resonant_arcana:spellbreaker`. Inspect any rank in game with `/resona
 
 ### Blood Wave
 
-A wide travelling arc, hitting each enemy once.
+Send a broad crimson crescent along your aim. Its moving front cuts each visible enemy once and dissipates against solid cover.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
 
@@ -335,7 +341,7 @@ Spell ID: `resonant_arcana:blood_wave`. Inspect any rank in game with `/resonant
 
 ### Crimson Strike
 
-Strike the living target you aim at.
+Snap a crimson spark onto one visible aimed enemy. Blood droplets mark the impact; this attack does not restore health.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 1.75s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
 
@@ -351,7 +357,7 @@ Spell ID: `resonant_arcana:blood_spark`. Inspect any rank in game with `/resonan
 
 ### Crimson Rupture
 
-An area burst centred on your aim.
+Detonate a crimson bloom at the aimed enemy or reachable aim point. Its radial blood spray damages visible enemies in the impact area once.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -367,7 +373,7 @@ Spell ID: `resonant_arcana:blood_explode`. Inspect any rank in game with `/reson
 
 ### Hemorrhagic Shock
 
-Slow and weaken your target.
+Close a crimson binding around one visible aimed enemy. One hit applies Slowness VI and Weakness II for three seconds; this spell does not drain health.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -417,7 +423,7 @@ Spell ID: `resonant_arcana:sanguine_drain`. Inspect any rank in game with `/reso
 
 ### Blood Lance
 
-An instant piercing line through visible enemies.
+Drive a straight crimson lance through visible enemies along your aim. Each enemy on the piercing line is hit once; solid cover ends the lance.
 
 **Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 24 blocks · **Radius / width:** 0.6 blocks.
 
@@ -570,7 +576,7 @@ Spell ID: `resonant_arcana:crimson_reversal`. Inspect any rank in game with `/re
 
 ### Fire Comet
 
-A slow projectile with an area impact. Fire hits ignite for three seconds.
+Hurl a slow ember comet with a burning wake. Its first collision releases an area detonation and ignites enemies hit for three seconds.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 6s · **Range:** 44 blocks · **Radius / width:** 4.5 blocks.
 
@@ -586,7 +592,7 @@ Spell ID: `resonant_arcana:fire_comet`. Inspect any rank in game with `/resonant
 
 ### Cinder Vortex
 
-A stationary vortex dealing repeated area damage. Fire hits ignite for three seconds.
+Raise a stationary ember funnel at your aim for two seconds. Four half-second pulses can damage visible enemies inside and refresh three seconds of burning.
 
 **Role:** Sustain · **Cast:** 1.25s · **Cooldown:** 6s · **Range:** 30 blocks · **Radius / width:** 3 blocks.
 
@@ -606,7 +612,7 @@ Spell ID: `resonant_arcana:fire_twister`. Inspect any rank in game with `/resona
 
 ### Flame Wave
 
-A wide travelling arc, hitting each enemy once. Fire hits ignite for three seconds.
+Drive a broad wall of flickering embers forwards. Its advancing front hits each visible enemy once and ignites them for three seconds.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
 
@@ -622,7 +628,7 @@ Spell ID: `resonant_arcana:flame_wave`. Inspect any rank in game with `/resonant
 
 ### Cinder Surge
 
-An expanding shock ring around you. Fire hits ignite for three seconds.
+Send an expanding ember ring across the ground around you. Its advancing rim damages each visible enemy once, pushes them away and ignites them for three seconds.
 
 **Role:** Attack · **Cast:** 0.8s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
 
@@ -638,7 +644,7 @@ Spell ID: `resonant_arcana:flame_shock_wave`. Inspect any rank in game with `/re
 
 ### Flamethrower
 
-A short stream following your current aim. Fire hits ignite for three seconds.
+Channel a narrow stream of flame following your current aim for 1.5 seconds. Six quarter-second pulses can hit enemies intersecting the stream; solid cover stops it. Hits ignite for three seconds.
 
 **Role:** Sustain · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 12 blocks · **Radius / width:** 1.4 blocks.
 
@@ -658,7 +664,7 @@ Spell ID: `resonant_arcana:flame_thrower`. Inspect any rank in game with `/reson
 
 ### Fireball
 
-A travelling projectile that stops at walls. Fire hits ignite for three seconds.
+Throw a compact fireball with a coiling ember trail. Its first collision releases a small area burst and ignites enemies hit for three seconds.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 2.5s · **Range:** 40 blocks · **Radius / width:** 2 blocks.
 
@@ -674,7 +680,7 @@ Spell ID: `resonant_arcana:fireball`. Inspect any rank in game with `/resonantar
 
 ### Ignite
 
-Strike the living target you aim at. Fire hits ignite for three seconds.
+Kindle one visible aimed enemy directly. Deal the listed impact damage and set it burning for three seconds; ordinary fire immunity still applies.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 2.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -690,7 +696,7 @@ Spell ID: `resonant_arcana:ignite`. Inspect any rank in game with `/resonantarca
 
 ### Ember Veil
 
-A damaging aura that moves with you. Fire hits ignite for three seconds.
+Carry a low ring of embers for three seconds. Three one-second pulses damage visible nearby enemies and ignite them for three seconds.
 
 **Role:** Sustain · **Cast:** 0.5s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 5 blocks.
 
@@ -859,7 +865,7 @@ Spell ID: `resonant_arcana:dragons_pyre`. Inspect any rank in game with `/resona
 
 ### Shadow Bolt
 
-A travelling projectile that stops at walls. Ender shadow hits weaken for three seconds.
+Launch a twisting shadow bolt. Its first collision releases a small void impact, applying Weakness I for three seconds to enemies hit.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.25s · **Range:** 36 blocks · **Radius / width:** 1.5 blocks.
 
@@ -875,7 +881,7 @@ Spell ID: `resonant_arcana:shadow_bolt`. Inspect any rank in game with `/resonan
 
 ### Umbral Seeker
 
-A projectile that follows your selected target. Ender shadow hits weaken for three seconds.
+Release a dark wisp that steers toward the enemy selected at release. Its impact damages and weakens enemies; solid cover intercepts the projectile.
 
 **Role:** Attack · **Cast:** 0.6s · **Cooldown:** 3.5s · **Range:** 36 blocks · **Radius / width:** 2 blocks.
 
@@ -891,7 +897,7 @@ Spell ID: `resonant_arcana:soul_seeker`. Inspect any rank in game with `/resonan
 
 ### Umbral Wave
 
-A wide travelling arc, hitting each enemy once. Ender shadow hits weaken for three seconds.
+Advance a broad curtain of shadow along your aim. Each enemy touched by the moving front takes one hit and Weakness I for three seconds.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 28 blocks · **Radius / width:** 2.5 blocks.
 
@@ -907,7 +913,7 @@ Spell ID: `resonant_arcana:dark_wave`. Inspect any rank in game with `/resonanta
 
 ### Nightfall
 
-An area burst centred on your aim. Ender shadow hits weaken for three seconds.
+Collapse a cloud of shadow at your aim. Visible enemies in the burst take one hit, Weakness I for three seconds and brief Darkness.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 7s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -923,7 +929,7 @@ Spell ID: `resonant_arcana:nightfall`. Inspect any rank in game with `/resonanta
 
 ### Dread Mark
 
-Curse a target; detonate after two seconds. Cover breaks the curse. Ender shadow hits weaken for three seconds.
+Fasten an orbiting shadow curse to one aimed enemy. After two seconds it bursts around that enemy, damaging and weakening nearby enemies. Losing line of sight or exceeding the link range breaks the curse.
 
 **Role:** Control · **Cast:** 0.5s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 3.5 blocks.
 
@@ -941,7 +947,7 @@ Spell ID: `resonant_arcana:shadow_cage`. Inspect any rank in game with `/resonan
 
 ### Umbral Veil
 
-A damaging aura that moves with you. Ender shadow hits weaken for three seconds.
+Carry a dark soul aura with you for three seconds. Three one-second pulses damage visible nearby enemies and apply Weakness I for three seconds.
 
 **Role:** Sustain · **Cast:** 0.5s · **Cooldown:** 8s · **Range:** 0 blocks · **Radius / width:** 8 blocks.
 
@@ -1007,7 +1013,7 @@ Spell ID: `resonant_arcana:dusk_cleave`. Inspect any rank in game with `/resonan
 
 ### Dread Effigy
 
-Place a spectral effigy at your aim for four seconds. Four pulses damage and weaken visible enemies near it. Ender shadow hits weaken for three seconds.
+Place a blackstone effigy with a carved head and soul torch at your aim for four seconds. Four pulses damage and weaken visible enemies near it. Ender shadow hits weaken for three seconds. Pulses suppress nearby enemies with Weakness II for 1.5 seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -1116,7 +1122,7 @@ Spell ID: `resonant_arcana:helvars_swordfall`. Inspect any rank in game with `/r
 
 ### Thunder Bolt
 
-A travelling projectile that stops at walls.
+Fire a compact electric bolt with a jagged spark wake. The first enemy or solid surface stops it and releases a small electric impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.5s · **Range:** 40 blocks · **Radius / width:** 1.5 blocks.
 
@@ -1132,7 +1138,7 @@ Spell ID: `resonant_arcana:thunder_bolt`. Inspect any rank in game with `/resona
 
 ### Chain Lightning
 
-Jump between up to five visible targets.
+Connect up to five distinct visible enemies with jagged lightning links. Each jump chooses a nearby eligible enemy; cover and the jump radius can end the chain early.
 
 **Role:** Attack · **Cast:** 0.6s · **Cooldown:** 6s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -1148,7 +1154,7 @@ Spell ID: `resonant_arcana:chain_lightning`. Inspect any rank in game with `/res
 
 ### Thunder Wave
 
-A wide travelling arc, hitting each enemy once.
+Send a broad, crackling electric front forwards. Each enemy crossed by its moving rim takes one hit.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 30 blocks · **Radius / width:** 2.5 blocks.
 
@@ -1164,7 +1170,7 @@ Spell ID: `resonant_arcana:thunder_wave`. Inspect any rank in game with `/resona
 
 ### Storm Call
 
-Call repeated lightning strikes over an area.
+Establish a lightning storm at your aim for 4.8 seconds. Five one-second pulses damage visible enemies; additional lightning columns show the active storm area.
 
 **Role:** Sustain · **Cast:** 1.6s · **Cooldown:** 12s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -1184,7 +1190,7 @@ Spell ID: `resonant_arcana:storm_call`. Inspect any rank in game with `/resonant
 
 ### Thunder Pulse
 
-An expanding shock ring around you.
+Unleash an expanding electric ring from your feet. The moving rim damages and pushes each visible enemy once, with sparks tracing its current reach.
 
 **Role:** Attack · **Cast:** 0.7s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
 
@@ -1200,7 +1206,7 @@ Spell ID: `resonant_arcana:thunder_pulse`. Inspect any rank in game with `/reson
 
 ### Static Shock
 
-Slow and weaken your target.
+Overload one visible aimed enemy with static. One direct hit applies Slowness VI and Weakness II for three seconds; it is a slowing debuff rather than an AI freeze.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 4s · **Range:** 28 blocks · **Radius / width:** 1 blocks.
 
@@ -1216,7 +1222,7 @@ Spell ID: `resonant_arcana:static_shock`. Inspect any rank in game with `/resona
 
 ### Lightning
 
-Call a lightning strike at your aim.
+Call a vertical lightning strike onto your aim, damaging eligible visible enemies near the strike point. Uses addon damage rather than a terrain-igniting vanilla lightning entity.
 
 **Role:** Attack · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 32 blocks · **Radius / width:** 2 blocks.
 
@@ -1232,7 +1238,7 @@ Spell ID: `resonant_arcana:lightning`. Inspect any rank in game with `/resonanta
 
 ### Smite
 
-Call a lightning strike at your aim.
+Mark your aim with holy light, then deliver a vertical judgement strike. Visible enemies within its impact radius take the listed damage; allies are protected.
 
 **Role:** Attack · **Cast:** 1.4s · **Cooldown:** 10s · **Range:** 32 blocks · **Radius / width:** 5 blocks.
 
@@ -1357,7 +1363,7 @@ Spell ID: `resonant_arcana:thunderbrand`. Inspect any rank in game with `/resona
 
 ### Rift Bolt
 
-A travelling projectile that stops at walls.
+Send a compressed spatial orb along your aim, trailed by inward-curling portal motes. Its first collision releases a small force impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.5s · **Range:** 32 blocks · **Radius / width:** 2 blocks.
 
@@ -1373,7 +1379,7 @@ Spell ID: `resonant_arcana:gravity_bolt`. Inspect any rank in game with `/resona
 
 ### Rift Well
 
-Draw nearby enemies into a gravity well.
+Open a stationary gravity well for 4.8 seconds. Pull visible enemies horizontally toward its centre and deal five one-second area pulses; walls block damage and pulling.
 
 **Role:** Sustain · **Cast:** 1.25s · **Cooldown:** 9s · **Range:** 28 blocks · **Radius / width:** 5 blocks.
 
@@ -1393,7 +1399,7 @@ Spell ID: `resonant_arcana:gravity_well`. Inspect any rank in game with `/resona
 
 ### Force Push
 
-Push the target away from you.
+Strike one visible aimed enemy with an outward spatial impulse. Deal direct damage and launch it away from the caster with a small upward lift.
 
 **Role:** Control · **Cast:** instant · **Cooldown:** 3.25s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -1409,7 +1415,7 @@ Spell ID: `resonant_arcana:force_push`. Inspect any rank in game with `/resonant
 
 ### Force Pull
 
-Pull the target towards you.
+Catch one visible aimed enemy with a spatial link. Deal direct damage and pull it horizontally toward you with a small upward lift.
 
 **Role:** Control · **Cast:** instant · **Cooldown:** 3.25s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -1425,7 +1431,7 @@ Spell ID: `resonant_arcana:force_pull`. Inspect any rank in game with `/resonant
 
 ### Suspension
 
-Lift a target briefly, followed by a gentle descent.
+Suspend one visible aimed enemy above its starting point for two seconds. Deal one hit, slow it and briefly grant Slow Falling. Cover, range or displacement beyond four blocks breaks the hold.
 
 **Role:** Control · **Cast:** 0.6s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -1443,7 +1449,7 @@ Spell ID: `resonant_arcana:gravity_choke`. Inspect any rank in game with `/reson
 
 ### Singularity
 
-An area burst centred on your aim.
+Collapse a concentrated spatial orb at your aim. One radial force burst damages and pushes visible enemies; this instant spell leaves no lingering gravity well.
 
 **Role:** Attack · **Cast:** 1.6s · **Cooldown:** 9s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -1622,7 +1628,7 @@ Spell ID: `resonant_arcana:sandworms_quicksand`. Inspect any rank in game with `
 
 ### Echo Bolt
 
-A travelling projectile that stops at walls.
+Fire a resonant soul bolt with blue sculk motes. It ends at the first enemy or solid surface, releasing a small echo impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.25s · **Range:** 36 blocks · **Radius / width:** 1.5 blocks.
 
@@ -1638,7 +1644,7 @@ Spell ID: `resonant_arcana:echo_bolt`. Inspect any rank in game with `/resonanta
 
 ### Sculk Wave
 
-A wide travelling arc, hitting each enemy once.
+Roll a broad sculk resonance front forwards. Each visible enemy crossed by the advancing wave takes one hit.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 28 blocks · **Radius / width:** 2.5 blocks.
 
@@ -1686,7 +1692,7 @@ Spell ID: `resonant_arcana:soul_siphon`. Inspect any rank in game with `/resonan
 
 ### Soul Prison
 
-Restrain and damage your target briefly.
+Imprison one aimed enemy in a winding soul cage for three seconds at level I. Three one-second hits apply Darkness while the hold suppresses movement. Cover, range or displacement breaks the link.
 
 **Role:** Control · **Cast:** 0.6s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -1706,7 +1712,7 @@ Spell ID: `resonant_arcana:soul_prison`. Inspect any rank in game with `/resonan
 
 ### Shrieking Pulse
 
-An expanding shock ring around you.
+Release a radial sculk shriek. An expanding soul ring damages and pushes each visible enemy once as its rim passes them.
 
 **Role:** Attack · **Cast:** 0.8s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
 
@@ -1722,7 +1728,7 @@ Spell ID: `resonant_arcana:shrieking_pulse`. Inspect any rank in game with `/res
 
 ### Amethyst Nova
 
-An area burst centred on your aim.
+Shatter a resonant amethyst bloom at your aim. Crystal motes radiate from one area burst, damaging and pushing visible enemies in range.
 
 **Role:** Attack · **Cast:** 1.2s · **Cooldown:** 8s · **Range:** 28 blocks · **Radius / width:** 5.5 blocks.
 
@@ -1772,7 +1778,7 @@ Spell ID: `resonant_arcana:soul_cannon`. Inspect any rank in game with `/resonan
 
 ### Wisp Lantern
 
-Place a soul lantern for four seconds. Four echo pulses damage visible enemies near it.
+Place a soul lantern on a deepslate post for four seconds. Four echo pulses damage visible enemies near it. Each pulse reveals enemies with a glowing outline for 1.5 seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -1875,7 +1881,7 @@ Spell ID: `resonant_arcana:funeral_bell`. Inspect any rank in game with `/resona
 
 ### Venom Sting
 
-Strike the living target you aim at. Nature hits poison for four seconds.
+Burst an acid bubble on one visible aimed enemy, dealing direct damage and applying Poison I for four seconds.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 2.5s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
 
@@ -1891,7 +1897,7 @@ Spell ID: `resonant_arcana:poison_spark`. Inspect any rank in game with `/resona
 
 ### Poison Wave
 
-A wide travelling arc, hitting each enemy once. Nature hits poison for four seconds.
+Roll a low green acid wave forwards. Each enemy crossed by its broad front takes one direct hit and Poison I for four seconds.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.5s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
 
@@ -1907,7 +1913,7 @@ Spell ID: `resonant_arcana:poison_wave`. Inspect any rank in game with `/resonan
 
 ### Venom Bolt
 
-A travelling projectile that stops at walls. Nature hits poison for four seconds.
+Spit a travelling acid orb with a spore-speckled wake. Its first collision releases a small impact that damages enemies and applies Poison I for four seconds.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.75s · **Range:** 32 blocks · **Radius / width:** 1.5 blocks.
 
@@ -1923,7 +1929,7 @@ Spell ID: `resonant_arcana:venom_bolt`. Inspect any rank in game with `/resonant
 
 ### Miasma Field
 
-Leave a poisonous cloud for nearly five seconds. Nature hits poison for four seconds.
+Leave a low poisonous cloud at your aim for 4.8 seconds. Five one-second pulses damage visible enemies inside and refresh Poison I for four seconds.
 
 **Role:** Sustain · **Cast:** 0.75s · **Cooldown:** 9s · **Range:** 24 blocks · **Radius / width:** 4.5 blocks.
 
@@ -2027,7 +2033,7 @@ Spell ID: `resonant_arcana:toxic_molt`. Inspect any rank in game with `/resonant
 
 ### Spore Totem
 
-Plant a spectral spore totem for four seconds. Four pulses poison and damage visible enemies near it. Nature hits poison for four seconds.
+Plant a mushroom totem with a glowing shroomlight cap for four seconds. Four pulses poison and damage visible enemies near it. Nature hits poison for four seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -2212,7 +2218,7 @@ Spell ID: `resonant_arcana:blessing_of_vigor`. Inspect any rank in game with `/r
 
 ### Consecration
 
-Place a consecrated beacon for four seconds. Each of four pulses damages enemies and restores 1 health at level I to eligible allies in its area.
+Place a quartz altar topped with an end rod for four seconds. Each of four pulses damages enemies and restores 1 health at level I to eligible allies in its area. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Healing · **Cast:** 1.2s · **Cooldown:** 12s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -2354,21 +2360,21 @@ Spell ID: `resonant_arcana:renewal_hymn`. Inspect any rank in game with `/resona
 
 ### Warscream
 
-Roar with dragon fury: repel enemies, taunt nearby hostile mobs for 3 seconds, and grant visible allies bonus melee damage, spell power and temporary health.
+Unleash three ground-shaking roars over eight blocks. Each pulse damages visible enemies; the roar draws them closer and taunts hostile mobs. You and nearby eligible allies gain Resistance I. Taunt and defense last 3/4/5/6/7 seconds at levels I–V.
 
 **Role:** Battle cry · **Cast:** 0.6s · **Cooldown:** 20s · **Range:** 8 blocks · **Radius / width:** 8 blocks.
 
 | Level | Direct damage | Healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | — | — | 45 |
-| II | — | — | 50 |
-| III | — | — | 55 |
-| IV | — | — | 60 |
-| V | — | — | 65 |
+| I | 3 | — | 45 |
+| II | 3.75 | — | 50 |
+| III | 4.5 | — | 55 |
+| IV | 5.25 | — | 60 |
+| V | 6 | — | 65 |
 
-**Base active phase:** 8s. Duration at levels I–V without gear: 8s, 10s, 12s, 14s, 16s.
+**Delivery:** up to 3 hits / pulses; the table gives the value for each one.
 
-**Ally damage:** +10%, +15%, +20%, +25%, +30% melee damage and native Iron’s spell power. **Temporary health:** 4, 5, 6, 7, 8. Taunts at most 32 visible hostile mobs, rechecking every half second for three seconds. Custom boss AI may override the target. Does not taunt animals, pets or players.
+**Roar:** three damage pulses at 0.05, 0.65 and 1.25 seconds after release, in an eight-block radius. Pulls eligible visible enemies inward, respecting knockback resistance. **Defense and taunt at ranks I–V:** 3, 4, 5, 6, 7 seconds. Grants Resistance I to the caster and visible eligible allies. Taunts at most 32 hostile mobs, rechecking every half second. Custom boss AI may override the target; animals, pets and players are not taunted.
 
 Spell ID: `resonant_arcana:warscream`. Inspect any rank in game with `/resonantarcana spell warscream <level>`.
 

@@ -29,7 +29,7 @@ def main():
         lines.append(f"| [{wand['title']}]({page}) | {build_docs.SCHOOL[wand['theme']]} | {len(wand['spells'])} |")
     lines += ['', 'Optional spells appear only with Bosses’Rise 2.1.2. See [Bosses’Rise Compatibility](Bosses-Rise-Compatibility.md) and the [full spell reference](../SPELLS.md).']
     (wiki / 'Wand-Index.md').write_text('\n'.join(lines) + footer)
-    optional_text = guide.split('## Optional Bosses’Rise spells', 1)[1].split('## Wand index', 1)[0]
+    optional_text = guide.split('## Optional Bosses’Rise spells', 1)[1].split('## Visual presentation', 1)[0]
     boss_table = '''
 | Boss | Spells | Wand |
 | --- | --- | --- |
@@ -44,7 +44,7 @@ Helvar’s Swordfall renders the installed mod’s original held Knight Sword ge
     (wiki / 'Bosses-Rise-Compatibility.md').write_text('# Optional Bosses’Rise Integration\n' + optional_text + boss_table + footer)
     preface = guide.split('## Optional Bosses’Rise spells', 1)[0].replace('# Spell reference', '# Spell Mechanics', 1)
     mechanics = guide.split('## Shared recovery', 1)[1].split('<a id=', 1)[0]
-    (wiki / 'Spell-Mechanics.md').write_text(preface + '## Shared recovery' + mechanics + footer)
+    (wiki / 'Spell-Mechanics.md').write_text(preface + '## Visual presentation' + guide.split('## Visual presentation', 1)[1].split('## Wand index', 1)[0] + '## Shared recovery' + mechanics + footer)
     for source, page in [('CONFIGURATION.md', 'Configuration.md'), ('CHANGELOG.md', 'Changelog.md')]:
         (wiki / page).write_text((ROOT / source).read_text().rstrip() + footer)
     home = wiki / 'Home.md'

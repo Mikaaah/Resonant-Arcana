@@ -8,7 +8,13 @@ All spells have five levels except **DOOM**, which has one Legendary level. Base
 
 Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.
 
-Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. No spell edits terrain or intentionally loads new chunks.
+Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. Spells do not intentionally load new chunks or damage terrain. Last Stand temporarily places and later removes its own banner; lantern and totem centrepieces use temporary display entities without replacing world blocks.
+
+## Visual presentation
+
+Native vanilla and Iron’s particles layer distinct projectile wakes, beams, rain, restraints, vortex interiors and impacts. Persistent areas use ground-following boundary rings; decorative particles have a separate allowance. Last Stand shows its full six-block defense radius. Wisp Lantern, Dread Effigy, Spore Totem and Consecration place temporary physical centrepieces on visible ground. Spell effects and centrepieces expire with the cast.
+
+The readability and bounded-detail approach is inspired by [Wynncraft’s official Spellbound combat notes](https://wynncraft.com/updates/2.0). Geometry and implementation are original; no Wynncraft assets are included.
 
 ## Shared recovery
 

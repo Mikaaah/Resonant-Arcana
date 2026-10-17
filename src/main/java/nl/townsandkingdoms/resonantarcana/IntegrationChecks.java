@@ -90,6 +90,7 @@ public final class IntegrationChecks {
                 String id=SpellAudio.chargeId(spell);
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(id)),"charge sound exists: "+spell);
                 check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(SpellAudio.spellCastId(spell))),"release sound exists: "+spell);
+                check(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.containsKey(net.minecraft.resources.ResourceLocation.parse(SpellAudio.sustainId(spell))),"sustain sound exists: "+spell);
                 check(!SpellAudio.castId(spell.theme).startsWith("resonant_arcana:"),"retired vacuum cast is not referenced: "+spell);
             }
             for(String id:List.of(SpellAudio.spellCastId(Spell.SONIC_SCREAM),SpellAudio.spellCastId(Spell.SHRIEKING_PULSE),SpellAudio.spellCastId(Spell.SOUL_PRISON),"entity.warden.sonic_boom"))
@@ -118,12 +119,18 @@ public final class IntegrationChecks {
                 Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.ORBIT?3:spell.kind==Spell.Kind.BLADE_ARC?4:spell.kind==Spell.Kind.SWEEP||spell.kind==Spell.Kind.GAZE?5:spell.kind==Spell.Kind.PULSE?Math.min(5,spell.radius-1):spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
                 if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
                 check(SpellEngine.cast(player,spell),spell.name()+" starts");
+                var props=level.getEntitiesOfClass(SpellCentrepieces.Prop.class,player.getBoundingBox().inflate(64));
+                if(spell.kind==Spell.Kind.TOTEM){
+                    check(props.size()>=2,spell+" places a physical centrepiece");
+                    check(props.stream().allMatch(e->e.getY()>=81&&e.getY()<=83&&!e.isPickable()),spell+" props sit on ground and cannot be attacked");
+                    check(level.getBlockState(new BlockPos(0,80,6)).is(Blocks.STONE),spell+" props preserve ground blocks");
+                }
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
                 for(int t=0;t<100;t++)SpellEngine.tick();
                 boolean observed=switch(spell.kind){
                     case HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
                     case CLEANSE->spell==Spell.TOXIC_MOLT?player.getHealth()>5:player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
-                    case WARCRY->player.hasEffect(ArcanaEffects.WARCRY)&&zombie.getDeltaMovement().lengthSqr()>.1;
+                    case WARCRY->player.hasEffect(MobEffects.DAMAGE_RESISTANCE)&&zombie.getHealth()<20&&zombie.getDeltaMovement().z<0;
                     case MARTIAL_BUFF->player.hasEffect(ArcanaEffects.ARCANE_EDGE)||player.hasEffect(ArcanaEffects.TEMPO)||player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
                     case BUFF->player.getAbsorptionAmount()>0||player.hasEffect(MobEffects.INVISIBILITY);
                     case BLINK->player.hasEffect(MobEffects.SLOW_FALLING)&&visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.LINK.ordinal()&&v.endZ()>1);
@@ -135,7 +142,12 @@ public final class IntegrationChecks {
                     default->zombie.getHealth()<zombie.getMaxHealth();
                 };
                 check(observed,spell.name()+" has expected gameplay effect");
+                if(spell==Spell.WISP_LANTERN)check(zombie.hasEffect(MobEffects.GLOWING),"lantern reveals affected enemies");
+                if(spell==Spell.DREAD_EFFIGY)check(zombie.getEffect(MobEffects.WEAKNESS).getAmplifier()==1,"effigy suppresses melee with Weakness II");
+                if(spell.kind==Spell.Kind.TOTEM||spell.kind==Spell.Kind.RAIN||spell.kind==Spell.Kind.DOMAIN||spell.kind==Spell.Kind.TRAP)
+                    check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.AREA.ordinal()&&Math.abs(v.size()-spell.radius)<.001),spell+" advertises its actual area radius");
                 check(SpellEngine.activeCount()==0,spell.name()+" timed tasks expire");
+                check(props.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),spell+" centrepieces expire with their cast");
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
@@ -154,6 +166,18 @@ public final class IntegrationChecks {
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
                 if(arrow!=null)arrow.discard();zombie.discard();
             }
+            SpellEngine.clear();resetPlayer(player);player.setXRot(-90);
+            for(Spell totem:List.of(Spell.WISP_LANTERN,Spell.DREAD_EFFIGY,Spell.SPORE_TOTEM,Spell.CONSECRATION)){
+                check(!SpellEngine.canStart(player,totem),totem+" refuses an aim without a floor");
+                check(!SpellEngine.cast(player,totem),totem+" refuses release without a floor");
+            }
+            resetPlayer(player);Zombie totemTarget=spawn(level,0,81,6);
+            check(SpellEngine.cast(player,Spell.WISP_LANTERN),"lantern starts before explicit cancellation");
+            var cancelledProps=level.getEntitiesOfClass(SpellCentrepieces.Prop.class,player.getBoundingBox().inflate(64));
+            check(!cancelledProps.isEmpty(),"cancellation fixture has physical props");SpellEngine.clear();
+            check(cancelledProps.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),"cancelling a cast removes every centrepiece immediately");totemTarget.discard();
+            resetPlayer(player);player.setXRot(60);visuals.clear();check(SpellEngine.cast(player,Spell.LAST_STAND),"banner range fixture starts");SpellEngine.tick();
+            check(visuals.stream().anyMatch(v->v.spell()==Spell.LAST_STAND.ordinal()&&v.stage()==SpellVisuals.Stage.AREA.ordinal()&&v.size()==Spell.LAST_STAND.radius),"banner outline shows its full defense radius");
             SpellEngine.clear();resetPlayer(player);Zombie chainFirst=spawn(level,0,81,6),chainSecond=spawn(level,3,81,6);
             check(SpellEngine.cast(player,Spell.CHAIN_LIGHTNING),"chain casts at first target");
             check(chainFirst.getHealth()<20&&chainSecond.getHealth()<20,"chain damages two distinct visible targets");chainFirst.discard();chainSecond.discard();
@@ -374,12 +398,16 @@ public final class IntegrationChecks {
             SpellEngine.clear();resetPlayer(player);Zombie enemy=spawn(level,0,81,4),behind=spawn(level,0,81,-4);
             double spellPower=player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER);
             check(SpellEngine.castFromSpellbook(player,Spell.WARSCREAM,Spell.WARSCREAM.power(rank),level.damageSources().indirectMagic(player,player),400,false),"warscream rank casts "+rank);
-            check(Math.abs(player.getAttributeValue(attack)-baseAttack*(1.1+.05*(rank-1)))<.001,"warcry melee scaling "+rank);
-            check(Math.abs(player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER)-spellPower*(1.1+.05*(rank-1)))<.001,"warcry native spell scaling "+rank);
-            check(Math.abs(player.getAbsorptionAmount()-(4+rank-1))<.01,"warcry shield scaling "+rank);
+            check(Math.abs(player.getAttributeValue(attack)-baseAttack)<.001,"warcry preserves melee attributes "+rank);
+            check(Math.abs(player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER)-spellPower)<.001,"warcry preserves spell attributes "+rank);
+            check(player.hasEffect(MobEffects.DAMAGE_RESISTANCE)&&player.getEffect(MobEffects.DAMAGE_RESISTANCE).getDuration()==(rank+2)*20,"warcry defense duration "+rank);
             check(enemy.getTarget()==player&&behind.getTarget()==player,"warcry radial hostile taunt "+rank);
-            enemy.setTarget(null);for(int i=0;i<10;i++)SpellEngine.tick();check(enemy.getTarget()==player,"taunt reasserts target");
-            for(int i=0;i<60;i++)SpellEngine.tick();enemy.setTarget(null);SpellEngine.tick();check(enemy.getTarget()==null&&SpellEngine.activeCount()==0,"taunt expires");
+            enemy.setTarget(null);for(int i=0;i<10;i++){enemy.invulnerableTime=0;behind.invulnerableTime=0;SpellEngine.tick();}check(enemy.getTarget()==player,"taunt reasserts target");
+            check(enemy.getDeltaMovement().z<0&&behind.getDeltaMovement().z>0,"warcry pulls enemies inward "+rank);
+            for(int i=10;i<26;i++){enemy.invulnerableTime=0;behind.invulnerableTime=0;SpellEngine.tick();}
+            check(Math.abs(enemy.getHealth()-(20-9*Spell.WARSCREAM.power(rank)))<.01,"warcry deals three distinct pulses "+rank);
+            for(int i=26;i<(rank+2)*20-1;i++)SpellEngine.tick();check(SpellEngine.activeCount()==1,"taunt remains active for rank duration "+rank);
+            SpellEngine.tick();enemy.setTarget(null);SpellEngine.tick();check(enemy.getTarget()==null&&SpellEngine.activeCount()==0,"taunt expires");
             enemy.discard();behind.discard();
         }
         SpellEngine.clear();resetPlayer(player);
@@ -389,10 +417,10 @@ public final class IntegrationChecks {
         level.getScoreboard().addPlayerToTeam(ally.getScoreboardName(),party);
         try{
             SpellEngine.cast(player,Spell.WARSCREAM);
-            check(ally.hasEffect(ArcanaEffects.WARCRY)&&ally.getAbsorptionAmount()==4,"warscream buffs visible teammates (effect="+ally.hasEffect(ArcanaEffects.WARCRY)+", absorption="+ally.getAbsorptionAmount()+")");
-            check(!outsider.hasEffect(ArcanaEffects.WARCRY)&&outsider.getAbsorptionAmount()==0,"warscream does not buff enemies");
+            check(ally.hasEffect(MobEffects.DAMAGE_RESISTANCE),"warscream defends visible teammates");
+            check(!outsider.hasEffect(MobEffects.DAMAGE_RESISTANCE),"warscream does not defend enemies");
             check(ally.getTarget()==null&&ally.getDeltaMovement().lengthSqr()==0,"warscream protects friendly teammates from push and taunt");
-            SpellEngine.clear();SpellEngine.cast(player,Spell.WARSCREAM);check(ally.getAbsorptionAmount()==4,"party shields refresh without stacking");
+            SpellEngine.clear();SpellEngine.cast(player,Spell.WARSCREAM);check(ally.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier()==0,"party defense refreshes without stacking");
             SpellEngine.clear();SpellEngine.cast(player,Spell.BULWARK_CHANT);check(ally.hasEffect(MobEffects.DAMAGE_RESISTANCE),"bulwark protects nearby allies");
             SpellEngine.clear();SpellEngine.cast(player,Spell.BATTLE_TEMPO);check(ally.hasEffect(ArcanaEffects.TEMPO)&&!outsider.hasEffect(ArcanaEffects.TEMPO),"tempo respects party allegiance");
         }finally{level.getScoreboard().removePlayerTeam(party);ally.discard();outsider.discard();}

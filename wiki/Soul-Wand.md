@@ -4,7 +4,7 @@
 
 ### Echo Bolt
 
-A travelling projectile that stops at walls.
+Fire a resonant soul bolt with blue sculk motes. It ends at the first enemy or solid surface, releasing a small echo impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.25s · **Range:** 36 blocks · **Radius / width:** 1.5 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:echo_bolt`. Inspect any rank in game with `/resonanta
 
 ### Sculk Wave
 
-A wide travelling arc, hitting each enemy once.
+Roll a broad sculk resonance front forwards. Each visible enemy crossed by the advancing wave takes one hit.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 28 blocks · **Radius / width:** 2.5 blocks.
 
@@ -68,7 +68,7 @@ Spell ID: `resonant_arcana:soul_siphon`. Inspect any rank in game with `/resonan
 
 ### Soul Prison
 
-Restrain and damage your target briefly.
+Imprison one aimed enemy in a winding soul cage for three seconds at level I. Three one-second hits apply Darkness while the hold suppresses movement. Cover, range or displacement breaks the link.
 
 **Role:** Control · **Cast:** 0.6s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -88,7 +88,7 @@ Spell ID: `resonant_arcana:soul_prison`. Inspect any rank in game with `/resonan
 
 ### Shrieking Pulse
 
-An expanding shock ring around you.
+Release a radial sculk shriek. An expanding soul ring damages and pushes each visible enemy once as its rim passes them.
 
 **Role:** Attack · **Cast:** 0.8s · **Cooldown:** 7.5s · **Range:** 0 blocks · **Radius / width:** 9 blocks.
 
@@ -104,7 +104,7 @@ Spell ID: `resonant_arcana:shrieking_pulse`. Inspect any rank in game with `/res
 
 ### Amethyst Nova
 
-An area burst centred on your aim.
+Shatter a resonant amethyst bloom at your aim. Crystal motes radiate from one area burst, damaging and pushing visible enemies in range.
 
 **Role:** Attack · **Cast:** 1.2s · **Cooldown:** 8s · **Range:** 28 blocks · **Radius / width:** 5.5 blocks.
 
@@ -154,7 +154,7 @@ Spell ID: `resonant_arcana:soul_cannon`. Inspect any rank in game with `/resonan
 
 ### Wisp Lantern
 
-Place a soul lantern for four seconds. Four echo pulses damage visible enemies near it.
+Place a soul lantern on a deepslate post for four seconds. Four echo pulses damage visible enemies near it. Each pulse reveals enemies with a glowing outline for 1.5 seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 

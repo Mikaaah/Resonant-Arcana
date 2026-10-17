@@ -17,16 +17,14 @@ final class MartialSpells {
     static boolean begin(Cast c){
         switch(c.spell.kind){
             case WARCRY -> {
+                c.duration=60+20*rank(c);
                 support(c);
                 Vec3 center=c.caster.getBoundingBox().getCenter();
                 for(var v:near(c.caster,center,c.spell.radius))if(inSight(c,center,v,c.spell.radius)){
-                    shove(c,v,center,1.3);
                     if(v instanceof Mob mob&&v instanceof Enemy&&c.taunted.size()<32){mob.setTarget(c.caster);c.taunted.add(v.getUUID());}
                 }
-                for(int i=0;i<16;i++){double a=i*Math.PI/8;Vec3 p=center.add(Math.cos(a)*3,0,Math.sin(a)*3);
-                    if(visible(c,center,p))c.level.sendParticles(ParticleTypes.EXPLOSION,p.x,p.y,p.z,1,0,0,0,0);}
-                SpellAudio.world(c.level,center,"entity.generic.explode",1.2f,.75f);
-                c.duration=60;return !c.taunted.isEmpty();
+                SpellAudio.world(c.level,center,"entity.ravager.roar",1.05f,.8f);
+                return true;
             }
             case MARTIAL_BUFF -> support(c);
             case SOULBLAST -> soulblast(c);
@@ -36,21 +34,34 @@ final class MartialSpells {
         return false;
     }
     static boolean tick(Cast c){
-        if(c.spell.kind!=Spell.Kind.WARCRY||c.age>=60)return false;
+        if(c.spell.kind!=Spell.Kind.WARCRY||c.age>=c.duration)return false;
+        Vec3 center=c.caster.getBoundingBox().getCenter();
+        if(c.age==1||c.age==13||c.age==25){
+            c.hit.clear();area(c,center,c.spell.radius,true);
+            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.caster.position().add(0,.08,0),center,c.spell.radius);
+            if(c.age>1)SpellAudio.world(c.level,center,"entity.warden.step",.8f,.65f+c.age*.005f);
+        }
+        if(c.age%5==1)for(var victim:near(c.caster,center,c.spell.radius)){
+            if(!inSight(c,center,victim,c.spell.radius)||victim instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragon||victim instanceof net.minecraft.world.entity.boss.wither.WitherBoss||victim.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES))continue;
+            double resistance=1-Math.clamp(victim.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE),0,1);
+            if(resistance<=0)continue;
+            Vec3 toward=center.subtract(victim.getBoundingBox().getCenter()).multiply(1,0,1);
+            if(toward.lengthSqr()>2.25){victim.setDeltaMovement(victim.getDeltaMovement().multiply(.35,1,.35).add(toward.normalize().scale(.24*resistance)));victim.hurtMarked=true;}
+        }
         if(c.age%10==0)c.taunted.removeIf(id->{
             var entity=c.level.getEntity(id);
             if(!(entity instanceof Mob mob)||!(entity instanceof Enemy)||!allowed(c.caster,mob)
-                ||mob.distanceToSqr(c.caster)>16*16||!visible(c,c.caster.getEyePosition(),mob.getBoundingBox().getCenter()))return true;
+                ||mob.distanceToSqr(c.caster)>c.spell.radius*c.spell.radius||!visible(c,c.caster.getEyePosition(),mob.getBoundingBox().getCenter()))return true;
             mob.setTarget(c.caster);return false;
         });
-        return !c.taunted.isEmpty();
+        return true;
     }
     private static void support(Cast c){
         int duration=SpellActions.supportDuration(c,c.spell.duration()),rank=rank(c);
         var allies=c.spell==Spell.ARCANE_EDGE?java.util.List.<LivingEntity>of(c.caster):SpellActions.allies(c,c.caster.position(),c.spell.radius);
         for(var ally:allies){
             switch(c.spell){
-                case WARSCREAM -> {effect(ally,ArcanaEffects.WARCRY,duration,rank+1);shield(c,ally,duration);}
+                case WARSCREAM -> effect(ally,MobEffects.DAMAGE_RESISTANCE,c.duration,0);
                 case ARCANE_EDGE -> effect(ally,ArcanaEffects.ARCANE_EDGE,duration,rank+3);
                 case BULWARK_CHANT -> {effect(ally,MobEffects.DAMAGE_RESISTANCE,duration,0);shield(c,ally,duration);}
                 case BATTLE_TEMPO -> effect(ally,ArcanaEffects.TEMPO,duration,rank+3);

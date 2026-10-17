@@ -4,7 +4,7 @@
 
 ### Spark
 
-A travelling projectile that stops at walls.
+Loose a compact arcane spark along your aim. It stops at the first enemy or solid surface, releasing a small arcane impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 0.6s · **Range:** 32 blocks · **Radius / width:** 1 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:spark`. Inspect any rank in game with `/resonantarcan
 
 ### Arcane Strike
 
-Strike the living target you aim at.
+Focus arcane energy directly on one visible aimed enemy. A woven link identifies the struck target; terrain blocks targeting.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 1.75s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
 
@@ -36,7 +36,7 @@ Spell ID: `resonant_arcana:arcane_strike`. Inspect any rank in game with `/reson
 
 ### Mind Haze
 
-Briefly blind and disorient your target.
+Wrap one visible aimed enemy in a spiralling hex. Apply Nausea for five seconds and Blindness for two seconds, with one direct hit.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -52,7 +52,7 @@ Spell ID: `resonant_arcana:confuse`. Inspect any rank in game with `/resonantarc
 
 ### Stun
 
-Slow and weaken your target.
+Bind one visible aimed enemy with arcane sparks. Apply Slowness VI and Weakness II for three seconds, with one direct hit; immune enemies may resist the effects.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -68,7 +68,7 @@ Spell ID: `resonant_arcana:stun`. Inspect any rank in game with `/resonantarcana
 
 ### Arcane Bind
 
-Hold a target briefly; cover breaks the tether.
+Wind an arcane cage around one aimed enemy for three seconds at level I. Suppress movement and melee damage while the link holds. Cover, range or displacement of more than four blocks breaks it.
 
 **Role:** Control · **Cast:** 0.6s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -86,7 +86,7 @@ Spell ID: `resonant_arcana:capture`. Inspect any rank in game with `/resonantarc
 
 ### Astral Comet
 
-A slow projectile with an area impact.
+Launch a slow astral comet with a bright core and trailing star motes. It bursts around the first enemy or solid surface reached, damaging visible enemies in the impact area.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 6s · **Range:** 48 blocks · **Radius / width:** 4.5 blocks.
 
@@ -102,7 +102,7 @@ Spell ID: `resonant_arcana:astral_comet`. Inspect any rank in game with `/resona
 
 ### Arcane Repulse
 
-An expanding shock ring around you.
+Release an expanding arcane pressure ring from your feet. Enemies touched by the advancing rim take one hit and are pushed away; walls block the hit.
 
 **Role:** Attack · **Cast:** 0.5s · **Cooldown:** 6s · **Range:** 0 blocks · **Radius / width:** 7 blocks.
 
@@ -118,7 +118,7 @@ Spell ID: `resonant_arcana:arcane_repulse`. Inspect any rank in game with `/reso
 
 ### Launch
 
-Launch your target upwards.
+Send a rising arcane strike into one visible aimed enemy, adding upward velocity. This lifts the target; it does not grant the enemy fall protection.
 
 **Role:** Mobility · **Cast:** instant · **Cooldown:** 3.5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -134,7 +134,7 @@ Spell ID: `resonant_arcana:launch`. Inspect any rank in game with `/resonantarca
 
 ### Leap
 
-Propel yourself forwards and upwards.
+Vault forwards and upwards in an arcane wake. This is a movement spell with no direct damage; choose a safe landing.
 
 **Role:** Mobility · **Cast:** instant · **Cooldown:** 4s · **Range:** 0 blocks · **Radius / width:** 0 blocks.
 
@@ -150,7 +150,7 @@ Spell ID: `resonant_arcana:leap`. Inspect any rank in game with `/resonantarcana
 
 ### Arcane Volley
 
-Fire three staggered arcane projectiles.
+Fire three arcane bolts staggered 0.3 seconds apart. Each bolt follows your aim when it leaves, stops at cover and releases its own small impact; normal damage immunity still applies.
 
 **Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 32 blocks · **Radius / width:** 1 blocks.
 

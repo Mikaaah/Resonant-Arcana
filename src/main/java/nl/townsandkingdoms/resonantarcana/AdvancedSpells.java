@@ -87,7 +87,7 @@ final class AdvancedSpells {
                 if(c.age==16){area(c,c.pos.add(0,.5,0),c.spell.radius,true);burst(c,c.pos.add(0,1,0));sound(c,c.pos,"entity.phantom.flap",1.5f,.6f);return false;}
             }
             case BANNER -> {
-                if(c.age%20==1){rally(c,s);bannerVisual(c);}
+                if(c.age%20==1)rally(c,s);if(c.age%4==1)bannerVisual(c);
                 if(c.age==c.duration){SpellActions.healArea(c,c.pos,c.spell.radius,c.spell.healing(),false);burst(c,c.pos.add(0,2,0));sound(c,c.pos,"block.beacon.activate",1,.8f);return false;}
             }
             case BELL -> {
@@ -101,7 +101,7 @@ final class AdvancedSpells {
                     }
                     if(elapsed%2==0){
                         for(int i=0;i<12;i++){double a=i*Math.PI/6;Vec3 p=c.pos.add(Math.cos(a)*radius,0,Math.sin(a)*radius);if(visible(c,c.pos,p))trail(c.level,p,c.spell.theme,.04);}
-                        areaVisual(c,c.pos,radius*.35+.4);
+                        areaVisual(c,c.pos,radius);
                     }
                 }
             }
@@ -178,7 +178,7 @@ final class AdvancedSpells {
     private static void bannerVisual(Cast c){
         c.level.sendParticles(ParticleTypes.END_ROD,c.pos.x,c.pos.y+1.8,c.pos.z,1,.18,.45,.18,.005);
         c.level.sendParticles(ParticleTypes.HAPPY_VILLAGER,c.pos.x,c.pos.y+2.2,c.pos.z,2,.35,.35,.35,.01);
-        areaVisual(c,c.pos,1.7);
+        areaVisual(c,c.pos,c.spell.radius);
     }
     private static BlockPos placeBanner(Cast c){
         BlockPos pos=BlockPos.containing(c.pos);
@@ -259,7 +259,7 @@ final class AdvancedSpells {
         if(facing.lengthSqr()<.01)facing=c.dir;
         c.bossVisuals.add(BossesRiseBridge.tentacle(c,point,facing));
     }
-    private static void areaVisual(Cast c,Vec3 p,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,p,p,Math.min(4,size));}
+    private static void areaVisual(Cast c,Vec3 p,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,p,p,size);}
     private static void line(Cast c,Vec3 a,Vec3 b,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,a,b,size);}
     private static void sound(Cast c,Vec3 p,String id,float volume,float pitch){SpellAudio.world(c.level,p,id,volume,pitch);}
     static final class State {final Cast c;boolean done;int charges;float weapon;BlockPos bannerPos;final Set<UUID> buffed=new HashSet<>();final List<Blade> blades=new ArrayList<>();State(Cast c){this.c=c;}}

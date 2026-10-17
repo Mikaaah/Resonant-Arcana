@@ -2,7 +2,7 @@
 
 Welcome to the documentation for **Resonant Arcana**, an experimental **Iron's Spells 'n Spellbooks** add-on for **Minecraft 1.21.1 / NeoForge**.
 
-**Current documented release: 0.18.0-alpha** · **10 wands · 137 core spells + 12 optional Bosses’Rise spells**.
+**Current documented release: 0.19.0-alpha** · **10 wands · 137 core spells + 12 optional Bosses’Rise spells**.
 
 Find what you need:
 

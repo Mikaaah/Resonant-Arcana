@@ -83,7 +83,7 @@ public final class SpellEngine {
         }
     }
     private static boolean cast(ServerPlayer player,Spell spell,BookCast book) {
-        if(BossesRiseCompat.optional(spell)&&!BossesRiseCompat.canStart(player,spell))return false;
+        if(!SpellActions.canStart(player,spell))return false;
         if(!spell.available()||!player.isAlive()||player.isSpectator())return false;
         var cooldowns=COOLDOWNS.computeIfAbsent(player.getUUID(),id->new HashMap<>());
         long left=cooldowns.getOrDefault(spell.cooldownKey(),0L)-ticks;
@@ -162,7 +162,7 @@ public final class SpellEngine {
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE->true;default->false;};}
-    private static void cleanup(Cast c){BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);}
+    private static void cleanup(Cast c){BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
         for(Iterator<Cast> it=ACTIVE.iterator();it.hasNext();){Cast c=it.next();
@@ -181,7 +181,7 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),0.55f,1.0f);
+        if(!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
         if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
@@ -659,6 +659,7 @@ public final class SpellEngine {
     static final class Cast {
         final UUID owner;final ServerLevel level;final Spell spell;final Vec3 dir;final LivingEntity target;final Set<UUID> hit=new HashSet<>();final List<VolleyBolt> bolts=new ArrayList<>();
         final List<SpellActions.Shot> shots=new ArrayList<>();
+        final List<Entity> centrepieces=new ArrayList<>();
         final List<Entity> bossVisuals=new ArrayList<>();final List<Vec3> eruptionPoints=new ArrayList<>();
         final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
         AdvancedSpells.State advanced;

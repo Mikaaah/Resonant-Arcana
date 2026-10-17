@@ -4,7 +4,7 @@
 
 ### Rift Bolt
 
-A travelling projectile that stops at walls.
+Send a compressed spatial orb along your aim, trailed by inward-curling portal motes. Its first collision releases a small force impact.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.5s · **Range:** 32 blocks · **Radius / width:** 2 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:gravity_bolt`. Inspect any rank in game with `/resona
 
 ### Rift Well
 
-Draw nearby enemies into a gravity well.
+Open a stationary gravity well for 4.8 seconds. Pull visible enemies horizontally toward its centre and deal five one-second area pulses; walls block damage and pulling.
 
 **Role:** Sustain · **Cast:** 1.25s · **Cooldown:** 9s · **Range:** 28 blocks · **Radius / width:** 5 blocks.
 
@@ -40,7 +40,7 @@ Spell ID: `resonant_arcana:gravity_well`. Inspect any rank in game with `/resona
 
 ### Force Push
 
-Push the target away from you.
+Strike one visible aimed enemy with an outward spatial impulse. Deal direct damage and launch it away from the caster with a small upward lift.
 
 **Role:** Control · **Cast:** instant · **Cooldown:** 3.25s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -56,7 +56,7 @@ Spell ID: `resonant_arcana:force_push`. Inspect any rank in game with `/resonant
 
 ### Force Pull
 
-Pull the target towards you.
+Catch one visible aimed enemy with a spatial link. Deal direct damage and pull it horizontally toward you with a small upward lift.
 
 **Role:** Control · **Cast:** instant · **Cooldown:** 3.25s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -72,7 +72,7 @@ Spell ID: `resonant_arcana:force_pull`. Inspect any rank in game with `/resonant
 
 ### Suspension
 
-Lift a target briefly, followed by a gentle descent.
+Suspend one visible aimed enemy above its starting point for two seconds. Deal one hit, slow it and briefly grant Slow Falling. Cover, range or displacement beyond four blocks breaks the hold.
 
 **Role:** Control · **Cast:** 0.6s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -90,7 +90,7 @@ Spell ID: `resonant_arcana:gravity_choke`. Inspect any rank in game with `/reson
 
 ### Singularity
 
-An area burst centred on your aim.
+Collapse a concentrated spatial orb at your aim. One radial force burst damages and pushes visible enemies; this instant spell leaves no lingering gravity well.
 
 **Role:** Attack · **Cast:** 1.6s · **Cooldown:** 9s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 

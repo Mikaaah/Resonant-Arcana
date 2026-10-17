@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.19.0-alpha
+
+- Add a bounded client native-particle renderer across all 149 spell definitions. Layer school-specific wave fronts, woven beams, projectile wakes, cages, rain, vortices and expanding impacts using vanilla and Iron’s particles. Keep AAAParticles limited to the existing 24 circles.
+- Reserve native capacity for ground-following range outlines. Show the full radius of Last Stand, traps, totems, fields and rain; fix Funeral Bell’s visual wave radius. Limit decorative detail with distance and concurrent-ripple budgets.
+- Rework Warscream into three damage pulses over eight blocks, inward pulls and Resistance I for visible nearby allies. Taunt and defense last 3/4/5/6/7 seconds at ranks I–V. Remove the explosion sound and retired damage/shield behavior.
+- Place real temporary block-model entities for Wisp Lantern, Dread Effigy, Spore Totem and Consecration. Require visible ground; remove the entities on expiry, cancellation or caster cleanup without replacing terrain.
+- Give Wisp Lantern revealing pulses and Dread Effigy Weakness II. Add individual placement and sustain sounds; remove duplicate generic totem sustain cues.
+- Audit all descriptions, replace 52 generic early-spell descriptions, and document the new functions, timings, rank scaling and visual controls.
+- Pass Java 21 compilation and Gradle packaged-effect checks, plus 5,340 dedicated-server checks without Bosses’Rise and 6,064 with Bosses’Rise 2.1.2. Client rendering and sound still require in-game playtesting.
+
 ## 0.18.0-alpha
 
 - Bury Kraken tentacle visual roots 1.25 blocks below the ground and point Wrath’s four outer tentacles toward the central impact.

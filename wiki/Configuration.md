@@ -29,7 +29,7 @@ Stop the game or server before editing. Restart after changes. Existing `resonan
 | `visuals.accentMessagesPerTick` | `32` | 8–128 | Reserved impact, strike and casting visual-message budget per tick. |
 | `visuals.ironsParticlesPerTick` | `128` | 32–512 | Extra native Iron’s particle budget per tick. |
 
-Visual budgets affect presentation; they never select targets or change damage. Active-spell limits can refuse a new cast when capacity is reached. All per-tick budgets are shared rather than granted separately to each caster.
+Visual budgets affect presentation; they never select targets or change damage. Active-spell limits can refuse a new cast when capacity is reached. Server per-tick budgets are shared across casters. Native client budgets are local to each player. Range rings and expanding ripples reserve separate capacity, and detail decreases with distance. Up to 32 twelve-tick native ripples may be active per client.
 
 ## Client settings
 
@@ -37,6 +37,7 @@ Visual budgets affect presentation; they never select targets or change damage. 
 | --- | ---: | --- | --- |
 | `controls.leftClickCasting` | `true` | boolean | Enable left-click wand casting. Disable for combat-mod input conflicts; the cast key remains available. |
 | `display.showWandHud` | `true` | boolean | Show the selected spell and rank above the hotbar. |
+| `particles.nativeParticlesPerTick` | `1800` | 300–6000 | Native client detail budget, plus a separate range-outline allowance of one third this value. Higher values add detail during crowded fights. |
 | `particles.enableAaaParticles` | `true` | boolean | Use AAAParticles for selected spell circles only. Other spell visuals remain vanilla and Iron’s particles. |
 | `particles.maxAaaEffectsPerTick` | `8` | 1–32 | Maximum new circle emitters per client tick. |
 

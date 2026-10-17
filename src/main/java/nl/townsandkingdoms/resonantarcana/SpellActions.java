@@ -32,6 +32,12 @@ final class SpellActions {
     static boolean canStart(ServerPlayer p,Spell s){
         if(!AdvancedSpells.canStart(p,s))return false;
         if(BossesRiseCompat.optional(s)&&!BossesRiseCompat.canStart(p,s))return false;
+        if(s.kind==Spell.Kind.TOTEM){
+            Vec3 eye=p.getEyePosition(),dir=p.getLookAngle().normalize();
+            Vec3 aim=clipLoaded(p.serverLevel(),eye,dir,s.range,p);var target=target(p,eye,aim,.5);
+            Vec3 ground=BossesRiseCompat.ground(p.serverLevel(),target==null?aim:target.position());
+            if(ground==null||p.serverLevel().clip(new net.minecraft.world.level.ClipContext(eye,ground.add(0,.2,0),net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,p)).getType()!=net.minecraft.world.phys.HitResult.Type.MISS)return false;
+        }
         if(s==Spell.SANGUINE_PACT&&p.getHealth()<=2)return false;
         return s.kind!=Spell.Kind.BLINK||blinkDestination(p,s,s.range)!=null;
     }
@@ -62,7 +68,7 @@ final class SpellActions {
             case TETHER -> {c.anchor=c.target.position();c.duration=supportDuration(c,c.spell.duration());}
             case ORBIT -> c.duration=c.spell.duration();
             case HYMN,CONE_CHANNEL -> c.duration=c.spell.duration();
-            case TOTEM,RAIN,DOMAIN,TRAP,PILLAR -> {c.pos=c.target!=null?c.target.getBoundingBox().getCenter():c.anchor.subtract(c.dir.scale(.08));c.duration=c.spell.duration();}
+            case TOTEM,RAIN,DOMAIN,TRAP,PILLAR -> {c.pos=c.target!=null?c.target.getBoundingBox().getCenter():c.anchor.subtract(c.dir.scale(.08));c.duration=c.spell.duration();if(c.spell.kind==Spell.Kind.TOTEM)SpellCentrepieces.place(c);}
             case FAN -> {
                 c.duration=40;Vec3 side=c.dir.cross(new Vec3(0,1,0));if(side.lengthSqr()<.01)side=new Vec3(1,0,0);side=side.normalize();
                 for(int i=-2;i<=2;i++)c.shots.add(new Shot(c.pos,c.dir.add(side.scale(i*.12)).normalize()));
@@ -105,7 +111,9 @@ final class SpellActions {
                 if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius);
                 if((c.age-1)%c.spell.interval()==0){
                     c.hit.clear();area(c,c.pos,c.spell.radius,true);
-                    if(c.age>1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell.theme),.65f,.9f+(c.age%5)*.04f);
+                    if(c.spell==Spell.WISP_LANTERN||c.spell==Spell.DREAD_EFFIGY)for(var victim:near(c.caster,c.pos,c.spell.radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
+                        if(c.spell==Spell.WISP_LANTERN)effect(victim,MobEffects.GLOWING,30,0);else effect(victim,MobEffects.WEAKNESS,30,1);
+                    }
                     if(c.spell==Spell.CONSECRATION)healArea(c,c.pos,c.spell.radius,c.spell.healing(),false);
                 }return true;
             }
@@ -121,7 +129,7 @@ final class SpellActions {
                 SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,eye.add(dir.scale(.8)),clipLoaded(c.level,eye,dir,c.spell.range,c.caster),1.5);return true;
             }
             case TRAP -> {
-                if(c.age%5==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,1.3);
+                if(c.age%5==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius);
                 if(c.age>=10&&near(c.caster,c.pos,2).stream().anyMatch(v->visible(c,c.pos,v.getBoundingBox().getCenter()))){area(c,c.pos,c.spell.radius,true);burst(c,c.pos);return false;}return true;
             }
             case PILLAR -> {

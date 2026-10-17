@@ -12,13 +12,19 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **twelve optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.18.0-alpha](downloads/resonant-arcana-0.18.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.19.0-alpha](downloads/resonant-arcana-0.19.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## New in 0.16
 
 Ten new RPG and spellsword spells: **Glacial Counter**, **Rift Draw**, **Crimson Reversal**, **Thunderbrand**, **Last Stand**, **Ashen Rebirth**, **Phantom Formation**, **Funeral Bell**, **Spellbreaker**, and optional **Kraken’s Wrath**. All ten support levels I–V, scroll inscription and their matching wands.
 
 Reactive guards, melee-triggered lightning and spectral swords connect spells with weapon combat. Crimson Reversal uses Iron’s native three-second recast window: a free return cast, followed by the normal cooldown. Melee triggers use successful native player-attack damage; custom combat damage types require testing or explicit integration.
+
+## New in 0.19
+
+Richer native particle choreography covers the full spell catalogue: woven beams, school-specific wave fronts, falling rain, orbiting restraints, inward spirals and expanding impacts. Persistent fields and Last Stand show their actual radius with ground-following native outlines. AAAParticles remains limited to spell circles.
+
+Warscream delivers three eight-block damage pulses, pulls enemies inward and grants nearby allies Resistance I. Taunt and defense last **3/4/5/6/7 seconds** at ranks I–V. Its TNT-like explosion sound is removed. Wisp Lantern reveals affected enemies; Dread Effigy applies Weakness II. Lanterns, effigies, spore totems and Consecration have temporary physical centrepieces. Totems require visible ground.
 
 ## Optional Bosses’Rise integration
 
@@ -113,7 +119,7 @@ Dedicated claim-protection, FTB Teams and Epic Fight integrations are not includ
 
 ## Design references
 
-The kits draw on RPG movement, control and support roles, including [Wynncraft’s class design](https://wynncraft.com/help/classes?class=mage), and familiar anime magic ideas such as charged beams and opposing-energy fusion. Spell implementations, icons, wand sprites and effect geometry are original. No anime or Wynncraft art or audio is distributed.
+The kits draw on RPG movement, control and support roles, including [Wynncraft’s class design](https://wynncraft.com/help/classes?class=mage) and [Spellbound’s readable-hitbox and particle-limit principles](https://wynncraft.com/updates/2.0), and familiar anime magic ideas such as charged beams and opposing-energy fusion. Spell implementations, icons, wand sprites and effect geometry are original. No anime or Wynncraft art or audio is distributed.
 
 ## Building
 
@@ -129,7 +135,7 @@ The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.
 
 ## Validation
 
-0.18.0-alpha passed **5,025 dedicated-server checks without Bosses’Rise** and **5,726 with Bosses’Rise 2.1.2**. Java 21 compilation and Gradle checks pass, including verification that the JAR contains exactly 24 particle effects. These server checks cover combat, targeting, cast timing, allegiance, optional registration and cleanup; they do not validate client rendering, visual balance or sound. In-game client playtesting remains required.
+0.19.0-alpha passed **5,340 dedicated-server checks without Bosses’Rise** and **6,064 with Bosses’Rise 2.1.2**. Java 21 compilation and Gradle checks pass, including verification that the JAR contains exactly 24 particle effects. These server checks cover combat, targeting, cast timing, allegiance, optional registration and cleanup; they do not validate client rendering, visual balance or sound. In-game client playtesting remains required.
 
 ## Contributing
 

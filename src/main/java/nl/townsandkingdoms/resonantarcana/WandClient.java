@@ -45,6 +45,7 @@ public final class WandClient {
     @SubscribeEvent public static void tick(ClientTickEvent.Post e) {
         visualBursts=0;
         AaaEffects.tick();
+        NativeSpellEffects.tick();
         var mc=Minecraft.getInstance();
         if(!mc.options.keyAttack.isDown())reversalAttackHeld=false;
         if(!CAST.isDown())reversalCastHeld=false;
@@ -87,6 +88,9 @@ public final class WandClient {
     }
     @EventBusSubscriber(modid=ResonantArcana.ID,value=Dist.CLIENT,bus=EventBusSubscriber.Bus.MOD)
     public static final class Registration {
+        @SubscribeEvent public static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers e){
+            e.registerEntityRenderer(SpellCentrepieces.PROP.get(),ctx->new net.minecraft.client.renderer.entity.DisplayRenderer.BlockDisplayRenderer(ctx){});
+        }
         @SubscribeEvent public static void keys(RegisterKeyMappingsEvent e){e.register(CAST);e.register(NEXT);e.register(SELECT);}
     }
 }

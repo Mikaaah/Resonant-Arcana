@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
 SCHOOL={'MAGIC':'Evocation','BLOOD':'Blood','FIRE':'Fire','DARK':'Ender','THUNDER':'Lightning','GRAVITY':'Ender','SOUL':'Eldritch','POISON':'Nature','HOLY':'Holy','ICE':'Ice'}
-SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER','MARTIAL_BUFF','WARCRY'}
+SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER','MARTIAL_BUFF'}
 def number(n):return f'{n:g}'
 def main():
     data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells']
@@ -11,12 +11,12 @@ def main():
     'Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.', '',
     'All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.', '',
     'Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.', '',
-    'Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. No spell edits terrain or intentionally loads new chunks.', '',
+    'Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. Spells do not intentionally load new chunks or damage terrain. Last Stand temporarily places and later removes its own banner; lantern and totem centrepieces use temporary display entities without replacing world blocks.', '',
     "## Optional Bosses’Rise spells",'',
     "Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrath and Undertow. Yeti: Ice Spike Eruption and Glacial Wall. Underworld Knight (Helvar): Rift, Fracture and Swordfall. Sandworm: Eruption and Quicksand. Infernal Dragon: Infernal Barrage and Dragon’s Cataclysm. Without that mod, they are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.", '',
     "Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s blazing projectiles. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.", '',
     "Kraken tentacle roots are buried 1.25 blocks below the surface, and Wrath’s outer tentacles face inward. Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.", '',
-    '## Wand index' ,'', '| Wand | School | Spell kit |','| --- | --- | --- |']
+    '## Visual presentation', '', 'Native vanilla and Iron’s particles layer distinct projectile wakes, beams, rain, restraints, vortex interiors and impacts. Persistent areas use ground-following boundary rings; decorative particles have a separate allowance. Last Stand shows its full six-block defense radius. Wisp Lantern, Dread Effigy, Spore Totem and Consecration place temporary physical centrepieces on visible ground. Spell effects and centrepieces expire with the cast.', '', 'The readability and bounded-detail approach is inspired by [Wynncraft’s official Spellbound combat notes](https://wynncraft.com/updates/2.0). Geometry and implementation are original; no Wynncraft assets are included.', '', '## Wand index' ,'', '| Wand | School | Spell kit |','| --- | --- | --- |']
     for w in data['wands']:
         lines.append(f"| [{w['title']}](#{w['id'].replace('_','-')}) | {SCHOOL[w['theme']]} | "+', '.join(spells[n]['title'] for n in w['spells'])+' |')
     lines+=['','## Shared recovery','',
@@ -40,7 +40,7 @@ def main():
                 lines.append(f"| {['I','II','III','IV','V'][rank-1]} | {number(s['damage']*power) if s['damage'] else '—'} | {number(s['healing']*power) if s['healing'] else '—'} | {s['mana']+(rank-1)*s['manaStep']} |")
             lines.append('')
             if s['pulses']>1:lines +=[f"**Delivery:** up to {s['pulses']} {'projectiles' if s['kind'] in ('FAN','VOLLEY') else 'hits / pulses'}; the table gives the value for each one.",'']
-            if s['duration']>0:
+            if s['duration']>0 and key!='WARSCREAM':
                 text=f"**Base active phase:** {number(s['duration']/20)}s."
                 if s['kind'] in SUPPORT:text+=' Duration at levels I–V without gear: '+', '.join(number(s['duration']/20*(1+.25*i))+'s' for i in range(s['maxLevel']))+'.'
                 lines +=[text,'']
@@ -49,7 +49,7 @@ def main():
                 lines +=['**Absorption at levels I–V:** '+', '.join(number(shield*(1+.25*i)) for i in range(5))+' health.','']
             if s['kind'] in ('BLADE_ARC','BLADE_THRUST'):
                 lines +=['**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.','']
-            if key=='WARSCREAM':lines +=['**Ally damage:** +10%, +15%, +20%, +25%, +30% melee damage and native Iron’s spell power. **Temporary health:** 4, 5, 6, 7, 8. Taunts at most 32 visible hostile mobs, rechecking every half second for three seconds. Custom boss AI may override the target. Does not taunt animals, pets or players.','']
+            if key=='WARSCREAM':lines +=['**Roar:** three damage pulses at 0.05, 0.65 and 1.25 seconds after release, in an eight-block radius. Pulls eligible visible enemies inward, respecting knockback resistance. **Defense and taunt at ranks I–V:** 3, 4, 5, 6, 7 seconds. Grants Resistance I to the caster and visible eligible allies. Taunts at most 32 hostile mobs, rechecking every half second. Custom boss AI may override the target; animals, pets and players are not taunted.','']
             if key=='BULWARK_CHANT':lines +=['**Defence:** Resistance I and 4, 5, 6, 7, 8 temporary health.','']
             if key=='ARCANE_EDGE':lines +=['**Attack damage:** +2, +2.5, +3, +3.5, +4. **Attack speed:** +10%, +12.5%, +15%, +17.5%, +20%.','']
             if key=='BATTLE_TEMPO':lines +=['**Attack and movement speed:** +10%, +12.5%, +15%, +17.5%, +20%.','']

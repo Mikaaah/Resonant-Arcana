@@ -4,7 +4,7 @@
 
 ### Blood Wave
 
-A wide travelling arc, hitting each enemy once.
+Send a broad crimson crescent along your aim. Its moving front cuts each visible enemy once and dissipates against solid cover.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3s · **Range:** 28 blocks · **Radius / width:** 1.8 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:blood_wave`. Inspect any rank in game with `/resonant
 
 ### Crimson Strike
 
-Strike the living target you aim at.
+Snap a crimson spark onto one visible aimed enemy. Blood droplets mark the impact; this attack does not restore health.
 
 **Role:** Attack · **Cast:** 0.25s · **Cooldown:** 1.75s · **Range:** 24 blocks · **Radius / width:** 2 blocks.
 
@@ -36,7 +36,7 @@ Spell ID: `resonant_arcana:blood_spark`. Inspect any rank in game with `/resonan
 
 ### Crimson Rupture
 
-An area burst centred on your aim.
+Detonate a crimson bloom at the aimed enemy or reachable aim point. Its radial blood spray damages visible enemies in the impact area once.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 7s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 
@@ -52,7 +52,7 @@ Spell ID: `resonant_arcana:blood_explode`. Inspect any rank in game with `/reson
 
 ### Hemorrhagic Shock
 
-Slow and weaken your target.
+Close a crimson binding around one visible aimed enemy. One hit applies Slowness VI and Weakness II for three seconds; this spell does not drain health.
 
 **Role:** Control · **Cast:** 0.4s · **Cooldown:** 5s · **Range:** 24 blocks · **Radius / width:** 1 blocks.
 
@@ -102,7 +102,7 @@ Spell ID: `resonant_arcana:sanguine_drain`. Inspect any rank in game with `/reso
 
 ### Blood Lance
 
-An instant piercing line through visible enemies.
+Drive a straight crimson lance through visible enemies along your aim. Each enemy on the piercing line is hit once; solid cover ends the lance.
 
 **Role:** Attack · **Cast:** 0.5s · **Cooldown:** 4.5s · **Range:** 24 blocks · **Radius / width:** 0.6 blocks.
 

@@ -4,7 +4,7 @@
 
 ### Shadow Bolt
 
-A travelling projectile that stops at walls. Ender shadow hits weaken for three seconds.
+Launch a twisting shadow bolt. Its first collision releases a small void impact, applying Weakness I for three seconds to enemies hit.
 
 **Role:** Attack · **Cast:** instant · **Cooldown:** 1.25s · **Range:** 36 blocks · **Radius / width:** 1.5 blocks.
 
@@ -20,7 +20,7 @@ Spell ID: `resonant_arcana:shadow_bolt`. Inspect any rank in game with `/resonan
 
 ### Umbral Seeker
 
-A projectile that follows your selected target. Ender shadow hits weaken for three seconds.
+Release a dark wisp that steers toward the enemy selected at release. Its impact damages and weakens enemies; solid cover intercepts the projectile.
 
 **Role:** Attack · **Cast:** 0.6s · **Cooldown:** 3.5s · **Range:** 36 blocks · **Radius / width:** 2 blocks.
 
@@ -36,7 +36,7 @@ Spell ID: `resonant_arcana:soul_seeker`. Inspect any rank in game with `/resonan
 
 ### Umbral Wave
 
-A wide travelling arc, hitting each enemy once. Ender shadow hits weaken for three seconds.
+Advance a broad curtain of shadow along your aim. Each enemy touched by the moving front takes one hit and Weakness I for three seconds.
 
 **Role:** Attack · **Cast:** 0.35s · **Cooldown:** 3.25s · **Range:** 28 blocks · **Radius / width:** 2.5 blocks.
 
@@ -52,7 +52,7 @@ Spell ID: `resonant_arcana:dark_wave`. Inspect any rank in game with `/resonanta
 
 ### Nightfall
 
-An area burst centred on your aim. Ender shadow hits weaken for three seconds.
+Collapse a cloud of shadow at your aim. Visible enemies in the burst take one hit, Weakness I for three seconds and brief Darkness.
 
 **Role:** Attack · **Cast:** 1s · **Cooldown:** 7s · **Range:** 28 blocks · **Radius / width:** 6 blocks.
 
@@ -68,7 +68,7 @@ Spell ID: `resonant_arcana:nightfall`. Inspect any rank in game with `/resonanta
 
 ### Dread Mark
 
-Curse a target; detonate after two seconds. Cover breaks the curse. Ender shadow hits weaken for three seconds.
+Fasten an orbiting shadow curse to one aimed enemy. After two seconds it bursts around that enemy, damaging and weakening nearby enemies. Losing line of sight or exceeding the link range breaks the curse.
 
 **Role:** Control · **Cast:** 0.5s · **Cooldown:** 8s · **Range:** 24 blocks · **Radius / width:** 3.5 blocks.
 
@@ -86,7 +86,7 @@ Spell ID: `resonant_arcana:shadow_cage`. Inspect any rank in game with `/resonan
 
 ### Umbral Veil
 
-A damaging aura that moves with you. Ender shadow hits weaken for three seconds.
+Carry a dark soul aura with you for three seconds. Three one-second pulses damage visible nearby enemies and apply Weakness I for three seconds.
 
 **Role:** Sustain · **Cast:** 0.5s · **Cooldown:** 8s · **Range:** 0 blocks · **Radius / width:** 8 blocks.
 
@@ -152,7 +152,7 @@ Spell ID: `resonant_arcana:dusk_cleave`. Inspect any rank in game with `/resonan
 
 ### Dread Effigy
 
-Place a spectral effigy at your aim for four seconds. Four pulses damage and weaken visible enemies near it. Ender shadow hits weaken for three seconds.
+Place a blackstone effigy with a carved head and soul torch at your aim for four seconds. Four pulses damage and weaken visible enemies near it. Ender shadow hits weaken for three seconds. Pulses suppress nearby enemies with Weakness II for 1.5 seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
 
 **Role:** Sustain · **Cast:** 1.2s · **Cooldown:** 11s · **Range:** 24 blocks · **Radius / width:** 5 blocks.
 

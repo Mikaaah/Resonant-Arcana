@@ -54,7 +54,7 @@ public final class WandNetwork {
         r.playToServer(Select.TYPE,Select.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer p)select(p,msg);
         }));
-        r.playToClient(Visual.TYPE,Visual.CODEC,(msg,ctx)->ctx.enqueueWork(()->AaaEffects.visual(msg)));
+        r.playToClient(Visual.TYPE,Visual.CODEC,(msg,ctx)->ctx.enqueueWork(()->{NativeSpellEffects.visual(msg);AaaEffects.visual(msg);}));
         r.playToClient(Burst.TYPE,Burst.CODEC,(msg,ctx)->ctx.enqueueWork(()->WandClient.burst(msg)));
     }
 }
