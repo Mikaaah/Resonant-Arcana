@@ -238,4 +238,20 @@ Enchant your weapon for ten seconds. Every third successful player melee hit rel
 
 Spell ID: `resonant_arcana:thunderbrand`. Inspect any rank in game with `/resonantarcana spell thunderbrand <level>`.
 
+### Heaven’s Thunder
+
+Six sky-to-ground lightning columns strike around the mark, each damaging enemies within six blocks. A final 14-block thunderclap deals double damage. Consecutive columns may overlap. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 100 | — | 480 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5.6s.
+
+Spell ID: `resonant_arcana:heavens_thunder`. Inspect any rank in game with `/resonantarcana spell heavens_thunder <level>`.
+
 [← Wiki Home](Home.md)

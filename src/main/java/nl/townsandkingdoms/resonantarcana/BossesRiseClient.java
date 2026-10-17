@@ -39,6 +39,20 @@ final class BossesRiseClient {
                 pose.popPose();
             }
         });
+        event.registerEntityRenderer(BossesRiseBridge.FULL_KRAKEN.get(),context->new GeoEntityRenderer<>(context,
+            new CustomEntityGeoModel<BossesRiseBridge.FullKraken>(ResourceLocation.fromNamespaceAndPath(BossesRiseCompat.MOD,"kraken_cinematic"),
+                (texture,outline)->RenderType.entityCutoutNoCull(texture)) {
+                @Override public ResourceLocation getTextureResource(BossesRiseBridge.FullKraken entity){return ResourceLocation.fromNamespaceAndPath(BossesRiseCompat.MOD,"textures/entity/kraken.png");}
+                @Override public ResourceLocation getAnimationResource(BossesRiseBridge.FullKraken entity){return ResourceLocation.fromNamespaceAndPath(BossesRiseCompat.MOD,"anim_bosses_rise/entity/kraken_cinematic.animation.json");}
+                @Override public void setCustomAnimations(BossesRiseBridge.FullKraken entity,long instance,software.bernie.geckolib.animation.AnimationState<BossesRiseBridge.FullKraken> state){
+                    double age=entity.tickCount+state.getPartialTick();
+                    float curl=(float)Math.sin(Math.clamp((age-26)/40.0,0,1)*Math.PI);
+                    for(int root:new int[]{1,37,61,73,97,109,121,133})for(int segment=0;segment<6;segment++){
+                        int index=root+segment;String name="left_front_tentacle"+(index==1?"":index);
+                        getBone(name).ifPresent(bone->bone.setRotX(bone.getInitialSnapshot().getRotX()-curl*.12f));
+                    }
+                }
+            }).withScale(.27f));
         event.registerEntityRenderer(BossesRiseBridge.TENTACLE.get(),context->new GeoEntityRenderer<>(context,
             new CustomEntityGeoModel<BossesRiseBridge.Tentacle>(ResourceLocation.fromNamespaceAndPath(BossesRiseCompat.MOD,"kraken_tentacle"),
                 (texture,outline)->RenderType.entityCutoutNoCull(texture)) {

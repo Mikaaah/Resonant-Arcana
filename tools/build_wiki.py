@@ -50,7 +50,7 @@ Helvar’s Swordfall renders the installed mod’s original held Knight Sword ge
     home = wiki / 'Home.md'
     if home.exists():
         text = re.sub(r'Current documented release: [^*]+', f'Current documented release: {version}', home.read_text())
-        text = re.sub(r'137 core spells \+ \d+ optional Bosses’Rise spells', f'{core} core spells + {optional} optional Bosses’Rise spells', text)
+        text = re.sub(r'\d+ core spells \+ \d+ optional Bosses’Rise spells', f'{core} core spells + {optional} optional Bosses’Rise spells', text)
         home.write_text(text)
     for page in wiki.glob('*.md'):
         text = page.read_text()

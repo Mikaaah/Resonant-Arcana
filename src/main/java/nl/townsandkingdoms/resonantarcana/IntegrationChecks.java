@@ -126,7 +126,7 @@ public final class IntegrationChecks {
                     check(level.getBlockState(new BlockPos(0,80,6)).is(Blocks.STONE),spell+" props preserve ground blocks");
                 }
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
-                for(int t=0;t<100;t++)SpellEngine.tick();
+                for(int t=0;t<160;t++)SpellEngine.tick();
                 boolean observed=switch(spell.kind){
                     case HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
                     case CLEANSE->spell==Spell.TOXIC_MOLT?player.getHealth()>5:player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
@@ -152,7 +152,7 @@ public final class IntegrationChecks {
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
                     case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
-                    case BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
+                    case CATACLYSM,BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
                     case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -285,6 +285,7 @@ public final class IntegrationChecks {
             audioChecks(level);
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
+            CataclysmChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{
@@ -304,6 +305,12 @@ public final class IntegrationChecks {
             for(var spell:optional){SpellEngine.clear();resetPlayer(player);check(!SpellEngine.cast(player,spell),spell+" safely rejects casting without dependency");}
             return;
         }
+        SpellEngine.clear();resetPlayer(player);Zombie graspTarget=spawn(level,0,81,6);
+        check(SpellEngine.cast(player,Spell.KRAKENS_GRASP),"full-model Grasp starts");
+        var fullKraken=level.getEntitiesOfClass(BossesRiseBridge.FullKraken.class,new net.minecraft.world.phys.AABB(-12,70,-8,12,95,24));
+        check(fullKraken.size()==1,"Grasp uses the complete Kraken cinematic adapter");
+        check(fullKraken.getFirst().getY()<79,"full Kraken starts beneath the ground");
+        SpellEngine.clear();check(fullKraken.getFirst().isRemoved(),"full Kraken disappears on cast cleanup");graspTarget.discard();
         SpellEngine.clear();resetPlayer(player);Zombie wrathTarget=spawn(level,0,81,6);
         check(SpellEngine.cast(player,Spell.KRAKENS_WRATH),"Wrath orientation fixture begins");
         for(int t=0;t<32;t++)SpellEngine.tick();
@@ -499,16 +506,16 @@ public final class IntegrationChecks {
         for(Spell spell:List.of(Spell.DOOM,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT)){
             SpellEngine.clear();resetPlayer(player);
             Zombie a=spawn(level,0,81,6),b=spawn(level,0,81,10);
-            for(var z:List.of(a,b)){z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);}
+            for(var z:List.of(a,b)){z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(1000);z.setHealth(1000);}
             check(SpellEngine.cast(player,spell),spell+" school test begins");
             if(spell==Spell.DOOM){
                 for(int t=0;t<39;t++)SpellEngine.tick();
-                check(a.getHealth()==100&&b.getHealth()==100,"DOOM grows before it starts devouring");
+                check(a.getHealth()==1000&&b.getHealth()==1000,"DOOM grows before it starts devouring");
                 check(b.getDeltaMovement().z<0,"DOOM drags a visible outer target inward");
-                SpellEngine.tick();check(a.getHealth()==28&&b.getHealth()==100,"DOOM devours its core before the outer collapse");
+                SpellEngine.tick();check(a.getHealth()==744&&b.getHealth()==1000,"DOOM devours its core before the outer collapse");
             }
             for(int t=0;t<100;t++)SpellEngine.tick();
-            check(Math.abs(a.getHealth()-(100-spell.damage))<.01&&Math.abs(b.getHealth()-(100-spell.damage))<.01,spell+" gives each target one full hit");
+            check(Math.abs(a.getHealth()-(1000-spell.damage))<.01&&Math.abs(b.getHealth()-(1000-spell.damage))<.01,spell+" gives each target one full hit");
             if(spell==Spell.GLACIAL_RUPTURE)check(a.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)&&a.getTicksFrozen()>=160,"ice front chills its targets");
             check(SpellEngine.activeCount()==0,spell+" school task expires");a.discard();b.discard();
             SpellEngine.clear();resetPlayer(player);Zombie hidden=spawn(level,0,81,6);

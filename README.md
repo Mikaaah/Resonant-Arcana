@@ -5,20 +5,41 @@
 [![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-5B8731?style=flat-square)](https://github.com/Mikaaah/Resonant-Arcana)
 [![NeoForge](https://img.shields.io/badge/Loader-NeoForge-D97724?style=flat-square)](https://neoforged.net/)
 [![Alpha](https://img.shields.io/badge/Release-Alpha-F59E0B?style=flat-square)](CHANGELOG.md)
-[![10 Wands · 137 + 12 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20137%20%2B%2012%20Spells-7756B4?style=flat-square)](SPELLS.md)
+[![10 Wands · 147 + 12 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20147%20%2B%2012%20Spells-7756B4?style=flat-square)](SPELLS.md)
 [![MIT License](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
 
 📚 **[Browse the documentation wiki](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)** · [Wand & spell index](https://github.com/Mikaaah/Resonant-Arcana/wiki/Wand-Index) · [Installation](https://github.com/Mikaaah/Resonant-Arcana/wiki/Getting-Started)
 
-An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **twelve optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
+An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **147 core spells**, plus **twelve optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.19.0-alpha](downloads/resonant-arcana-0.19.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.20.0-alpha](downloads/resonant-arcana-0.20.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## New in 0.16
 
 Ten new RPG and spellsword spells: **Glacial Counter**, **Rift Draw**, **Crimson Reversal**, **Thunderbrand**, **Last Stand**, **Ashen Rebirth**, **Phantom Formation**, **Funeral Bell**, **Spellbreaker**, and optional **Kraken’s Wrath**. All ten support levels I–V, scroll inscription and their matching wands.
 
 Reactive guards, melee-triggered lightning and spectral swords connect spells with weapon combat. Crimson Reversal uses Iron’s native three-second recast window: a free return cast, followed by the normal cooldown. Melee triggers use successful native player-attack damage; custom combat damage types require testing or explicit integration.
+
+## New in 0.20: Cataclysms
+
+Ten new **single-rank Legendary cataclysms**, one per wand theme across all nine native Iron’s schools. **Doom is an additional spell**. These have 10–12-second interruptible base casts, cost 440–500 mana, and have two-minute base cooldowns. Damage is applied in distinct release sequences; the spell reference explains normal hits and final multipliers.
+
+| Wand | Cataclysm | Cast | Mana | Release |
+| --- | --- | ---: | ---: | --- |
+| Arcane | Astral Apocalypse | 10s | 440 | Nine star impacts and a collapsing lattice |
+| Blood | Crimson Eclipse | 10s | 460 | Blood tides with capped actual-damage healing |
+| Cinder | World Pyre | 12s | 500 | Five meteors and a heavy firestorm |
+| Dark | Void Coronation | 11s | 480 | Void spires, expanding tides and suppression |
+| Thunder | Heaven’s Thunder | 10s | 480 | Six lightning columns and a final thunderclap |
+| Rift | Rift Collision | 12s | 500 | Inward pull, perpendicular cuts and implosion |
+| Soul | Soul Requiem | 11s | 460 | Three sonic shells and a final requiem |
+| Venom | Worldroot Catastrophe | 10s | 440 | Branching roots, poison pulses and an ally bloom |
+| Holy | Final Judgement | 12s | 500 | Damaging verdicts, healing and final cleansing |
+| Frost | Eternal Winter | 11s | 480 | Freezing field, three pulses and triple-damage shatter |
+
+**Doom** now has a ten-second base cast, costs 500 mana and deals one 256-damage hit per enemy. A solid black event horizon occludes spiralling red accretion rings as they flow inward; the final collapse disperses red shock rings. It uses native particles and a small depth-tested core mesh.
+
+Kraken tentacle roots are lowered another block, to 2.25 blocks below the surface. **Kraken’s Grasp uses the installed complete cinematic Kraken model**, with its head, eight tentacles, spell-owned emergence, a short curl and sinking cleanup. It runs no native boss AI or cutscene.
 
 ## New in 0.19
 
@@ -28,7 +49,7 @@ Warscream delivers three eight-block damage pulses, pulls enemies inward and gra
 
 ## Optional Bosses’Rise integration
 
-Install **Bosses’Rise 2.1.2** on both client and server to add twelve spells from all five bosses: **Kraken** (Grasp, Wrath, Undertow), **Yeti** (Ice Spike Eruption, Glacial Wall), **Underworld Knight / Helvar** (Rift, Fracture, Swordfall), **Sandworm** (Eruption, Quicksand), and **Infernal Dragon** (Infernal Barrage, Dragon’s Cataclysm). These are native Iron’s spells with levels I–V. Their visual entities use the installed mod’s models, items and textures, including the red Kraken tentacle, Helvar’s Knight Sword, Sandworm columns and Dragon’s blazing projectiles. No third-party assets are bundled. Without Bosses’Rise, the 137-spell core kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
+Install **Bosses’Rise 2.1.2** on both client and server to add twelve spells from all five bosses: **Kraken** (Grasp, Wrath, Undertow), **Yeti** (Ice Spike Eruption, Glacial Wall), **Underworld Knight / Helvar** (Rift, Fracture, Swordfall), **Sandworm** (Eruption, Quicksand), and **Infernal Dragon** (Infernal Barrage, Dragon’s Cataclysm). These are native Iron’s spells with levels I–V. Their visual entities use the installed mod’s models, items and textures, including the red Kraken tentacle, Helvar’s Knight Sword, Sandworm columns and Dragon’s blazing projectiles. No third-party assets are bundled. Without Bosses’Rise, the 147-spell core kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
 
 Boss attacks are adapted for player use: visual entities cannot run native boss attacks, and our shared engine handles damage, ally protection, PvP and walls. Kraken’s Grasp is a delayed tentacle slam with slowing, rather than an enemy-grabbing mechanic. See [spell details and timing](SPELLS.md#optional-bossesrise-spells).
 
@@ -36,7 +57,7 @@ Boss attacks are adapted for player use: visual entities cannot run native boss 
 
 New in 0.14: **Warscream**, **Soulblast**, three spellsword attacks and three weapon/party buffs. Expanded wand kits use pages: click the arrow buttons or press Left/Right; number shortcuts select a spell on the current page.
 
-Each wand carries **12–16 spells**. Use a wand directly or inscribe the same spells into an existing Iron’s spellbook. Mana, casting bars, interruption, cooldowns, school attributes and player animations use Iron’s native systems.
+Each wand carries **13–17 spells**. Use a wand directly or inscribe the same spells into an existing Iron’s spellbook. Mana, casting bars, interruption, cooldowns, school attributes and player animations use Iron’s native systems.
 
 The creative inventory has separate **Wands** and **Scrolls** tabs. Scrolls are grouped in wand order, with optional Bosses’Rise spells shown only when that mod is installed.
 
@@ -135,7 +156,7 @@ The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.
 
 ## Validation
 
-0.19.0-alpha passed **5,340 dedicated-server checks without Bosses’Rise** and **6,064 with Bosses’Rise 2.1.2**. Java 21 compilation and Gradle checks pass, including verification that the JAR contains exactly 24 particle effects. These server checks cover combat, targeting, cast timing, allegiance, optional registration and cleanup; they do not validate client rendering, visual balance or sound. In-game client playtesting remains required.
+0.20.0-alpha passed **8,001 dedicated-server checks without Bosses’Rise** and **8,729 with Bosses’Rise 2.1.2**. Java 21 compilation and Gradle checks pass, including verification that the JAR contains exactly 24 particle effects. These server checks cover combat, targeting, cast timing, allegiance, optional registration and cleanup; they do not validate client rendering, visual balance or sound. In-game client playtesting remains required.
 
 ## Contributing
 

@@ -13,9 +13,48 @@ def main(only=None):
     for index,(name,title,kind,theme) in enumerate(spells):
         ident=catalogue['spells'][name]['bookId']
         if only and ident not in only:continue
-        im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c='#ab3036' if kind in ('BOSS_TENTACLE','BOSS_WRATH') else '#c49b60' if kind=='BOSS_SAND' else PALETTES[theme];white='#edfff8';rng=random.Random(index+911)
+        im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c='#ab3036' if kind in ('BOSS_TENTACLE','BOSS_WRATH') else '#c49b60' if kind=='BOSS_SAND' else PALETTES[theme];white='#ff7355' if kind=='DOOM' else '#edfff8';c='#ed1936' if kind=='DOOM' else c;rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind=='BOSS_TENTACLE':
+        if kind=='CATACLYSM':
+            # Each single-rank ultimate has a silhouette matching its release sequence.
+            if name=='ASTRAL_APOCALYPSE':
+                for x,y in [(30,35),(94,35),(64,87)]:
+                    d.polygon([(x,y-18),(x+6,y-5),(x+18,y),(x+5,y+6),(x,y+18),(x-6,y+5),(x-18,y),(x-5,y-6)],fill=c)
+                line([(30,35),(94,35),(64,87),(30,35)],3,white)
+            elif name=='CRIMSON_ECLIPSE':
+                d.ellipse((24,15,104,95),fill=c);d.ellipse((35,17,98,82),fill='#130512')
+                for x in [39,64,89]:line([(x,83),(x-4,111)],7)
+            elif name=='WORLD_PYRE':
+                for x,y in [(25,76),(62,48),(96,76)]:
+                    line([(x,y),(x+12,y-39)],12);d.ellipse((x-12,y-12,x+12,y+12),fill=c)
+                d.arc((12,91,116,120),180,355,fill=white,width=6)
+            elif name=='VOID_CORONATION':
+                for x,h in [(22,55),(44,31),(64,17),(84,31),(106,55)]:d.polygon([(x-8,104),(x,h),(x+8,104)],fill=c)
+                d.arc((13,78,116,118),0,180,fill=white,width=6)
+            elif name=='HEAVENS_THUNDER':
+                d.ellipse((17,17,111,44),outline=white,width=6)
+                for x in [30,64,98]:line([(x+7,42),(x-8,73),(x+4,71),(x-5,111)],8)
+            elif name=='RIFT_COLLISION':
+                d.ellipse((8,22,49,108),outline=c,width=8);d.ellipse((79,22,120,108),outline=c,width=8)
+                line([(32,100),(99,29)],7,white);line([(33,29),(99,100)],7,white)
+            elif name=='SOUL_REQUIEM':
+                for r in [21,36,51]:d.ellipse((64-r,64-r,64+r,64+r),outline=c,width=6)
+                d.ellipse((53,52,75,77),fill=white)
+            elif name=='WORLDROOT_CATASTROPHE':
+                line([(64,15),(64,107)],12)
+                for dx in [-43,-23,23,43]:line([(64,69),(64+dx,39),(64+dx,20)],7)
+                for dx in [-39,-17,17,39]:line([(64,87),(64+dx,111)],6,white)
+            elif name=='FINAL_JUDGEMENT':
+                d.ellipse((22,9,106,37),outline=c,width=8)
+                line([(64,34),(64,109)],15,white);line([(31,65),(98,65)],10)
+                d.arc((12,90,117,121),180,360,fill=c,width=6)
+            elif name=='ETERNAL_WINTER':
+                for arm in range(6):
+                    a=arm*math.pi/3;line([(64,64),(64+math.cos(a)*51,64+math.sin(a)*51)],7)
+                    for sign in [-1,1]:
+                        x,y=64+math.cos(a)*31,64+math.sin(a)*31
+                        line([(x,y),(x+math.cos(a+sign*2.2)*15,y+math.sin(a+sign*2.2)*15)],5,white)
+        elif kind=='BOSS_TENTACLE':
             points=[(19,107),(25,82),(42,75),(70,75),(88,60),(90,40),(76,26),(57,30),(52,44),(62,50)]
             line(points,19);line(points,6,white)
             for x,y in [(32,86),(53,85),(78,77),(98,55),(91,30)]:d.ellipse((x-4,y-4,x+4,y+4),fill=white)

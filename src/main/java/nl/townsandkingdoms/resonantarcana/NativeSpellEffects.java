@@ -37,6 +37,7 @@ final class NativeSpellEffects {
         double size=msg.size(),time=level.getGameTime()*.14;
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
+        if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
             case AREA -> area(level,spell,p,end,size,time,count);
             case LINK,STRIKE -> beam(level,spell,p,end,size,time,count);
@@ -220,7 +221,7 @@ final class NativeSpellEffects {
             case SOUL -> ParticleTypes.SCULK_SOUL;case MAGIC -> ParticleTypes.ENCHANT;
         };
     };}
-    private static void point(ClientLevel level,ParticleOptions particle,Vec3 p,Vec3 v,int life,boolean boundary){
+    static void point(ClientLevel level,ParticleOptions particle,Vec3 p,Vec3 v,int life,boolean boundary){
         if(boundary){if(outline--<=0)return;}else if(detail--<=0)return;
         var result=Minecraft.getInstance().particleEngine.createParticle(particle,p.x,p.y,p.z,v.x,v.y,v.z);
         if(result!=null)result.setLifetime(life);

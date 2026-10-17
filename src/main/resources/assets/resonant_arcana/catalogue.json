@@ -21,7 +21,8 @@
         "ARCANE_STEP",
         "ARCANE_EDGE",
         "PHANTOM_FORMATION",
-        "SPELLBREAKER"
+        "SPELLBREAKER",
+        "ASTRAL_APOCALYPSE"
       ]
     },
     {
@@ -42,7 +43,8 @@
         "SANGUINE_PACT",
         "CRIMSON_HARVEST",
         "BLOOD_REND",
-        "CRIMSON_REVERSAL"
+        "CRIMSON_REVERSAL",
+        "CRIMSON_ECLIPSE"
       ]
     },
     {
@@ -65,7 +67,8 @@
         "CINDER_CLEAVE",
         "ASHEN_REBIRTH",
         "DRAGONS_GUARD",
-        "DRAGONS_PYRE"
+        "DRAGONS_PYRE",
+        "WORLD_PYRE"
       ]
     },
     {
@@ -87,7 +90,8 @@
         "NIGHT_BLOOM",
         "HELVARS_RIFT",
         "HELVARS_FRACTURE",
-        "HELVARS_SWORDFALL"
+        "HELVARS_SWORDFALL",
+        "VOID_CORONATION"
       ]
     },
     {
@@ -108,7 +112,8 @@
         "THUNDERCLAP",
         "ARC_RICOCHET",
         "BATTLE_TEMPO",
-        "THUNDERBRAND"
+        "THUNDERBRAND",
+        "HEAVENS_THUNDER"
       ]
     },
     {
@@ -130,7 +135,8 @@
         "SPATIAL_SHEAR",
         "RIFT_DRAW",
         "SANDWORMS_ERUPTION",
-        "SANDWORMS_QUICKSAND"
+        "SANDWORMS_QUICKSAND",
+        "RIFT_COLLISION"
       ]
     },
     {
@@ -151,7 +157,8 @@
         "RESONANT_GUARD",
         "MEMORY_FRACTURE",
         "SOULBLAST",
-        "FUNERAL_BELL"
+        "FUNERAL_BELL",
+        "SOUL_REQUIEM"
       ]
     },
     {
@@ -173,7 +180,8 @@
         "GORGON_GAZE",
         "KRAKENS_GRASP",
         "KRAKENS_WRATH",
-        "KRAKENS_UNDERTOW"
+        "KRAKENS_UNDERTOW",
+        "WORLDROOT_CATASTROPHE"
       ]
     },
     {
@@ -195,7 +203,8 @@
         "RENEWAL_HYMN",
         "WARSCREAM",
         "BULWARK_CHANT",
-        "LAST_STAND"
+        "LAST_STAND",
+        "FINAL_JUDGEMENT"
       ]
     },
     {
@@ -218,7 +227,8 @@
         "RIME_THRUST",
         "ICE_SPIKE_ERUPTION",
         "GLACIAL_COUNTER",
-        "YETIS_GLACIAL_WALL"
+        "YETIS_GLACIAL_WALL",
+        "ETERNAL_WINTER"
       ]
     }
   ],
@@ -1467,13 +1477,13 @@
       "title": "DOOM",
       "kind": "DOOM",
       "theme": "DARK",
-      "damage": 72.0,
+      "damage": 256,
       "radius": 12.0,
       "range": 32.0,
-      "cooldown": 1200,
-      "castTicks": 80,
-      "mana": 100,
-      "description": "Grow a vast black hole. It drags visible enemies inward, devours its core, then collapses. One damaging hit per enemy. Ender shadow hits weaken for three seconds.",
+      "cooldown": 2400,
+      "castTicks": 200,
+      "mana": 500,
+      "description": "Channel for ten seconds to form a chaotic black hole with a dark core and red accretion rings that spiral inward and vanish into it. Pull visible enemies toward the event horizon, devour enemies reaching the core, then collapse over twelve blocks. Each enemy takes at most one 256-damage hit. Doom is an additional Legendary spell, separate from the school cataclysms.",
       "manaStep": 10,
       "maxLevel": 1,
       "healing": 0,
@@ -2800,7 +2810,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Boss magic / control",
-      "description": "Requires Bosses’Rise 2.1.2. Summon the Kraken’s red tentacle at a visible ground location. After rising, it slams nearby enemies and slows them for 3 seconds. Protects allies; does not grab or move bosses.",
+      "description": "Requires Bosses’Rise 2.1.2. Summon the complete Kraken cinematic model—head and all eight tentacles—at visible ground. It rises from below the surface, curls its tentacles for a grasping slam and sinks away. The slam damages and slows visible enemies for three seconds. Uses the installed original red texture; no boss AI or original boss damage runs.",
       "bookId": "krakens_grasp"
     },
     "ICE_SPIKE_ERUPTION": {
@@ -3202,6 +3212,206 @@
       "role": "Anti-magic sweep",
       "description": "Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hostile or unowned projectiles and interrupt eligible Iron’s casts. Allies, owned projectiles, protected casts and unrelated magic systems are not cancelled.",
       "bookId": "spellbreaker"
+    },
+    "ASTRAL_APOCALYPSE": {
+      "title": "Astral Apocalypse",
+      "kind": "CATACLYSM",
+      "theme": "MAGIC",
+      "damage": 96,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 200,
+      "mana": 440,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 88,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Three triads of falling stars burst around the marked centre, then their lattice collapses for double damage over 14 blocks. Damage is per star impact; multiple stars can overlap. Cover blocks damage. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "astral_apocalypse"
+    },
+    "CRIMSON_ECLIPSE": {
+      "title": "Crimson Eclipse",
+      "kind": "CATACLYSM",
+      "theme": "BLOOD",
+      "damage": 96,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 200,
+      "mana": 460,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 90,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Raise a blood-red eclipse. Three radial blood tides damage enemies before a double-damage final tide. Restore 8% of health actually removed, capped at 20 health across the entire cast. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "crimson_eclipse"
+    },
+    "WORLD_PYRE": {
+      "title": "World Pyre",
+      "kind": "CATACLYSM",
+      "theme": "FIRE",
+      "damage": 100,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 240,
+      "mana": 500,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 100,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Call five descending meteors onto separate points around the mark, each bursting within five blocks. Finish with a 14-block firestorm dealing 250% damage. Fire hits ignite enemies for three seconds. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "world_pyre"
+    },
+    "VOID_CORONATION": {
+      "title": "Void Coronation",
+      "kind": "CATACLYSM",
+      "theme": "DARK",
+      "damage": 104,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 220,
+      "mana": 480,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 96,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Crown the mark with five towering void spires. Three expanding shadow tides deal damage while Darkness and Weakness II suppress nearby enemies, followed by a double-damage void collapse. This is separate from Doom. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "void_coronation"
+    },
+    "HEAVENS_THUNDER": {
+      "title": "Heaven’s Thunder",
+      "kind": "CATACLYSM",
+      "theme": "THUNDER",
+      "damage": 100,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 200,
+      "mana": 480,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 112,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Six sky-to-ground lightning columns strike around the mark, each damaging enemies within six blocks. A final 14-block thunderclap deals double damage. Consecutive columns may overlap. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "heavens_thunder"
+    },
+    "RIFT_COLLISION": {
+      "title": "Rift Collision",
+      "kind": "CATACLYSM",
+      "theme": "GRAVITY",
+      "damage": 112,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 240,
+      "mana": 500,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 104,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Draw visible enemies inward between two spatial gates. Two perpendicular piercing cuts deal damage along their lines, followed by a triple-damage spatial implosion over 14 blocks. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "rift_collision"
+    },
+    "SOUL_REQUIEM": {
+      "title": "Soul Requiem",
+      "kind": "CATACLYSM",
+      "theme": "SOUL",
+      "damage": 104,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 220,
+      "mana": 460,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 92,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Three sonic shells strike enemies around radii four, eight and twelve blocks, revealing them and applying Darkness. Enemies can move between shells. A final 14-block requiem deals double damage. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "soul_requiem"
+    },
+    "WORLDROOT_CATASTROPHE": {
+      "title": "Worldroot Catastrophe",
+      "kind": "CATACLYSM",
+      "theme": "POISON",
+      "damage": 88,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 200,
+      "mana": 440,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 96,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Grow a colossal branching worldroot field. Three pulses poison and damage enemies while Slowness III holds the area. The double-damage final bloom restores up to eight health to eligible allies. No terrain is replaced. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "worldroot_catastrophe"
+    },
+    "FINAL_JUDGEMENT": {
+      "title": "Final Judgement",
+      "kind": "CATACLYSM",
+      "theme": "HOLY",
+      "damage": 96,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 240,
+      "mana": 500,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 104,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Raise a radiant crown of judgement. Three pulses damage visible enemies and heal eligible allies for four health each. The double-damage final verdict heals twelve health, cleanses afflictions and grants Resistance I for five seconds. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "final_judgement"
+    },
+    "ETERNAL_WINTER": {
+      "title": "Eternal Winter",
+      "kind": "CATACLYSM",
+      "theme": "ICE",
+      "damage": 88,
+      "radius": 14,
+      "range": 40,
+      "cooldown": 2400,
+      "castTicks": 220,
+      "mana": 480,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 100,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "description": "Establish a 14-block glacial storm, applying Slowness IV and at least 180 freezing ticks to visible enemies. Three damage pulses precede a triple-damage shattering implosion. Freeze immunity still applies. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.",
+      "bookId": "eternal_winter"
     }
   }
 }

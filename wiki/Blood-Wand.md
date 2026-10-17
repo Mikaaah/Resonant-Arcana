@@ -248,4 +248,20 @@ Blink forward with a blood slash along the clear path, adding half your melee at
 
 Spell ID: `resonant_arcana:crimson_reversal`. Inspect any rank in game with `/resonantarcana spell crimson_reversal <level>`.
 
+### Crimson Eclipse
+
+Raise a blood-red eclipse. Three radial blood tides damage enemies before a double-damage final tide. Restore 8% of health actually removed, capped at 20 health across the entire cast. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 460 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.5s.
+
+Spell ID: `resonant_arcana:crimson_eclipse`. Inspect any rank in game with `/resonantarcana spell crimson_eclipse <level>`.
+
 [← Wiki Home](Home.md)

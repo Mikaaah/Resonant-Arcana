@@ -69,6 +69,8 @@ public final class SpellEngine {
             if(elapsed%4==0)BossesRiseBridge.castCue(player.serverLevel(),spell,center);
             return;
         }
+        if((spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM)&&elapsed%40==0)
+            SpellAudio.world(player.serverLevel(),center,spell==Spell.DOOM?"entity.warden.heartbeat":"block.respawn_anchor.charge",.7f,(float)(.5+progress*.7));
         if(elapsed%3==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,center,center.add(dir),0.45+progress);
         for(int i=0;i<3;i++){
             double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=spell==Spell.SOUL_CANNON?new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7)):SpellParticles.chargeOffset(spell.theme,angle,progress);
@@ -181,12 +183,12 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
+        if(!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.spell.kind!=Spell.Kind.CATACLYSM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
         if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
                 double radius=Math.min(c.spell.radius,2+c.age*.25);
-                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,radius);
+                if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,radius);
                 if(c.age%20==1)SpellAudio.world(c.level,c.pos,"entity.warden.heartbeat",1,.55f);
                 for(var victim:near(c.caster,c.pos,radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
                     Vec3 pull=c.pos.subtract(victim.getBoundingBox().getCenter());

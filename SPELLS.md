@@ -1,10 +1,10 @@
 # Spell reference
 
-**137 core spells + 12 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
+**147 core spells + 12 optional Bosses’Rise spells · 10 wands · 13–17 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
-All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.
+Ordinary spells have five levels. **DOOM** and the ten **Cataclysm** spells have one Legendary rank. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.
 
 Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.
 
@@ -16,7 +16,7 @@ Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrat
 
 Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s blazing projectiles. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
 
-Kraken tentacle roots are buried 1.25 blocks below the surface, and Wrath’s outer tentacles face inward. Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
+Kraken tentacle roots are buried 2.25 blocks below the surface, and Wrath’s outer tentacles face inward. Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
 
 ## Visual presentation
 
@@ -28,16 +28,16 @@ The readability and bounded-detail approach is inspired by [Wynncraft’s offici
 
 | Wand | School | Spell kit |
 | --- | --- | --- |
-| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge, Phantom Formation, Spellbreaker |
-| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend, Crimson Reversal |
-| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth, Infernal Barrage, Dragon’s Cataclysm |
-| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift, Helvar’s Fracture, Helvar’s Swordfall |
-| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo, Thunderbrand |
-| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear, Rift Draw, Sandworm’s Eruption, Sandworm’s Quicksand |
-| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast, Funeral Bell |
-| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp, Kraken’s Wrath, Kraken’s Undertow |
-| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant, Last Stand |
-| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption, Glacial Counter, Yeti’s Glacial Wall |
+| [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge, Phantom Formation, Spellbreaker, Astral Apocalypse |
+| [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend, Crimson Reversal, Crimson Eclipse |
+| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth, Infernal Barrage, Dragon’s Cataclysm, World Pyre |
+| [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift, Helvar’s Fracture, Helvar’s Swordfall, Void Coronation |
+| [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo, Thunderbrand, Heaven’s Thunder |
+| [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear, Rift Draw, Sandworm’s Eruption, Sandworm’s Quicksand, Rift Collision |
+| [Soul Wand](#soul-wand) | Eldritch | Echo Bolt, Sculk Wave, Sonic Scream, Soul Siphon, Soul Prison, Shrieking Pulse, Amethyst Nova, Echo Ward, Soul Cannon, Wisp Lantern, Resonant Guard, Memory Fracture, Soulblast, Funeral Bell, Soul Requiem |
+| [Venom Wand](#venom-wand) | Nature | Venom Sting, Poison Wave, Venom Bolt, Miasma Field, Withering Hex, Thorn Lash, Viper Fangs, Bramble Ring, Toxic Molt, Spore Totem, Corrosive Rain, Gorgon Gaze, Kraken’s Grasp, Kraken’s Wrath, Kraken’s Undertow, Worldroot Catastrophe |
+| [Holy Wand](#holy-wand) | Holy | Sanctuary, Luminous Dart, Mending Light, Blessing of Vigor, Consecration, Radiant Sweep, Pilgrim Step, Absolution, Dawn Ward, Judgement Ray, Seraphic Descent, Renewal Hymn, Warscream, Bulwark Chant, Last Stand, Final Judgement |
+| [Frost Wand](#frost-wand) | Ice | Glacial Rupture, Frost Needle, Ice Serpent, Rime Nova, Cryo Lance, Frozen Aegis, Glacier Step, Shatter, Hailstorm, Glacial Prison, Crystal Barrage, Absolute Zero, Rime Thrust, Ice Spike Eruption, Glacial Counter, Yeti’s Glacial Wall, Eternal Winter |
 
 ## Shared recovery
 
@@ -53,7 +53,7 @@ Healing and cleansing spells share a recovery group. Blood Ward, Echo Ward and D
 
 ## Heavy cast timing
 
-Windup is the native Iron’s cast bar. Some spells also have a release phase: Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
+Windup is the native Iron’s cast bar. Some spells also have a release phase: The ten Legendary cataclysms have 10–12-second base cast bars, cost 440–500 mana and have two-minute base cooldowns. Doom also has a ten-second cast and costs 500 mana; it is separate from those ten. Their release sequences continue for roughly 4.4–5.6 seconds. Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
 
 <a id="arcane-wand"></a>
 ## Arcane Wand
@@ -318,6 +318,22 @@ Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hosti
 
 Spell ID: `resonant_arcana:spellbreaker`. Inspect any rank in game with `/resonantarcana spell spellbreaker <level>`.
 
+### Astral Apocalypse
+
+Three triads of falling stars burst around the marked centre, then their lattice collapses for double damage over 14 blocks. Damage is per star impact; multiple stars can overlap. Cover blocks damage. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 440 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.4s.
+
+Spell ID: `resonant_arcana:astral_apocalypse`. Inspect any rank in game with `/resonantarcana spell astral_apocalypse <level>`.
+
 <a id="blood-wand"></a>
 ## Blood Wand
 
@@ -568,6 +584,22 @@ Blink forward with a blood slash along the clear path, adding half your melee at
 **Native recast:** a three-second return window. The return costs no mana and has no second windup; using or timing out the return starts the normal cooldown. The saved anchor must remain in the same dimension, within 16 blocks, loaded, outside lava and free of collisions. The return cannot be used as a directly consumed scroll; inscribe it in a spellbook or cast with a wand.
 
 Spell ID: `resonant_arcana:crimson_reversal`. Inspect any rank in game with `/resonantarcana spell crimson_reversal <level>`.
+
+### Crimson Eclipse
+
+Raise a blood-red eclipse. Three radial blood tides damage enemies before a double-damage final tide. Restore 8% of health actually removed, capped at 20 health across the entire cast. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 460 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.5s.
+
+Spell ID: `resonant_arcana:crimson_eclipse`. Inspect any rank in game with `/resonantarcana spell crimson_eclipse <level>`.
 
 <a id="cinder-wand"></a>
 ## Cinder Wand
@@ -858,6 +890,22 @@ Requires Bosses’Rise 2.1.2. Mark visible ground with an ember ring and call do
 
 Spell ID: `resonant_arcana:dragons_pyre`. Inspect any rank in game with `/resonantarcana spell dragons_pyre <level>`.
 
+### World Pyre
+
+Call five descending meteors onto separate points around the mark, each bursting within five blocks. Finish with a 14-block firestorm dealing 250% damage. Fire hits ignite enemies for three seconds. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 12s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 100 | — | 500 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5s.
+
+Spell ID: `resonant_arcana:world_pyre`. Inspect any rank in game with `/resonantarcana spell world_pyre <level>`.
+
 <a id="dark-wand"></a>
 ## Dark Wand
 
@@ -967,13 +1015,13 @@ Spell ID: `resonant_arcana:soul_aura`. Inspect any rank in game with `/resonanta
 
 ### DOOM
 
-Grow a vast black hole. It drags visible enemies inward, devours its core, then collapses. One damaging hit per enemy. Ender shadow hits weaken for three seconds.
+Channel for ten seconds to form a chaotic black hole with a dark core and red accretion rings that spiral inward and vanish into it. Pull visible enemies toward the event horizon, devour enemies reaching the core, then collapse over twelve blocks. Each enemy takes at most one 256-damage hit. Doom is an additional Legendary spell, separate from the school cataclysms.
 
-**Role:** Attack · **Cast:** 4s · **Cooldown:** 60s · **Range:** 32 blocks · **Radius / width:** 12 blocks.
+**Role:** Attack · **Cast:** 10s · **Cooldown:** 120s · **Range:** 32 blocks · **Radius / width:** 12 blocks.
 
 | Level | Direct damage | Healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 72 | — | 100 |
+| I | 256 | — | 500 |
 
 **Base active phase:** 4.5s.
 
@@ -1114,6 +1162,22 @@ Requires Bosses’Rise 2.1.2. Summon Helvar’s original three-dimensional held 
 | V | 32 | — | 84 |
 
 Spell ID: `resonant_arcana:helvars_swordfall`. Inspect any rank in game with `/resonantarcana spell helvars_swordfall <level>`.
+
+### Void Coronation
+
+Crown the mark with five towering void spires. Three expanding shadow tides deal damage while Darkness and Weakness II suppress nearby enemies, followed by a double-damage void collapse. This is separate from Doom. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 11s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 104 | — | 480 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `resonant_arcana:void_coronation`. Inspect any rank in game with `/resonantarcana spell void_coronation <level>`.
 
 <a id="thunder-wand"></a>
 ## Thunder Wand
@@ -1355,6 +1419,22 @@ Enchant your weapon for ten seconds. Every third successful player melee hit rel
 **Trigger:** every third successful native player melee hit. The third hit gains the listed damage before its normal mitigation; lightning separately strikes up to two nearby enemies. Lightning and spell damage never add charges. Duration is 10 seconds, with no stacking on recast. Mods must route melee damage through the native player-attack damage type; custom combat damage types need an explicit integration.
 
 Spell ID: `resonant_arcana:thunderbrand`. Inspect any rank in game with `/resonantarcana spell thunderbrand <level>`.
+
+### Heaven’s Thunder
+
+Six sky-to-ground lightning columns strike around the mark, each damaging enemies within six blocks. A final 14-block thunderclap deals double damage. Consecutive columns may overlap. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 100 | — | 480 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5.6s.
+
+Spell ID: `resonant_arcana:heavens_thunder`. Inspect any rank in game with `/resonantarcana spell heavens_thunder <level>`.
 
 <a id="rift-wand"></a>
 ## Rift Wand
@@ -1621,6 +1701,22 @@ Requires Bosses’Rise 2.1.2. A spiralling sand vortex slows and draws visible e
 
 Spell ID: `resonant_arcana:sandworms_quicksand`. Inspect any rank in game with `/resonantarcana spell sandworms_quicksand <level>`.
 
+### Rift Collision
+
+Draw visible enemies inward between two spatial gates. Two perpendicular piercing cuts deal damage along their lines, followed by a triple-damage spatial implosion over 14 blocks. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 12s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 112 | — | 500 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5.2s.
+
+Spell ID: `resonant_arcana:rift_collision`. Inspect any rank in game with `/resonantarcana spell rift_collision <level>`.
+
 <a id="soul-wand"></a>
 ## Soul Wand
 
@@ -1874,6 +1970,22 @@ Charge a funeral bell. Two expanding sonic rings deal the listed damage; a third
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect any rank in game with `/resonantarcana spell funeral_bell <level>`.
 
+### Soul Requiem
+
+Three sonic shells strike enemies around radii four, eight and twelve blocks, revealing them and applying Darkness. Enemies can move between shells. A final 14-block requiem deals double damage. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 11s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 104 | — | 460 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.6s.
+
+Spell ID: `resonant_arcana:soul_requiem`. Inspect any rank in game with `/resonantarcana spell soul_requiem <level>`.
+
 <a id="venom-wand"></a>
 ## Venom Wand
 
@@ -2091,7 +2203,7 @@ Spell ID: `resonant_arcana:gorgon_gaze`. Inspect any rank in game with `/resonan
 
 ### Kraken’s Grasp
 
-Requires Bosses’Rise 2.1.2. Summon the Kraken’s red tentacle at a visible ground location. After rising, it slams nearby enemies and slows them for 3 seconds. Protects allies; does not grab or move bosses.
+Requires Bosses’Rise 2.1.2. Summon the complete Kraken cinematic model—head and all eight tentacles—at visible ground. It rises from below the surface, curls its tentacles for a grasping slam and sinks away. The slam damages and slows visible enemies for three seconds. Uses the installed original red texture; no boss AI or original boss damage runs.
 
 **Role:** Boss magic / control · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 18 blocks · **Radius / width:** 4 blocks.
 
@@ -2142,6 +2254,22 @@ Requires Bosses’Rise 2.1.2. A Kraken tentacle rises at a visible ground locati
 | V | 24 | — | 89 |
 
 Spell ID: `resonant_arcana:krakens_undertow`. Inspect any rank in game with `/resonantarcana spell krakens_undertow <level>`.
+
+### Worldroot Catastrophe
+
+Grow a colossal branching worldroot field. Three pulses poison and damage enemies while Slowness III holds the area. The double-damage final bloom restores up to eight health to eligible allies. No terrain is replaced. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 88 | — | 440 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `resonant_arcana:worldroot_catastrophe`. Inspect any rank in game with `/resonantarcana spell worldroot_catastrophe <level>`.
 
 <a id="holy-wand"></a>
 ## Holy Wand
@@ -2417,6 +2545,22 @@ Plant a temporary golden banner for six seconds, surrounded by a radiant ward ci
 **Banner:** six seconds, fixed location, six-block ally radius. Grants Resistance I while defending the area and 4, 5, 6, 7, 8 temporary health once per ally. Re-entering does not refill absorption. Only allies still in range and visible at the end receive the table’s healing.
 
 Spell ID: `resonant_arcana:last_stand`. Inspect any rank in game with `/resonantarcana spell last_stand <level>`.
+
+### Final Judgement
+
+Raise a radiant crown of judgement. Three pulses damage visible enemies and heal eligible allies for four health each. The double-damage final verdict heals twelve health, cleanses afflictions and grants Resistance I for five seconds. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 12s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 500 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5.2s.
+
+Spell ID: `resonant_arcana:final_judgement`. Inspect any rank in game with `/resonantarcana spell final_judgement <level>`.
 
 <a id="frost-wand"></a>
 ## Frost Wand
@@ -2704,3 +2848,19 @@ Requires Bosses’Rise 2.1.2. Seven of the Yeti’s ice spikes rise together in 
 **Base active phase:** 3.1s.
 
 Spell ID: `resonant_arcana:yetis_glacial_wall`. Inspect any rank in game with `/resonantarcana spell yetis_glacial_wall <level>`.
+
+### Eternal Winter
+
+Establish a 14-block glacial storm, applying Slowness IV and at least 180 freezing ticks to visible enemies. Three damage pulses precede a triple-damage shattering implosion. Freeze immunity still applies. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 11s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 88 | — | 480 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5s.
+
+Spell ID: `resonant_arcana:eternal_winter`. Inspect any rank in game with `/resonantarcana spell eternal_winter <level>`.

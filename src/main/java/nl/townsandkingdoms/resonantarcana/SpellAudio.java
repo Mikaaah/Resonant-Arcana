@@ -19,6 +19,12 @@ final class SpellAudio {
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
+        case ASTRAL_APOCALYPSE->"block.amethyst_block.resonate";
+        case CRIMSON_ECLIPSE->irons("heartstop_cast");case WORLD_PYRE->irons("spell.fire_bomb.charge");
+        case VOID_CORONATION->irons("spell.black_hole.charge");case HEAVENS_THUNDER->irons("spell.thunderstorm.prepare");
+        case RIFT_COLLISION->irons("spell.gravity_fissure.charge");case SOUL_REQUIEM->"entity.warden.sonic_charge";
+        case WORLDROOT_CATASTROPHE->irons("spell.firefly_swarm.prepare");case FINAL_JUDGEMENT->irons("entity.sunbeam.windup");
+        case ETERNAL_WINTER->irons("spell.frostbite.freeze");
         case KRAKENS_WRATH->BossesRiseCompat.MOD+":item.undying_tentacle.charging";
         case RIFT_DRAW,SPELLBREAKER->irons("spell.summon_swords.charge");
         case FUNERAL_BELL->"block.bell.resonate";case LAST_STAND->irons("cast.generic.holy");
@@ -92,6 +98,11 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
+        case ASTRAL_APOCALYPSE->irons("spell.summon_swords.cast");case CRIMSON_ECLIPSE->irons("cast.generic.blood");
+        case WORLD_PYRE->irons("spell.fire_bomb.cast");case VOID_CORONATION->irons("spell.black_hole.cast");
+        case HEAVENS_THUNDER->irons("entity.lightning_strike.strike");case RIFT_COLLISION->irons("force_impact");
+        case SOUL_REQUIEM->"entity.warden.roar";case WORLDROOT_CATASTROPHE->irons("entity.root.emerge");
+        case FINAL_JUDGEMENT->irons("entity.sunbeam.impact");case ETERNAL_WINTER->irons("entity.ice_block.impact");
         case KRAKENS_WRATH->BossesRiseCompat.MOD+":item.undying_tentacle.spawn_tentacles";
         case GLACIAL_COUNTER->irons("spell.frostbite.freeze");case RIFT_DRAW,SPELLBREAKER->irons("entity.generic.swing_blade");
         case CRIMSON_REVERSAL->irons("cast.blood_step");case ASHEN_REBIRTH->irons("spell.heat_surge.prepare");

@@ -34,7 +34,8 @@ final class BossesRiseBridge {
     static final DeferredHolder<EntityType<?>,EntityType<Sand>> SAND=ENTITIES.register("sand_spell_visual",()->EntityType.Builder.<Sand>of(Sand::new,MobCategory.MISC).sized(1.3f,3).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:sand_spell_visual"));
     static final DeferredHolder<EntityType<?>,EntityType<Sword>> SWORD=ENTITIES.register("helvar_sword_spell_visual",()->EntityType.Builder.<Sword>of(Sword::new,MobCategory.MISC).sized(.6f,2).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:helvar_sword_spell_visual"));
     static final DeferredHolder<EntityType<?>,EntityType<FlameOrb>> FLAME=ENTITIES.register("dragon_flame_spell_visual",()->EntityType.Builder.<FlameOrb>of(FlameOrb::new,MobCategory.MISC).sized(.8f,.8f).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:dragon_flame_spell_visual"));
-    static final double TENTACLE_BURY_DEPTH=1.25;
+    static final DeferredHolder<EntityType<?>,EntityType<FullKraken>> FULL_KRAKEN=ENTITIES.register("kraken_grasp_visual",()->EntityType.Builder.<FullKraken>of(FullKraken::new,MobCategory.MISC).sized(18,10).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:kraken_grasp_visual"));
+    static final double TENTACLE_BURY_DEPTH=2.25;
     static final float SWORD_SCALE=2.5f;
     // The original held model's blade tip is at -9 model pixels before scaling.
     static final double SWORD_TIP_OFFSET=9.0/16*SWORD_SCALE;
@@ -46,8 +47,14 @@ final class BossesRiseBridge {
     }
     private static void attributes(EntityAttributeCreationEvent e){
         e.put(TENTACLE.get(),GhostTentacleEntity.createAttributes().build());
+        e.put(FULL_KRAKEN.get(),GhostTentacleEntity.createAttributes().build());
     }
     static Entity tentacle(SpellEngine.Cast c){
+        if(c.spell==Spell.KRAKENS_GRASP){
+            var visual=FULL_KRAKEN.get().create(c.level);visual.setOwnerUUID(c.owner);visual.origin=c.pos;
+            visual.setPos(c.pos.add(0,-3.25,0));visual.setYRot(tentacleYaw(c.dir));visual.yRotO=visual.getYRot();
+            c.level.addFreshEntity(visual);tentacleRise(c.level,c.pos);return visual;
+        }
         return tentacle(c,c.pos,c.dir);
     }
     static float tentacleYaw(Vec3 direction){return (float)Math.toDegrees(Math.atan2(-direction.x,direction.z));}
@@ -151,6 +158,26 @@ final class BossesRiseBridge {
         @Override public void onHitBlock(net.minecraft.world.phys.BlockHitResult hit){}
         @Override public boolean isPickable(){return false;}
         @Override public boolean canBeCollidedWith(){return false;}
+    }
+    /** Full installed cinematic geometry, with no original boss AI or damage ticks. */
+    static final class FullKraken extends GhostTentacleEntity implements BossSpellVisual {
+        private int visualAge;private Vec3 origin;
+        @SuppressWarnings("unchecked") FullKraken(EntityType<FullKraken> type,Level level){
+            super((EntityType<GhostTentacleEntity>)(EntityType<?>)type,level);setNoAi(true);setNoGravity(true);setInvulnerable(true);setSilent(true);
+        }
+        @Override public void tick(){
+            float yaw=getYRot();setYBodyRot(yaw);yBodyRotO=yaw;setYHeadRot(yaw);yHeadRotO=yaw;
+            if(level().isClientSide())return;
+            int age=++visualAge;if(origin==null)origin=position().add(0,3.25,0);
+            double rise=Math.min(1,age/24.0),sink=Math.max(0,(age-55)/28.0);
+            setPos(origin.add(0,-3.25+rise*2.0-sink*3.0,0));if(age>=88)discard();
+        }
+        // The native cinematic tracks hide the head or run a 24-second cutscene. Use the full
+        // rest pose and the spell-owned rise/slam/sink timing, without invoking either track.
+        @Override public void registerControllers(AnimatableManager.ControllerRegistrar controllers){}
+        @Override public boolean isPickable(){return false;}
+        @Override public boolean canBeCollidedWith(){return false;}
+        @Override protected boolean shouldDropLoot(){return false;}
     }
     static final class Tentacle extends GhostTentacleEntity implements BossSpellVisual {
         private int visualAge;

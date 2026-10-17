@@ -286,4 +286,20 @@ Requires Bosses’Rise 2.1.2. Mark visible ground with an ember ring and call do
 
 Spell ID: `resonant_arcana:dragons_pyre`. Inspect any rank in game with `/resonantarcana spell dragons_pyre <level>`.
 
+### World Pyre
+
+Call five descending meteors onto separate points around the mark, each bursting within five blocks. Finish with a 14-block firestorm dealing 250% damage. Fire hits ignite enemies for three seconds. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 12s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 100 | — | 500 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5s.
+
+Spell ID: `resonant_arcana:world_pyre`. Inspect any rank in game with `/resonantarcana spell world_pyre <level>`.
+
 [← Wiki Home](Home.md)

@@ -106,13 +106,13 @@ Spell ID: `resonant_arcana:soul_aura`. Inspect any rank in game with `/resonanta
 
 ### DOOM
 
-Grow a vast black hole. It drags visible enemies inward, devours its core, then collapses. One damaging hit per enemy. Ender shadow hits weaken for three seconds.
+Channel for ten seconds to form a chaotic black hole with a dark core and red accretion rings that spiral inward and vanish into it. Pull visible enemies toward the event horizon, devour enemies reaching the core, then collapse over twelve blocks. Each enemy takes at most one 256-damage hit. Doom is an additional Legendary spell, separate from the school cataclysms.
 
-**Role:** Attack · **Cast:** 4s · **Cooldown:** 60s · **Range:** 32 blocks · **Radius / width:** 12 blocks.
+**Role:** Attack · **Cast:** 10s · **Cooldown:** 120s · **Range:** 32 blocks · **Radius / width:** 12 blocks.
 
 | Level | Direct damage | Healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 72 | — | 100 |
+| I | 256 | — | 500 |
 
 **Base active phase:** 4.5s.
 
@@ -253,5 +253,21 @@ Requires Bosses’Rise 2.1.2. Summon Helvar’s original three-dimensional held 
 | V | 32 | — | 84 |
 
 Spell ID: `resonant_arcana:helvars_swordfall`. Inspect any rank in game with `/resonantarcana spell helvars_swordfall <level>`.
+
+### Void Coronation
+
+Crown the mark with five towering void spires. Three expanding shadow tides deal damage while Darkness and Weakness II suppress nearby enemies, followed by a double-damage void collapse. This is separate from Doom. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 11s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 104 | — | 480 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `resonant_arcana:void_coronation`. Inspect any rank in game with `/resonantarcana spell void_coronation <level>`.
 
 [← Wiki Home](Home.md)

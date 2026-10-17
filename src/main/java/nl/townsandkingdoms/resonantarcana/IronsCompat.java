@@ -84,7 +84,7 @@ final class IronsCompat {
             baseManaCost=spell.manaCost();
             manaCostPerLevel=spell.manaStep();baseSpellPower=100;spellPowerPerLevel=SpellCatalogue.POWER_PER_LEVEL;
             castTime=spell.castTicks();
-            defaults=new DefaultConfig().setMinRarity(spell==Spell.DOOM?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
+            defaults=new DefaultConfig().setMinRarity((spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
                 .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(true).build();
         }
         @Override public boolean attemptInitiateCast(net.minecraft.world.item.ItemStack stack,int rank,Level level,Player player,CastSource source,boolean triggerCooldown,String slot){
@@ -114,7 +114,7 @@ final class IronsCompat {
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL,PIERCING_ORB,CONE_CHANNEL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
             case STORM,SMITE,TWISTER,METEOR,FROSTFRONT,PILLAR,RAIN->SpellAnimations.CHARGE_RAISED_HAND;
-            case BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
+            case CATACLYSM,BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
             case WARD,AURA,HEAL,BUFF,CLEANSE,HYMN,REMEDY->SpellAnimations.PREPARE_CROSS_ARMS;
             default->castTime>0?SpellAnimations.ANIMATION_LONG_CAST:SpellAnimations.ANIMATION_INSTANT_CAST;
         };}

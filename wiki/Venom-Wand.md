@@ -214,7 +214,7 @@ Spell ID: `resonant_arcana:gorgon_gaze`. Inspect any rank in game with `/resonan
 
 ### Kraken’s Grasp
 
-Requires Bosses’Rise 2.1.2. Summon the Kraken’s red tentacle at a visible ground location. After rising, it slams nearby enemies and slows them for 3 seconds. Protects allies; does not grab or move bosses.
+Requires Bosses’Rise 2.1.2. Summon the complete Kraken cinematic model—head and all eight tentacles—at visible ground. It rises from below the surface, curls its tentacles for a grasping slam and sinks away. The slam damages and slows visible enemies for three seconds. Uses the installed original red texture; no boss AI or original boss damage runs.
 
 **Role:** Boss magic / control · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 18 blocks · **Radius / width:** 4 blocks.
 
@@ -265,5 +265,21 @@ Requires Bosses’Rise 2.1.2. A Kraken tentacle rises at a visible ground locati
 | V | 24 | — | 89 |
 
 Spell ID: `resonant_arcana:krakens_undertow`. Inspect any rank in game with `/resonantarcana spell krakens_undertow <level>`.
+
+### Worldroot Catastrophe
+
+Grow a colossal branching worldroot field. Three pulses poison and damage enemies while Slowness III holds the area. The double-damage final bloom restores up to eight health to eligible allies. No terrain is replaced. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 88 | — | 440 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.8s.
+
+Spell ID: `resonant_arcana:worldroot_catastrophe`. Inspect any rank in game with `/resonantarcana spell worldroot_catastrophe <level>`.
 
 [← Wiki Home](Home.md)

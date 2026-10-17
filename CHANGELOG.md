@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.20.0-alpha
+
+- Add ten single-rank Legendary cataclysms across all nine native schools: Astral Apocalypse, Crimson Eclipse, World Pyre, Void Coronation, Heaven’s Thunder, Rift Collision, Soul Requiem, Worldroot Catastrophe, Final Judgement and Eternal Winter. Doom is separate from the ten.
+- Give each a 10–12-second base cast, 440–500 mana cost, two-minute base cooldown, individual staged mechanics, particle choreography, sound cues and original icon. Preserve native Iron’s interruption, mana, cooldown and school systems.
+- Rework Doom into a ten-second, 500-mana cast with one 256-damage hit per enemy. Render an opaque, depth-tested black core with inward-flowing red accretion spirals and a red collapse. Remove its generic purple native particles and AAAParticles circle.
+- Lower tentacle roots from 1.25 to 2.25 blocks below ground. Grasp uses the full original cinematic Kraken geometry and red texture, with a spell-owned rise, tentacle curl and sink. It cannot run original boss AI, attacks, loot or cutscenes.
+- Expand to 147 core spells plus twelve optional Bosses’Rise spells, while preserving all existing spell ordinals and saved identifiers.
+- Add native long-cast, cancellation, staged damage, wall, teammate and full-model cleanup checks. Pass Java 21 compilation, packaged-effect validation, 8,001 dedicated-server checks without Bosses’Rise and 8,729 with Bosses’Rise 2.1.2. Client rendering and audio remain unverified in game.
+
 ## 0.19.0-alpha
 
 - Add a bounded client native-particle renderer across all 149 spell definitions. Layer school-specific wave fronts, woven beams, projectile wakes, cages, rain, vortices and expanding impacts using vanilla and Iron’s particles. Keep AAAParticles limited to the existing 24 circles.

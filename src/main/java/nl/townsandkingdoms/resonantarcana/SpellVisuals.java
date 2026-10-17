@@ -118,7 +118,7 @@ final class SpellVisuals {
         return ASSETS.contains(shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc");
     }
     static boolean usesAaa(Spell spell,Stage stage){
-        if(stage!=Stage.AREA||BossesRiseCompat.optional(spell))return false;
+        if(stage!=Stage.AREA||spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM||BossesRiseCompat.optional(spell))return false;
         return switch(shape(spell,stage)){
             case FIELD,WARD,DOMAIN,TRAP,DOOM_WELL,HORIZON_WELL->true;
             default->false;

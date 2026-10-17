@@ -260,4 +260,20 @@ Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hosti
 
 Spell ID: `resonant_arcana:spellbreaker`. Inspect any rank in game with `/resonantarcana spell spellbreaker <level>`.
 
+### Astral Apocalypse
+
+Three triads of falling stars burst around the marked centre, then their lattice collapses for double damage over 14 blocks. Damage is per star impact; multiple stars can overlap. Cover blocks damage. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 10s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 440 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.4s.
+
+Spell ID: `resonant_arcana:astral_apocalypse`. Inspect any rank in game with `/resonantarcana spell astral_apocalypse <level>`.
+
 [← Wiki Home](Home.md)

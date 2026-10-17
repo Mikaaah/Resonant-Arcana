@@ -250,4 +250,20 @@ Charge a funeral bell. Two expanding sonic rings deal the listed damage; a third
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect any rank in game with `/resonantarcana spell funeral_bell <level>`.
 
+### Soul Requiem
+
+Three sonic shells strike enemies around radii four, eight and twelve blocks, revealing them and applying Darkness. Enemies can move between shells. A final 14-block requiem deals double damage. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 11s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 104 | — | 460 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 4.6s.
+
+Spell ID: `resonant_arcana:soul_requiem`. Inspect any rank in game with `/resonantarcana spell soul_requiem <level>`.
+
 [← Wiki Home](Home.md)

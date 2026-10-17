@@ -21,6 +21,7 @@ final class IronsIntegrationChecks {
     static void run(ServerLevel level,BiConsumer<Boolean,String> check){
         var player=FakePlayerFactory.get(level,new GameProfile(UUID.fromString("d8a06677-1d44-4ed0-aef9-ef4aab2cb009"),"ArcanaBookTest"));
         player.setGameMode(GameType.SURVIVAL);player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);
+        player.getAttribute(AttributeRegistry.MAX_MANA).setBaseValue(1000);
         MagicData data=MagicData.getPlayerMagicData(player);
         if(data.getSyncedData()==null)data.setSyncedData(new io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData(player));
         for(Spell spell:Spell.enabledValues()){
@@ -45,22 +46,22 @@ final class IronsIntegrationChecks {
         var spell=SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.SPARK));
         SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(0);
         check.accept(!spell.canBeCastedBy(1,CastSource.SPELLBOOK,data,player).isSuccess(),"Iron mana gate rejects an empty mana pool");
-        data.setMana(100);Zombie victim=target(level,6);
+        data.setMana(1000);Zombie victim=target(level,6);
         check.accept(spell.checkPreCastConditions(level,1,player,data),"Iron preflight accepts a valid caster");
         check.accept(spell.canBeCastedBy(1,CastSource.SPELLBOOK,data,player).isSuccess(),"Iron mana gate permits a funded cast");
         spell.castSpell(level,1,player,CastSource.SPELLBOOK,true);
-        check.accept(data.getMana()==100-spell.getManaCost(1),"Iron framework consumes the configured mana once (actual="+data.getMana()+", cost="+spell.getManaCost(1)+")");
+        check.accept(data.getMana()==1000-spell.getManaCost(1),"Iron framework consumes the configured mana once (actual="+data.getMana()+", cost="+spell.getManaCost(1)+")");
         check.accept(data.getPlayerCooldowns().isOnCooldown(spell),"Iron framework applies its own spell cooldown");
         check.accept(!spell.canBeCastedBy(1,CastSource.SPELLBOOK,data,player).isSuccess(),"Iron cooldown gate rejects immediate repeats");
         for(int i=0;i<35;i++)SpellEngine.tick();
         float baseDamage=20-victim.getHealth();check.accept(baseDamage>0,"Iron spellbook cast runs the projectile gameplay");victim.discard();
-        SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+        SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
         var power=player.getAttribute(AttributeRegistry.SPELL_POWER);double oldPower=power.getBaseValue();
         power.setBaseValue(oldPower+1);victim=target(level,6);
         spell.castSpell(level,1,player,CastSource.SPELLBOOK,true);for(int i=0;i<35;i++)SpellEngine.tick();
         check.accept(20-victim.getHealth()>baseDamage*1.5,"Iron spell power increases actual projectile damage");
         power.setBaseValue(oldPower);victim.discard();
-        SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+        SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
         var cannon=SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.SOUL_CANNON));victim=target(level,20);
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);
         check.accept(cannon.getCastType()==CastType.LONG&&cannon.getCastTime(1)==40,"Iron Soul Cannon uses a real two second cast bar");
@@ -76,7 +77,7 @@ final class IronsIntegrationChecks {
         data.getPlayerCooldowns().clearCooldowns();
         var targeted=SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.ARCANE_STRIKE));
         check.accept(!targeted.checkPreCastConditions(level,1,player,data),"Iron targeted spells fail preflight when no target exists");
-        check.accept(data.getMana()==100-cannon.getManaCost(1),"failed Iron preflight leaves mana unchanged");
+        check.accept(data.getMana()==1000-cannon.getManaCost(1),"failed Iron preflight leaves mana unchanged");
         chargedWandChecks(level,check,player,data);
     }
     /** Uses Iron's real public tick loop, not a stand-in windup timer. */
@@ -86,9 +87,9 @@ final class IronsIntegrationChecks {
         level.addNewPlayer(player);
         try{
             upgradeChecks(level,check,player,data,manager);
-            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_SCREAM,Spell.PRISMATIC_RUIN,Spell.SERAPHIC_DESCENT,Spell.GRAVITY_STAMP,Spell.JUDGEMENT_RAY,Spell.ICE_SERPENT,Spell.HAILSTORM,Spell.CONSECRATION,Spell.CRIMSON_TETHER,Spell.DRAGON_BREATH,Spell.NIGHT_BLOOM,Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT)){
+            for(Spell selected:List.of(Spell.FIRE_COMET,Spell.SMITE,Spell.AMETHYST_NOVA,Spell.SINGULARITY,Spell.STORM_CALL,Spell.BLOOD_LANCE,Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_SCREAM,Spell.PRISMATIC_RUIN,Spell.SERAPHIC_DESCENT,Spell.GRAVITY_STAMP,Spell.JUDGEMENT_RAY,Spell.ICE_SERPENT,Spell.HAILSTORM,Spell.CONSECRATION,Spell.CRIMSON_TETHER,Spell.DRAGON_BREATH,Spell.NIGHT_BLOOM,Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT,Spell.ASTRAL_APOCALYPSE,Spell.CRIMSON_ECLIPSE,Spell.WORLD_PYRE,Spell.VOID_CORONATION,Spell.HEAVENS_THUNDER,Spell.RIFT_COLLISION,Spell.SOUL_REQUIEM,Spell.WORLDROOT_CATASTROPHE,Spell.FINAL_JUDGEMENT,Spell.ETERNAL_WINTER)){
                 if(!selected.available())continue;
-                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
                 player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);player.setHealth(selected==Spell.SANCTUARY?5:20);
                 var wand=ResonantArcana.ITEMS.getEntries().stream().map(e->(WandItem)e.get()).filter(w->w.spells.contains(selected)).findFirst().orElseThrow();
                 ItemStack stack=wand.getDefaultInstance();wand.select(stack,wand.spells.indexOf(selected));
@@ -101,41 +102,41 @@ final class IronsIntegrationChecks {
                     check.accept(victim.getHealth()==20,"no damage before native charge completes: "+selected);
                     if(selected==Spell.SANCTUARY)check.accept(player.getHealth()==5,"no healing before native charge completes");
                 }
-                check.accept(data.getMana()==100,"native windup does not charge mana early: "+selected);
+                check.accept(data.getMana()==1000,"native windup does not charge mana early: "+selected);
                 manager.tick(level);SpellEngine.tick();
-                check.accept(data.getMana()==100-registered.getManaCost(1),"wand spends native mana exactly once: "+selected);
-                for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
+                check.accept(data.getMana()==1000-registered.getManaCost(1),"wand spends native mana exactly once: "+selected);
+                for(int t=0;t<160;t++){manager.tick(level);SpellEngine.tick();}
                 check.accept(selected==Spell.SANCTUARY?player.getHealth()>5&&victim.getHealth()==20:victim.getHealth()<20,"charged wand releases its gameplay: "+selected);
                 check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"charged wand and effect clean up: "+selected);victim.discard();
             }
-            for(Spell selected:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_SCREAM)){
-                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+            for(Spell selected:List.of(Spell.SOLAR_CATACLYSM,Spell.TEMPEST_SPEAR,Spell.EVENT_HORIZON,Spell.DOOM,Spell.SANCTUARY,Spell.GLACIAL_RUPTURE,Spell.EVOKERS_EDICT,Spell.SONIC_SCREAM,Spell.ASTRAL_APOCALYPSE,Spell.CRIMSON_ECLIPSE,Spell.WORLD_PYRE,Spell.VOID_CORONATION,Spell.HEAVENS_THUNDER,Spell.RIFT_COLLISION,Spell.SOUL_REQUIEM,Spell.WORLDROOT_CATASTROPHE,Spell.FINAL_JUDGEMENT,Spell.ETERNAL_WINTER)){
+                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
                 var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
                 Zombie untouched=target(level,6);
                 check.accept(registered.attemptInitiateCast(ItemStack.EMPTY,1,level,player,CastSource.SPELLBOOK,false,"test"),"heavy spellbook windup begins: "+selected);
                 for(int t=0;t<20;t++){manager.tick(level);SpellEngine.tick();}
                 IronsCompat.cancel(player);
-                for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
-                check.accept(untouched.getHealth()==20&&data.getMana()==100&&SpellEngine.activeCount()==0,"cancelled heavy spell has no residual damage or mana cost: "+selected);untouched.discard();
+                for(int t=0;t<160;t++){manager.tick(level);SpellEngine.tick();}
+                check.accept(untouched.getHealth()==20&&data.getMana()==1000&&SpellEngine.activeCount()==0,"cancelled heavy spell has no residual damage or mana cost: "+selected);untouched.discard();
             }
             for(Spell selected:List.of(Spell.KRAKENS_GRASP,Spell.ICE_SPIKE_ERUPTION,Spell.HELVARS_RIFT)){
                 if(!selected.available())continue;
-                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+                SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
                 player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);Zombie untouched=target(level,6);
                 var registered=SpellRegistry.REGISTRY.get(IronsCompat.id(selected));
                 check.accept(registered.attemptInitiateCast(ItemStack.EMPTY,1,level,player,CastSource.SPELLBOOK,false,"test"),"boss spellbook cast begins: "+selected);
                 manager.tick(level);SpellEngine.tick();IronsCompat.cancel(player);
-                for(int t=0;t<100;t++){manager.tick(level);SpellEngine.tick();}
-                check.accept(untouched.getHealth()==20&&data.getMana()==100&&SpellEngine.activeCount()==0,"interrupted boss spell spends no mana and leaves no attacks: "+selected);untouched.discard();
+                for(int t=0;t<160;t++){manager.tick(level);SpellEngine.tick();}
+                check.accept(untouched.getHealth()==20&&data.getMana()==1000&&SpellEngine.activeCount()==0,"interrupted boss spell spends no mana and leaves no attacks: "+selected);untouched.discard();
             }
-            SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+            SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
             ItemStack stack=ResonantArcana.CINDER.toStack();ResonantArcana.CINDER.get().select(stack,0);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
             Zombie victim=target(level,6);SpellEngine.action(player,0);manager.tick(level);SpellEngine.tick();
             check.accept(data.isCasting(),"wand cancellation test is charging");
             SpellEngine.action(player,1);
             check.accept(!data.isCasting(),"cycling wand cancels native charge");
             for(int t=0;t<60;t++){manager.tick(level);SpellEngine.tick();}
-            check.accept(victim.getHealth()==20&&data.getMana()==100,"cancelled charge does no damage and spends no mana");victim.discard();
+            check.accept(victim.getHealth()==20&&data.getMana()==1000,"cancelled charge does no damage and spends no mana");victim.discard();
             SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(0);
             ResonantArcana.CINDER.get().select(stack,0);SpellEngine.action(player,0);
             check.accept(!data.isCasting()&&SpellEngine.activeCount()==0,"wand cannot bypass Iron mana gate");
@@ -166,17 +167,17 @@ final class IronsIntegrationChecks {
         var top=IronsCompat.scroll(Spell.FROST_NEEDLE,5);player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,top);IronsCompat.learnOffhand(player,wand,stack);
         check.accept(wand.level(stack)==5&&top.isEmpty(),"matching level V scroll upgrades and is consumed");
         var nativeSpell=SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.FROST_NEEDLE));
-        SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+        SpellEngine.clear();data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
         player.setPos(0,81,0);player.setYRot(0);player.setXRot(0);Zombie victim=target(level,6);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
         check.accept(IronsCompat.castWand(player,Spell.FROST_NEEDLE,stack),"upgraded wand starts native level V cast");
         for(int i=0;i<35;i++){manager.tick(level);SpellEngine.tick();}
         check.accept(ISpellContainer.get(stack).getSpellAtIndex(0).getLevel()==5,"native imbued container receives stored wand rank");
-        check.accept(data.getMana()==100-nativeSpell.getManaCost(5)&&victim.getHealth()==12,"native level V consumes correct mana and deals eight damage (mana="+data.getMana()+", health="+victim.getHealth()+")");victim.discard();
+        check.accept(data.getMana()==1000-nativeSpell.getManaCost(5)&&victim.getHealth()==12,"native level V consumes correct mana and deals eight damage (mana="+data.getMana()+", health="+victim.getHealth()+")");victim.discard();
         SpellEngine.clear();WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.SOUL.getId(),1));
         check.accept(wand.selected(stack)==Spell.FROST_NEEDLE,"selection packet for another held wand is rejected");
         WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.FROST.getId(),999));check.accept(wand.selected(stack)==Spell.FROST_NEEDLE,"invalid selection slot is rejected");
         WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.FROST.getId(),11));check.accept(wand.selected(stack)==Spell.ABSOLUTE_ZERO,"valid selection packet selects slot twelve without casting");
-        player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,ItemStack.EMPTY);SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(100);
+        player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND,ItemStack.EMPTY);SpellEngine.clear();data.getPlayerCooldowns().clearCooldowns();data.setMana(1000);
     }
     private static Zombie target(ServerLevel level,double z){
         Zombie zombie=new Zombie(EntityType.ZOMBIE,level);zombie.setPos(0,81,z);zombie.setNoAi(true);zombie.setNoGravity(true);level.addFreshEntity(zombie);return zombie;

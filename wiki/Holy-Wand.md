@@ -272,4 +272,20 @@ Plant a temporary golden banner for six seconds, surrounded by a radiant ward ci
 
 Spell ID: `resonant_arcana:last_stand`. Inspect any rank in game with `/resonantarcana spell last_stand <level>`.
 
+### Final Judgement
+
+Raise a radiant crown of judgement. Three pulses damage visible enemies and heal eligible allies for four health each. The double-damage final verdict heals twelve health, cleanses afflictions and grants Resistance I for five seconds. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 12s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 500 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5.2s.
+
+Spell ID: `resonant_arcana:final_judgement`. Inspect any rank in game with `/resonantarcana spell final_judgement <level>`.
+
 [← Wiki Home](Home.md)

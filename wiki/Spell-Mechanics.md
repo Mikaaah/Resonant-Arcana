@@ -1,10 +1,10 @@
 # Spell Mechanics
 
-**137 core spells + 12 optional Bosses’Rise spells · 10 wands · 12–16 spells per wand.**
+**147 core spells + 12 optional Bosses’Rise spells · 10 wands · 13–17 spells per wand.**
 
 Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.
 
-All spells have five levels except **DOOM**, which has one Legendary level. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.
+Ordinary spells have five levels. **DOOM** and the ten **Cataclysm** spells have one Legendary rank. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.
 
 Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.
 
@@ -30,7 +30,7 @@ Healing and cleansing spells share a recovery group. Blood Ward, Echo Ward and D
 
 ## Heavy cast timing
 
-Windup is the native Iron’s cast bar. Some spells also have a release phase: Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
+Windup is the native Iron’s cast bar. Some spells also have a release phase: The ten Legendary cataclysms have 10–12-second base cast bars, cost 440–500 mana and have two-minute base cooldowns. Doom also has a ten-second cast and costs 500 mana; it is separate from those ten. Their release sequences continue for roughly 4.4–5.6 seconds. Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.
 
 
 

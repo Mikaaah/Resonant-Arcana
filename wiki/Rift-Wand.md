@@ -262,4 +262,20 @@ Requires Bosses’Rise 2.1.2. A spiralling sand vortex slows and draws visible e
 
 Spell ID: `resonant_arcana:sandworms_quicksand`. Inspect any rank in game with `/resonantarcana spell sandworms_quicksand <level>`.
 
+### Rift Collision
+
+Draw visible enemies inward between two spatial gates. Two perpendicular piercing cuts deal damage along their lines, followed by a triple-damage spatial implosion over 14 blocks. Legendary, single rank. Long windup can be interrupted; allies and terrain are protected.
+
+**Role:** Cataclysm · **Cast:** 12s · **Cooldown:** 120s · **Range:** 40 blocks · **Radius / width:** 14 blocks.
+
+| Level | Direct damage | Healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 112 | — | 500 |
+
+**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.
+
+**Base active phase:** 5.2s.
+
+Spell ID: `resonant_arcana:rift_collision`. Inspect any rank in game with `/resonantarcana spell rift_collision <level>`.
+
 [← Wiki Home](Home.md)
