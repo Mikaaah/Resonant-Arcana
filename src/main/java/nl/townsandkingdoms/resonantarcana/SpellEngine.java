@@ -64,7 +64,10 @@ public final class SpellEngine {
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
+        if(spell==Spell.EXPLOSION)ExplosionRitual.charge(player,progress,elapsed);
+        if(spell!=Spell.SOUL_CANNON&&spell!=Spell.DOOM&&spell.kind!=Spell.Kind.CATACLYSM)SpellAudio.charging(player,spell,progress,elapsed);
         Vec3 center=clipLoaded(player.serverLevel(),eye,dir,spell==Spell.DOOM?3:2,player).add(0,spell==Spell.DOOM?1.8:-0.18,0);
+        if(spell!=Spell.DOOM&&spell.kind!=Spell.Kind.CATACLYSM&&elapsed%8==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.RITUAL_TARGET,player.position().add(0,.06,0),player.position().add(0,1.06,0),2.5+progress);
         if(BossesRiseCompat.optional(spell)){
             if(elapsed%4==0)BossesRiseBridge.castCue(player.serverLevel(),spell,center);
             return;
@@ -98,7 +101,14 @@ public final class SpellEngine {
         ServerLevel level=player.serverLevel();
         Vec3 start=player.getEyePosition(), direction=player.getLookAngle().normalize();
         Vec3 aim=clipLoaded(level,start,direction,spell.range,player);
-        LivingEntity target=target(player,start,aim,0.5);
+        if(spell==Spell.EXPLOSION&&book!=null&&book.prepared()){
+            var locked=ExplosionRitual.locked(player);
+            if(locked==null||!locked.valid(player)){message(player,"Explosion's locked target is no longer reachable");return false;}
+            aim=locked.point();
+        }else if(spell==Spell.EXPLOSION){
+            var marked=target(player,start,aim,.5);if(marked!=null)aim=marked.getBoundingBox().getCenter();
+        }
+        LivingEntity target=spell==Spell.EXPLOSION?null:target(player,start,aim,0.5);
         if(requiresTarget(spell)&&target==null){message(player,"Aim at a living target within range");return false;}
         Cast cast=new Cast(player,spell,start,direction,aim,target);
         cast.book=book;
@@ -192,7 +202,7 @@ public final class SpellEngine {
         switch(c.spell.kind){
             case DOOM -> {
                 double radius=Math.min(c.spell.radius,2+c.age*.25);
-                if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,radius);
+                if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos.add(0,5,0),c.pos.add(0,5,0),radius);
                 if(c.age%20==1)SpellAudio.world(c.level,c.pos,"entity.warden.heartbeat",1,.55f);
                 for(var victim:near(c.caster,c.pos,radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
                     Vec3 pull=c.pos.subtract(victim.getBoundingBox().getCenter());
@@ -201,7 +211,7 @@ public final class SpellEngine {
                 }
                 if(c.age==90){
                     area(c,c.pos,c.spell.radius,true);
-                    SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.pos,c.pos,12);
+                    SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.pos.add(0,5,0),c.pos.add(0,5,0),12);
                     impactFeedback(c,c.pos);return false;
                 }
             }

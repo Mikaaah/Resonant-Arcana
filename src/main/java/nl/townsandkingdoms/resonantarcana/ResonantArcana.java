@@ -30,11 +30,12 @@ public final class ResonantArcana {
     static {
         TABS.register("equipment",()->CreativeModeTab.builder().title(Component.literal("Resonant Arcana · Equipment"))
             .icon(()->RUNIC_ECHOES.toStack()).displayItems((params,out)->ITEMS.getEntries().forEach(entry->out.accept(entry.get()))).build());
-        for(var category:SpellCategory.values())TABS.register(category.name().toLowerCase(java.util.Locale.ROOT),()->CreativeModeTab.builder()
-            .title(Component.literal("Arcana · "+category.title)).icon(()->IronsCompat.scroll(java.util.Arrays.stream(Spell.enabledValues()).filter(s->s.category()==category).findFirst().orElse(Spell.SPARK)))
-            .displayItems((params,out)->{for(Spell spell:Spell.enabledValues())if(spell.category()==category)out.accept(IronsCompat.scroll(spell));}).build());
+        TABS.register("spells",()->CreativeModeTab.builder().title(Component.literal("Resonant Arcana · Spells"))
+            .icon(()->IronsCompat.scroll(Spell.SPARK))
+            .displayItems((params,out)->{for(Spell spell:Spell.enabledValues())out.accept(IronsCompat.scroll(spell));}).build());
     }
     public ResonantArcana(IEventBus bus,ModContainer container) {
+        ExplosionRitual.SOUNDS.register(bus);
         AdvancedSpells.register();
         SpellCentrepieces.register(bus);
         BossesRiseCompat.register(bus);IronsCompat.register(bus);
@@ -49,7 +50,7 @@ public final class ResonantArcana {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("resonantarcana");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.21.0-alpha: 3 legendary spellbooks, 1 debug wand, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.22.0-alpha: 3 legendary spellbooks, 1 debug wand, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);

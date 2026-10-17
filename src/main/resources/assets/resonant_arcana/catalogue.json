@@ -3360,7 +3360,7 @@
       "role": "Cataclysm",
       "category": "CATACLYSM",
       "bookId": "explosion",
-      "description": "Channel a massive fire ritual, then detonate the marked area after a short warning. The blast deals 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five."
+      "description": "Lock the aimed location at the start of a twelve-second chant. A diagonal beacon forms five seals that gather fire at different heights. After release, the marked area detonates for 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five."
     },
     "SERAPH_ASCENDANT": {
       "title": "Seraph Ascendant",

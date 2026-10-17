@@ -6,12 +6,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-/** Native particles only. Rituals stay at the caster's feet and build gradually. */
+/** Dense native choreography complements the deliberately limited optional AAA seals. */
 final class CataclysmEffects {
     private CataclysmEffects(){}
     static boolean visual(ClientLevel level,Spell s,SpellVisuals.Stage stage,Vec3 p,Vec3 end,double size){
-        if(s!=Spell.DOOM&&s.kind!=Spell.Kind.CATACLYSM)return false;
         double time=level.getGameTime()*.08;
+        if(stage==SpellVisuals.Stage.RITUAL_TARGET){
+            if(s==Spell.EXPLOSION)explosionTarget(level,p,end,Math.clamp((size-5)/2,0,1),time);
+            else groundSeal(level,s,p,size,time);
+            return true;
+        }
+        if(s!=Spell.DOOM&&s.kind!=Spell.Kind.CATACLYSM)return false;
         if(stage==SpellVisuals.Stage.CAST)return true; // No burst in the caster's face.
         if(stage==SpellVisuals.Stage.CHARGE){ritual(level,s,p,size,time);return true;}
         if(s==Spell.DOOM){doom(level,stage,p,size,time);return true;}
@@ -24,7 +29,16 @@ final class CataclysmEffects {
                 point(level,themed(s,i),p.add(dir.scale(size*.2)),dir.scale(s==Spell.EXPLOSION?.55:.23),24);
             }
             if(s==Spell.EXPLOSION){
+                point(level,ParticleTypes.FLASH,p.add(0,2,0),Vec3.ZERO,4);
                 point(level,ParticleTypes.EXPLOSION_EMITTER,p,Vec3.ZERO,12);
+                for(int ring=0;ring<4;ring++)for(int i=0;i<100;i++){
+                    double a=i*Math.PI/50,r=size*(.3+ring*.22);
+                    point(level,ring%2==0?ParticleTypes.FLAME:ParticleTypes.CLOUD,p.add(Math.cos(a)*r,.2+ring*.3,Math.sin(a)*r),new Vec3(Math.cos(a)*.28,.04,Math.sin(a)*.28),32);
+                }
+                for(int i=0;i<90;i++){
+                    double a=i*2.39996,h=i/90.0*15,r=2+(h>9?(h-9)*1.4:h*.15);
+                    point(level,i%3==0?ParticleTypes.CAMPFIRE_COSY_SMOKE:ParticleTypes.FLAME,p.add(Math.cos(a)*r,h,Math.sin(a)*r),new Vec3(Math.cos(a)*.05,.14,Math.sin(a)*.05),50);
+                }
                 for(int i=0;i<40;i++){double a=i*2.39996;point(level,ParticleTypes.CAMPFIRE_COSY_SMOKE,p.add(Math.cos(a)*4,1+i%6,Math.sin(a)*4),new Vec3(0,.12,0),60);}
             }
             return true;
@@ -81,12 +95,64 @@ final class CataclysmEffects {
             double a=rune*Math.PI/6+time*.025,r=radius-.7+j*.14;
             boundary(level,dust,p.add(Math.cos(a)*r,.04,Math.sin(a)*r),12);
         }
-        int n=18+(int)(progress*64);
-        for(int i=0;i<n;i++){
-            double a=i*2.39996+time,t=(i+.5)/n,r=radius+.35+t*3;
-            Vec3 off=new Vec3(Math.cos(a)*r,.15+(i%5)*.13,Math.sin(a)*r);
-            Vec3 velocity=new Vec3(-Math.cos(a)*(.045+progress*.055),-.005,-Math.sin(a)*(.045+progress*.055));
-            point(level,themed(s,i),p.add(off),velocity,14);
+        // Six descending corkscrews gather from well above the caster into the ground seal.
+        // Dense outside the centre, with just a few smaller streams entering the player's hands.
+        int n=30+(int)(progress*26);
+        for(int arm=0;arm<6;arm++)for(int i=0;i<n;i++){
+            double t=(i+.5)/n,a=arm*Math.PI/3+time*.8+t*Math.PI*3.5;
+            double r=radius*(.35+.85*t),height=.2+t*(8+progress*5);
+            Vec3 q=p.add(Math.cos(a)*r,height,Math.sin(a)*r);
+            Vec3 tangent=new Vec3(-Math.sin(a)*.13-Math.cos(a)*.04,-.2-progress*.14,Math.cos(a)*.13-Math.sin(a)*.04);
+            point(level,i%5==0?dust:themed(s,i),q,tangent,26);
+        }
+        for(int i=0;i<14;i++){
+            double a=i*2.39996+time,r=1.6+(i%3)*.25;
+            Vec3 q=p.add(Math.cos(a)*r,2.8+i*.12,Math.sin(a)*r);
+            Vec3 destination=p.add(0,1.05,0);
+            point(level,themed(s,i),q,destination.subtract(q).scale(.07),18);
+        }
+    }
+    private static void groundSeal(ClientLevel level,Spell s,Vec3 p,double radius,double time){
+        var dust=new DustParticleOptions(color(s.theme.color),.7f);
+        for(int i=0;i<96;i++){double a=i*Math.PI/48;boundary(level,dust,p.add(Math.cos(a)*radius,.03,Math.sin(a)*radius),12);}
+        for(int arm=0;arm<3;arm++)for(int i=0;i<24;i++){
+            double t=(i+.5)/24,a=arm*Math.PI*2/3+time+t*8,r=radius*(.4+.6*t);
+            Vec3 q=p.add(Math.cos(a)*r,.15+t*5.5,Math.sin(a)*r);
+            point(level,themed(s,i),q,new Vec3(-Math.sin(a)*.12-Math.cos(a)*.025,-.22,Math.cos(a)*.12-Math.sin(a)*.025),24);
+        }
+        for(int i=0;i<5;i++){double a=i*2.39996+time;Vec3 off=new Vec3(Math.cos(a)*1.1,1.9,Math.sin(a)*1.1);point(level,themed(s,i),p.add(off),new Vec3(-off.x*.07,-.065,-off.z*.07),16);}
+    }
+    static int explosionRings(double progress){return (int)Math.ceil(Math.clamp((progress-.1)/.65,0,1)*5);}
+    private static Vector3f color(int c){return new Vector3f(((c>>16)&255)/255f,((c>>8)&255)/255f,(c&255)/255f);}
+    private static void explosionTarget(ClientLevel l,Vec3 p,Vec3 top,double progress,double time){
+        Vec3 axis=top.subtract(p).normalize();if(axis.lengthSqr()<.01)return;
+        Vec3 side=axis.cross(new Vec3(0,0,1)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
+        Vec3 up=axis.cross(side).normalize();
+        var core=new DustParticleOptions(new Vector3f(1,.92f,.6f),1.5f);
+        var red=new DustParticleOptions(new Vector3f(1,.07f,.008f),1.25f);
+        // The beacon is present from the very first charge tick. Five seals appear in order.
+        int segments=(int)Math.clamp(p.distanceTo(top)*7,32,196);
+        for(int i=0;i<=segments;i++){
+            double t=i/(double)segments,a=t*24-time*2;
+            Vec3 q=p.lerp(top,t),off=side.scale(Math.cos(a)*.24).add(up.scale(Math.sin(a)*.24));
+            point(l,core,q,Vec3.ZERO,10);point(l,red,q.add(off),Vec3.ZERO,12);
+        }
+        int rings=explosionRings(progress);
+        for(int ring=0;ring<rings;ring++){
+            Vec3 center=p.lerp(top,.12+ring*.17);double radius=2.4+ring*.3;
+            // A native rim stays visible when AAA is absent. Geometry is perpendicular to the beam.
+            for(int j=0;j<112;j++){
+                double a=j*Math.PI/56+time*(ring%2==0?.3:-.3);
+                Vec3 off=side.scale(Math.cos(a)*radius).add(up.scale(Math.sin(a)*radius));
+                point(l,ring%2==0?red:core,center.add(off),Vec3.ZERO,12);
+            }
+            for(int j=0;j<36;j++){
+                double a=j*2.39996+time*2+ring,r=radius+1+(j%5)*.35;
+                Vec3 off=side.scale(Math.cos(a)*r).add(up.scale(Math.sin(a)*r)).add(axis.scale(1+j%3));
+                Vec3 destination=center.add(side.scale(Math.cos(a+.7)*radius*.7)).add(up.scale(Math.sin(a+.7)*radius*.7));
+                Vec3 q=center.add(off);
+                point(l,j%4==0?ParticleTypes.FLAME:red,q,destination.subtract(q).scale(.09),20);
+            }
         }
     }
     private static void doom(ClientLevel l,SpellVisuals.Stage stage,Vec3 p,double size,double time){

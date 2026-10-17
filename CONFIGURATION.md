@@ -85,3 +85,28 @@ Its visuals stay in that mod; no third-party assets are bundled.
 ## Equipment and renderer changes in 0.21
 
 The ten survival wands and their assets are removed. One debug wand exposes all enabled spells. Three native spellbooks grant equipment perks only in the Curios spellbook slot. Cataclysm rituals use native particles at the caster’s feet. AAA settings and renderer support are removed.
+
+
+## Selective rituals in 0.22
+
+The Spells creative tab contains every enabled scroll. Categories remain available in the debug archive. The client `particles.aaaRituals` option (default true) enables only floor seals, Explosion seals and Doom when AAAParticles is installed and supported. Native detail uses the existing budget. Without AAA, native circles, the diagonal Explosion beacon and incoming streams still render.
+
+Explosion snapshots the aimed entity position or block/range mark at the beginning of its native cast. Turning does not move it. A new cast acquires a new mark; cancellation clears the snapshot and cannot detonate it. The mark must remain loaded and within 64 blocks with line of sight at release.
+
+### Optional Explosion chant
+
+No Megumin recording is included. A Minecraft 1.21.1 resource pack can supply audio you have permission to use:
+
+1. Put the recording at `assets/resonant_arcana/sounds/megumin_explosion.ogg`.
+2. Put the following in `assets/resonant_arcana/sounds.json`:
+
+```json
+{
+  "explosion_chant": {
+    "replace": true,
+    "sounds": [{"name": "resonant_arcana:megumin_explosion", "stream": true}]
+  }
+}
+```
+
+The chant starts when the target is locked and stops when the cast completes or is interrupted. Its slot is silent until a pack provides the recording. The twelve-second cast can be reduced by native equipment; the audio stops at that effective cast length.

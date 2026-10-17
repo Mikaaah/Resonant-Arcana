@@ -4,7 +4,7 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **150 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.21.0-alpha](downloads/resonant-arcana-0.21.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.22.0-alpha](downloads/resonant-arcana-0.22.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -24,13 +24,13 @@ The ten old school wands, their recipes and their textures have been removed. Ex
 
 ## Spell categories
 
-Scrolls have separate creative tabs for **Projectiles**, **Beams & Channels**, **Area Magic**, **Control**, **Movement**, **Support & Defense**, **Summons & Constructs**, **Strikes & Drains**, **Boss Arts**, and **Cataclysms**. The debug archive can filter the same categories. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
+All scrolls share **one Spells creative tab**, alongside the Equipment tab. Functional categories remain in descriptions and as filters in the debug archive. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
 
 ## Rituals and new spells
 
-Cataclysms charge through a **large summoning circle beneath the caster**. Native themed particles gradually gather into its perimeter, leaving the central view clear. Individual rituals use different initial sounds and charging pulses. AAAParticles support, native effect files and the old solid Doom orb are removed.
+Cataclysms charge through a **large seal beneath the caster**. Dense native particles spiral down from 8–13 blocks above into the seal, with a small amount flowing into the caster. Individual charge sounds repeat at stronger volume throughout the cast. Optional **AAAParticles** are limited to floor seals, Explosion’s five seals and the original Doom black-hole effect, now centred with its red spirals five blocks higher. Native particles remain available without AAA. The actual anime chant is not bundled; see the [optional chant sound slot](CONFIGURATION.md#optional-explosion-chant).
 
-- **Explosion:** twelve-second fire ritual, sixteen-block detonation and 256 base damage. Causes brief slowness and weakness from exhaustion; does not destroy terrain.
+- **Explosion:** target locks when the twelve-second charge begins. A diagonal beacon appears first, then five seals assemble along it and gather particles at different heights. Sixteen-block detonation and 256 base damage. Causes brief slowness and weakness from exhaustion; does not destroy terrain.
 - **Seraph Ascendant:** twenty seconds of flight with radiant particle wings. Nearby allies gain +15% spell power and periodic healing. Cleanup removes its own flight modifier and grants brief Slow Falling.
 - **Arcane Devastator:** a six-second charge followed by a broad, piercing arcane cannon beam. Cover stops it.
 - **Final Judgement:** an actual descending golden sword accompanies holy damage, healing and the final cleansing verdict. Its visual scale adapts to available overhead room.
@@ -70,7 +70,7 @@ Supply compile-only API JARs, then run with Java 21:
 ./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar
 ```
 
-The packaged-asset check verifies the four item assets and rejects retired wand textures and AAA content. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.21.0-alpha:** 10,180 dedicated-server checks pass without Bosses’Rise and 10,959 with it. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies the four item assets, exactly three selective AAA effects and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.22.0-alpha:** 10,188 dedicated-server checks pass without Bosses’Rise and 10,967 with it. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 

@@ -23,4 +23,4 @@ Please remove private credentials, tokens and addresses from logs.
 
 To build, use Java 21 and follow the [README build instructions](README.md#building). 
 
-Version 0.21 explicitly retires the ten school-wand item IDs at the project owner’s request. Existing spell IDs remain stable. New visual work should use native particles; AAA assets and renderer code are not part of the mod.
+Version 0.21 explicitly retires the ten school-wand item IDs at the project owner’s request. Existing spell IDs remain stable. Use native particles for most spell detail. Version 0.22 restores optional AAA only for floor seals, Explosion seals and Doom; keep that scope small.

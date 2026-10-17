@@ -159,8 +159,8 @@ final class SpellAudio {
     };}
     static void charge(ServerPlayer player,Spell spell){
         if(spell==Spell.SOUL_CANNON){cast(player,spell);return;}
-        cue(player,player.position(),chargeId(spell),1.15f,1.0f,true);
-        cue(player,player.position(),castAccentId(spell.theme),0.45f,0.85f,true);
+        cue(player,player.position(),chargeId(spell),spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM?2.2f:1.5f,1.0f,true);
+        cue(player,player.position(),castAccentId(spell.theme),.75f,0.85f,true);
     }
     static void cast(ServerPlayer player,Spell spell){
         cue(player,player.position(),spellCastId(spell),1.3f,castPitch(spell),true);
@@ -186,7 +186,7 @@ final class SpellAudio {
         cue(player,pos,"entity.warden.sonic_boom",1.8f,.65f,true);
     }
     static void ritualPulse(ServerPlayer player,Spell spell,Vec3 pos,double progress,int elapsed){
-        if(elapsed%40!=0)return;
+        if(elapsed%16!=0)return;
         String id=switch(spell){
             case DOOM->"entity.warden.heartbeat";case ASTRAL_APOCALYPSE->"block.enchantment_table.use";
             case CRIMSON_ECLIPSE->"block.bubble_column.whirlpool_inside";case WORLD_PYRE->"block.fire.ambient";
@@ -196,7 +196,11 @@ final class SpellAudio {
             case ETERNAL_WINTER->"block.powder_snow.step";case EXPLOSION->"entity.blaze.ambient";
             default->sustainId(spell);
         };
-        world(player.serverLevel(),pos,id,.55f,(float)(.6+progress*.6));
+        cue(player,pos,id,1.5f+(float)progress*.8f,(float)(.55+progress*.65),true);
+        if(elapsed%32==0)cue(player,pos,chargeId(spell),1.25f+(float)progress*.6f,(float)(.7+progress*.45),true);
+    }
+    static void charging(ServerPlayer player,Spell spell,double progress,int elapsed){
+        if(elapsed>0&&elapsed%24==0)cue(player,player.position(),chargeId(spell),1.35f,(float)(.8+progress*.35),true);
     }
     static void cannonCharge(ServerPlayer player,Vec3 pos,float progress){
         cue(player,pos,"block.respawn_anchor.charge",0.8f+progress*0.6f,0.55f+progress*0.9f,true);

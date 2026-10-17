@@ -136,7 +136,12 @@ final class IronsCompat {
             return entity instanceof ServerPlayer player&&SpellEngine.canStart(player,spell);
         }
         @Override public void onServerPreCast(Level level,int spellLevel,LivingEntity entity,MagicData data){
+            if(spell==Spell.EXPLOSION&&entity instanceof ServerPlayer player)ExplosionRitual.lock(player,data);
             if(castTime>0&&!(spell==Spell.CRIMSON_REVERSAL&&data.getPlayerRecasts().hasRecastForSpell(getSpellId()))&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
+        }
+        @Override public void onServerCastComplete(Level level,int spellLevel,LivingEntity entity,MagicData data,boolean cancelled){
+            if(spell==Spell.EXPLOSION&&entity instanceof ServerPlayer player)ExplosionRitual.stopChant(player);
+            super.onServerCastComplete(level,spellLevel,entity,data,cancelled);
         }
         @Override public void onServerCastTick(Level level,int spellLevel,LivingEntity entity,MagicData data){
             if(castTime>0&&entity instanceof ServerPlayer player){

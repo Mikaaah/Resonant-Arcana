@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.22.0-alpha
+
+- Combine scrolls into one Spells creative tab; keep Equipment separate and retain category filters in the debug archive.
+- Restore three selective AAA effects: flattened floor seals, Explosion seals, and the original Doom effect. Native fallback circles remain. Doom’s core and red spirals share an origin five blocks higher.
+- Increase charging audio volume and repeat distinct cues through the entire windup, including casts longer than four seconds.
+- Add denser downward charge spirals from above the seal, with a smaller stream entering the caster.
+- Reduce Final Judgement’s sword to scale four, correct its orientation for the renderer’s Y flip, and plant the tip before the final verdict.
+- Lock Explosion’s target at the beginning of the native cast. Build a diagonal beacon and five sequential seals with incoming particles at different heights, then detonate with fire, smoke and shockwaves. Preserve mana, interruption and terrain protection.
+- Add an optional `resonant_arcana:explosion_chant` sound slot, stopped on completion/cancellation. No anime recording is bundled; a resource pack can supply one.
+
 ## 0.21.0-alpha
 
 - Remove the ten school wands, their models, textures, recipes and advancements. Add one uncrafteable Debug Wand with every enabled spell, using the supplied copper-chisel texture. Preserve all existing spell IDs.

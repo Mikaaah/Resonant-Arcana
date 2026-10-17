@@ -13,17 +13,24 @@ final class CataclysmSpells {
     static boolean begin(Cast c){
         c.pos=c.target==null?c.anchor.subtract(c.dir.scale(.08)):c.target.getBoundingBox().getCenter();
         c.duration=c.spell.duration();
+        if(c.spell==Spell.EXPLOSION){
+            var lock=c.book!=null&&c.book.prepared()?ExplosionRitual.locked(c.caster):null;
+            if(lock!=null){c.pos=lock.point();c.travel=lock.top();}
+            else {c.pos=c.anchor;c.travel=ExplosionRitual.beamTop(c.caster,c.pos);}
+        }
         if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.holySword(c);return true;
     }
     static boolean tick(Cast c){
         double t=c.age/(double)c.duration;
-        if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,t,0),c.spell.radius);
+        if(c.spell==Spell.EXPLOSION&&c.age<24&&c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.RITUAL_TARGET,c.pos,c.travel,7);
+        if(c.spell!=Spell.EXPLOSION&&c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,t,0),c.spell.radius);
         if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.moveHolySword(c);
         switch(c.spell){
             case EXPLOSION -> {
                 if(c.age==24){
                     pulse(c,c.pos,c.spell.radius,1);effect(c.caster,MobEffects.MOVEMENT_SLOWDOWN,80,3);effect(c.caster,MobEffects.WEAKNESS,100,0);
-                    SpellAudio.world(c.level,c.pos,"entity.generic.explode",2.5f,.55f);finish(c);
+                    SpellAudio.world(c.level,c.pos,"entity.generic.explode",3.5f,.55f);
+                    SpellAudio.world(c.level,c.pos,"entity.warden.sonic_boom",2.5f,.5f);
                 }
             }
             case ASTRAL_APOCALYPSE -> {

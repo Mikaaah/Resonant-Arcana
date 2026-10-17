@@ -47,14 +47,14 @@ public final class WandNetwork {
             &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("12");
+        var r=e.registrar("13");
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer player)SpellEngine.action(player,msg.action);
         }));
         r.playToServer(Select.TYPE,Select.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer p)select(p,msg);
         }));
-        r.playToClient(Visual.TYPE,Visual.CODEC,(msg,ctx)->ctx.enqueueWork(()->{NativeSpellEffects.visual(msg);}));
+        r.playToClient(Visual.TYPE,Visual.CODEC,(msg,ctx)->ctx.enqueueWork(()->{NativeSpellEffects.visual(msg);AaaEffects.visual(msg);}));
         r.playToClient(Burst.TYPE,Burst.CODEC,(msg,ctx)->ctx.enqueueWork(()->WandClient.burst(msg)));
     }
 }

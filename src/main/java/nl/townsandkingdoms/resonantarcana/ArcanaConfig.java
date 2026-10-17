@@ -6,7 +6,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 final class ArcanaConfig {
     static final ModConfigSpec SERVER,CLIENT;
     static final ModConfigSpec.BooleanValue WAND_CASTING,PVP,CASTER_IMPACTS,TEAMLESS_HEALING;
-    static final ModConfigSpec.BooleanValue MOUSE_CONTROLS,WAND_HUD;
+    static final ModConfigSpec.BooleanValue MOUSE_CONTROLS,WAND_HUD,AAA_RITUALS;
     static final ModConfigSpec.DoubleValue DAMAGE,HEALING,COOLDOWNS,SOUND_VOLUME,IMPACT_VOLUME;
     static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,PER_PLAYER_LIMIT,VISUAL_BUDGET,DETAIL_BUDGET,ACCENT_BUDGET,NATIVE_BUDGET,CLIENT_NATIVE_BUDGET;
     static {
@@ -36,6 +36,7 @@ final class ArcanaConfig {
         MOUSE_CONTROLS=c.comment("Enable classic left-click casting. Disable if a combat mod owns attack inputs; the cast key still works.").define("leftClickCasting",true);c.pop();
         c.push("display");WAND_HUD=c.comment("Show the selected wand spell above the hotbar.").define("showWandHud",true);c.pop();
         c.push("particles");
+        AAA_RITUALS=c.comment("Optional AAAParticles: caster seals, five Explosion seals and Doom only. Native fallback remains available.").define("aaaRituals",true);
         CLIENT_NATIVE_BUDGET=c.comment("Native particle detail per client tick; range outlines have an additional reserved allowance.").defineInRange("nativeParticlesPerTick",1800,300,6000);
         c.pop();CLIENT=c.build();
     }

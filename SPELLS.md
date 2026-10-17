@@ -8,7 +8,7 @@ Values are defaults before school power, equipment, resistances and server setti
 
 Offensive spells protect the caster, eligible teammates and owned pets. Healing affects the caster, owned pets and visible scoreboard teammates, plus teamless players when enabled. Cover, enemy movement, normal damage immunity and status immunities can change results. Spells do not destroy terrain or intentionally load new chunks.
 
-Cataclysm windups use a large summoning circle at the caster’s feet, with native particles gathering into its perimeter. The centre stays clear for visibility. Each ritual has individual charge audio. No AAAParticles renderer or assets are used.
+Cataclysm windups use a large seal at the caster’s feet, with dense native particles spiralling down from above and a small stream into the caster. Optional AAAParticles are limited to floor seals, Explosion’s five beam seals and Doom. Without AAA, native outlines remain. Charge cues repeat throughout the cast.
 
 ## Categories
 
@@ -2808,7 +2808,7 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Channel a massive fire ritual, then detonate the marked area after a short warning. The blast deals 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five.
+Lock the aimed location at the start of a twelve-second chant. A diagonal beacon forms five seals that gather fire at different heights. After release, the marked area detonates for 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five.
 
 **Fire** · Cast **12s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 

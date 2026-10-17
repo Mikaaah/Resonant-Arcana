@@ -176,7 +176,7 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Channel a massive fire ritual, then detonate the marked area after a short warning. The blast deals 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five.
+Lock the aimed location at the start of a twelve-second chant. A diagonal beacon forms five seals that gather fire at different heights. After release, the marked area detonates for 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five.
 
 **Fire** · Cast **12s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 

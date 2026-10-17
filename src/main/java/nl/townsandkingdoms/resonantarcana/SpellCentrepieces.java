@@ -20,21 +20,23 @@ final class SpellCentrepieces {
     static final DeferredHolder<EntityType<?>,EntityType<Prop>> PROP=TYPES.register("spell_centrepiece",()->EntityType.Builder.<Prop>of(Prop::new,MobCategory.MISC)
         .sized(1,2).noSave().clientTrackingRange(8).updateInterval(20).build("resonant_arcana:spell_centrepiece"));
     static final DeferredHolder<EntityType<?>,EntityType<HolySword>> SWORD=TYPES.register("holy_sword",()->EntityType.Builder.<HolySword>of(HolySword::new,MobCategory.MISC)
-        .sized(5,20).noSave().clientTrackingRange(8).updateInterval(2).build("resonant_arcana:holy_sword"));
+        .sized(3,7).noSave().clientTrackingRange(8).updateInterval(2).build("resonant_arcana:holy_sword"));
     static void holySword(SpellEngine.Cast c){
         Vec3 ground=BossesRiseCompat.ground(c.level,c.pos);if(ground==null)ground=c.pos;
         var sword=new HolySword(SWORD.get(),c.level);sword.origin=ground;
         double available=SpellEngine.clipLoaded(c.level,ground.add(0,.1,0),new Vec3(0,1,0),32,c.caster).y-ground.y;
-        float scale=(float)Math.clamp((available-.3)/1.42,1,14);sword.baseHeight=scale*.6;sword.startHeight=Math.max(sword.baseHeight,Math.min(sword.baseHeight+8,available-sword.baseHeight-.2));
+        float scale=(float)Math.clamp((available-.3)/1.42,.5,4);
+        // ItemDisplayRenderer adds a 180-degree Y rotation: compensate before pointing the tip down.
+        sword.baseHeight=scale*.62-.12;sword.startHeight=Math.max(sword.baseHeight,Math.min(sword.baseHeight+6,available-scale*.72-.2));
         var tag=new CompoundTag();tag.putString("item_display","none");tag.putFloat("view_range",2);tag.putFloat("width",20);tag.putFloat("height",24);tag.putInt("teleport_duration",2);
         var brightness=new CompoundTag();brightness.putInt("block",15);brightness.putInt("sky",15);tag.put("brightness",brightness);
-        var transform=new com.mojang.math.Transformation(new org.joml.Vector3f(),new org.joml.Quaternionf().rotationZ((float)(-3*Math.PI/4)),new org.joml.Vector3f(scale),new org.joml.Quaternionf());
+        var transform=new com.mojang.math.Transformation(new org.joml.Vector3f(),new org.joml.Quaternionf().rotationZ((float)(3*Math.PI/4)),new org.joml.Vector3f(scale),new org.joml.Quaternionf());
         tag.put("transformation",com.mojang.math.Transformation.EXTENDED_CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,transform).getOrThrow());
         sword.configure(tag);sword.getSlot(0).set(net.minecraft.world.item.Items.GOLDEN_SWORD.getDefaultInstance());sword.setYRot(c.caster.getYRot());sword.setPos(ground.add(0,sword.startHeight,0));
         if(c.level.addFreshEntity(sword))c.centrepieces.add(sword);
     }
     static void moveHolySword(SpellEngine.Cast c){for(var entity:c.centrepieces)if(entity instanceof HolySword sword){
-        double progress=Math.clamp(c.age/(double)c.duration,0,1);sword.setPos(sword.origin.add(0,sword.baseHeight+(sword.startHeight-sword.baseHeight)*(1-progress)*(1-progress),0));
+        double progress=Math.clamp(c.age/(double)(c.duration-8),0,1);sword.setPos(sword.origin.add(0,sword.baseHeight+(sword.startHeight-sword.baseHeight)*(1-progress)*(1-progress),0));
     }}
     private SpellCentrepieces(){}
     static void register(IEventBus bus){TYPES.register(bus);}

@@ -40,6 +40,7 @@ final class NativeSpellEffects {
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
         if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
+            case RITUAL_TARGET -> {} // Explosion target choreography is owned by CataclysmEffects.
             case AREA -> area(level,spell,p,end,size,time,count);
             case LINK,STRIKE -> beam(level,spell,p,end,size,time,count);
             case FLIGHT -> flight(level,spell,p,end,size,time,count);

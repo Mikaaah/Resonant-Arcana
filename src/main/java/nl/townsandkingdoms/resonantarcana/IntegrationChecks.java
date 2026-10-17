@@ -103,7 +103,9 @@ public final class IntegrationChecks {
             check(visuals.size()==96,"32 accent events reserved when detail budget is exhausted");
             SpellVisuals.tick();SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
             check(visuals.size()==97,"visual budgets recover on the next tick");
-            check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/manifest.json")==null,"AAA assets are absent");
+            check(ResonantArcana.TABS.getEntries().size()==2,"one equipment tab and one combined spell tab");
+            for(String id:List.of("ward_magic","ward_fire","doom_well_dark"))
+                check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/"+id+".efkefc")!=null,"selective AAA asset packaged: "+id);
             for(Spell spell:Spell.enabledValues()){
                 if(AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
@@ -143,7 +145,7 @@ public final class IntegrationChecks {
                 check(props.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),spell+" centrepieces expire with their cast");
                 check(visuals.stream().allMatch(WandNetwork.Visual::valid),spell+" emits bounded visual packets");
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
-                SpellVisuals.Stage expectedStage=switch(spell.kind){
+                SpellVisuals.Stage expectedStage=spell==Spell.EXPLOSION?SpellVisuals.Stage.RITUAL_TARGET:switch(spell.kind){
                     case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
                     case ASCENSION,CATACLYSM,BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
