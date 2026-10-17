@@ -8,11 +8,11 @@
 [![10 Wands · 137 + 12 Spells](https://img.shields.io/badge/Content-10%20Wands%20%7C%20137%20%2B%2012%20Spells-7756B4?style=flat-square)](SPELLS.md)
 [![MIT License](https://img.shields.io/badge/License-MIT-64748B?style=flat-square)](LICENSE)
 
-📚 **[Browse the documentation wiki](wiki/Home.md)** · [Wand & spell index](wiki/Wand-Index.md) · [Installation](wiki/Getting-Started.md)
+📚 **[Browse the documentation wiki](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)** · [Wand & spell index](https://github.com/Mikaaah/Resonant-Arcana/wiki/Wand-Index) · [Installation](https://github.com/Mikaaah/Resonant-Arcana/wiki/Getting-Started)
 
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **twelve optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.17.0-alpha](downloads/resonant-arcana-0.17.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.17.0-alpha](downloads/resonant-arcana-0.17.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## New in 0.16
 
@@ -101,7 +101,7 @@ Requires **Java 21**, **Minecraft 1.21.1**, **NeoForge 21.1.219 or later within 
 
 Install the same Resonant Arcana version on **client and server**. Version **0.13 is a clean namespace break**: all addon IDs now use `resonant_arcana`. Remove the previous addon JAR. Older wands, scrolls, spellbook entries and key bindings are not migrated. Obtain new items and reinscribe spells using the new IDs. There are no legacy registry aliases.
 
-Settings remain in the world’s **serverconfig** and each client’s local config file. See the [configuration guide](CONFIGURATION.md). Servers can disable direct wand casting for a spellbook-only pack.
+Settings remain in the world’s **serverconfig** and each client’s local config file. See the [configuration guide](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration). Servers can disable direct wand casting for a spellbook-only pack.
 
 ## Multiplayer and compatibility
 
