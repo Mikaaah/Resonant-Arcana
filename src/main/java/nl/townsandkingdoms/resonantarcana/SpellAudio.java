@@ -19,6 +19,7 @@ final class SpellAudio {
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
+        case EXPLOSION->"entity.ghast.warn";case SERAPH_ASCENDANT->"block.beacon.activate";case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.charge");
         case ASTRAL_APOCALYPSE->"block.amethyst_block.resonate";
         case CRIMSON_ECLIPSE->irons("heartstop_cast");case WORLD_PYRE->irons("spell.fire_bomb.charge");
         case VOID_CORONATION->irons("spell.black_hole.charge");case HEAVENS_THUNDER->irons("spell.thunderstorm.prepare");
@@ -98,6 +99,7 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
+        case EXPLOSION->"entity.blaze.shoot";case SERAPH_ASCENDANT->irons("spell.cleanse.cast");case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.cast");
         case ASTRAL_APOCALYPSE->irons("spell.summon_swords.cast");case CRIMSON_ECLIPSE->irons("cast.generic.blood");
         case WORLD_PYRE->irons("spell.fire_bomb.cast");case VOID_CORONATION->irons("spell.black_hole.cast");
         case HEAVENS_THUNDER->irons("entity.lightning_strike.strike");case RIFT_COLLISION->irons("force_impact");
@@ -182,6 +184,19 @@ final class SpellAudio {
     static void scream(ServerPlayer player,Vec3 pos){
         cue(player,pos,"entity.enderman.scream",2.0f,.7f,true);
         cue(player,pos,"entity.warden.sonic_boom",1.8f,.65f,true);
+    }
+    static void ritualPulse(ServerPlayer player,Spell spell,Vec3 pos,double progress,int elapsed){
+        if(elapsed%40!=0)return;
+        String id=switch(spell){
+            case DOOM->"entity.warden.heartbeat";case ASTRAL_APOCALYPSE->"block.enchantment_table.use";
+            case CRIMSON_ECLIPSE->"block.bubble_column.whirlpool_inside";case WORLD_PYRE->"block.fire.ambient";
+            case VOID_CORONATION->"block.respawn_anchor.ambient";case HEAVENS_THUNDER->"block.conduit.ambient.short";
+            case RIFT_COLLISION->"block.beacon.power_select";case SOUL_REQUIEM->"block.sculk_sensor.clicking";
+            case WORLDROOT_CATASTROPHE->"block.flowering_azalea.place";case FINAL_JUDGEMENT->"block.amethyst_block.resonate";
+            case ETERNAL_WINTER->"block.powder_snow.step";case EXPLOSION->"entity.blaze.ambient";
+            default->sustainId(spell);
+        };
+        world(player.serverLevel(),pos,id,.55f,(float)(.6+progress*.6));
     }
     static void cannonCharge(ServerPlayer player,Vec3 pos,float progress){
         cue(player,pos,"block.respawn_anchor.charge",0.8f+progress*0.6f,0.55f+progress*0.9f,true);

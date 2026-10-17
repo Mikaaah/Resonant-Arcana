@@ -48,16 +48,16 @@ public final class IntegrationChecks {
             }
             FakePlayer player=FakePlayerFactory.get(level,new GameProfile(UUID.fromString("6341cb70-4863-4d65-a614-1fd6719c50b8"),"WandTest"));
             player.setGameMode(GameType.SURVIVAL);resetPlayer(player);
-            WandItem wand=ResonantArcana.ARCANE.get();ItemStack stack=wand.getDefaultInstance();
+            WandItem wand=ResonantArcana.DEBUG.get();ItemStack stack=wand.getDefaultInstance();
             wand.select(stack,-1);check(wand.selection(stack)==wand.spells.size()-1,"previous selection wraps");
             var custom=stack.get(DataComponents.CUSTOM_DATA).copyTag();custom.putString("external","preserved");stack.set(DataComponents.CUSTOM_DATA,CustomData.of(custom));
-            wand.select(stack,2);check(stack.get(DataComponents.CUSTOM_DATA).copyTag().getString("external").equals("preserved"),"selection preserves unrelated custom data");
+            wand.select(stack,wand.spells.indexOf(Spell.CONFUSE));check(stack.get(DataComponents.CUSTOM_DATA).copyTag().getString("external").equals("preserved"),"selection preserves unrelated custom data");
             ItemStack restored=ItemStack.parseOptional(server.registryAccess(),(CompoundTag)stack.save(server.registryAccess()));
             check(wand.selected(restored)==Spell.CONFUSE,"selected spell survives item serialization");
             RegistryFriendlyByteBuf buffer=new RegistryFriendlyByteBuf(Unpooled.buffer(),server.registryAccess());
             try {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
-                buffer.clear();var selection=new WandNetwork.Select(ResonantArcana.ARCANE.getId(),11);WandNetwork.Select.CODEC.encode(buffer,selection);check(WandNetwork.Select.CODEC.decode(buffer).equals(selection),"wand selection packet round trip");
+                buffer.clear();var selection=new WandNetwork.Select(ResonantArcana.DEBUG.getId(),11);WandNetwork.Select.CODEC.encode(buffer,selection);check(WandNetwork.Select.CODEC.decode(buffer).equals(selection),"wand selection packet round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
                 buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_SCREAM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
                 WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
@@ -68,12 +68,13 @@ public final class IntegrationChecks {
                 check(!new WandNetwork.Visual(0,0,0,0,0,500,0,0,1).valid(),"unbounded beam rejected");
                 check(!new WandNetwork.Visual(0,0,0,0,0,0,0,0,Float.POSITIVE_INFINITY).valid(),"nonfinite effect size rejected");
             }finally{buffer.release();}
-            check(ResonantArcana.ITEMS.getEntries().size()==10,"ten registered wands");
+            check(ResonantArcana.ITEMS.getEntries().size()==4,"one debug wand and three legendary books");
             var catalog=EnumSet.noneOf(Spell.class);
             for(var item:ResonantArcana.ITEMS.getEntries()){
                 check(item.getId().getNamespace().equals("resonant_arcana"),item.getId()+" uses the new namespace");
-                WandItem w=(WandItem)item.get();ItemStack ws=w.getDefaultInstance();check(w.spells.size()>=12&&w.spells.size()<=18,item.getId()+" has a bounded expanded kit");
-                check(server.getRecipeManager().byKey(item.getId()).isPresent(),item.getId()+" has a loaded survival recipe");
+                if(!(item.get() instanceof WandItem w)){check(item.get() instanceof LegendarySpellBook,"equipment is a native legendary book");check(server.getRecipeManager().byKey(item.getId()).isPresent(),item.getId()+" has a survival recipe");continue;}
+                ItemStack ws=w.getDefaultInstance();check(w.spells.size()==Spell.enabledValues().length,"debug wand exposes all enabled spells");
+                check(server.getRecipeManager().byKey(item.getId()).isEmpty(),"debug wand has no survival recipe");
                 for(int i=0;i<w.spells.size();i++){
                     w.select(ws,i);check(w.selected(ws)==w.spells.get(i),item.getId()+" selection "+i);
                     check(catalog.add(w.spells.get(i)),w.spells.get(i)+" has exactly one wand home");
@@ -102,19 +103,11 @@ public final class IntegrationChecks {
             check(visuals.size()==96,"32 accent events reserved when detail budget is exhausted");
             SpellVisuals.tick();SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
             check(visuals.size()==97,"visual budgets recover on the next tick");
-            for(var shape:SpellVisuals.Shape.values())for(var theme:Spell.Theme.values()){
-            if(!SpellVisuals.packaged(shape,theme))continue;
-                String asset="/assets/resonant_arcana/effeks/"+shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc";
-                try(var input=IntegrationChecks.class.getResourceAsStream(asset)){
-                    check(input!=null&&new String(input.readNBytes(4),java.nio.charset.StandardCharsets.US_ASCII).equals("EFKE"),"native effect packaged: "+shape+"/"+theme);
-                }
-            }
-            check(SpellVisuals.assetCount()==24,"only the 24 circular AAAParticles effects are packaged");
-            for(Spell spell:Spell.values())if(BossesRiseCompat.optional(spell))check(!SpellVisuals.usesAaa(spell,SpellVisuals.Stage.AREA),spell+" uses Bosses'Rise visuals without AAAParticles");
+            check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/manifest.json")==null,"AAA assets are absent");
             for(Spell spell:Spell.enabledValues()){
                 if(AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
-                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.ARCANE.toStack());
+                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
                 if(spell.healing()>0)player.setHealth(5);
                 Zombie zombie=spawn(level,0,81,spell.kind==Spell.Kind.ORBIT?3:spell.kind==Spell.Kind.BLADE_ARC?4:spell.kind==Spell.Kind.SWEEP||spell.kind==Spell.Kind.GAZE?5:spell.kind==Spell.Kind.PULSE?Math.min(5,spell.radius-1):spell.kind==Spell.Kind.AURA?Math.min(6,spell.radius-1):6);Arrow arrow=null;
                 if(spell.kind==Spell.Kind.WARD){arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(zombie);arrow.setPos(0,82,2);arrow.setDeltaMovement(0,0,-0.8);level.addFreshEntity(arrow);}
@@ -126,9 +119,9 @@ public final class IntegrationChecks {
                     check(level.getBlockState(new BlockPos(0,80,6)).is(Blocks.STONE),spell+" props preserve ground blocks");
                 }
                 check(!SpellEngine.cast(player,spell),spell.name()+" cooldown rejects immediate repeat");
-                for(int t=0;t<160;t++)SpellEngine.tick();
+                for(int t=0;t<500;t++)SpellEngine.tick();
                 boolean observed=switch(spell.kind){
-                    case HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
+                    case ASCENSION,HEAL,REMEDY,HYMN->player.getHealth()>5&&zombie.getHealth()==20;
                     case CLEANSE->spell==Spell.TOXIC_MOLT?player.getHealth()>5:player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
                     case WARCRY->player.hasEffect(MobEffects.DAMAGE_RESISTANCE)&&zombie.getHealth()<20&&zombie.getDeltaMovement().z<0;
                     case MARTIAL_BUFF->player.hasEffect(ArcanaEffects.ARCANE_EDGE)||player.hasEffect(ArcanaEffects.TEMPO)||player.hasEffect(MobEffects.DAMAGE_RESISTANCE);
@@ -152,7 +145,7 @@ public final class IntegrationChecks {
                 check(visuals.stream().anyMatch(v->v.stage()==SpellVisuals.Stage.CAST.ordinal()),spell+" has casting visuals");
                 SpellVisuals.Stage expectedStage=switch(spell.kind){
                     case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
-                    case CATACLYSM,BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
+                    case ASCENSION,CATACLYSM,BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
                     case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
                     case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
@@ -161,7 +154,7 @@ public final class IntegrationChecks {
                 for(var visual:visuals){
                     var emitted=Spell.values()[visual.spell()];var shape=SpellVisuals.shape(emitted,SpellVisuals.Stage.values()[visual.stage()]);
                     var stage=SpellVisuals.Stage.values()[visual.stage()];
-                    if(SpellVisuals.usesAaa(emitted,stage))check(SpellVisuals.packaged(shape,emitted.theme),emitted+" circular effect exists: "+shape);
+                    check(emitted.category()!=null,emitted+" has a functional category");
                 }
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));
                 if(arrow!=null)arrow.discard();zombie.discard();
@@ -264,13 +257,13 @@ public final class IntegrationChecks {
             level.getScoreboard().removePlayerTeam(team);ally.discard();
             SpellEngine.clear();resetPlayer(player);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.STICK));
             SpellEngine.action(player,0);check(SpellEngine.activeCount()==0,"unarmed action packet is rejected");
-            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.ARCANE.toStack());
-            SpellEngine.action(player,99);check(SpellEngine.activeCount()==0,"invalid action packet is rejected");
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
+            SpellEngine.action(player,9999);check(SpellEngine.activeCount()==0,"invalid action packet is rejected");
             var actionMagic=io.redspace.ironsspellbooks.api.magic.MagicData.getPlayerMagicData(player);
             if(actionMagic.getSyncedData()==null)actionMagic.setSyncedData(new io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData(player));
-            actionMagic.setMana(100);
+            actionMagic.setMana(100);ResonantArcana.DEBUG.get().select(player.getMainHandItem(),ResonantArcana.DEBUG.get().spells.indexOf(Spell.FIRE_COMET));
             SpellEngine.action(player,0);check(actionMagic.isCasting(),"held wand starts native Iron casting");
-            SpellEngine.action(player,1);check(wand.selection(player.getMainHandItem())==0,"multiple actions in one tick are rate limited");
+            SpellEngine.action(player,1);check(wand.selected(player.getMainHandItem())==Spell.FIRE_COMET,"multiple actions in one tick are rate limited");
             IronsCompat.cancel(player);
             SpellEngine.clear();player.setGameMode(GameType.SPECTATOR);SpellEngine.action(player,0);check(SpellEngine.activeCount()==0,"spectator casting is rejected");player.setGameMode(GameType.SURVIVAL);
             SpellEngine.clear();resetPlayer(player);
@@ -286,6 +279,7 @@ public final class IntegrationChecks {
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
             CataclysmChecks.run(level,IntegrationChecks::check);
+            EquipmentChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{
@@ -388,11 +382,11 @@ public final class IntegrationChecks {
         var attack=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE;
         var speed=net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED;
         SpellEngine.clear();resetPlayer(player);
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.HOLY.toStack());
-        WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.HOLY.getId(),13));
-        check(ResonantArcana.HOLY.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"second-page selection accepted");
-        SpellEngine.tick();WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.HOLY.getId(),999));
-        check(ResonantArcana.HOLY.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"invalid page selection rejected");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
+        WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.DEBUG.getId(),ResonantArcana.DEBUG.get().spells.indexOf(Spell.BULWARK_CHANT)));
+        check(ResonantArcana.DEBUG.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"second-page selection accepted");
+        SpellEngine.tick();WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.DEBUG.getId(),999));
+        check(ResonantArcana.DEBUG.get().selected(player.getMainHandItem())==Spell.BULWARK_CHANT,"invalid page selection rejected");
         SpellEngine.clear();resetPlayer(player);
         double baseAttack=player.getAttributeValue(attack),baseSpeed=player.getAttributeValue(speed);
         check(SpellEngine.cast(player,Spell.ARCANE_EDGE),"arcane edge starts");
@@ -452,7 +446,7 @@ public final class IntegrationChecks {
         SpellEngine.clear();resetPlayer(player);
     }
     private static void expansionChecks(ServerLevel level,FakePlayer player){
-        var wand=ResonantArcana.FROST.get();var stack=wand.getDefaultInstance();
+        var wand=ResonantArcana.DEBUG.get();var stack=wand.getDefaultInstance();
         var tag=new CompoundTag();tag.putString("external","keep");stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
         check(wand.level(stack,Spell.FROST_NEEDLE)==1,"unmodified wands start at level I");
         wand.learn(stack,Spell.FROST_NEEDLE,5);wand.select(stack,wand.spells.indexOf(Spell.FROST_NEEDLE));
@@ -460,7 +454,7 @@ public final class IntegrationChecks {
         check(stack.get(DataComponents.CUSTOM_DATA).copyTag().getString("external").equals("keep"),"level upgrades preserve unrelated item data");
         var restored=ItemStack.parseOptional(level.registryAccess(),(CompoundTag)stack.save(level.registryAccess()));
         check(wand.level(restored,Spell.FROST_NEEDLE)==5,"wand rank survives serialization");
-        boolean rejected=false;try{wand.learn(stack,Spell.SOUL_CANNON,5);}catch(IllegalArgumentException expected){rejected=true;}check(rejected&&wand.level(stack,Spell.FROST_NEEDLE)==5,"foreign spell cannot replace own rank");
+        wand.learn(stack,Spell.SOUL_CANNON,5);check(wand.level(stack,Spell.SOUL_CANNON)==5&&wand.level(stack,Spell.FROST_NEEDLE)==5,"debug wand stores independent ranks across schools");
         SpellEngine.clear();resetPlayer(player);player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
         var nativeSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.FROST_NEEDLE));
         Zombie victim=spawn(level,0,81,6);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
@@ -568,7 +562,7 @@ public final class IntegrationChecks {
     private static void cannonChecks(ServerLevel level){
         var player=new AudioPlayer(level,new GameProfile(UUID.fromString("ab438590-0c2e-4559-819e-31116824450f"),"CannonTest"));
         player.setGameMode(GameType.SURVIVAL);resetPlayer(player);
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.SOUL.toStack());
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
         SpellEngine.clear();visuals.clear();Zombie victim=spawn(level,0,81,20);
         check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon begins charge");
         for(int t=0;t<39;t++)SpellEngine.tick();
@@ -590,7 +584,7 @@ public final class IntegrationChecks {
         for(int t=0;t<12;t++)SpellEngine.tick();
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ItemStack.EMPTY);SpellEngine.tick();
         check(SpellEngine.activeCount()==0&&visuals.stream().noneMatch(v->v.stage()==SpellVisuals.Stage.FLIGHT.ordinal()),"putting wand away cancels cannon before firing");
-        SpellEngine.clear();resetPlayer(player);visuals.clear();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.SOUL.toStack());
+        SpellEngine.clear();resetPlayer(player);visuals.clear();player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
         level.getChunk(0,3);
         check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon can fire into empty sky");
         for(int t=0;t<80;t++)SpellEngine.tick();

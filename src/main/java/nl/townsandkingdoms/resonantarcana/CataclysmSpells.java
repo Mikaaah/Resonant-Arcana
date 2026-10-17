@@ -12,12 +12,20 @@ final class CataclysmSpells {
     static boolean handles(Spell s){return s.kind==Spell.Kind.CATACLYSM;}
     static boolean begin(Cast c){
         c.pos=c.target==null?c.anchor.subtract(c.dir.scale(.08)):c.target.getBoundingBox().getCenter();
-        c.duration=c.spell.duration();return true;
+        c.duration=c.spell.duration();
+        if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.holySword(c);return true;
     }
     static boolean tick(Cast c){
         double t=c.age/(double)c.duration;
         if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,t,0),c.spell.radius);
+        if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.moveHolySword(c);
         switch(c.spell){
+            case EXPLOSION -> {
+                if(c.age==24){
+                    pulse(c,c.pos,c.spell.radius,1);effect(c.caster,MobEffects.MOVEMENT_SLOWDOWN,80,3);effect(c.caster,MobEffects.WEAKNESS,100,0);
+                    SpellAudio.world(c.level,c.pos,"entity.generic.explode",2.5f,.55f);finish(c);
+                }
+            }
             case ASTRAL_APOCALYPSE -> {
                 if(c.age==16||c.age==40||c.age==64){
                     for(int i=0;i<3;i++){
@@ -93,8 +101,8 @@ final class CataclysmSpells {
                 if(c.age%5==1)for(var v:near(c.caster,c.pos,c.spell.radius))if(seen(c,v)){
                     effect(v,MobEffects.MOVEMENT_SLOWDOWN,30,3);v.setTicksFrozen(Math.max(180,v.getTicksFrozen()));
                 }
-                if(c.age==16||c.age==40||c.age==64)pulse(c,c.pos,c.spell.radius,1);
-                if(c.age==100){pulse(c,c.pos,c.spell.radius,3);finish(c);}
+                if(c.age<=176&&(c.age-1)%25==0)pulse(c,c.pos,c.spell.radius,1);
+                if(c.age==200){pulse(c,c.pos,c.spell.radius,3);finish(c);}
             }
             default -> throw new IllegalArgumentException("Missing cataclysm: "+c.spell);
         }

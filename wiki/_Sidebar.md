@@ -1,22 +1,27 @@
-**Resonant Arcana**
-- [Home](Home.md)
-- [Getting Started](Getting-Started.md)
-- [Controls & Commands](Controls-and-Commands.md)
-- [Wands & Spells](Wand-Index.md)
-  - [Arcane](Arcane-Wand.md)
-  - [Blood](Blood-Wand.md)
-  - [Cinder](Cinder-Wand.md)
-  - [Dark](Dark-Wand.md)
-  - [Thunder](Thunder-Wand.md)
-  - [Rift](Rift-Wand.md)
-  - [Soul](Soul-Wand.md)
-  - [Venom](Venom-Wand.md)
-  - [Holy](Holy-Wand.md)
-  - [Frost](Frost-Wand.md)
-- [Spell Mechanics](Spell-Mechanics.md)
-- [Optional Bosses’Rise](Bosses-Rise-Compatibility.md)
-- [Configuration](Configuration.md)
-- [Multiplayer](Multiplayer-and-Compatibility.md)
-- [Troubleshooting](Troubleshooting.md)
-- [Changelog](Changelog.md)
-- [Developers](Developers-and-Contributors.md)
+[Home](Home.md)
+
+[Equipment](Equipment.md)
+
+[All Spells](../SPELLS.md)
+
+[Configuration](Configuration.md)
+
+[Projectiles](Projectile.md)
+
+[Beams & Channels](Beam.md)
+
+[Area Magic](Area.md)
+
+[Control](Control.md)
+
+[Movement](Mobility.md)
+
+[Support & Defense](Support.md)
+
+[Summons & Constructs](Summon.md)
+
+[Strikes & Drains](Melee.md)
+
+[Boss Arts](Boss-Art.md)
+
+[Cataclysms](Cataclysm.md)

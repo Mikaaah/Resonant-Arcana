@@ -69,8 +69,12 @@ public final class SpellEngine {
             if(elapsed%4==0)BossesRiseBridge.castCue(player.serverLevel(),spell,center);
             return;
         }
-        if((spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM)&&elapsed%40==0)
-            SpellAudio.world(player.serverLevel(),center,spell==Spell.DOOM?"entity.warden.heartbeat":"block.respawn_anchor.charge",.7f,(float)(.5+progress*.7));
+        if(spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM){
+            Vec3 feet=player.position().add(0,.04,0);
+            if(elapsed%4==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,feet,feet.add(dir),5+progress*2);
+            SpellAudio.ritualPulse(player,spell,feet,progress,elapsed);
+            return;
+        }
         if(elapsed%3==0)SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,center,center.add(dir),0.45+progress);
         for(int i=0;i<3;i++){
             double angle=elapsed*.65+i*Math.PI*2/3;Vec3 offset=spell==Spell.SOUL_CANNON?new Vec3(Math.cos(angle)*1.6,Math.sin(angle)*1.1,Math.sin(angle*.7)):SpellParticles.chargeOffset(spell.theme,angle,progress);
@@ -164,7 +168,7 @@ public final class SpellEngine {
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE->true;default->false;};}
-    private static void cleanup(Cast c){BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);}
+    private static void cleanup(Cast c){BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);SpecialSpells.cleanup(c);}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
         for(Iterator<Cast> it=ACTIVE.iterator();it.hasNext();){Cast c=it.next();

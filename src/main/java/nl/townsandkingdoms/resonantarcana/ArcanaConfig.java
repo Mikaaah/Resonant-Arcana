@@ -6,9 +6,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 final class ArcanaConfig {
     static final ModConfigSpec SERVER,CLIENT;
     static final ModConfigSpec.BooleanValue WAND_CASTING,PVP,CASTER_IMPACTS,TEAMLESS_HEALING;
-    static final ModConfigSpec.BooleanValue MOUSE_CONTROLS,AAA_PARTICLES,WAND_HUD;
+    static final ModConfigSpec.BooleanValue MOUSE_CONTROLS,WAND_HUD;
     static final ModConfigSpec.DoubleValue DAMAGE,HEALING,COOLDOWNS,SOUND_VOLUME,IMPACT_VOLUME;
-    static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,PER_PLAYER_LIMIT,VISUAL_BUDGET,AAA_BUDGET,DETAIL_BUDGET,ACCENT_BUDGET,NATIVE_BUDGET,CLIENT_NATIVE_BUDGET;
+    static final ModConfigSpec.IntValue PARTICLES,MAX_ACTIVE,PER_PLAYER_LIMIT,VISUAL_BUDGET,DETAIL_BUDGET,ACCENT_BUDGET,NATIVE_BUDGET,CLIENT_NATIVE_BUDGET;
     static {
         var s=new ModConfigSpec.Builder();
         s.comment("Authoritative casting rules. These values synchronize to joining clients.").push("casting");
@@ -37,8 +37,7 @@ final class ArcanaConfig {
         c.push("display");WAND_HUD=c.comment("Show the selected wand spell above the hotbar.").define("showWandHud",true);c.pop();
         c.push("particles");
         CLIENT_NATIVE_BUDGET=c.comment("Native particle detail per client tick; range outlines have an additional reserved allowance.").defineInRange("nativeParticlesPerTick",1800,300,6000);
-        AAA_PARTICLES=c.comment("Use AAAParticles for selected spell circles only. Other visuals use vanilla and Iron's particles.").define("enableAaaParticles",true);
-        AAA_BUDGET=c.comment("Maximum circle emitters per client tick. Other spell visuals use vanilla and Iron's particles.").defineInRange("maxAaaEffectsPerTick",8,1,32);c.pop();CLIENT=c.build();
+        c.pop();CLIENT=c.build();
     }
     private ArcanaConfig(){}
 }

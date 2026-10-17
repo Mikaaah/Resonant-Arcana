@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ASA",
+    "BNB",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:echo_shard"
+    },
+    "B": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "N": {
+      "item": "irons_spellbooks:netherite_spell_book"
+    }
+  },
+  "result": {
+    "id": "resonant_arcana:runic_echoes_spell_book",
+    "count": 1
+  }
+}

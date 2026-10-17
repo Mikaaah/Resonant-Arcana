@@ -22,24 +22,17 @@ public final class ResonantArcana {
     public static final String ID="resonant_arcana";
     public static final org.slf4j.Logger LOG=LogUtils.getLogger();
     public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems(ID);
-    public static final DeferredItem<WandItem> ARCANE=ITEMS.register("arcane_wand",()->new WandItem("arcane_wand",SpellCatalogue.wand("arcane_wand").catalogue()));
-    public static final DeferredItem<WandItem> BLOOD=ITEMS.register("blood_wand",()->new WandItem("blood_wand",SpellCatalogue.wand("blood_wand").catalogue()));
-    public static final DeferredItem<WandItem> CINDER=ITEMS.register("cinder_wand",()->new WandItem("cinder_wand",SpellCatalogue.wand("cinder_wand").catalogue()));
-    public static final DeferredItem<WandItem> DARK=ITEMS.register("dark_wand",()->new WandItem("dark_wand",SpellCatalogue.wand("dark_wand").catalogue()));
-    public static final DeferredItem<WandItem> THUNDER=ITEMS.register("thunder_wand",()->new WandItem("thunder_wand",SpellCatalogue.wand("thunder_wand").catalogue()));
-    public static final DeferredItem<WandItem> RIFT=ITEMS.register("rift_wand",()->new WandItem("rift_wand",SpellCatalogue.wand("rift_wand").catalogue()));
-    public static final DeferredItem<WandItem> SOUL=ITEMS.register("soul_wand",()->new WandItem("soul_wand",SpellCatalogue.wand("soul_wand").catalogue()));
-    public static final DeferredItem<WandItem> VENOM=ITEMS.register("venom_wand",()->new WandItem("venom_wand",SpellCatalogue.wand("venom_wand").catalogue()));
-    public static final DeferredItem<WandItem> HOLY=ITEMS.register("holy_wand",()->new WandItem("holy_wand",SpellCatalogue.wand("holy_wand").catalogue()));
-    public static final DeferredItem<WandItem> FROST=ITEMS.register("frost_wand",()->new WandItem("frost_wand",SpellCatalogue.wand("frost_wand").catalogue()));
+    public static final DeferredItem<WandItem> DEBUG=ITEMS.register("debug_wand",()->new WandItem("debug_wand",Spell.enabledValues()));
+    public static final DeferredItem<LegendarySpellBook> RUNIC_ECHOES=ITEMS.register("runic_echoes_spell_book",()->new LegendarySpellBook(LegendarySpellBook.Style.RUNIC));
+    public static final DeferredItem<LegendarySpellBook> PHOENIX=ITEMS.register("phoenix_spell_book",()->new LegendarySpellBook(LegendarySpellBook.Style.PHOENIX));
+    public static final DeferredItem<LegendarySpellBook> DEATHCHILL=ITEMS.register("deathchill_spell_book",()->new LegendarySpellBook(LegendarySpellBook.Style.DEATHCHILL));
     public static final DeferredRegister<CreativeModeTab> TABS=DeferredRegister.create(Registries.CREATIVE_MODE_TAB,ID);
     static {
-        TABS.register("wands",()->CreativeModeTab.builder().title(Component.translatable("itemGroup.resonant_arcana.wands"))
-            .icon(()->ARCANE.toStack()).displayItems((params,out)->ITEMS.getEntries().forEach(entry->out.accept(entry.get()))).build());
-        TABS.register("scrolls",()->CreativeModeTab.builder().title(Component.translatable("itemGroup.resonant_arcana.scrolls"))
-            .icon(()->IronsCompat.scroll(Spell.SPARK)).displayItems((params,out)->{
-                for(var entry:ITEMS.getEntries())if(entry.get() instanceof WandItem wand)for(var spell:wand.spells)out.accept(IronsCompat.scroll(spell));
-            }).build());
+        TABS.register("equipment",()->CreativeModeTab.builder().title(Component.literal("Resonant Arcana · Equipment"))
+            .icon(()->RUNIC_ECHOES.toStack()).displayItems((params,out)->ITEMS.getEntries().forEach(entry->out.accept(entry.get()))).build());
+        for(var category:SpellCategory.values())TABS.register(category.name().toLowerCase(java.util.Locale.ROOT),()->CreativeModeTab.builder()
+            .title(Component.literal("Arcana · "+category.title)).icon(()->IronsCompat.scroll(java.util.Arrays.stream(Spell.enabledValues()).filter(s->s.category()==category).findFirst().orElse(Spell.SPARK)))
+            .displayItems((params,out)->{for(Spell spell:Spell.enabledValues())if(spell.category()==category)out.accept(IronsCompat.scroll(spell));}).build());
     }
     public ResonantArcana(IEventBus bus,ModContainer container) {
         AdvancedSpells.register();
@@ -56,13 +49,13 @@ public final class ResonantArcana {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("resonantarcana");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.20.0-alpha: 10 wands, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.21.0-alpha: 3 legendary spellbooks, 1 debug wand, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);
         root.then(Commands.literal("info").executes(c->{
             var p=c.getSource().getPlayerOrException();var stack=p.getMainHandItem();
-            if(!(stack.getItem() instanceof WandItem wand)){c.getSource().sendFailure(Component.literal("Hold a wand to inspect its selected spell."));return 0;}
+            if(!(stack.getItem() instanceof WandItem wand)){c.getSource().sendFailure(Component.literal("Hold the debug wand to inspect its selected spell."));return 0;}
             for(var line:SpellInfo.details(wand.selected(stack),wand.level(stack)))c.getSource().sendSuccess(()->line,false);return 1;
         }));
         var spells=Commands.literal("spell");var scrolls=Commands.literal("scroll").requires(c->c.hasPermission(2));

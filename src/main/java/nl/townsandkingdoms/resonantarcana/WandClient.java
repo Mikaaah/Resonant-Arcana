@@ -37,14 +37,8 @@ public final class WandClient {
             if(e.getHand()==InteractionHand.MAIN_HAND)PacketDistributor.sendToServer(new WandNetwork.Action(mc.player.isShiftKeyDown()?2:1));
         }
     }
-    @SubscribeEvent public static void commands(net.neoforged.neoforge.client.event.RegisterClientCommandsEvent e){
-        e.getDispatcher().register(net.minecraft.commands.Commands.literal("arcana_visuals")
-            .executes(ctx->{AaaEffects.diagnostics();return 1;})
-            .then(net.minecraft.commands.Commands.literal("test").executes(ctx->{AaaEffects.test();return 1;})));
-    }
     @SubscribeEvent public static void tick(ClientTickEvent.Post e) {
         visualBursts=0;
-        AaaEffects.tick();
         NativeSpellEffects.tick();
         var mc=Minecraft.getInstance();
         if(!mc.options.keyAttack.isDown())reversalAttackHeld=false;
@@ -89,6 +83,7 @@ public final class WandClient {
     @EventBusSubscriber(modid=ResonantArcana.ID,value=Dist.CLIENT,bus=EventBusSubscriber.Bus.MOD)
     public static final class Registration {
         @SubscribeEvent public static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers e){
+            e.registerEntityRenderer(SpellCentrepieces.SWORD.get(),ctx->new net.minecraft.client.renderer.entity.DisplayRenderer.ItemDisplayRenderer(ctx){});
             e.registerEntityRenderer(SpellCentrepieces.PROP.get(),ctx->new net.minecraft.client.renderer.entity.DisplayRenderer.BlockDisplayRenderer(ctx){});
         }
         @SubscribeEvent public static void keys(RegisterKeyMappingsEvent e){e.register(CAST);e.register(NEXT);e.register(SELECT);}

@@ -4,7 +4,7 @@ Resonant Arcana 0.13 separates authoritative server rules from local client pref
 
 - **Server:** `<world>/serverconfig/resonantarcana-server.toml`. These values synchronize to joining clients. On a dedicated server, `<world>` is the configured level folder.
 - **New-world defaults:** copy the server file to `defaultconfigs/resonantarcana-server.toml` before creating a world. This does not overwrite existing worlds.
-- **Client:** `config/resonantarcana-client.toml`. Each player controls their own display, mouse input and optional AAAParticles settings.
+- **Client:** `config/resonantarcana-client.toml`. Each player controls their own display, mouse input and native particle density.
 
 Stop the game or server before editing. Restart after changes. Existing `resonantarcana-server.toml` and `resonantarcana-client.toml` settings from 0.12 can still be used. The namespace change does not migrate saved items or spells.
 
@@ -12,7 +12,7 @@ Stop the game or server before editing. Restart after changes. Existing `resonan
 
 | Section and key | Default | Allowed values | Function |
 | --- | ---: | --- | --- |
-| `casting.enableWands` | `true` | boolean | Allow direct wand casting; disable for a spellbook-only pack. |
+| `casting.enableWands` | `true` | boolean | Allow debug-wand casting; normal spellbooks remain available. |
 | `casting.maxActiveSpells` | `128` | 8–512 | Maximum concurrent timed spells across the server. |
 | `casting.maxActivePerPlayer` | `8` | 1–16 | Maximum concurrent timed spells owned by one player. |
 | `combat.allowPvp` | `true` | boolean | Allow offensive spells against players, subject to server PvP and team rules. |
@@ -38,10 +38,7 @@ Visual budgets affect presentation; they never select targets or change damage. 
 | `controls.leftClickCasting` | `true` | boolean | Enable left-click wand casting. Disable for combat-mod input conflicts; the cast key remains available. |
 | `display.showWandHud` | `true` | boolean | Show the selected spell and rank above the hotbar. |
 | `particles.nativeParticlesPerTick` | `1800` | 300–6000 | Native client detail budget, plus a separate range-outline allowance of one third this value. Higher values add detail during crowded fights. |
-| `particles.enableAaaParticles` | `true` | boolean | Use AAAParticles for selected spell circles only. Other spell visuals remain vanilla and Iron’s particles. |
-| `particles.maxAaaEffectsPerTick` | `8` | 1–32 | Maximum new circle emitters per client tick. |
 
-Keys are rebound under **Controls → Resonant Arcana**. `/arcana_visuals` reports optional renderer status and loaded effect counts; `/arcana_visuals test` plays a short local test.
 
 ## Individual spells
 
@@ -85,4 +82,6 @@ already-released fields or arbitrarily cancel independent magic systems.
 Kraken’s Wrath is available only with the supported Bosses’Rise 2.1.2 version.
 Its visuals stay in that mod; no third-party assets are bundled.
 
-[← Wiki Home](Home.md)
+## Equipment and renderer changes in 0.21
+
+The ten survival wands and their assets are removed. One debug wand exposes all enabled spells. Three native spellbooks grant equipment perks only in the Curios spellbook slot. Cataclysm rituals use native particles at the caster’s feet. AAA settings and renderer support are removed.

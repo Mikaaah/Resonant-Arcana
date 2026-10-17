@@ -104,27 +104,6 @@ final class SpellVisuals {
         };
     }
 
-    private static final java.util.Set<String> ASSETS=loadAssets();
-    private static java.util.Set<String> loadAssets(){
-        try(var input=SpellVisuals.class.getResourceAsStream("/assets/resonant_arcana/effeks/manifest.json")){
-            if(input==null)throw new IllegalStateException("Missing effect manifest");
-            var json=com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(input,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
-            var result=new java.util.HashSet<String>();
-            for(var entry:json.getAsJsonArray("effects"))if(!result.add(entry.getAsString()))throw new IllegalStateException("Duplicate effect");
-            return java.util.Set.copyOf(result);
-        }catch(java.io.IOException ex){throw new java.io.UncheckedIOException(ex);}
-    }
-    static boolean packaged(Shape shape,Spell.Theme theme){
-        return ASSETS.contains(shape.name().toLowerCase(java.util.Locale.ROOT)+"_"+theme.name().toLowerCase(java.util.Locale.ROOT)+".efkefc");
-    }
-    static boolean usesAaa(Spell spell,Stage stage){
-        if(stage!=Stage.AREA||spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM||BossesRiseCompat.optional(spell))return false;
-        return switch(shape(spell,stage)){
-            case FIELD,WARD,DOMAIN,TRAP,DOOM_WELL,HORIZON_WELL->true;
-            default->false;
-        };
-    }
-    static int assetCount(){return ASSETS.size();}
     static void send(ServerLevel level, Spell spell, Stage stage, Vec3 pos, Vec3 end, double size) {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
         if(detail ? details++>=ArcanaConfig.DETAIL_BUDGET.get() : accents++>=ArcanaConfig.ACCENT_BUDGET.get())return;

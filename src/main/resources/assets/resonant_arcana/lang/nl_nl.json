@@ -1,4 +1,8 @@
 {
-  "itemGroup.resonant_arcana.wands": "Resonant Arcana: Toverstaven",
-  "itemGroup.resonant_arcana.scrolls": "Resonant Arcana: Spreukrollen"
+  "effect.resonant_arcana.seraph_flight": "Seraph Wings",
+  "effect.resonant_arcana.seraph_grace": "Seraphic Grace",
+  "item.resonant_arcana.debug_wand": "Debug Wand",
+  "item.resonant_arcana.runic_echoes_spell_book": "Grimoire of Runic Echoes",
+  "item.resonant_arcana.phoenix_spell_book": "Codex of the Phoenix",
+  "item.resonant_arcana.deathchill_spell_book": "Deathchill Grimoire"
 }

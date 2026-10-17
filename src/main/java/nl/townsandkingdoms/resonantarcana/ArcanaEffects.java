@@ -24,6 +24,10 @@ final class ArcanaEffects {
     static final net.minecraft.core.Holder<MobEffect> GLACIAL_GUARD=REGISTER.register("glacial_guard",()->new Beneficial(0xa6e7ff));
     static final net.minecraft.core.Holder<MobEffect> THUNDERBRAND=REGISTER.register("thunderbrand",()->new Beneficial(0x7bdfff));
     static final net.minecraft.core.Holder<MobEffect> PHANTOM_FORMATION=REGISTER.register("phantom_formation",()->new Beneficial(0xb349f5));
+    static final net.minecraft.core.Holder<MobEffect> SERAPH_FLIGHT=REGISTER.register("seraph_flight",()->new Beneficial(0xffe9a5)
+        .addAttributeModifier(net.neoforged.neoforge.common.NeoForgeMod.CREATIVE_FLIGHT,id("seraph_flight"),1,Operation.ADD_VALUE));
+    static final net.minecraft.core.Holder<MobEffect> SERAPH_GRACE=REGISTER.register("seraph_grace",()->new Beneficial(0xffe9a5)
+        .addAttributeModifier(AttributeRegistry.SPELL_POWER,id("seraph_power"),.15,Operation.ADD_MULTIPLIED_TOTAL));
     private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,path);}
     private static final class Beneficial extends MobEffect {Beneficial(int color){super(MobEffectCategory.BENEFICIAL,color);}}
     private ArcanaEffects(){}

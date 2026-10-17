@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.21.0-alpha
+
+- Remove the ten school wands, their models, textures, recipes and advancements. Add one uncrafteable Debug Wand with every enabled spell, using the supplied copper-chisel texture. Preserve all existing spell IDs.
+- Add three inscribable legendary Iron’s spellbooks using the supplied textures unchanged: Runic Echoes (14 slots, mana and Evocation/Ender perks), Phoenix (12 slots, fire and recovery perks), and Deathchill (12 slots, Ice/Eldritch and casting perks). Native Curios equipment attributes apply only in the spellbook slot.
+- Categorize every spell by function. Add categorized creative scroll tabs and a category filter in the debug spell archive. Reorganize and shorten descriptions and spell documentation.
+- Remove all AAAParticles renderer code, configuration, assets and generation tooling. Cataclysm windups now use a large native summoning circle under the caster; themed particles gather into its perimeter with gradually increasing density and a clear centre. Ordinary charge particles are reduced at the beginning.
+- Replace the common ritual pulse with individual sound profiles. Remove Doom’s solid orb and align its dark rings with its red accretion streams. Replace geometric shadow/soul structures with native particles.
+- Worldroot Blessing uses moss fragments, flowering-azalea fragments, spores and drifting leaves. Eternal Winter becomes a sixteen-block, ten-second blizzard. Final Judgement summons an actual descending golden sword with overhead-aware scale.
+- Add Explosion (large blast with exhaustion), Seraph Ascendant (native temporary flight, particle wings, healing and ally spell-power aura), and Arcane Devastator (focused piercing cannon).
+- Add equipment, native inscription, flight coexistence, sword and cleanup checks. Require a fresh successful report for integration runs; a crashed server cannot reuse an older result.
+- Pass 10,959 fresh dedicated-server checks with Bosses’Rise and 10,180 without, plus Java 21 compilation and packaged-asset checks. Client visuals and audio require in-game playtesting.
+
 ## 0.20.0-alpha
 
 - Add ten single-rank Legendary cataclysms across all nine native schools: Astral Apocalypse, Crimson Eclipse, World Pyre, Void Coronation, Heaven’s Thunder, Rift Collision, Soul Requiem, Worldroot Catastrophe, Final Judgement and Eternal Winter. Doom is separate from the ten.
@@ -203,5 +215,3 @@
 ## 0.1.0-alpha
 
 - Initial release with Empire, Blood and Celcrius wands and 26 spells.
-
-[← Wiki Home](Home.md)

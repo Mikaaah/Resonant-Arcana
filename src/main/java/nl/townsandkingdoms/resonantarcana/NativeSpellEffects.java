@@ -37,6 +37,7 @@ final class NativeSpellEffects {
         double size=msg.size(),time=level.getGameTime()*.14;
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
+        if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
         if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
             case AREA -> area(level,spell,p,end,size,time,count);
@@ -44,6 +45,16 @@ final class NativeSpellEffects {
             case FLIGHT -> flight(level,spell,p,end,size,time,count);
             case CAST,CHARGE -> charge(level,spell,p,end,size,time,count);
             case HIT,IMPACT,TRAIL_BURST -> impact(level,spell,p,size,stage==SpellVisuals.Stage.IMPACT,count);
+        }
+    }
+    private static void seraph(ClientLevel level,Vec3 p,Vec3 end,double time){
+        Vec3 forward=end.subtract(p).multiply(1,0,1).normalize();if(forward.lengthSqr()<.01)forward=new Vec3(0,0,1);
+        Vec3 side=new Vec3(-forward.z,0,forward.x),shoulder=p.subtract(forward.scale(.45)).add(0,1.35,0);
+        for(int sign:new int[]{-1,1})for(int feather=0;feather<10;feather++){
+            double f=feather/9.0,spread=.8+f*2.3,height=1.7-f*.9;
+            Vec3 tip=shoulder.add(side.scale(sign*spread)).add(forward.scale(-.35-f*.25+Math.sin(time)*.15)).add(0,height,0);
+            Vec3 base=shoulder.add(side.scale(sign*(.15+f*.35))).add(0,.4-f*.4,0);
+            for(int i=0;i<9;i++)point(level,i%4==0?ParticleTypes.END_ROD:new DustParticleOptions(new Vector3f(1,.9f,.58f),.8f),base.lerp(tip,i/8.0),Vec3.ZERO,11,false);
         }
     }
     private static void area(ClientLevel level,Spell s,Vec3 p,Vec3 end,double radius,double time,int count){
@@ -131,6 +142,15 @@ final class NativeSpellEffects {
         return q.add(0,.08,0);
     }
     private static void beam(ClientLevel level,Spell s,Vec3 p,Vec3 end,double size,double time,int count){
+        if(s==Spell.ARCANE_DEVASTATOR){
+            Vec3 d=end.subtract(p).normalize(),x=side(d),y=x.cross(d).normalize();
+            for(int i=0;i<140;i++){
+                double t=i/139.0,a=time+t*22;Vec3 center=p.lerp(end,t);
+                point(level,new DustParticleOptions(new Vector3f(.85f,.55f,1),1.7f),center,Vec3.ZERO,9,false);
+                for(int arm=0;arm<3;arm++){double angle=a+arm*Math.PI*2/3;Vec3 q=center.add(x.scale(Math.cos(angle)*1.7)).add(y.scale(Math.sin(angle)*1.7));point(level,arm==0?ParticleTypes.END_ROD:SpellParticles.particle(Spell.Theme.MAGIC),q,d.scale(.03),9,false);}
+            }
+            return;
+        }
         Vec3 dir=end.subtract(p).normalize(),side=side(dir),up=side.cross(dir).normalize();
         int n=(int)Math.clamp(p.distanceTo(end)*7,20,160);
         boolean lightning=s.theme==Spell.Theme.THUNDER;
@@ -175,6 +195,7 @@ final class NativeSpellEffects {
     private static void charge(ClientLevel level,Spell s,Vec3 p,Vec3 end,double size,double time,int count){
         Vec3 dir=end.subtract(p).normalize();if(dir.lengthSqr()<.01)dir=new Vec3(0,0,1);
         Vec3 side=side(dir),up=side.cross(dir).normalize();double r=Math.clamp(size*.5,.3,1.8);
+        count=Math.clamp((int)(size*14),8,24);
         for(int i=0;i<count;i++){
             double t=(i+.5)/count,a=time+t*Math.PI*4;
             Vec3 off=side.scale(Math.cos(a)*r*(1-t*.6)).add(up.scale(Math.sin(a)*r*(1-t*.6))).subtract(dir.scale(t*.7));

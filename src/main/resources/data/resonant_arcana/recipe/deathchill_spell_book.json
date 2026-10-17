@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ASA",
+    "BNB",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:blue_ice"
+    },
+    "B": {
+      "item": "minecraft:echo_shard"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "N": {
+      "item": "irons_spellbooks:netherite_spell_book"
+    }
+  },
+  "result": {
+    "id": "resonant_arcana:deathchill_spell_book",
+    "count": 1
+  }
+}

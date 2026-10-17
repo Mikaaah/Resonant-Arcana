@@ -114,7 +114,7 @@ final class IronsCompat {
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL,PIERCING_ORB,CONE_CHANNEL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
             case STORM,SMITE,TWISTER,METEOR,FROSTFRONT,PILLAR,RAIN->SpellAnimations.CHARGE_RAISED_HAND;
-            case CATACLYSM,BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
+            case ASCENSION,DEVASTATOR,CATACLYSM,BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
             case WARD,AURA,HEAL,BUFF,CLEANSE,HYMN,REMEDY->SpellAnimations.PREPARE_CROSS_ARMS;
             default->castTime>0?SpellAnimations.ANIMATION_LONG_CAST:SpellAnimations.ANIMATION_INSTANT_CAST;
         };}
@@ -160,7 +160,7 @@ final class IronsCompat {
             var info=new ArrayList<MutableComponent>();
             info.add(Component.literal(spell.description()));
             float power=getSpellPower(spellLevel,entity)/100f;
-            info.add(Component.literal(spell.role()+" • "+SpellInfo.school(spell.theme)));
+            info.add(Component.literal(spell.category().title+" • "+SpellInfo.school(spell.theme)));
             if(spell.damage>0)info.add(Component.literal(String.format(Locale.ROOT,"Damage: %.1f%s",spell.damage*power,spell.pulses()>1?" per hit / pulse":"")));
             if(spell.healing()>0)info.add(Component.literal(String.format(Locale.ROOT,"Healing: %.1f health%s",spell.healing()*power,spell.pulses()>1?" per pulse":"")));
             if(castTime>0)info.add(Component.literal(String.format(Locale.ROOT,"Windup: %.2fs",getEffectiveCastTime(spellLevel,entity)/20.0)));

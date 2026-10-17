@@ -7,7 +7,7 @@ Resonant Arcana is an experimental addon for **Minecraft 1.21.1**, **NeoForge**,
 Please include:
 
 - Resonant Arcana, NeoForge and Iron's Spells versions; client/server environment and relevant optional mods.
-- Wand name, spell ID, school, spell rank and keybind used.
+- Equipped spellbook or debug wand, spell ID, school, spell rank and keybind used.
 - Expected versus actual behavior, reproducible steps, logs and screenshots or a short recording where useful.
 - Whether the problem also happens without unrelated mods.
 
@@ -19,6 +19,8 @@ Please remove private credentials, tokens and addresses from logs.
 - Update [SPELLS.md](SPELLS.md), [CONFIGURATION.md](CONFIGURATION.md) and [CHANGELOG.md](CHANGELOG.md) when relevant.
 - Test on the supported NeoForge/Java 21 environment when possible and list anything untested.
 - Do not bundle Iron's Spells or other mods' source, textures or audio.
-- **Preserve the current `resonant_arcana` registry namespace and existing IDs.** Version 0.13 introduced a clean namespace break from the previous addon, without legacy aliases or automatic migration. See the [installation notes](README.md#installation); any future identifier change needs an explicit compatibility plan.
+- **Preserve the current `resonant_arcana` registry namespace and existing IDs.** Version 0.13 introduced a clean namespace break from the previous addon, without legacy aliases or automatic migration. See the [installation notes](README.md#installation-and-compatibility); any future identifier change needs an explicit compatibility plan.
 
 To build, use Java 21 and follow the [README build instructions](README.md#building). 
+
+Version 0.21 explicitly retires the ten school-wand item IDs at the project owner’s request. Existing spell IDs remain stable. New visual work should use native particles; AAA assets and renderer code are not part of the mod.

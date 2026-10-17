@@ -13,7 +13,7 @@ final class SpellInfo {
     };}
     static List<MutableComponent> details(Spell s,int level){
         var out=new ArrayList<MutableComponent>();out.add(Component.literal(s.description()));
-        out.add(Component.literal(s.role()+" • "+school(s.theme)+" • Level "+WandItem.roman(level)));
+        out.add(Component.literal(s.category().title+" • "+school(s.theme)+" • Level "+WandItem.roman(level)));
         if(s.damage>0)out.add(Component.literal(String.format(Locale.ROOT,"Base damage: %.1f%s",s.damageAtLevel(level),s.pulses()>1?" per hit / pulse":"")));
         if(s.healing()>0)out.add(Component.literal(String.format(Locale.ROOT,"Base healing: %.1f health%s",s.healingAtLevel(level),s.pulses()>1?" per pulse":"")));
         out.add(Component.literal(String.format(Locale.ROOT,"Mana %d • Windup %.2fs • Cooldown %.1fs",s.manaAtLevel(level),s.castTicks()/20.0,s.cooldown/20.0)));

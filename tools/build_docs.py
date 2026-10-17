@@ -1,73 +1,36 @@
-"""Generate the public spell reference from the same catalogue consumed by the mod."""
+"""Generate the spell reference from the gameplay catalogue, grouped by functional category."""
 from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
-SCHOOL={'MAGIC':'Evocation','BLOOD':'Blood','FIRE':'Fire','DARK':'Ender','THUNDER':'Lightning','GRAVITY':'Ender','SOUL':'Eldritch','POISON':'Nature','HOLY':'Holy','ICE':'Ice'}
-SUPPORT={'WARD','CAPTURE','CHOKE','BUFF','CLEANSE','GAZE','TETHER','MARTIAL_BUFF'}
-def number(n):return f'{n:g}'
+SCHOOL={'MAGIC':'Evocation','BLOOD':'Blood','FIRE':'Fire','DARK':'Ender','GRAVITY':'Ender','THUNDER':'Lightning','SOUL':'Eldritch','POISON':'Nature','HOLY':'Holy','ICE':'Ice'}
+CATEGORIES={'PROJECTILE':'Projectiles','BEAM':'Beams & Channels','AREA':'Area Magic','CONTROL':'Control','MOBILITY':'Movement','SUPPORT':'Support & Defense','SUMMON':'Summons & Constructs','MELEE':'Strikes & Drains','BOSS_ART':'Boss Arts','CATACLYSM':'Cataclysms'}
+def num(n):return f'{n:g}'
 def main():
-    data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells']
-    lines=['# Spell reference','',f"**147 core spells + 12 optional Bosses’Rise spells · 10 wands · 13–17 spells per wand.**",'',
-    'Values below are defaults before armour, resistance, school power, equipment and configuration. Damage and healing use **health points**: 2 points equal one heart. A listed damage value is per successful hit or pulse, rather than guaranteed total damage. Normal Minecraft damage immunity and status-effect immunities still apply.', '',
-    'Ordinary spells have five levels. **DOOM** and the ten **Cataclysm** spells have one Legendary rank. Base power is 100%, 125%, 150%, 175%, and 200%. Mana increases by the spell’s listed step for each level above I. Higher levels do not change the base cast time or cooldown. Iron’s cast-speed, cooldown and school modifiers still apply.', '',
-    'Craft a wand to access its level-I kit. To upgrade an individual spell, hold a matching higher-level Iron’s scroll in your offhand and sneak-use the wand. The scroll is consumed. Native Iron’s spellbooks also accept all spells through normal inscription.', '',
-    'Healing affects the caster, owned pets and scoreboard teammates. By default it also affects players who, like the caster, have no scoreboard team; servers can disable this. Healing requires line of sight and cannot exceed maximum health. Offensive spells respect server PvP and scoreboard friendly-fire settings, and protect the caster’s own pets. Spells do not intentionally load new chunks or damage terrain. Last Stand temporarily places and later removes its own banner; lantern and totem centrepieces use temporary display entities without replacing world blocks.', '',
-    "## Optional Bosses’Rise spells",'',
-    "Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrath and Undertow. Yeti: Ice Spike Eruption and Glacial Wall. Underworld Knight (Helvar): Rift, Fracture and Swordfall. Sandworm: Eruption and Quicksand. Infernal Dragon: Infernal Barrage and Dragon’s Cataclysm. Without that mod, they are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.", '',
-    "Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s blazing projectiles. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.", '',
-    "Kraken tentacle roots are buried 2.25 blocks below the surface, and Wrath’s outer tentacles face inward. Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.", '',
-    '## Visual presentation', '', 'Native vanilla and Iron’s particles layer distinct projectile wakes, beams, rain, restraints, vortex interiors and impacts. Persistent areas use ground-following boundary rings; decorative particles have a separate allowance. Last Stand shows its full six-block defense radius. Wisp Lantern, Dread Effigy, Spore Totem and Consecration place temporary physical centrepieces on visible ground. Spell effects and centrepieces expire with the cast.', '', 'The readability and bounded-detail approach is inspired by [Wynncraft’s official Spellbound combat notes](https://wynncraft.com/updates/2.0). Geometry and implementation are original; no Wynncraft assets are included.', '', '## Wand index' ,'', '| Wand | School | Spell kit |','| --- | --- | --- |']
-    for w in data['wands']:
-        lines.append(f"| [{w['title']}](#{w['id'].replace('_','-')}) | {SCHOOL[w['theme']]} | "+', '.join(spells[n]['title'] for n in w['spells'])+' |')
-    lines+=['','## Shared recovery','',
-    'Healing and cleansing spells share a recovery group. Blood Ward, Echo Ward and Dawn Ward share another; stuns, restraints and life drains each share their own group. Swapping wands or switching to a spellbook does not bypass the recovery already applied. Other cooldowns are per spell and player, rather than per item.', '',
-    '## Secondary effects and level scaling','',
-    '- Fire hits ignite for three seconds. Nature hits poison for four seconds. Dark shadow hits apply Weakness I for three seconds; Nightfall also applies Darkness.',
-    '- Frost hits apply Slowness I for two seconds and add 40 freezing ticks, capped at 240. Freeze buildup is not a guaranteed stun and can decay or be resisted normally. Absolute Zero additionally imposes Slowness IV and at least 160 freezing ticks.',
-    '- Ward, restraint, tether, blessing, cleansing-speed and gaze durations scale with spell power, capped at twice their base duration. Resistance and Strength amplifiers remain fixed. Absorption scales with spell power, capped at 16 health, and refreshes rather than adding unlimited shields.',
-    '- Blink range gains up to four blocks from spell power, reaching the extra four at level V without gear. The destination must be clear, loaded, and outside lava. Blinks follow the caster’s line of sight; they do not search for a safe floor, so aiming into open air still requires care.',
-    '- Siphons restore 40% of health actually removed, capped at 2 health times spell power, before the healing multiplier. They provide no healing when damage is blocked. Projectile fans and volleys list damage per projectile; normal hit immunity prevents treating all overlapping projectiles as guaranteed combined damage.', '',
-    '## Heavy cast timing','',
-    'Windup is the native Iron’s cast bar. Some spells also have a release phase: The ten Legendary cataclysms have 10–12-second base cast bars, cost 440–500 mana and have two-minute base cooldowns. Doom also has a ten-second cast and costs 500 mana; it is separate from those ten. Their release sequences continue for roughly 4.4–5.6 seconds. Solar Cataclysm warns for 0.6 seconds before its meteor falls; Event Horizon pulls for 1.5 seconds; DOOM grows and devours its core before collapsing at 4.5 seconds. Gravity Stamp and Seraphic Descent mark their impact for one second after the cast bar. Other attacks may take additional time to travel. Interrupting the cast bar cancels the release; already-released fields continue for their stated lifetime.', '']
-    for w in data['wands']:
-        lines +=[f"<a id=\"{w['id'].replace('_','-')}\"></a>",f"## {w['title']}",'',f"**{SCHOOL[w['theme']]} school.** Saved item ID: `resonant_arcana:{w['id']}`.",'']
-        for key in w['spells']:
-            s=spells[key];lines +=[f"### {s['title']}",'',s['description'],'',
-            f"**Role:** {s['role']} · **Cast:** {number(s['castTicks']/20)+'s' if s['castTicks'] else 'instant'} · **Cooldown:** {number(s['cooldown']/20)}s · **Range:** {number(s['range'])} blocks · **Radius / width:** {number(s['radius'])} blocks.",'',
-            '| Level | Direct damage | Healing | Mana |','| --- | ---: | ---: | ---: |']
-            for rank in range(1,s['maxLevel']+1):
-                power=1+(rank-1)*data['powerPerLevel']/100
-                lines.append(f"| {['I','II','III','IV','V'][rank-1]} | {number(s['damage']*power) if s['damage'] else '—'} | {number(s['healing']*power) if s['healing'] else '—'} | {s['mana']+(rank-1)*s['manaStep']} |")
-            lines.append('')
-            if s['kind']=='CATACLYSM':lines +=['**Cataclysm damage:** the table gives one normal pulse, impact or cut. The description specifies the final-hit multiplier and delivery sequence. Overlapping attacks, enemy movement, cover and normal damage immunity affect the total.', '']
-            if s['pulses']>1:lines +=[f"**Delivery:** up to {s['pulses']} {'projectiles' if s['kind'] in ('FAN','VOLLEY') else 'hits / pulses'}; the table gives the value for each one.",'']
-            if s['duration']>0 and key!='WARSCREAM':
-                text=f"**Base active phase:** {number(s['duration']/20)}s."
-                if s['kind'] in SUPPORT:text+=' Duration at levels I–V without gear: '+', '.join(number(s['duration']/20*(1+.25*i))+'s' for i in range(s['maxLevel']))+'.'
-                lines +=[text,'']
-            if key in ('SANGUINE_PACT','BLESSING_OF_VIGOR','RESONANT_GUARD','FROZEN_AEGIS'):
-                shield=4 if key in ('SANGUINE_PACT','BLESSING_OF_VIGOR') else 6
-                lines +=['**Absorption at levels I–V:** '+', '.join(number(shield*(1+.25*i)) for i in range(5))+' health.','']
-            if s['kind'] in ('BLADE_ARC','BLADE_THRUST'):
-                lines +=['**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the caster’s melee attack attribute at release to the listed base damage, at levels I–V respectively. This uses the equipped weapon’s attributes; the spell is not an automatic melee swing. Cast from an Iron’s spellbook while holding your weapon to use its attack damage.','']
-            if key=='WARSCREAM':lines +=['**Roar:** three damage pulses at 0.05, 0.65 and 1.25 seconds after release, in an eight-block radius. Pulls eligible visible enemies inward, respecting knockback resistance. **Defense and taunt at ranks I–V:** 3, 4, 5, 6, 7 seconds. Grants Resistance I to the caster and visible eligible allies. Taunts at most 32 hostile mobs, rechecking every half second. Custom boss AI may override the target; animals, pets and players are not taunted.','']
-            if key=='BULWARK_CHANT':lines +=['**Defence:** Resistance I and 4, 5, 6, 7, 8 temporary health.','']
-            if key=='ARCANE_EDGE':lines +=['**Attack damage:** +2, +2.5, +3, +3.5, +4. **Attack speed:** +10%, +12.5%, +15%, +17.5%, +20%.','']
-            if key=='BATTLE_TEMPO':lines +=['**Attack and movement speed:** +10%, +12.5%, +15%, +17.5%, +20%.','']
-            if key=='BLOOD_REND':lines +=['**Drain:** 40% of health actually removed, capped at 3, 3.75, 4.5, 5.25, 6 health per entire cast, before the healing configuration multiplier. Blocked damage gives no healing.','']
-            if key=='SOULBLAST':lines +=['**Aim modes:** while gliding, boost along your look direction (initial contribution 1.7–2.1 blocks/tick plus 30% of existing motion, final speed capped at 3). Otherwise, look down at least 40.6 degrees to launch upward at 1.05–1.45 blocks/tick and gain three seconds of Slow Falling. Forward casts hit a 120-degree cone and apply horizontal knockback, respecting knockback resistance. Mobility modes deal no damage and do not force Elytra flight. Slow Falling is brief, not permanent fall immunity.','']
-            if s['kind']=='EXECUTE':lines +=['**Conditional direct damage at levels I–V:** '+', '.join(number(s['damage']*1.5*(1+.25*i)) for i in range(5))+'.','']
-            if key in ('RIFT_DRAW','CRIMSON_REVERSAL','SPELLBREAKER'):lines +=['**Weapon contribution:** add 50%, 62.5%, 75%, 87.5%, or 100% of the melee attack damage attribute at release, for levels I–V respectively.','']
-            if key=='GLACIAL_COUNTER':lines +=['**Guard:** 0.9 seconds, consumed by one frontal blockable hostile hit. The first 0.3 seconds prevent all damage and deal a 175% counter: '+', '.join(number(s['damage']*1.75*(1+.25*i)) for i in range(5))+' damage. Later guards reduce incoming damage by 70% and deal the table value. Rear hits, environmental damage and attacks tagged to bypass shields do not trigger the counter.','']
-            if key=='THUNDERBRAND':lines +=['**Trigger:** every third successful native player melee hit. The third hit gains the listed damage before its normal mitigation; lightning separately strikes up to two nearby enemies. Lightning and spell damage never add charges. Duration is 10 seconds, with no stacking on recast. Mods must route melee damage through the native player-attack damage type; custom combat damage types need an explicit integration.','']
-            if key=='PHANTOM_FORMATION':lines +=['**Sword count I–V:** 4, 5, 6, 7, 8. Each successful native player melee hit queues one sword, which arms for 0.5 seconds before flying along the attack direction. It collides with the first enemy or wall, travels at most 20 blocks and cannot create further proc attacks. Unused swords expire after ten seconds.','']
-            if key=='CRIMSON_REVERSAL':lines +=['**Native recast:** a three-second return window. The return costs no mana and has no second windup; using or timing out the return starts the normal cooldown. The saved anchor must remain in the same dimension, within 16 blocks, loaded, outside lava and free of collisions. The return cannot be used as a directly consumed scroll; inscribe it in a spellbook or cast with a wand.','']
-            if key=='LAST_STAND':lines +=['**Banner:** six seconds, fixed location, six-block ally radius. Grants Resistance I while defending the area and 4, 5, 6, 7, 8 temporary health once per ally. Re-entering does not refill absorption. Only allies still in range and visible at the end receive the table’s healing.','']
-            if key=='ASHEN_REBIRTH':lines +=['**Release:** safe forward blink up to eight blocks, with three seconds of Slow Falling. The silhouette remains at the departure point and explodes after 0.8 seconds. The movement itself deals no damage.','']
-            if key=='FUNERAL_BELL':lines +=['**Tolls:** rings start at release, 1.1 seconds and 2.2 seconds. The last ring deals triple damage: '+', '.join(number(s['damage']*3*(1+.25*i)) for i in range(5))+'. Each enemy is hit at most once by each ring. The pressure waves expand from the release location; enemies can escape or take cover.','']
-            if key=='KRAKENS_WRATH':lines +=['**Requires Bosses’Rise 2.1.2.** Four outer tentacles rise ten ticks apart, then a central tentacle. Outer impacts deal the table value at most once per enemy across the entire ring. The central slam deals triple damage at 5.3 seconds after release. All damage, targeting and cleanup use the addon’s normal rules.','']
-            if key=='SPELLBREAKER':lines +=['**Counterspell:** interrupts native Iron’s player and IMagicEntity long casts when their interruption rules and CounterSpellEvent allow it. Does not cancel already-released spells or arbitrary other magic systems. Up to 32 visible hostile/unowned projectiles in the forward cone are removed; owned projectiles, allies and Bosses’Rise visual adapters are protected.','']
-            lines +=[f"Spell ID: `resonant_arcana:{s['bookId']}`. Inspect any rank in game with `/resonantarcana spell {s['bookId']} <level>`.",'']
-    (ROOT/'SPELLS.md').write_text('\n'.join(lines))
-    print(f"Documented {len(spells)} spells from catalogue.json.")
+ data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells'];optional=sum(s['kind'].startswith('BOSS_') for s in spells.values())
+ lines=['# Spell reference','',f"**{len(spells)-optional} core spells + {optional} optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.",'',
+ 'Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.', '',
+ 'Values are defaults before school power, equipment, resistances and server settings. Damage and healing use health points: two health points equal one heart. Damage is per normal hit or pulse; descriptions explain final multipliers. Travel time and release sequences occur after the cast bar. Ordinary spells have up to five ranks; Doom and cataclysms have one Legendary rank.', '',
+ 'Offensive spells protect the caster, eligible teammates and owned pets. Healing affects the caster, owned pets and visible scoreboard teammates, plus teamless players when enabled. Cover, enemy movement, normal damage immunity and status immunities can change results. Spells do not destroy terrain or intentionally load new chunks.', '',
+ 'Cataclysm windups use a large summoning circle at the caster’s feet, with native particles gathering into its perimeter. The centre stays clear for visibility. Each ritual has individual charge audio. No AAAParticles renderer or assets are used.', '',
+ '## Categories', '', '| Category | Spells |', '| --- | ---: |']
+ for key,title in CATEGORIES.items():lines.append(f"| [{title}](#{key.lower()}) | {sum(s['category']==key for s in spells.values())} |")
+ lines+=['','## Schools','','| School | Spells |','| --- | ---: |']
+ for school in data['schools']:lines.append(f"| {school['title']} | {len(school['spells'])} |")
+ for key,title in CATEGORIES.items():
+  lines +=['',f'<a id="{key.lower()}"></a>',f'## {title}','']
+  for ident,s in spells.items():
+   if s['category']!=key:continue
+   lines +=[f"### {s['title']}",'',s['description'],'',f"**{SCHOOL[s['theme']]}** · Cast **{num(s['castTicks']/20)}s** · Cooldown **{num(s['cooldown']/20)}s** · Range **{num(s['range'])} blocks** · Radius / half-width **{num(s['radius'])} blocks**.",'', '| Rank | Base damage | Base healing | Mana |','| --- | ---: | ---: | ---: |']
+   for rank in range(1,s['maxLevel']+1):
+    power=1+(rank-1)*data['powerPerLevel']/100;lines.append(f"| {['I','II','III','IV','V'][rank-1]} | {num(s['damage']*power) if s['damage'] else '—'} | {num(s['healing']*power) if s['healing'] else '—'} | {s['mana']+(rank-1)*s['manaStep']} |")
+   lines.append('')
+   if s['duration']:lines +=[f"Base release / active phase: **{num(s['duration']/20)}s**.",'']
+   if ident=='WARSCREAM':lines+=['Resistance I and hostile-mob taunt last **3/4/5/6/7 seconds** at ranks I–V. Three damage pulses. No offensive damage buff or absorption shield.','']
+   if ident=='SERAPH_ASCENDANT':lines+=['Flight lasts twenty seconds at every rank. Healing scales with spell power; the nearby spell-power blessing stays at +15%. Flight is removed on cleanup, with four seconds of Slow Falling. Other sources of native flight are preserved.','']
+   if s['kind'] in ('BLADE_ARC','BLADE_THRUST','DRAW','REVERSAL','BREAKER'):lines+=['Weapon contribution: add half the melee attack attribute at release before spell-power scaling.','']
+   if s['kind']=='CATACLYSM':lines+=['Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.','']
+   if s['kind'].startswith('BOSS_'):lines+=['Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.','']
+   lines +=[f"Spell ID: `resonant_arcana:{s['bookId']}`. Inspect ranks with `/resonantarcana spell {s['bookId']} <rank>`.",'']
+ (ROOT/'SPELLS.md').write_text('\n'.join(lines))
+ print('Documented',len(spells),'categorized spells.')
 if __name__=='__main__':main()

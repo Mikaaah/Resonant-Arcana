@@ -1,69 +1,20 @@
-"""Refresh generated wiki pages from the catalogue and public guides."""
-import json
-import re
+"""Refresh documentation source pages by functional category and school."""
 from pathlib import Path
-import build_docs
-
-ROOT = Path(__file__).resolve().parents[1]
-
-
+import json,re,build_docs
+ROOT=Path(__file__).resolve().parents[1]
 def main():
-    build_docs.main()
-    data = json.loads((ROOT / 'src/main/resources/assets/resonant_arcana/catalogue.json').read_text())
-    spells = data['spells']
-    optional = sum(s['kind'].startswith('BOSS_') for s in spells.values())
-    core = len(spells) - optional
-    version = re.search(r"version = '([^']+)'", (ROOT / 'build.gradle').read_text())[1]
-    wiki = ROOT / 'wiki'
-    wiki.mkdir(exist_ok=True)
-    guide = (ROOT / 'SPELLS.md').read_text()
-    footer = '\n\n[← Wiki Home](Home.md)\n'
-    for anchor, body in re.findall(r'<a id="([^"]+)"></a>\n(.*?)(?=<a id=|\Z)', guide, re.S):
-        filename = anchor.title() + '.md'
-        (wiki / filename).write_text(body.replace('## ', '# ', 1).strip() + footer)
-    lines = ['# Wands & Spell Index', '',
-             f'**{core} core spells + {optional} optional Bosses’Rise spells**, organized into ten wands.', '',
-             '| Wand | School | Spells with Bosses’Rise |', '| --- | --- | ---: |']
-    for wand in data['wands']:
-        page = wand['title'].replace(' ', '-') + '.md'
-        lines.append(f"| [{wand['title']}]({page}) | {build_docs.SCHOOL[wand['theme']]} | {len(wand['spells'])} |")
-    lines += ['', 'Optional spells appear only with Bosses’Rise 2.1.2. See [Bosses’Rise Compatibility](Bosses-Rise-Compatibility.md) and the [full spell reference](../SPELLS.md).']
-    (wiki / 'Wand-Index.md').write_text('\n'.join(lines) + footer)
-    optional_text = guide.split('## Optional Bosses’Rise spells', 1)[1].split('## Visual presentation', 1)[0]
-    boss_table = '''
-| Boss | Spells | Wand |
-| --- | --- | --- |
-| Kraken | Grasp, Wrath, Undertow | [Venom](Venom-Wand.md) |
-| Yeti | Ice Spike Eruption, Glacial Wall | [Frost](Frost-Wand.md) |
-| Underworld Knight / Helvar | Rift, Fracture, Swordfall | [Dark](Dark-Wand.md) |
-| Sandworm | Eruption, Quicksand | [Rift](Rift-Wand.md) |
-| Infernal Dragon | Infernal Barrage, Dragon’s Cataclysm | [Cinder](Cinder-Wand.md) |
-
-Helvar’s Swordfall renders the installed mod’s original held Knight Sword geometry and animated textures, with its blade tip pointing down. Its saved spell ID is unchanged. After the cast bar, the sword falls for 1.2 seconds before one area impact. It does not drop an obtainable item or alter blocks.
-'''
-    (wiki / 'Bosses-Rise-Compatibility.md').write_text('# Optional Bosses’Rise Integration\n' + optional_text + boss_table + footer)
-    preface = guide.split('## Optional Bosses’Rise spells', 1)[0].replace('# Spell reference', '# Spell Mechanics', 1)
-    mechanics = guide.split('## Shared recovery', 1)[1].split('<a id=', 1)[0]
-    (wiki / 'Spell-Mechanics.md').write_text(preface + '## Visual presentation' + guide.split('## Visual presentation', 1)[1].split('## Wand index', 1)[0] + '## Shared recovery' + mechanics + footer)
-    for source, page in [('CONFIGURATION.md', 'Configuration.md'), ('CHANGELOG.md', 'Changelog.md')]:
-        (wiki / page).write_text((ROOT / source).read_text().rstrip() + footer)
-    home = wiki / 'Home.md'
-    if home.exists():
-        text = re.sub(r'Current documented release: [^*]+', f'Current documented release: {version}', home.read_text())
-        text = re.sub(r'\d+ core spells \+ \d+ optional Bosses’Rise spells', f'{core} core spells + {optional} optional Bosses’Rise spells', text)
-        home.write_text(text)
-    for page in wiki.glob('*.md'):
-        text = page.read_text()
-        for filename in ['SPELLS.md', 'README.md', 'CONTRIBUTING.md', 'LICENSE']:
-            text = text.replace('](' + filename, '](../' + filename)
-        text = text.replace('](CONFIGURATION.md', '](Configuration.md')
-        text = text.replace('**AAAParticles is optional.** Installing it adds 222 packaged native effects; Iron’s particles and vanilla trails remain available without it. The addon includes no native renderer or extra particle-mod dependency.',
-                            '**AAAParticles is optional and limited to 24 spell-circle effects.** Other visuals use vanilla, Iron’s or Bosses’Rise particles and entities. Bosses’Rise spells do not use AAAParticles.')
-        text = text.replace('The build also validates the texture paths of all 222 packaged effects.',
-                            f'Those check counts belong to the previously published build. {version} passes Java 21 compilation and Gradle validation of 24 packaged effects; fresh dedicated-server checks remain pending.')
-        page.write_text(text)
-    print(f'Refreshed wiki for {version}: {len(spells)} spells.')
-
-
-if __name__ == '__main__':
-    main()
+ build_docs.main();data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());wiki=ROOT/'wiki';wiki.mkdir(exist_ok=True)
+ for p in wiki.glob('*Wand*.md'):p.unlink()
+ guide=(ROOT/'SPELLS.md').read_text();sidebar=['[Home](Home.md)','[Equipment](Equipment.md)','[All Spells](../SPELLS.md)','[Configuration](Configuration.md)']
+ for key,title in build_docs.CATEGORIES.items():
+  body=guide.split(f'<a id="{key.lower()}"></a>',1)[1].split('<a id=',1)[0].strip();name=key.title().replace('_','-')+'.md';(wiki/name).write_text(body+'\n\n[← Home](Home.md)\n');sidebar.append(f'[{title}]({name})')
+ equipment=(ROOT/'README.md').read_text().split('## Equipment',1)[1].split('## ',1)[0]
+ (wiki/'Equipment.md').write_text('# Equipment\n'+equipment)
+ (wiki/'_Sidebar.md').write_text('\n\n'.join(sidebar)+'\n')
+ (wiki/'Home.md').write_text('# Resonant Arcana\n\nIron’s Spells ’n Spellbooks addon for NeoForge 1.21.1. Three legendary spellbooks, one debug wand, and '+str(len(data['spells']))+' spells.\n\n[Equipment](Equipment.md) · [Spell reference](../SPELLS.md) · [Configuration](Configuration.md)\n')
+ for src,dst in [('CHANGELOG.md','Changelog.md'),('CONFIGURATION.md','Configuration.md')]: (wiki/dst).write_text((ROOT/src).read_text())
+ for stale in ['Wand-Index.md','Spell-Mechanics.md','Controls-and-Commands.md','Getting-Started.md','Multiplayer-and-Compatibility.md','Troubleshooting.md','Developers-and-Contributors.md','Bosses-Rise-Compatibility.md']:
+  p=wiki/stale
+  if p.exists():p.write_text('# '+stale[:-3].replace('-',' ')+'\n\nSee the current [README](../README.md), [equipment guide](Equipment.md), [spell reference](../SPELLS.md) and [configuration](Configuration.md).\n')
+ print('Refreshed category documentation.')
+if __name__=='__main__':main()

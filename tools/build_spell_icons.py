@@ -17,7 +17,12 @@ def main(only=None):
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
         if kind=='CATACLYSM':
             # Each single-rank ultimate has a silhouette matching its release sequence.
-            if name=='ASTRAL_APOCALYPSE':
+            if name=='EXPLOSION':
+                for arm in range(12):
+                    a=arm*math.pi/6;line([(64+math.cos(a)*25,70+math.sin(a)*25),(64+math.cos(a)*51,70+math.sin(a)*43)],7)
+                d.ellipse((37,43,91,96),fill=c);d.ellipse((49,53,79,84),fill=white)
+                line([(64,44),(64,16)],9,white)
+            elif name=='ASTRAL_APOCALYPSE':
                 for x,y in [(30,35),(94,35),(64,87)]:
                     d.polygon([(x,y-18),(x+6,y-5),(x+18,y),(x+5,y+6),(x,y+18),(x-6,y+5),(x-18,y),(x-5,y-6)],fill=c)
                 line([(30,35),(94,35),(64,87),(30,35)],3,white)
@@ -54,6 +59,14 @@ def main(only=None):
                     for sign in [-1,1]:
                         x,y=64+math.cos(a)*31,64+math.sin(a)*31
                         line([(x,y),(x+math.cos(a+sign*2.2)*15,y+math.sin(a+sign*2.2)*15)],5,white)
+        elif kind=='ASCENSION':
+            for sign in [-1,1]:
+                d.polygon([(64,93),(64+sign*51,20),(64+sign*45,63),(64+sign*20,99)],fill=c)
+                for feather in range(4):line([(64+sign*(12+feather*7),81-feather*8),(64+sign*(26+feather*8),39-feather*4)],4,white)
+            d.ellipse((52,12,76,28),outline=white,width=4)
+        elif kind=='DEVASTATOR':
+            line([(13,104),(104,24)],21);line([(16,104),(105,24)],9,white)
+            for x,y in [(37,82),(62,58),(86,36)]:d.ellipse((x-13,y-13,x+13,y+13),outline=c,width=4)
         elif kind=='BOSS_TENTACLE':
             points=[(19,107),(25,82),(42,75),(70,75),(88,60),(90,40),(76,26),(57,30),(52,44),(62,50)]
             line(points,19);line(points,6,white)
@@ -180,7 +193,7 @@ def main(only=None):
             for a in range(6):
                 v=a*math.pi/3;line([(64,64),(64+math.cos(v)*48,64+math.sin(v)*48)],8)
         elif kind=='DOOM':
-            d.ellipse((25,25,103,103),fill='#08040f',outline=c,width=9)
+            d.ellipse((25,25,103,103),outline='#3c1620',width=9)
             d.arc((8,31,120,97),12,340,fill=white,width=5)
         elif kind=='METEOR':
             d.ellipse((24,55,79,110),fill=c);d.ellipse((37,68,65,96),fill=white)

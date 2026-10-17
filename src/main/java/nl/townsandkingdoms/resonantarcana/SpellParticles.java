@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-/** Native Iron's particles also provide the full visual fallback without AAAParticles. */
+/** Bounded native particle helpers for vanilla and Iron's effects. */
 final class SpellParticles {
     private static int remaining;
     private static long frame;
