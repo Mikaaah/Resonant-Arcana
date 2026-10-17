@@ -38,9 +38,10 @@ final class NativeSpellEffects {
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
+        if(spell==Spell.I_AM_ATOMIC){AtomicEffects.visual(level,stage,p,end,size);return;}
         if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
-            case RITUAL_TARGET -> {} // Explosion target choreography is owned by CataclysmEffects.
+            case RITUAL_TARGET,RITUAL_END -> {} // Explosion target choreography is owned by CataclysmEffects.
             case AREA -> area(level,spell,p,end,size,time,count);
             case LINK,STRIKE -> beam(level,spell,p,end,size,time,count);
             case FLIGHT -> flight(level,spell,p,end,size,time,count);

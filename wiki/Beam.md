@@ -134,9 +134,9 @@ Spell ID: `resonant_arcana:cryo_lance`. Inspect ranks with `/resonantarcana spel
 
 ### Arcane Devastator
 
-Charge a broad arcane cannon and fire one piercing blast along your aim. Every visible enemy intersecting the beam takes one hit. Solid cover stops the blast.
+Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along the released aim. Each visible enemy entering it can take one 120-base-damage hit. Solid cover stops the beam. The recording uses its original pitch and this spell has a fixed windup.
 
-**Evocation** · Cast **6s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
+**Evocation** · Cast **4.2s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -146,7 +146,7 @@ Charge a broad arcane cannon and fire one piercing blast along your aim. Every v
 | IV | 210 | — | 280 |
 | V | 240 | — | 300 |
 
-Base release / active phase: **0.7s**.
+Base release / active phase: **9.7s**.
 
 Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarcana spell arcane_devastator <rank>`.
 

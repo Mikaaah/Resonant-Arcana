@@ -14,11 +14,11 @@ public final class WandNetwork {
         public static final StreamCodec<RegistryFriendlyByteBuf,Action> CODEC=StreamCodec.of((buf,msg)->buf.writeVarInt(msg.action),buf->new Action(buf.readVarInt()));
         @Override public Type<Action> type(){return TYPE;}
     }
-    public record Chant(int caster,boolean start,float pitch,float gain) implements CustomPacketPayload {
+    public record Chant(int caster,int spell,boolean start,float pitch,float gain) implements CustomPacketPayload {
         public static final Type<Chant> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"chant"));
-        public static final StreamCodec<RegistryFriendlyByteBuf,Chant> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeBoolean(m.start);b.writeFloat(m.pitch);b.writeFloat(m.gain);},b->new Chant(b.readVarInt(),b.readBoolean(),b.readFloat(),b.readFloat()));
+        public static final StreamCodec<RegistryFriendlyByteBuf,Chant> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeVarInt(m.spell);b.writeBoolean(m.start);b.writeFloat(m.pitch);b.writeFloat(m.gain);},b->new Chant(b.readVarInt(),b.readVarInt(),b.readBoolean(),b.readFloat(),b.readFloat()));
         @Override public Type<Chant> type(){return TYPE;}
-        boolean valid(){return caster>=0&&Float.isFinite(pitch)&&pitch>=.5f&&pitch<=2&&Float.isFinite(gain)&&gain>=0&&gain<=8;}
+        boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&RecordedSpells.handles(Spell.values()[spell])&&Float.isFinite(pitch)&&pitch>=.5f&&pitch<=2&&Float.isFinite(gain)&&gain>=0&&gain<=8;}
     }
     public record Select(ResourceLocation wand,int slot) implements CustomPacketPayload {
         public static final Type<Select> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"select"));
@@ -53,8 +53,8 @@ public final class WandNetwork {
             &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("14");
-        r.playToClient(Chant.TYPE,Chant.CODEC,(msg,ctx)->ctx.enqueueWork(()->ExplosionAudio.handle(msg)));
+        var r=e.registrar("15");
+        r.playToClient(Chant.TYPE,Chant.CODEC,(msg,ctx)->ctx.enqueueWork(()->RecordedAudio.handle(msg)));
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{
             if(ctx.player() instanceof ServerPlayer player)SpellEngine.action(player,msg.action);
         }));

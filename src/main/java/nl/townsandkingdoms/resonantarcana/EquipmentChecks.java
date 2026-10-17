@@ -73,14 +73,14 @@ final class EquipmentChecks {
         try{
             SpellEngine.clear();p.setPos(0,81,0);p.setYRot(0);p.setXRot(0);data.resetCastingState();data.setMana(1000);data.getPlayerCooldowns().clearCooldowns();
             data.initiateCast(spell,1,spell.getEffectiveCastTime(1,p),io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,"mainhand");spell.onServerPreCast(level,1,p,data);
-            check.accept(spell.getEffectiveCastTime(1,p)==420,"Explosion base windup uses the full twenty-one-second chant");
-            check.accept(Math.abs(ExplosionRitual.chantPitch(420)*420-419)<.001,"chant pitch aligns the source recording to the native cast duration");
+            check.accept(spell.getEffectiveCastTime(1,p)==154,"Explosion uses its redesigned 7.7-second fixed recording");
+            check.accept(ExplosionRitual.chantPitch(154)==1,"recordings stay at their original pitch");
             var attribute=p.getAttribute(AttributeRegistry.CAST_TIME_REDUCTION);double old=attribute.getBaseValue();
             try{attribute.setBaseValue(old+.25);int accelerated=spell.getEffectiveCastTime(1,p);
-                check.accept(accelerated<420&&Math.abs(ExplosionRitual.chantPitch(accelerated)*accelerated-419)<.01,"native cast reduction keeps the chant aligned");
-                attribute.setBaseValue(old+4);check.accept(spell.getEffectiveCastTime(1,p)>=210,"extreme casting speed stays inside the supported audio pitch range");
+                check.accept(accelerated==154,"cast-speed gear cannot pitch-shift the cinematic recording");
+                attribute.setBaseValue(old+4);check.accept(spell.getEffectiveCastTime(1,p)==154,"extreme casting speed preserves the recorded cue timing");
             }finally{attribute.setBaseValue(old);}
-            for(String id:java.util.List.of("explosion_chant","explosion_blast"))
+            for(String id:java.util.List.of("explosion_charge","explosion_release"))
                 check.accept(EquipmentChecks.class.getResource("/assets/resonant_arcana/sounds/"+id+".ogg")!=null,"recorded audio is packaged: "+id);
             var locked=ExplosionRitual.locked(p);
             check.accept(locked!=null&&locked.point().distanceToSqr(first.getBoundingBox().getCenter())<.1,"Explosion marks its initial aimed enemy");

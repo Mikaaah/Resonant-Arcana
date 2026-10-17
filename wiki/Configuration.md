@@ -93,23 +93,25 @@ The Spells creative tab contains every enabled scroll. Categories remain availab
 
 Explosion snapshots the aimed entity position or block/range mark at the beginning of its native cast. Turning does not move it. A new cast acquires a new mark; cancellation clears the snapshot and cannot detonate it. The mark must remain loaded and within 64 blocks with line of sight at release.
 
-### Explosion recording in 0.23
+### Recorded spells in 0.24
 
-The owner-supplied recording is included as two streamed OGG assets: `explosion_chant` (20.95 seconds) and `explosion_blast` (the remaining 6.75 seconds). The base native windup is 420 ticks / 21 seconds. Native cast-speed equipment adjusts the chant pitch so its end stays aligned with the cast bar. Explosion's effective windup is bounded to 210–838 ticks, keeping playback inside the supported pitch range of 0.5–2.0. Other spells' cast-speed rules are unchanged.
+These four spells have fixed windups so voices and sound effects keep their original pitch. Cast-speed equipment still affects other spells. Native mana, cooldowns, interruption, spell power and enabled-state settings remain active.
 
-The target locks at the beginning. The recorded blast and damage start on the first release tick; there is no extra warning delay. The caster hears its blast directly, while nearby players hear it at the marked position. Generic Explosion charging pulses and overlapping vanilla blast cues are suppressed so the recording can be heard clearly.
+| Spell | Fixed charge | Audio after release | Source |
+| --- | ---: | ---: | --- |
+| Explosion | 7.7 s | 6.28 s | Megumin Explosion (Sound Redesign), entire recording |
+| I Am Atomic | 13.5 s | 18.57 s | iamatomic, entire recording |
+| Arcane Devastator | 4.2 s | 9.66 s | Cosmic Beam, entire recording |
+| Doom | 10 s | 12.5 s | Laser of Doom, selected consecutive excerpts |
 
-Chants are tracked per caster on the client. Cancellation, death and dimension changes stop that instance. Completing or cancelling one caster's ritual does not stop another caster's chant. Server audio gain and the client's Players slider still apply.
+Each complete source is loudness-normalized before splitting; neither phase is independently amplified. The old bass-boosted Explosion recording and pitch scaling are removed. Voices and buildup follow their caster, while released audio comes from the spell origin. Optional direct caster impact feedback and all existing audio sliders still apply. Caster/spell-specific sound instances stop on interruption, death and dimension changes without silencing another ritual. Released tails finish naturally.
 
-Resource packs can replace `resonant_arcana:explosion_chant` and `resonant_arcana:explosion_blast` through `assets/resonant_arcana/sounds.json`; use streamed OGG files. A replacement chant should have the same 20.95-second source duration to keep the default timing. For example:
+Explosion's existing sound-event IDs `resonant_arcana:explosion_chant` and `resonant_arcana:explosion_blast` are preserved and point to the redesigned recording. Other IDs are `atomic_charge`, `atomic_release`, `cosmic_charge`, `cosmic_release`, `doom_laser_charge` and `doom_laser_release`, all in the `resonant_arcana` namespace. Resource packs can override those events through `assets/resonant_arcana/sounds.json`. Replacement charge recordings should retain the corresponding fixed duration.
 
-```json
-{
-  "explosion_chant": {
-    "replace": true,
-    "sounds": [{"name": "resonant_arcana:my_explosion_chant", "stream": true}]
-  }
-}
-```
+### Atomic containment
 
-Explosion's native particles and dedicated AAA seal use crimson/red, amber and a pale warm core. The two ember ribbons at each seal counter-rotate into the diagonal beacon; the core brightens in the second half of charging. Optional AAA usage remains limited to seals and Doom. The native particle fallback remains available.
+I Am Atomic anchors a sixteen-block sphere at the start of its native cast. Moving more than three blocks interrupts it. Enemies captured at initiation are returned to their last clear position if they cross the sphere, subject to loaded-space and collision checks. Bosses and fully knockback-resistant enemies resist this displacement. Hostile-owned projectiles crossing the boundary are absorbed; allied projectiles are preserved. Visible allies receive brief, refreshed Resistance I while channeling.
+
+The focus is a temporary, invulnerable netherite sword display. Interruption and release remove it; it cannot save into chunks or drop an item. The violet membrane is translucent, with native energy streams gathering at the sword tip. One 512-base-damage detonation occurs at the first release tick. Its expanding shock fronts are visual only. Caster/allied protection, PvP rules and line of sight remain authoritative, and terrain is never destroyed.
+
+Arcane Devastator now sustains its beam for 9.7 seconds. Each enemy can be damaged once, including enemies entering after release. The path is clipped against current loaded terrain each tick, so newly placed cover also stops it.

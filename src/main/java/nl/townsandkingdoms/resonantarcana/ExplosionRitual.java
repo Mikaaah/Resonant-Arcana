@@ -15,11 +15,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 /** One immutable aim snapshot per native cast; cancellation clears it with Iron's cast data. */
 final class ExplosionRitual {
-    static final int CHANT_TICKS=419; // 20.95 seconds in the supplied source recording.
-    static final ResourceLocation CHANT_ID=ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"explosion_chant");
-    static final DeferredRegister<SoundEvent> SOUNDS=DeferredRegister.create(Registries.SOUND_EVENT,ResonantArcana.ID);
-    static final java.util.function.Supplier<SoundEvent> CHANT=SOUNDS.register("explosion_chant",()->SoundEvent.createVariableRangeEvent(CHANT_ID));
-    static final java.util.function.Supplier<SoundEvent> BLAST=SOUNDS.register("explosion_blast",()->SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"explosion_blast")));
+    static final int CHANT_TICKS=154;
+    static final DeferredRegister<SoundEvent> SOUNDS=RecordedSpells.SOUNDS;
+    static final java.util.function.Supplier<SoundEvent> CHANT=()->RecordedSpells.chargeEvent(Spell.EXPLOSION);
+    static final java.util.function.Supplier<SoundEvent> BLAST=()->RecordedSpells.releaseEvent(Spell.EXPLOSION);
     record Locked(Vec3 point,Vec3 top,ResourceKey<Level> dimension) implements ICastData {
         @Override public void reset(){} // Scoped to MagicData, never retained in a global player map.
         boolean valid(ServerPlayer p){
@@ -35,8 +34,7 @@ final class ExplosionRitual {
         // Keep the mark just outside the hit surface, so its blast has line of sight.
         point=point.subtract(p.getLookAngle().scale(.08));
         data.setAdditionalCastData(new Locked(point,beamTop(p,point),p.serverLevel().dimension()));
-        var cue=new WandNetwork.Chant(p.getId(),true,chantPitch(data.getCastDuration()),(float)(1.5*ArcanaConfig.SOUND_VOLUME.get()));
-        for(var listener:p.serverLevel().players())if(listener==p||listener.distanceToSqr(p)<64*64)PacketDistributor.sendToPlayer(listener,cue);
+        RecordedSpells.start(p,Spell.EXPLOSION);
     }
     static Locked locked(ServerPlayer p){return MagicData.getPlayerMagicData(p).getAdditionalCastData() instanceof Locked l?l:null;}
     static Vec3 beamTop(ServerPlayer p,Vec3 point){
@@ -49,18 +47,7 @@ final class ExplosionRitual {
         var l=locked(p);if(l==null)return;
         if(elapsed%4==0)SpellVisuals.send(p.serverLevel(),Spell.EXPLOSION,SpellVisuals.Stage.RITUAL_TARGET,l.point(),l.top(),5+2*progress);
     }
-    static float chantPitch(int castTicks){return Math.clamp(CHANT_TICKS/(float)Math.max(1,castTicks),.5f,2);}
-    static void blast(SpellEngine.Cast c){
-        stopChant(c.caster);
-        float gain=(float)(2.4*ArcanaConfig.SOUND_VOLUME.get()*ArcanaConfig.IMPACT_VOLUME.get());
-        if(gain<=0)return;
-        boolean direct=ArcanaConfig.CASTER_IMPACTS.get();
-        if(direct)c.caster.playNotifySound(BLAST.get(),SoundSource.PLAYERS,gain,1);
-        c.level.playSound(direct?c.caster:null,c.pos.x,c.pos.y,c.pos.z,BLAST.get(),SoundSource.PLAYERS,gain,1);
-    }
-    static void stopChant(ServerPlayer p){
-        var packet=new WandNetwork.Chant(p.getId(),false,1,0);
-        // Each listener stops only this caster's instance, including listeners who have moved away.
-        for(var listener:p.serverLevel().players())PacketDistributor.sendToPlayer(listener,packet);
-    }
+    static float chantPitch(int castTicks){return 1;}
+    static void blast(SpellEngine.Cast c){RecordedSpells.release(c);}
+    static void stopChant(ServerPlayer p){RecordedSpells.stop(p,Spell.EXPLOSION);}
 }

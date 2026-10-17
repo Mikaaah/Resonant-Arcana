@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.24.0-alpha
+
+- Add Legendary I Am Atomic: a fixed 13.5-second anchored ritual, translucent violet containment sphere, captured-enemy boundary control, hostile-projectile absorption, temporary netherite sword focus and one protected 512-damage detonation over sixteen blocks. Moving more than three blocks interrupts it. Bosses and fully knockback-resistant foes resist containment; terrain is preserved.
+- Use the entire supplied Atomic recording, including the 18.57-second release tail. Add a dedicated icon, native registration, category and descriptions.
+- Replace the old bass-boosted Explosion track with the supplied Sound Redesign: 7.7-second charge plus full blast tail. Preserve its public sound-event IDs.
+- Give Arcane Devastator the Cosmic Beam recording, a 4.2-second charge and a 9.7-second sustained piercing beam. Each target can be hit once, including late entrants; new cover clips the beam.
+- Give Doom selected consecutive charge/release excerpts from Laser of Doom while preserving its ten-second cast and gameplay.
+- Normalize each complete recording before splitting, retain original pitch and use fixed recorded windups. Native casting bonuses still affect other spells. Keep cancellation scoped to caster and spell; suppress competing generic cues and add subtitles.
+- Extend server fixtures for containment, interruption, projectile filtering, exact damage, ally/cover protection, original-pitch timing, sustained beams and resource packaging.
+
 ## 0.23.0-alpha
 
 - Include the owner-supplied Explosion chant and bass-heavy blast as two streamed OGG assets split at 20.95 seconds. Preserve the full decoded recording and keep the original MP3 untouched.

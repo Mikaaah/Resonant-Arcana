@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.23.0-alpha'
+version = '0.24.0-alpha'
 group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -38,10 +38,16 @@ tasks.register('verifyPackagedAssets') {
                 if (entry == null) throw new GradleException('Missing selective AAA effect '+id)
                 if (new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'EFKE') throw new GradleException('Invalid AAA effect '+id)
             }
-            ['explosion_chant','explosion_blast'].each { id ->
+            ['explosion_charge','explosion_release','atomic_charge','atomic_release','cosmic_charge','cosmic_release','doom_laser_charge','doom_laser_release'].each { id ->
                 def entry = jar.getEntry('assets/resonant_arcana/sounds/'+id+'.ogg')
-                if (entry == null || new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'OggS') throw new GradleException('Missing or invalid Explosion audio '+id)
+                if (entry == null || new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'OggS') throw new GradleException('Missing or invalid recorded spell audio '+id)
             }
+            if (paths.any { it.endsWith('/sounds/explosion_chant.ogg') || it.endsWith('/sounds/explosion_blast.ogg') }) throw new GradleException('Retired bass-boosted recording in JAR')
+            def soundDefinitions = new groovy.json.JsonSlurper().parse(jar.getInputStream(jar.getEntry('assets/resonant_arcana/sounds.json')))
+            soundDefinitions.values().each { event -> event.sounds.each { sound ->
+                def asset = 'assets/resonant_arcana/sounds/'+sound.name.split(':')[1]+'.ogg'
+                if (!paths.contains(asset)) throw new GradleException('Unresolved sound resource '+asset)
+            } }
             ['sigil','star','flame','glow','halo','shard'].each { id ->
                 if (!paths.contains('assets/resonant_arcana/effeks/textures/'+id+'.png')) throw new GradleException('Missing AAA texture '+id)
             }

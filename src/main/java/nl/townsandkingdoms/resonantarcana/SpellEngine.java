@@ -64,6 +64,7 @@ public final class SpellEngine {
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
+        if(spell==Spell.I_AM_ATOMIC){AtomicRitual.charge(player,progress,elapsed);return;}
         if(spell==Spell.EXPLOSION)ExplosionRitual.charge(player,progress,elapsed);
         if(spell!=Spell.SOUL_CANNON&&spell!=Spell.DOOM&&spell.kind!=Spell.Kind.CATACLYSM)SpellAudio.charging(player,spell,progress,elapsed);
         Vec3 center=clipLoaded(player.serverLevel(),eye,dir,spell==Spell.DOOM?3:2,player).add(0,spell==Spell.DOOM?1.8:-0.18,0);
@@ -121,7 +122,7 @@ public final class SpellEngine {
             trail(level,muzzle.add(side.scale(Math.cos(a)*.35)).add(0,Math.sin(a)*.25,0).add(direction.scale(t*.6)),spell.theme,.02);
         }
         if(spell.theme==Spell.Theme.SOUL)level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,start.x,start.y,start.z,6,0.15,0.15,0.15,0.02);
-        if(spell!=Spell.EXPLOSION&&(book==null||!book.prepared()))SpellAudio.cast(player,spell);
+        if(!RecordedSpells.handles(spell)&&(book==null||!book.prepared()))SpellAudio.cast(player,spell);
         SpellVisuals.send(level,spell,SpellVisuals.Stage.CAST,muzzle,muzzle.add(direction),0.65);
 
         if(SpellActions.handles(spell.kind))timed=SpellActions.begin(cast);else switch(spell.kind){
@@ -197,13 +198,13 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.spell.kind!=Spell.Kind.CATACLYSM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
+        if(!RecordedSpells.handles(c.spell)&&!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.spell.kind!=Spell.Kind.CATACLYSM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
         if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
                 double radius=Math.min(c.spell.radius,2+c.age*.25);
                 if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos.add(0,5,0),c.pos.add(0,5,0),radius);
-                if(c.age%20==1)SpellAudio.world(c.level,c.pos,"entity.warden.heartbeat",1,.55f);
+                if(c.age==1)RecordedSpells.release(c);
                 for(var victim:near(c.caster,c.pos,radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
                     Vec3 pull=c.pos.subtract(victim.getBoundingBox().getCenter());
                     victim.setDeltaMovement(pull.normalize().scale(Math.min(.5,pull.length()*.13)));victim.hurtMarked=true;
@@ -623,7 +624,7 @@ public final class SpellEngine {
         for(int i=0;i<count;i++){double a=i*Math.PI*2/count+offset;trail(level,center.add(Math.cos(a)*radius,0,Math.sin(a)*radius),theme,0.015);}
     }
     static void impactFeedback(Cast c,Vec3 pos){
-        if(c.spell.kind==Spell.Kind.CANNON||c.spell==Spell.EXPLOSION)return;
+        if(c.spell.kind==Spell.Kind.CANNON||RecordedSpells.handles(c.spell))return;
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
         if(c.spell.kind!=Spell.Kind.METEOR&&c.spell.kind!=Spell.Kind.RAIL&&c.spell.kind!=Spell.Kind.COLLAPSE&&c.spell.kind!=Spell.Kind.DOOM)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);

@@ -104,13 +104,13 @@ final class IronsCompat {
         @Override public int getSpellCooldown(){return Math.max(1,(int)Math.ceil(super.getSpellCooldown()*ArcanaConfig.COOLDOWNS.get()));}
         @Override public int getRecastCount(int level,LivingEntity entity){return spell==Spell.CRIMSON_REVERSAL?2:0;}
         @Override public int getEffectiveCastTime(int level,LivingEntity entity){
-            if(spell==Spell.EXPLOSION)return Math.clamp(super.getEffectiveCastTime(level,entity),210,838); // Keep native chant pitch within OpenAL's supported range.
+            if(RecordedSpells.handles(spell))return spell.castTicks(); // Preserve the original voices and release cues without pitch shifting.
             return spell==Spell.CRIMSON_REVERSAL&&entity!=null&&MagicData.getPlayerMagicData(entity).getPlayerRecasts().hasRecastForSpell(getSpellId())?0:super.getEffectiveCastTime(level,entity);
         }
         @Override public CastType getCastType(){return castTime>0?CastType.LONG:CastType.INSTANT;}
         @Override public MutableComponent getDisplayName(Player player){return Component.literal(spell.title);}
         @Override public boolean requiresLearning(){return false;}
-        @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0&&spell!=Spell.EXPLOSION?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
+        @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0&&!RecordedSpells.handles(spell)?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
         @Override public Optional<net.minecraft.sounds.SoundEvent> getCastFinishSound(){return Optional.empty();}
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL,PIERCING_ORB,CONE_CHANNEL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
@@ -137,11 +137,17 @@ final class IronsCompat {
             return entity instanceof ServerPlayer player&&SpellEngine.canStart(player,spell);
         }
         @Override public void onServerPreCast(Level level,int spellLevel,LivingEntity entity,MagicData data){
-            if(spell==Spell.EXPLOSION&&entity instanceof ServerPlayer player)ExplosionRitual.lock(player,data);
-            if(castTime>0&&spell!=Spell.EXPLOSION&&!(spell==Spell.CRIMSON_REVERSAL&&data.getPlayerRecasts().hasRecastForSpell(getSpellId()))&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
+            if(entity instanceof ServerPlayer player){
+                if(spell==Spell.EXPLOSION)ExplosionRitual.lock(player,data);
+                else {if(spell==Spell.I_AM_ATOMIC)AtomicRitual.lock(player,data);if(RecordedSpells.handles(spell))RecordedSpells.start(player,spell);}
+            }
+            if(castTime>0&&!RecordedSpells.handles(spell)&&!(spell==Spell.CRIMSON_REVERSAL&&data.getPlayerRecasts().hasRecastForSpell(getSpellId()))&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
         }
         @Override public void onServerCastComplete(Level level,int spellLevel,LivingEntity entity,MagicData data,boolean cancelled){
-            if(spell==Spell.EXPLOSION&&entity instanceof ServerPlayer player)ExplosionRitual.stopChant(player);
+            if(entity instanceof ServerPlayer player){
+                if(RecordedSpells.handles(spell))RecordedSpells.stop(player,spell);
+                if(spell==Spell.I_AM_ATOMIC&&cancelled)AtomicRitual.end(player,data);
+            }
             super.onServerCastComplete(level,spellLevel,entity,data,cancelled);
         }
         @Override public void onServerCastTick(Level level,int spellLevel,LivingEntity entity,MagicData data){
@@ -157,7 +163,7 @@ final class IronsCompat {
                 }
                 ReversalData anchor=spell==Spell.CRIMSON_REVERSAL?new ReversalData(player):null;
                 int cooldown=Utils.applyCooldownReduction(getSpellCooldown(),player);
-                if(castTime>0&&spell!=Spell.EXPLOSION&&spell!=Spell.SOUL_CANNON&&spell!=Spell.SONIC_SCREAM)SpellAudio.cast(player,spell);
+                if(castTime>0&&!RecordedSpells.handles(spell)&&spell!=Spell.SOUL_CANNON&&spell!=Spell.SONIC_SCREAM)SpellAudio.cast(player,spell);
                 boolean success=SpellEngine.castFromSpellbook(player,spell,getSpellPower(spellLevel,player)/100f,getDamageSource(player),cooldown,castTime>0);
                 if(success&&anchor!=null)data.getPlayerRecasts().addRecast(new io.redspace.ironsspellbooks.capabilities.magic.RecastInstance(getSpellId(),spellLevel,2,60,source,anchor),data);
             }

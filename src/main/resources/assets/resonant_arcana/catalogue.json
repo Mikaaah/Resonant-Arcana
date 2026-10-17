@@ -1314,7 +1314,7 @@
       "cooldown": 2400,
       "castTicks": 200,
       "mana": 500,
-      "description": "Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Ten-second base cast; terrain remains intact.",
+      "description": "Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Fixed ten-second recorded windup; terrain remains intact.",
       "manaStep": 10,
       "maxLevel": 1,
       "healing": 0,
@@ -3349,7 +3349,7 @@
       "radius": 16,
       "range": 48,
       "cooldown": 2400,
-      "castTicks": 420,
+      "castTicks": 154,
       "mana": 480,
       "manaStep": 0,
       "maxLevel": 1,
@@ -3360,7 +3360,7 @@
       "role": "Cataclysm",
       "category": "CATACLYSM",
       "bookId": "explosion",
-      "description": "Lock the aimed location and channel the supplied Explosion chant for twenty-one seconds before equipment modifiers. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion immediately detonates the marked area for 256 base damage over sixteen blocks, with the recorded blast. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed."
+      "description": "Lock the aimed location and charge for 7.7 seconds at the original recording pitch. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion detonates the marked area for 256 base damage over sixteen blocks with the redesigned blast audio. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed. This recorded ritual has a fixed windup."
     },
     "SERAPH_ASCENDANT": {
       "title": "Seraph Ascendant",
@@ -3391,18 +3391,39 @@
       "radius": 2.5,
       "range": 48,
       "cooldown": 1000,
-      "castTicks": 120,
+      "castTicks": 84,
       "mana": 220,
       "manaStep": 20,
       "maxLevel": 5,
       "healing": 0,
-      "duration": 14,
+      "duration": 194,
       "interval": 0,
       "pulses": 1,
       "role": "Attack",
       "category": "BEAM",
       "bookId": "arcane_devastator",
-      "description": "Charge a broad arcane cannon and fire one piercing blast along your aim. Every visible enemy intersecting the beam takes one hit. Solid cover stops the blast."
+      "description": "Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along the released aim. Each visible enemy entering it can take one 120-base-damage hit. Solid cover stops the beam. The recording uses its original pitch and this spell has a fixed windup."
+    },
+    "I_AM_ATOMIC": {
+      "title": "I Am Atomic",
+      "kind": "CATACLYSM",
+      "theme": "DARK",
+      "damage": 512,
+      "radius": 16,
+      "range": 32,
+      "cooldown": 3600,
+      "castTicks": 270,
+      "mana": 500,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 80,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Cataclysm",
+      "category": "CATACLYSM",
+      "bookId": "i_am_atomic",
+      "description": "Anchor a sixteen-block violet containment sphere and compress mana at a spectral sword tip for 13.5 seconds. Captured enemies are held within the boundary; bosses and fully knockback-resistant foes resist containment. Allies gain brief Resistance I and hostile projectiles crossing the sphere are absorbed. Release one 512-damage violet detonation, sparing allies and terrain. Moving more than three blocks interrupts the ritual. The full recording plays at its original pitch; cast-speed bonuses do not shorten this ritual."
     }
   },
   "schools": [
@@ -3509,7 +3530,8 @@
         "RIFT_DRAW",
         "SANDWORMS_ERUPTION",
         "SANDWORMS_QUICKSAND",
-        "RIFT_COLLISION"
+        "RIFT_COLLISION",
+        "I_AM_ATOMIC"
       ]
     },
     {

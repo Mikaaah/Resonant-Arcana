@@ -20,12 +20,13 @@ final class SpecialSpells {
             if(c.age%20==1)SpellActions.healArea(c,c.pos,c.spell.radius,c.spell.healing(),false);
             return true;
         }
+        c.anchor=clipLoaded(c.level,c.pos,c.dir,c.spell.range,c.caster);
         if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,c.pos,c.anchor,3.2);
-        if(c.age==1){
-            c.hit.clear();for(var victim:near(c.caster,c.pos.lerp(c.anchor,.5),c.spell.range*.5+c.spell.radius))
+        if(c.age==1)RecordedSpells.release(c);
+        {
+            for(var victim:near(c.caster,c.pos.lerp(c.anchor,.5),c.spell.range*.5+c.spell.radius))
                 if(victim.getBoundingBox().inflate(c.spell.radius).clip(c.pos,c.anchor).isPresent()&&visible(c,c.pos,victim.getBoundingBox().getCenter()))hit(c,victim,c.pos,true);
-            SpellAudio.world(c.level,c.pos,"entity.warden.sonic_boom",1.8f,.6f);
-            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.anchor,c.anchor,5);
+            if(c.age==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.anchor,c.anchor,5);
         }
         return c.age<c.duration;
     }

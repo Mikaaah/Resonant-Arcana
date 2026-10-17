@@ -1,6 +1,6 @@
 # Spell reference
 
-**150 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
+**151 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
 
 Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
@@ -23,7 +23,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | [Summons & Constructs](#summon) | 9 |
 | [Strikes & Drains](#melee) | 20 |
 | [Boss Arts](#boss_art) | 12 |
-| [Cataclysms](#cataclysm) | 12 |
+| [Cataclysms](#cataclysm) | 13 |
 
 ## Schools
 
@@ -32,7 +32,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | Evocation | 17 |
 | Blood | 15 |
 | Fire | 18 |
-| Ender | 32 |
+| Ender | 33 |
 | Lightning | 15 |
 | Eldritch | 15 |
 | Nature | 16 |
@@ -486,9 +486,9 @@ Spell ID: `resonant_arcana:cryo_lance`. Inspect ranks with `/resonantarcana spel
 
 ### Arcane Devastator
 
-Charge a broad arcane cannon and fire one piercing blast along your aim. Every visible enemy intersecting the beam takes one hit. Solid cover stops the blast.
+Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along the released aim. Each visible enemy entering it can take one 120-base-damage hit. Solid cover stops the beam. The recording uses its original pitch and this spell has a fixed windup.
 
-**Evocation** · Cast **6s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
+**Evocation** · Cast **4.2s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -498,7 +498,7 @@ Charge a broad arcane cannon and fire one piercing blast along your aim. Every v
 | IV | 210 | — | 280 |
 | V | 240 | — | 300 |
 
-Base release / active phase: **0.7s**.
+Base release / active phase: **9.7s**.
 
 Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarcana spell arcane_devastator <rank>`.
 
@@ -2634,7 +2634,7 @@ Spell ID: `resonant_arcana:dragons_pyre`. Inspect ranks with `/resonantarcana sp
 
 ### DOOM
 
-Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Ten-second base cast; terrain remains intact.
+Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Fixed ten-second recorded windup; terrain remains intact.
 
 **Ender** · Cast **10s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
 
@@ -2808,9 +2808,9 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Lock the aimed location and channel the supplied Explosion chant for twenty-one seconds before equipment modifiers. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion immediately detonates the marked area for 256 base damage over sixteen blocks, with the recorded blast. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed.
+Lock the aimed location and charge for 7.7 seconds at the original recording pitch. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion detonates the marked area for 256 base damage over sixteen blocks with the redesigned blast audio. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed. This recorded ritual has a fixed windup.
 
-**Fire** · Cast **21s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
+**Fire** · Cast **7.7s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -2821,3 +2821,19 @@ Base release / active phase: **1.6s**.
 Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.
 
 Spell ID: `resonant_arcana:explosion`. Inspect ranks with `/resonantarcana spell explosion <rank>`.
+
+### I Am Atomic
+
+Anchor a sixteen-block violet containment sphere and compress mana at a spectral sword tip for 13.5 seconds. Captured enemies are held within the boundary; bosses and fully knockback-resistant foes resist containment. Allies gain brief Resistance I and hostile projectiles crossing the sphere are absorbed. Release one 512-damage violet detonation, sparing allies and terrain. Moving more than three blocks interrupts the ritual. The full recording plays at its original pitch; cast-speed bonuses do not shorten this ritual.
+
+**Ender** · Cast **13.5s** · Cooldown **180s** · Range **32 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 512 | — | 500 |
+
+Base release / active phase: **4s**.
+
+Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.
+
+Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spell i_am_atomic <rank>`.

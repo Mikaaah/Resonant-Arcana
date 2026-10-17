@@ -1,12 +1,21 @@
-# Explosion audio
+# Recorded spell audio
 
-Recording supplied by the project owner as **Megumin Bass Boosted Explosion.mp3**.
-Reference upload: [Megumin Bass Boosted Explosion](https://www.youtube.com/watch?v=P8QA375KWv0), raccoonpokemon.
+The project owner supplied the following MP3 recordings. Their original files
+are unchanged. The mod uses normalized, mono 44.1 kHz Vorbis streams, prepared
+from each complete source before splitting so the charge and release share gain.
+Recordings play at their original pitch.
 
-The decoded recording is split at 20.95 seconds into a chant and a blast tail,
-converted to mono Vorbis at 44.1 kHz with a common gain of 0.8. No chant section
-is skipped. The original uploaded MP3 is unchanged. Regenerate the two streams
-with `python3 tools/build_explosion_audio.py path/to/recording.mp3`.
+| Recording | Spell | Included sections |
+| --- | --- | --- |
+| Megumin Explosion (Sound Redesign).mp3 | Explosion | Entire decoded recording, split at 7.7 seconds |
+| iamatomic.mp3 | I Am Atomic | Entire decoded recording, split at 13.5 seconds |
+| Cosmic Beam [Sound Design].mp3 | Arcane Devastator | Entire decoded recording, split at 4.2 seconds |
+| Laser of doom sound effect.mp3 | Doom | Charge excerpt 6.5–16.5 seconds; release excerpt 16.5–29 seconds |
 
-The repository's MIT license covers its original code and assets; it does not
-relicense this third-party recording.
+Regenerate with `python3 tools/build_recorded_audio.py path/to/upload`.
+Source checksums, section boundaries and loudness measurements are recorded in
+`assets/resonant_arcana/audio/recordings.json`. The earlier bass-boosted Megumin
+recording is no longer bundled in the current mod.
+
+The repository's MIT license covers original code and assets; it does not
+relicense these third-party recordings.

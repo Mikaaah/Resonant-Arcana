@@ -17,7 +17,12 @@ def main(only=None):
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
         if kind=='CATACLYSM':
             # Each single-rank ultimate has a silhouette matching its release sequence.
-            if name=='EXPLOSION':
+            if name=='I_AM_ATOMIC':
+                d.ellipse((15,15,113,113),outline=c,width=5)
+                for i in range(12):
+                    a=i*math.pi/6;line([(64+math.cos(a)*12,64+math.sin(a)*12),(64+math.cos(a+.1)*42,64+math.sin(a+.1)*42)],5)
+                line([(64,86),(64,30)],8,white);d.ellipse((55,54,73,72),fill=white)
+            elif name=='EXPLOSION':
                 for arm in range(12):
                     a=arm*math.pi/6;line([(64+math.cos(a)*25,70+math.sin(a)*25),(64+math.cos(a)*51,70+math.sin(a)*43)],7)
                 d.ellipse((37,43,91,96),fill=c);d.ellipse((49,53,79,84),fill=white)

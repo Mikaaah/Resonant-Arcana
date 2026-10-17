@@ -39,7 +39,7 @@ public final class WandClient {
     }
     @SubscribeEvent public static void tick(ClientTickEvent.Post e) {
         visualBursts=0;
-        NativeSpellEffects.tick();AaaEffects.tick();ExplosionAudio.tick();
+        NativeSpellEffects.tick();AaaEffects.tick();RecordedAudio.tick();
         var mc=Minecraft.getInstance();
         if(!mc.options.keyAttack.isDown())reversalAttackHeld=false;
         if(!CAST.isDown())reversalCastHeld=false;

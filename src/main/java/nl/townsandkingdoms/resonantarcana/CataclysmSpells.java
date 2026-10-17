@@ -11,6 +11,7 @@ final class CataclysmSpells {
     private CataclysmSpells(){}
     static boolean handles(Spell s){return s.kind==Spell.Kind.CATACLYSM;}
     static boolean begin(Cast c){
+        if(c.spell==Spell.I_AM_ATOMIC)return AtomicRitual.begin(c);
         c.pos=c.target==null?c.anchor.subtract(c.dir.scale(.08)):c.target.getBoundingBox().getCenter();
         c.duration=c.spell.duration();
         if(c.spell==Spell.EXPLOSION){
@@ -22,6 +23,7 @@ final class CataclysmSpells {
         if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.holySword(c);return true;
     }
     static boolean tick(Cast c){
+        if(c.spell==Spell.I_AM_ATOMIC)return AtomicRitual.tick(c);
         double t=c.age/(double)c.duration;
         if(c.spell!=Spell.EXPLOSION&&c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,t,0),c.spell.radius);
         if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.moveHolySword(c);
@@ -124,7 +126,7 @@ final class CataclysmSpells {
             }
         }}finally{c.weaponBonus=old;}
         SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,center,center,radius);
-        if(c.spell!=Spell.EXPLOSION)SpellAudio.world(c.level,center,SpellAudio.impactId(c.spell.theme),1.4f,.65f);
+        if(!RecordedSpells.handles(c.spell))SpellAudio.world(c.level,center,SpellAudio.impactId(c.spell.theme),1.4f,.65f);
     }
     static void pull(Cast c,double speed){
         for(var v:near(c.caster,c.pos,c.spell.radius))if(seen(c,v)&&!v.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES)){

@@ -6,7 +6,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 /** Bounded visual messages; never used for collision, damage or target selection. */
 final class SpellVisuals {
-    enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE, TRAIL_BURST, RITUAL_TARGET }
+    enum Stage { CAST, FLIGHT, AREA, LINK, STRIKE, HIT, IMPACT, CHARGE, TRAIL_BURST, RITUAL_TARGET, RITUAL_END }
     enum Shape { CAST, ORB, COMET, WAVE, IMPACT, NOVA, PULSE, FIELD, VORTEX, WARD, CAGE, CURSE, BEAM, DRAIN, LIGHTNING, FLAME, CHARGE, CANNON_CHARGE, CANNON_HEAD, CANNON_BURST, CANNON_IMPACT, PYRE_CHARGE, PYRE_FALL, PYRE_IMPACT, TEMPEST_CHARGE, TEMPEST_BEAM, TEMPEST_IMPACT, HORIZON_CHARGE, HORIZON_WELL, HORIZON_IMPACT, SCREAM_FRONT, SCREAM_IMPACT, DOOM_CHARGE, DOOM_WELL, DOOM_IMPACT, SANCTUARY_CHARGE, SANCTUARY_FIELD, SANCTUARY_BLOOM, GLACIER_CHARGE, GLACIER_FRONT, GLACIER_IMPACT, FANG_CHARGE, FANG_ROW, FANG_IMPACT, SLASH, ORBIT, TOTEM, RAIN, TRAP, SERPENT, BLESSING, DOMAIN, FUSION_CHARGE, FUSION_ORB, FUSION_IMPACT }
     private static int details, accents;
     private SpellVisuals() {}
@@ -66,7 +66,7 @@ final class SpellVisuals {
             default -> Shape.FUSION_IMPACT;
         };
         return switch(stage) {
-            case RITUAL_TARGET -> Shape.CHARGE;
+            case RITUAL_TARGET,RITUAL_END -> Shape.CHARGE;
             case CAST -> Shape.CAST;
             case HIT,TRAIL_BURST -> Shape.CHARGE;
             case IMPACT -> switch(spell.kind) {

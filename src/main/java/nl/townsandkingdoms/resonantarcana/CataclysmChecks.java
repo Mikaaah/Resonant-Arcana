@@ -17,7 +17,7 @@ final class CataclysmChecks {
         var p=FakePlayerFactory.get(level,new GameProfile(UUID.fromString("fce984cb-0206-4abb-973b-3cd712334301"),"CataclysmTest"));
         p.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100);p.setPos(0,81,0);p.setYRot(0);p.setXRot(0);p.removeAllEffects();p.setHealth(10);
         var spells=Arrays.stream(Spell.values()).filter(CataclysmSpells::handles).toList();
-        check.accept(spells.size()==11,"eleven cataclysms supplement Doom");
+        check.accept(spells.size()==12,"twelve cataclysms supplement Doom");
         check.accept(spells.stream().map(s->IronsCompat.school(s.theme)).distinct().count()==9,"every native school has a separate cataclysm");
         check.accept(Spell.DOOM.castTicks()==200&&Spell.DOOM.damage==256,"Doom has a ten-second base cast and 256 damage");
         var team=level.getScoreboard().addPlayerTeam("cataclysm_allies");team.setAllowFriendlyFire(false);level.getScoreboard().addPlayerToTeam(p.getScoreboardName(),team);
@@ -25,7 +25,7 @@ final class CataclysmChecks {
             SpellEngine.clear();p.removeAllEffects();p.setHealth(10);
             Zombie target=enemy(level,0,6),friend=enemy(level,1,6),hidden=enemy(level,0,10);
             level.getScoreboard().addPlayerToTeam(friend.getScoreboardName(),team);
-            check.accept(s.castTicks()>=200&&s.manaCost()>=400&&s.levelCap()==1,s+" is a costly long-cast Legendary");
+            check.accept(s.castTicks()>=(s==Spell.EXPLOSION?154:200)&&s.manaCost()>=400&&s.levelCap()==1,s+" is a costly long-cast Legendary");
             check.accept(SpellEngine.cast(p,s),s+" exact release fixture starts");
             for(int x=-14;x<=14;x++)for(int y=81;y<=100;y++)level.setBlockAndUpdate(new BlockPos(x,y,8),Blocks.STONE.defaultBlockState());
             try{
@@ -35,7 +35,7 @@ final class CataclysmChecks {
                     case WORLD_PYRE -> s.damage*7.5;
                     case HEAVENS_THUNDER -> s.damage*8;
                     case ETERNAL_WINTER -> s.damage*11;
-                    case EXPLOSION -> s.damage;
+                    case EXPLOSION,I_AM_ATOMIC -> s.damage;
                     default -> s.damage*5;
                 };
                 // The wall may intercept off-centre meteors/columns; only full-radius sequences

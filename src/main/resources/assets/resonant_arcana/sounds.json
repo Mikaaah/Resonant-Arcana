@@ -1,20 +1,82 @@
 {
-  "explosion_chant": {
+  "atomic_charge": {
     "sounds": [
       {
-        "name": "resonant_arcana:explosion_chant",
+        "name": "resonant_arcana:atomic_charge",
         "stream": true,
         "preload": true
       }
-    ]
+    ],
+    "subtitle": "subtitles.resonant_arcana.atomic_charge"
+  },
+  "atomic_release": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:atomic_release",
+        "stream": true,
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.atomic_release"
+  },
+  "cosmic_charge": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:cosmic_charge",
+        "stream": true,
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.cosmic_charge"
+  },
+  "cosmic_release": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:cosmic_release",
+        "stream": true,
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.cosmic_release"
+  },
+  "doom_laser_charge": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:doom_laser_charge",
+        "stream": true,
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.doom_laser_charge"
+  },
+  "doom_laser_release": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:doom_laser_release",
+        "stream": true,
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.doom_laser_release"
+  },
+  "explosion_chant": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:explosion_charge",
+        "stream": true,
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.explosion_chant"
   },
   "explosion_blast": {
     "sounds": [
       {
-        "name": "resonant_arcana:explosion_blast",
+        "name": "resonant_arcana:explosion_release",
         "stream": true,
         "preload": true
       }
-    ]
+    ],
+    "subtitle": "subtitles.resonant_arcana.explosion_blast"
   }
 }

@@ -59,9 +59,9 @@ public final class IntegrationChecks {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
                 buffer.clear();var selection=new WandNetwork.Select(ResonantArcana.DEBUG.getId(),11);WandNetwork.Select.CODEC.encode(buffer,selection);check(WandNetwork.Select.CODEC.decode(buffer).equals(selection),"wand selection packet round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
-                buffer.clear();var chant=new WandNetwork.Chant(player.getId(),true,1.2f,1.5f);WandNetwork.Chant.CODEC.encode(buffer,chant);
+                buffer.clear();var chant=new WandNetwork.Chant(player.getId(),Spell.EXPLOSION.ordinal(),true,1,1.5f);WandNetwork.Chant.CODEC.encode(buffer,chant);
                 check(WandNetwork.Chant.CODEC.decode(buffer).equals(chant),"caster-scoped chant packet round trip");
-                check(chant.valid()&&!new WandNetwork.Chant(-1,true,1,1).valid()&&!new WandNetwork.Chant(1,true,Float.NaN,1).valid(),"chant packets reject invalid source and pitch");
+                check(chant.valid()&&!new WandNetwork.Chant(-1,Spell.EXPLOSION.ordinal(),true,1,1).valid()&&!new WandNetwork.Chant(1,Spell.EXPLOSION.ordinal(),true,Float.NaN,1).valid(),"chant packets reject invalid source and pitch");
                 buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_SCREAM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
                 WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
                 check(visual.valid(),"finite beam packet accepted");
@@ -284,7 +284,7 @@ public final class IntegrationChecks {
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
             CataclysmChecks.run(level,IntegrationChecks::check);
-            EquipmentChecks.run(level,IntegrationChecks::check);
+            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{

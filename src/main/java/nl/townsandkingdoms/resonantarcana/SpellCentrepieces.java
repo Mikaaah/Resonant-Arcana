@@ -35,6 +35,20 @@ final class SpellCentrepieces {
         sword.configure(tag);sword.getSlot(0).set(net.minecraft.world.item.Items.GOLDEN_SWORD.getDefaultInstance());sword.setYRot(c.caster.getYRot());sword.setPos(ground.add(0,sword.startHeight,0));
         if(c.level.addFreshEntity(sword))c.centrepieces.add(sword);
     }
+    static Vec3 atomicTip(net.minecraft.server.level.ServerPlayer p){
+        Vec3 dir=p.getLookAngle().multiply(1,0,1).normalize();if(dir.lengthSqr()<.01)dir=new Vec3(0,0,1);
+        return p.position().add(dir.scale(1.3)).add(0,2.4,0);
+    }
+    static void atomicFocus(SpellEngine.Cast c){
+        var sword=new HolySword(SWORD.get(),c.level);sword.life=900;
+        var tag=new CompoundTag();tag.putString("item_display","none");tag.putFloat("view_range",2);tag.putFloat("width",5);tag.putFloat("height",5);tag.putInt("teleport_duration",2);
+        var brightness=new CompoundTag();brightness.putInt("block",15);brightness.putInt("sky",15);tag.put("brightness",brightness);
+        var transform=new com.mojang.math.Transformation(new org.joml.Vector3f(),new org.joml.Quaternionf().rotationZ((float)(-Math.PI/4)),new org.joml.Vector3f(1.45f),new org.joml.Quaternionf());
+        tag.put("transformation",com.mojang.math.Transformation.EXTENDED_CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,transform).getOrThrow());
+        sword.configure(tag);sword.getSlot(0).set(net.minecraft.world.item.Items.NETHERITE_SWORD.getDefaultInstance());c.centrepieces.add(sword);
+        moveAtomicFocus(c);c.level.addFreshEntity(sword);
+    }
+    static void moveAtomicFocus(SpellEngine.Cast c){for(var entity:c.centrepieces)if(entity instanceof HolySword sword){sword.setYRot(c.caster.getYRot());sword.setPos(atomicTip(c.caster).add(0,-.9,0));}}
     static void moveHolySword(SpellEngine.Cast c){for(var entity:c.centrepieces)if(entity instanceof HolySword sword){
         double progress=Math.clamp(c.age/(double)(c.duration-8),0,1);sword.setPos(sword.origin.add(0,sword.baseHeight+(sword.startHeight-sword.baseHeight)*(1-progress)*(1-progress),0));
     }}

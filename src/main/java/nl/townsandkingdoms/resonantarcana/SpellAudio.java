@@ -186,7 +186,7 @@ final class SpellAudio {
         cue(player,pos,"entity.warden.sonic_boom",1.8f,.65f,true);
     }
     static void ritualPulse(ServerPlayer player,Spell spell,Vec3 pos,double progress,int elapsed){
-        if(spell==Spell.EXPLOSION||elapsed%16!=0)return; // The supplied chant already includes its own buildup.
+        if(RecordedSpells.handles(spell)||elapsed%16!=0)return; // The supplied chant already includes its own buildup.
 
         String id=switch(spell){
             case DOOM->"entity.warden.heartbeat";case ASTRAL_APOCALYPSE->"block.enchantment_table.use";
@@ -201,7 +201,7 @@ final class SpellAudio {
         if(elapsed%32==0)cue(player,pos,chargeId(spell),1.25f+(float)progress*.6f,(float)(.7+progress*.45),true);
     }
     static void charging(ServerPlayer player,Spell spell,double progress,int elapsed){
-        if(elapsed>0&&elapsed%24==0)cue(player,player.position(),chargeId(spell),1.35f,(float)(.8+progress*.35),true);
+        if(!RecordedSpells.handles(spell)&&elapsed>0&&elapsed%24==0)cue(player,player.position(),chargeId(spell),1.35f,(float)(.8+progress*.35),true);
     }
     static void cannonCharge(ServerPlayer player,Vec3 pos,float progress){
         cue(player,pos,"block.respawn_anchor.charge",0.8f+progress*0.6f,0.55f+progress*0.9f,true);
