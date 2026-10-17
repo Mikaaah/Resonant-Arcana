@@ -246,7 +246,7 @@ Spell ID: `resonant_arcana:sandworms_eruption`. Inspect any rank in game with `/
 
 ### Sandworm’s Quicksand
 
-Requires Bosses’Rise 2.1.2. A sand column marks a quicksand zone. Visible enemies in the zone are slowed and drawn inward before one final eruption. Bosses and allies are never pulled.
+Requires Bosses’Rise 2.1.2. A spiralling sand vortex slows and draws visible enemies inward. Three sand columns then erupt around its rim for one final strike. Bosses and allies are never pulled; no terrain is changed.
 
 **Role:** Sandworm / control · **Cast:** 1.2s · **Cooldown:** 15s · **Range:** 16 blocks · **Radius / width:** 4.5 blocks.
 

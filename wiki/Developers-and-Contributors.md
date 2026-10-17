@@ -14,7 +14,7 @@ The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.
 
 ## Validation
 
-0.16.0-alpha passed **6,270 dedicated-server checks without Bosses’Rise** and **6,547 with Bosses’Rise 2.1.2**. Those check counts belong to the previously published build. 0.17.0-alpha passes Java 21 compilation and Gradle validation of 24 packaged effects; fresh dedicated-server checks remain pending. In-game visuals, sound balance, controls and custom combat-mod interactions still need modpack playtesting.
+0.18.0-alpha passed **5,025 dedicated-server checks without Bosses’Rise** and **5,726 with Bosses’Rise 2.1.2**. Java 21 compilation and Gradle checks pass, including verification that the JAR contains exactly 24 particle effects. These server checks cover combat, targeting, cast timing, allegiance, optional registration and cleanup; they do not validate client rendering, visual balance or sound. In-game client playtesting remains required.
 
 ## Contributing
 

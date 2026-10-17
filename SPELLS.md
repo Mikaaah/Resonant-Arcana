@@ -12,11 +12,11 @@ Healing affects the caster, owned pets and scoreboard teammates. By default it a
 
 ## Optional Bosses’Rise spells
 
-Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrath and Undertow. Yeti: Ice Spike Eruption and Glacial Wall. Underworld Knight (Helvar): Rift, Fracture and Swordfall. Sandworm: Eruption and Quicksand. Infernal Dragon: Guard and Pyre. Without that mod, they are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
+Bosses’Rise **2.1.2** adds twelve spells from five bosses. Kraken: Grasp, Wrath and Undertow. Yeti: Ice Spike Eruption and Glacial Wall. Underworld Knight (Helvar): Rift, Fracture and Swordfall. Sandworm: Eruption and Quicksand. Infernal Dragon: Infernal Barrage and Dragon’s Cataclysm. Without that mod, they are absent from registries, scrolls, commands and wand selections. Existing spell IDs remain unchanged. Other Bosses’Rise versions leave this adapter disabled until validated.
 
-Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s flaming guard. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
+Visual-only entities reference the installed mod’s models, animations, textures and items: red Kraken tentacles, Yeti ice spikes, Helvar’s rift projectile and Knight Sword, Sandworm sand columns and the Infernal Dragon’s blazing projectiles. They do not run original boss attack ticks, persist in saves, break terrain, drop loot or qualify as spell targets. Damage and status effects use Resonant Arcana’s targeting, line-of-sight, PvP and friendly-fire rules. Sounds also come from the installed mod; no third-party assets are bundled.
 
-Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
+Kraken tentacle roots are buried 1.25 blocks below the surface, and Wrath’s outer tentacles face inward. Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 seconds of rise/attack animation before one slam; its visual fades afterward. Ice Spike Eruption has a 0.8-second cast bar, then five eruptions over 0.75–1.35 seconds; each enemy can take one hit per cast. Helvar’s Rift has a 0.9-second cast bar, then travels at 1.2 blocks per tick up to 28 blocks, stopping at walls or its first enemy. Ground spells need a visible solid surface within a bounded ground search; they cannot place attacks through ceilings or walls.
 
 ## Wand index
 
@@ -24,7 +24,7 @@ Kraken’s Grasp has a 1.2-second cast bar, followed by approximately 2.3 second
 | --- | --- | --- |
 | [Arcane Wand](#arcane-wand) | Evocation | Spark, Arcane Strike, Mind Haze, Stun, Arcane Bind, Astral Comet, Arcane Repulse, Launch, Leap, Arcane Volley, Evoker's Edict, Arcane Step, Arcane Edge, Phantom Formation, Spellbreaker |
 | [Blood Wand](#blood-wand) | Blood | Blood Wave, Crimson Strike, Crimson Rupture, Hemorrhagic Shock, Blood Ward, Sanguine Drain, Blood Lance, Blood Needles, Blood Reap, Crimson Tether, Sanguine Pact, Crimson Harvest, Blood Rend, Crimson Reversal |
-| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth, Dragon’s Guard, Dragon’s Pyre |
+| [Cinder Wand](#cinder-wand) | Fire | Fire Comet, Cinder Vortex, Flame Wave, Cinder Surge, Flamethrower, Fireball, Ignite, Ember Veil, Solar Cataclysm, Cinder Step, Phoenix Rush, Dragon Breath, Cinder Cleave, Ashen Rebirth, Infernal Barrage, Dragon’s Cataclysm |
 | [Dark Wand](#dark-wand) | Ender | Shadow Bolt, Umbral Seeker, Umbral Wave, Nightfall, Dread Mark, Umbral Veil, DOOM, Umbral Step, Dusk Cleave, Dread Effigy, Veil of Night, Night Bloom, Helvar’s Rift, Helvar’s Fracture, Helvar’s Swordfall |
 | [Thunder Wand](#thunder-wand) | Lightning | Thunder Bolt, Chain Lightning, Thunder Wave, Storm Call, Thunder Pulse, Static Shock, Lightning, Smite, Tempest Spear, Storm Step, Thunderclap, Arc Ricochet, Battle Tempo, Thunderbrand |
 | [Rift Wand](#rift-wand) | Ender | Rift Bolt, Rift Well, Force Push, Force Pull, Suspension, Singularity, Event Horizon, Rift Blink, Orbital Blades, Prismatic Ruin, Gravity Stamp, Spatial Shear, Rift Draw, Sandworm’s Eruption, Sandworm’s Quicksand |
@@ -814,11 +814,11 @@ Burst forward along a clear path as a phoenix, leaving a burning silhouette. Aft
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect any rank in game with `/resonantarcana spell ashen_rebirth <level>`.
 
-### Dragon’s Guard
+### Infernal Barrage
 
-Requires Bosses’Rise 2.1.2. Summon a visual of the Infernal Dragon’s flaming guard at a visible ground location. Three timed fire pulses strike nearby enemies; the guard has no combat AI, loot or terrain effects.
+Requires Bosses’Rise 2.1.2. Conjure three blazing orbs beside you, then launch them one after another toward the aimed ground. Each orb travels visibly and bursts against the first enemy or wall. No guard mobs are summoned; allies and terrain are protected.
 
-**Role:** Infernal Dragon / guard · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 16 blocks · **Radius / width:** 4 blocks.
+**Role:** Infernal Dragon / flame barrage · **Cast:** 1.2s · **Cooldown:** 14s · **Range:** 16 blocks · **Radius / width:** 4 blocks.
 
 | Level | Direct damage | Healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -834,11 +834,11 @@ Requires Bosses’Rise 2.1.2. Summon a visual of the Infernal Dragon’s flaming
 
 Spell ID: `resonant_arcana:dragons_guard`. Inspect any rank in game with `/resonantarcana spell dragons_guard <level>`.
 
-### Dragon’s Pyre
+### Dragon’s Cataclysm
 
-Requires Bosses’Rise 2.1.2. Three of the Infernal Dragon’s flaming guards surround the aimed ground, then ignite a single heavy fire burst. Their visual entities cannot attack or damage allies themselves.
+Requires Bosses’Rise 2.1.2. Mark visible ground with an ember ring and call down a blazing fireball. After one second of warning it descends, detonating once in a heavy expanding fire shockwave. Requires space overhead; allies and terrain are protected.
 
-**Role:** Infernal Dragon / detonation · **Cast:** 1.6s · **Cooldown:** 18s · **Range:** 18 blocks · **Radius / width:** 4.5 blocks.
+**Role:** Infernal Dragon / descending fire strike · **Cast:** 1.6s · **Cooldown:** 18s · **Range:** 18 blocks · **Radius / width:** 4.5 blocks.
 
 | Level | Direct damage | Healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -848,7 +848,7 @@ Requires Bosses’Rise 2.1.2. Three of the Infernal Dragon’s flaming guards su
 | IV | 28 | — | 109 |
 | V | 32 | — | 117 |
 
-**Base active phase:** 3.25s.
+**Base active phase:** 2.7s.
 
 Spell ID: `resonant_arcana:dragons_pyre`. Inspect any rank in game with `/resonantarcana spell dragons_pyre <level>`.
 
@@ -1095,7 +1095,7 @@ Spell ID: `resonant_arcana:helvars_fracture`. Inspect any rank in game with `/re
 
 ### Helvar’s Swordfall
 
-Requires Bosses’Rise 2.1.2. Summon Helvar’s actual Knight Sword over visible solid ground. It falls and strikes after 1.2 seconds, damaging and weakening nearby enemies. Allies and terrain are protected.
+Requires Bosses’Rise 2.1.2. Summon Helvar’s original three-dimensional held Knight Sword above visible ground. A runic warning tightens as the blade falls point-first, striking after 1.2 seconds and weakening nearby enemies. Allies and terrain are protected.
 
 **Role:** Helvar / falling sword · **Cast:** 1.3s · **Cooldown:** 12s · **Range:** 18 blocks · **Radius / width:** 3 blocks.
 
@@ -1599,7 +1599,7 @@ Spell ID: `resonant_arcana:sandworms_eruption`. Inspect any rank in game with `/
 
 ### Sandworm’s Quicksand
 
-Requires Bosses’Rise 2.1.2. A sand column marks a quicksand zone. Visible enemies in the zone are slowed and drawn inward before one final eruption. Bosses and allies are never pulled.
+Requires Bosses’Rise 2.1.2. A spiralling sand vortex slows and draws visible enemies inward. Three sand columns then erupt around its rim for one final strike. Bosses and allies are never pulled; no terrain is changed.
 
 **Role:** Sandworm / control · **Cast:** 1.2s · **Cooldown:** 15s · **Range:** 16 blocks · **Radius / width:** 4.5 blocks.
 
@@ -2683,7 +2683,7 @@ Spell ID: `resonant_arcana:glacial_counter`. Inspect any rank in game with `/res
 
 ### Yeti’s Glacial Wall
 
-Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the aimed ground to form a temporary wall of ice. Each enemy takes at most one hit and is slowed and chilled; no blocks are changed.
+Requires Bosses’Rise 2.1.2. Seven of the Yeti’s ice spikes rise together in a crescent across the aimed ground. The spikes linger with frost shards instead of flashing away. Each visible enemy is hit at most once, slowed and chilled; no blocks are placed.
 
 **Role:** Yeti / ice barrier · **Cast:** 1s · **Cooldown:** 11s · **Range:** 16 blocks · **Radius / width:** 2 blocks.
 
@@ -2694,5 +2694,7 @@ Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the a
 | III | 13.5 | — | 60 |
 | IV | 15.75 | — | 65 |
 | V | 18 | — | 70 |
+
+**Base active phase:** 3.1s.
 
 Spell ID: `resonant_arcana:yetis_glacial_wall`. Inspect any rank in game with `/resonantarcana spell yetis_glacial_wall <level>`.

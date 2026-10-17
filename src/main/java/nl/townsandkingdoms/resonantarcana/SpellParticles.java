@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.registries.ParticleRegistry;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
@@ -14,6 +15,23 @@ final class SpellParticles {
     private static long frame;
     private SpellParticles() {}
     static void tick(){remaining=ArcanaConfig.NATIVE_BUDGET.get();frame++;}
+    static void point(ServerLevel level,ParticleOptions particle,Vec3 pos,Vec3 velocity){
+        if(remaining<=0)return;remaining--;
+        level.sendParticles(particle,pos.x,pos.y,pos.z,0,velocity.x,velocity.y,velocity.z,1);
+    }
+    static void cannonCharge(ServerLevel level,Vec3 center,Vec3 direction,double progress,int age){
+        Vec3 side=direction.cross(new Vec3(0,1,0));if(side.lengthSqr()<.01)side=new Vec3(1,0,0);side=side.normalize();
+        Vec3 up=side.cross(direction).normalize();
+        var blue=new DustColorTransitionOptions(new Vector3f(.05f,.25f,1),new Vector3f(.05f,.95f,1),1.25f);
+        for(int arm=0;arm<2;arm++)for(int i=0;i<5;i++){
+            double t=i/5.0,angle=age*.28+arm*Math.PI+t*1.4,radius=(1.2-.75*progress)*(1-.4*t);
+            Vec3 radial=side.scale(Math.cos(angle)*radius).add(up.scale(Math.sin(angle)*radius));
+            Vec3 pos=center.add(radial).subtract(direction.scale((1-t)*.9));
+            point(level,blue,pos,Vec3.ZERO);
+            if(i==4)point(level,ParticleRegistry.SOUL_FIRE_PARTICLE.get(),pos,radial.scale(-.045).add(direction.scale(.025)));
+        }
+        point(level,ParticleTypes.SCULK_CHARGE_POP,center,Vec3.ZERO);
+    }
     static Vec3 chargeOffset(Spell.Theme theme,double a,double progress){
         double r=1.8-progress;
         return switch(theme){

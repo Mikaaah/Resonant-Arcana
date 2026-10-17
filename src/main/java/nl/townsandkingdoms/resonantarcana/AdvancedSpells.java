@@ -251,10 +251,14 @@ final class AdvancedSpells {
             c.hit.clear();for(var v:near(c.caster,c.pos,c.spell.radius))if(visible(c,c.pos.add(0,.7,0),v.getBoundingBox().getCenter()))scaledHit(c,v,c.pos,3,true);
             BossesRiseBridge.tentacleImpact(c.level,c.pos);sound(c,c.pos,BossesRiseCompat.MOD+":item.undying_tentacle.smash_ground",1.7f,.55f);
         }
-        if(c.age%8==1){c.level.sendParticles(ParticleTypes.SPLASH,c.pos.x,c.pos.y+.2,c.pos.z,12,2,.2,2,.1);areaVisual(c,c.pos,2);}
+        if(c.age%8==1){c.level.sendParticles(ParticleTypes.SPLASH,c.pos.x,c.pos.y+.2,c.pos.z,12,2,.2,2,.1);BossSpellEffects.water(c,c.age/106.0);areaVisual(c,c.pos,2);}
         return c.age<149;
     }
-    private static void spawnTentacle(Cast c,Vec3 point){Vec3 old=c.pos;c.pos=point;try{c.bossVisuals.add(BossesRiseBridge.tentacle(c));}finally{c.pos=old;}}
+    private static void spawnTentacle(Cast c,Vec3 point){
+        Vec3 facing=c.pos.subtract(point).multiply(1,0,1);
+        if(facing.lengthSqr()<.01)facing=c.dir;
+        c.bossVisuals.add(BossesRiseBridge.tentacle(c,point,facing));
+    }
     private static void areaVisual(Cast c,Vec3 p,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,p,p,Math.min(4,size));}
     private static void line(Cast c,Vec3 a,Vec3 b,double size){SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,a,b,size);}
     private static void sound(Cast c,Vec3 p,String id,float volume,float pitch){SpellAudio.world(c.level,p,id,volume,pitch);}

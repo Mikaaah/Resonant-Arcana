@@ -37,9 +37,9 @@ def main():
 | Yeti | Ice Spike Eruption, Glacial Wall | [Frost](Frost-Wand.md) |
 | Underworld Knight / Helvar | Rift, Fracture, Swordfall | [Dark](Dark-Wand.md) |
 | Sandworm | Eruption, Quicksand | [Rift](Rift-Wand.md) |
-| Infernal Dragon | Guard, Pyre | [Cinder](Cinder-Wand.md) |
+| Infernal Dragon | Infernal Barrage, Dragon’s Cataclysm | [Cinder](Cinder-Wand.md) |
 
-Helvar’s Swordfall displays the installed mod’s `block_factorys_bosses:knight_sword` item. After the cast bar, the sword falls for 1.2 seconds before one area impact. It does not drop an obtainable item or alter blocks.
+Helvar’s Swordfall renders the installed mod’s original held Knight Sword geometry and animated textures, with its blade tip pointing down. Its saved spell ID is unchanged. After the cast bar, the sword falls for 1.2 seconds before one area impact. It does not drop an obtainable item or alter blocks.
 '''
     (wiki / 'Bosses-Rise-Compatibility.md').write_text('# Optional Bosses’Rise Integration\n' + optional_text + boss_table + footer)
     preface = guide.split('## Optional Bosses’Rise spells', 1)[0].replace('# Spell reference', '# Spell Mechanics', 1)

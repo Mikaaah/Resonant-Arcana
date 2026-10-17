@@ -240,7 +240,7 @@ Spell ID: `resonant_arcana:helvars_fracture`. Inspect any rank in game with `/re
 
 ### Helvar’s Swordfall
 
-Requires Bosses’Rise 2.1.2. Summon Helvar’s actual Knight Sword over visible solid ground. It falls and strikes after 1.2 seconds, damaging and weakening nearby enemies. Allies and terrain are protected.
+Requires Bosses’Rise 2.1.2. Summon Helvar’s original three-dimensional held Knight Sword above visible ground. A runic warning tightens as the blade falls point-first, striking after 1.2 seconds and weakening nearby enemies. Allies and terrain are protected.
 
 **Role:** Helvar / falling sword · **Cast:** 1.3s · **Cooldown:** 12s · **Range:** 18 blocks · **Radius / width:** 3 blocks.
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.18.0-alpha
+
+- Bury Kraken tentacle visual roots 1.25 blocks below the ground and point Wrath’s four outer tentacles toward the central impact.
+- Add two blue and cyan soul-fire spirals to both phases of Soul Cannon charging, within the shared native particle budget.
+- Render Helvar’s original 3D held sword geometry and animated textures directly, with the blade tip aligned to the ground at impact.
+- Replace Dragon’s Guard with Infernal Barrage: three charged, travelling fireballs that collide with enemies and walls. Replace Dragon’s Pyre with Dragon’s Cataclysm: a warned descending fireball and expanding flame shockwave. Preserve both spell registry IDs and scroll upgrades.
+- Give the Yeti a seven-spike lingering crescent, stage Sandworm columns with their eruptions, and add shaped frost, water, sand and rift effects using vanilla and Iron’s particles.
+- Remove the unused dragon guard visual entity and renderer. Preserve friendly-fire, line-of-sight, chunk, terrain and cleanup rules.
+- Pass 5,025 dedicated-server checks without Bosses’Rise and 5,726 with it, plus Java 21 compilation and packaged-effect validation. Client rendering remains unverified.
+
 ## 0.17.0-alpha
 
 - Expand Bosses’Rise support to twelve spells across all five bosses, including Helvar’s Swordfall using the original Knight Sword item.

@@ -77,7 +77,10 @@ public final class SpellEngine {
                 player.serverLevel().sendParticles(ParticleTypes.REVERSE_PORTAL,pos.x,pos.y,pos.z,0,velocity.x,velocity.y,velocity.z,1);
             else trail(player.serverLevel(),pos,spell.theme,.025);
         }
-        if(spell==Spell.SOUL_CANNON&&elapsed%8==0)SpellAudio.cannonCharge(player,center,(float)progress);
+        if(spell==Spell.SOUL_CANNON){
+            if(elapsed%2==0)SpellParticles.cannonCharge(player.serverLevel(),center,dir,progress,elapsed);
+            if(elapsed%8==0)SpellAudio.cannonCharge(player,center,(float)progress);
+        }
     }
     private static boolean cast(ServerPlayer player,Spell spell,BookCast book) {
         if(BossesRiseCompat.optional(spell)&&!BossesRiseCompat.canStart(player,spell))return false;
@@ -427,6 +430,7 @@ public final class SpellEngine {
             c.pos=clipLoaded(c.level,c.caster.getEyePosition(),c.travel,1,c.caster);
             double progress=c.age/40.0;
             if(c.age<40){
+                if(c.age%2==0)SpellParticles.cannonCharge(c.level,c.pos,c.travel,progress,c.age);
                 if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.CHARGE,c.pos,c.pos.add(c.travel),0.6+progress*0.9);
                 // Directional count-zero packets pull real vanilla void motes towards the muzzle.
                 for(int i=0;i<4;i++){
@@ -658,6 +662,7 @@ public final class SpellEngine {
         final List<Entity> bossVisuals=new ArrayList<>();final List<Vec3> eruptionPoints=new ArrayList<>();
         final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
         AdvancedSpells.State advanced;
+        BossesRiseCompat.State bossState;
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;

@@ -12,7 +12,7 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft **1.21.1 / NeoForge**. Ten craftable wands, **137 core spells**, plus **twelve optional Bosses’Rise spells**, original wand artwork, and magic built around distinct attacks, movement, control and support roles.
 
-[Download 0.17.0-alpha](downloads/resonant-arcana-0.17.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
+[Download 0.18.0-alpha](downloads/resonant-arcana-0.18.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and level](SPELLS.md) · [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration) · [Changelog](CHANGELOG.md) · [Issues](https://github.com/Mikaaah/Resonant-Arcana/issues)
 
 ## New in 0.16
 
@@ -22,7 +22,7 @@ Reactive guards, melee-triggered lightning and spectral swords connect spells wi
 
 ## Optional Bosses’Rise integration
 
-Install **Bosses’Rise 2.1.2** on both client and server to add twelve spells from all five bosses: **Kraken** (Grasp, Wrath, Undertow), **Yeti** (Ice Spike Eruption, Glacial Wall), **Underworld Knight / Helvar** (Rift, Fracture, Swordfall), **Sandworm** (Eruption, Quicksand), and **Infernal Dragon** (Guard, Pyre). These are native Iron’s spells with levels I–V. Their visual entities use the installed mod’s models, items and textures, including the red Kraken tentacle, Helvar’s Knight Sword, Sandworm columns and Dragon’s flaming guard. No third-party assets are bundled. Without Bosses’Rise, the 137-spell core kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
+Install **Bosses’Rise 2.1.2** on both client and server to add twelve spells from all five bosses: **Kraken** (Grasp, Wrath, Undertow), **Yeti** (Ice Spike Eruption, Glacial Wall), **Underworld Knight / Helvar** (Rift, Fracture, Swordfall), **Sandworm** (Eruption, Quicksand), and **Infernal Dragon** (Infernal Barrage, Dragon’s Cataclysm). These are native Iron’s spells with levels I–V. Their visual entities use the installed mod’s models, items and textures, including the red Kraken tentacle, Helvar’s Knight Sword, Sandworm columns and Dragon’s blazing projectiles. No third-party assets are bundled. Without Bosses’Rise, the 137-spell core kit remains available. Other Bosses’Rise versions leave this integration disabled until validated.
 
 Boss attacks are adapted for player use: visual entities cannot run native boss attacks, and our shared engine handles damage, ally protection, PvP and walls. Kraken’s Grasp is a delayed tentacle slam with slowing, rather than an enemy-grabbing mechanic. See [spell details and timing](SPELLS.md#optional-bossesrise-spells).
 
@@ -49,7 +49,7 @@ The creative inventory has separate **Wands** and **Scrolls** tabs. Scrolls are 
 
 ## Charge, release, impact
 
-Basic projectiles and movement stay responsive. Larger spells have readable windups and distinct releases: a marked meteor impact, a growing black hole, an advancing ice front, or a broad spatial orb formed from opposing energies. **Soul Cannon** keeps its two-second void charge, travelling echo blast, four-block firework cadence and large warden/crystal detonation.
+Basic projectiles and movement stay responsive. Larger spells have readable windups and distinct releases: a marked meteor impact, a growing black hole, an advancing ice front, or a broad spatial orb formed from opposing energies. **Soul Cannon** layers blue/cyan spirals and soul fire over its two-second void charge, travelling echo blast, four-block firework cadence and large warden/crystal detonation.
 
 Effects use different shapes as well as school colours: sweeping crescents, orbiting blades, rising feathers, lantern totems, falling hail, frost spines, shadow petals and braided fusion trails. Charging effects use motes and flowing energy without camera-facing casting circles.
 
@@ -129,7 +129,7 @@ The validated catalogue at `src/main/resources/assets/resonant_arcana/catalogue.
 
 ## Validation
 
-The previously published 0.16.0-alpha JAR passed **6,270 dedicated-server checks without Bosses’Rise** and **6,547 with Bosses’Rise 2.1.2**; that JAR packaged 222 effects. The current source, including Helvar’s Swordfall, passes Java compilation and the Gradle build with all 24 packaged effects validated. This test build still needs fresh dedicated-server checks and in-game client testing before release.
+0.18.0-alpha passed **5,025 dedicated-server checks without Bosses’Rise** and **5,726 with Bosses’Rise 2.1.2**. Java 21 compilation and Gradle checks pass, including verification that the JAR contains exactly 24 particle effects. These server checks cover combat, targeting, cast timing, allegiance, optional registration and cleanup; they do not validate client rendering, visual balance or sound. In-game client playtesting remains required.
 
 ## Contributing
 

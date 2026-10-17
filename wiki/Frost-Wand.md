@@ -268,7 +268,7 @@ Spell ID: `resonant_arcana:glacial_counter`. Inspect any rank in game with `/res
 
 ### Yeti’s Glacial Wall
 
-Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the aimed ground to form a temporary wall of ice. Each enemy takes at most one hit and is slowed and chilled; no blocks are changed.
+Requires Bosses’Rise 2.1.2. Seven of the Yeti’s ice spikes rise together in a crescent across the aimed ground. The spikes linger with frost shards instead of flashing away. Each visible enemy is hit at most once, slowed and chilled; no blocks are placed.
 
 **Role:** Yeti / ice barrier · **Cast:** 1s · **Cooldown:** 11s · **Range:** 16 blocks · **Radius / width:** 2 blocks.
 
@@ -279,6 +279,8 @@ Requires Bosses’Rise 2.1.2. Five of the Yeti’s ice spikes erupt across the a
 | III | 13.5 | — | 60 |
 | IV | 15.75 | — | 65 |
 | V | 18 | — | 70 |
+
+**Base active phase:** 3.1s.
 
 Spell ID: `resonant_arcana:yetis_glacial_wall`. Inspect any rank in game with `/resonantarcana spell yetis_glacial_wall <level>`.
 

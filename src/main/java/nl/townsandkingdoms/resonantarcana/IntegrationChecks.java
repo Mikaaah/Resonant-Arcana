@@ -280,6 +280,26 @@ public final class IntegrationChecks {
             for(var spell:optional){SpellEngine.clear();resetPlayer(player);check(!SpellEngine.cast(player,spell),spell+" safely rejects casting without dependency");}
             return;
         }
+        SpellEngine.clear();resetPlayer(player);Zombie wrathTarget=spawn(level,0,81,6);
+        check(SpellEngine.cast(player,Spell.KRAKENS_WRATH),"Wrath orientation fixture begins");
+        for(int t=0;t<32;t++)SpellEngine.tick();
+        var tentacles=level.getEntitiesOfClass(BossesRiseBridge.Tentacle.class,new net.minecraft.world.phys.AABB(-12,76,-8,12,90,24),e->!e.isRemoved());
+        check(tentacles.size()==4,"Wrath creates four outer tentacles before its central slam");
+        var headings=new java.util.HashSet<Integer>();
+        for(var tentacle:tentacles){
+            check(Math.abs(tentacle.getY()-(81-BossesRiseBridge.TENTACLE_BURY_DEPTH))<.01,"Kraken visual root is buried below the ground surface");
+            Vec3 towardCenter=new Vec3(0,81,6).subtract(tentacle.position());
+            check(Math.abs(net.minecraft.util.Mth.wrapDegrees(tentacle.getYRot()-BossesRiseBridge.tentacleYaw(towardCenter)))<.01,"Wrath outer tentacles face the shared impact center");
+            headings.add(Math.round(tentacle.getYRot()));
+        }
+        check(headings.size()==4,"Wrath does not reuse one facing for every outer tentacle");
+        SpellEngine.clear();wrathTarget.discard();
+        resetPlayer(player);Zombie ceilingTarget=spawn(level,0,81,6);
+        for(int x=-2;x<=2;x++)for(int z=4;z<=8;z++)level.setBlockAndUpdate(new BlockPos(x,85,z),Blocks.STONE.defaultBlockState());
+        check(!SpellEngine.canStart(player,Spell.HELVARS_SWORDFALL),"The full 3D sword rejects headroom that would clip its hilt into a ceiling");
+        for(int x=-2;x<=2;x++)for(int z=4;z<=8;z++)level.setBlockAndUpdate(new BlockPos(x,85,z),Blocks.AIR.defaultBlockState());
+        check(SpellEngine.canStart(player,Spell.HELVARS_SWORDFALL),"Swordfall remains available with open headroom");
+        ceilingTarget.discard();
         for(var spell:optional)for(int rank=1;rank<=5;rank++){
             SpellEngine.clear();resetPlayer(player);Zombie victim=spawn(level,0,81,6);
             victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(200);victim.setHealth(200);
@@ -287,7 +307,15 @@ public final class IntegrationChecks {
             check(SpellEngine.castFromSpellbook(player,spell,spell.power(rank),level.damageSources().indirectMagic(player,player),spell.cooldown,false),spell+" rank "+rank+" begins");
             if(spell==Spell.KRAKENS_GRASP){for(int t=0;t<45;t++)SpellEngine.tick();check(victim.getHealth()==200,"tentacle has a real rise and attack windup");}
             if(spell==Spell.HELVARS_SWORDFALL){for(int t=0;t<23;t++)SpellEngine.tick();check(victim.getHealth()==200,"Helvar sword deals no damage before impact");}
-            for(int t=0;t<100;t++)SpellEngine.tick();
+            if(spell==Spell.DRAGONS_GUARD){
+                var flames=level.getEntitiesOfClass(BossesRiseBridge.FlameOrb.class,new net.minecraft.world.phys.AABB(-12,76,-8,12,92,24),e->!e.isRemoved());
+                check(flames.size()==3,"Infernal Barrage creates three travelling flame visuals");
+                for(var flame:flames)check(flame.getItem().is(net.minecraft.world.item.Items.FIRE_CHARGE),"Dragon orb has a visible core instead of the native invisible placeholder");
+                for(int t=0;t<9;t++)SpellEngine.tick();
+                check(victim.getHealth()==200,"Infernal Barrage has a charge before its first projectile launches");
+            }
+            // The fixture advances spells synchronously rather than world ticks: simulate normal hurt recovery.
+            for(int t=0;t<100;t++){if(victim.invulnerableTime>0)victim.invulnerableTime--;SpellEngine.tick();}
             int hits=spell==Spell.DRAGONS_GUARD?3:1;
             check(Math.abs(victim.getHealth()-(200-spell.damageAtLevel(rank)*hits))<.01,spell+" uses native level damage "+hits+" time(s) at rank "+rank);
             check(SpellEngine.activeCount()==0,spell+" releases expire");victim.discard();

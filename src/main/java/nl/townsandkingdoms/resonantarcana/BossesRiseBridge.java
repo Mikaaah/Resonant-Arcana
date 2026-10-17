@@ -17,8 +17,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.unusual.block_factorys_bosses.entity.boss.kraken.summons.GhostTentacleEntity;
 import net.unusual.block_factorys_bosses.entity.boss.yeti.IceSpikeEntity;
 import net.unusual.block_factorys_bosses.entity.projectile.RiftProjectileEntity;
+import net.unusual.block_factorys_bosses.entity.projectile.BlazingFireBallEntity;
 import net.unusual.block_factorys_bosses.entity.SandColumnEntity;
-import net.unusual.block_factorys_bosses.entity.boss.dragon.guardians.FlamingSkeletonGuardFireballEntity;
 import net.unusual.block_factorys_bosses.init.BossesRiseParticleTypes;
 import net.unusual.block_factorys_bosses.init.BossesRiseItems;
 import software.bernie.geckolib.animation.AnimationController;
@@ -32,8 +32,13 @@ final class BossesRiseBridge {
     static final DeferredHolder<EntityType<?>,EntityType<Ice>> ICE=ENTITIES.register("ice_spell_visual",()->EntityType.Builder.<Ice>of(Ice::new,MobCategory.MISC).sized(.8f,2).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:ice_spell_visual"));
     static final DeferredHolder<EntityType<?>,EntityType<Rift>> RIFT=ENTITIES.register("rift_spell_visual",()->EntityType.Builder.<Rift>of(Rift::new,MobCategory.MISC).sized(.5f,.5f).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:rift_spell_visual"));
     static final DeferredHolder<EntityType<?>,EntityType<Sand>> SAND=ENTITIES.register("sand_spell_visual",()->EntityType.Builder.<Sand>of(Sand::new,MobCategory.MISC).sized(1.3f,3).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:sand_spell_visual"));
-    static final DeferredHolder<EntityType<?>,EntityType<Guard>> GUARD=ENTITIES.register("dragon_guard_spell_visual",()->EntityType.Builder.<Guard>of(Guard::new,MobCategory.MISC).sized(1.2f,2).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:dragon_guard_spell_visual"));
     static final DeferredHolder<EntityType<?>,EntityType<Sword>> SWORD=ENTITIES.register("helvar_sword_spell_visual",()->EntityType.Builder.<Sword>of(Sword::new,MobCategory.MISC).sized(.6f,2).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:helvar_sword_spell_visual"));
+    static final DeferredHolder<EntityType<?>,EntityType<FlameOrb>> FLAME=ENTITIES.register("dragon_flame_spell_visual",()->EntityType.Builder.<FlameOrb>of(FlameOrb::new,MobCategory.MISC).sized(.8f,.8f).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:dragon_flame_spell_visual"));
+    static final double TENTACLE_BURY_DEPTH=1.25;
+    static final float SWORD_SCALE=2.5f;
+    // The original held model's blade tip is at -9 model pixels before scaling.
+    static final double SWORD_TIP_OFFSET=9.0/16*SWORD_SCALE;
+    static final double SWORD_TOP_OFFSET=24.0/16*SWORD_SCALE;
     private BossesRiseBridge(){}
     static void register(IEventBus bus){
         ENTITIES.register(bus);bus.addListener(BossesRiseBridge::attributes);
@@ -41,14 +46,21 @@ final class BossesRiseBridge {
     }
     private static void attributes(EntityAttributeCreationEvent e){
         e.put(TENTACLE.get(),GhostTentacleEntity.createAttributes().build());
-        e.put(GUARD.get(),FlamingSkeletonGuardFireballEntity.createAttributes().build());
     }
     static Entity tentacle(SpellEngine.Cast c){
-        var visual=TENTACLE.get().create(c.level);visual.setOwnerUUID(c.owner);visual.setPos(c.pos);visual.setYRot(c.caster.getYRot());visual.setYBodyRot(c.caster.getYRot());
-        c.level.addFreshEntity(visual);tentacleRise(c.level,c.pos);return visual;
+        return tentacle(c,c.pos,c.dir);
+    }
+    static float tentacleYaw(Vec3 direction){return (float)Math.toDegrees(Math.atan2(-direction.x,direction.z));}
+    static Vec3 tentacleAnchor(Vec3 ground){return ground.add(0,-TENTACLE_BURY_DEPTH,0);}
+    static Entity tentacle(SpellEngine.Cast c,Vec3 ground,Vec3 facing){
+        var visual=TENTACLE.get().create(c.level);visual.setOwnerUUID(c.owner);visual.setPos(tentacleAnchor(ground));
+        float yaw=tentacleYaw(facing);visual.setYRot(yaw);visual.yRotO=yaw;
+        visual.setYBodyRot(yaw);visual.yBodyRotO=yaw;visual.setYHeadRot(yaw);visual.yHeadRotO=yaw;
+        c.level.addFreshEntity(visual);tentacleRise(c.level,ground);return visual;
     }
     static Entity ice(SpellEngine.Cast c,Vec3 pos,int delay){
         var visual=ICE.get().create(c.level);visual.setOwnerUUID(c.owner);visual.setPos(pos);visual.setDelay(delay);visual.setScale(4);visual.setDamage(0);
+        visual.holdTicks=c.spell==Spell.YETIS_GLACIAL_WALL?28:0;
         c.level.addFreshEntity(visual);return visual;
     }
     static Entity rift(SpellEngine.Cast c){
@@ -56,16 +68,20 @@ final class BossesRiseBridge {
         c.level.addFreshEntity(visual);c.level.sendParticles(BossesRiseParticleTypes.RIFT_OPEN.get(),c.pos.x,c.pos.y,c.pos.z,1,0,0,0,0);return visual;
     }
     static Entity sand(SpellEngine.Cast c,Vec3 pos){
-        var visual=SAND.get().create(c.level);visual.setOwner(c.caster);visual.setPos(pos);c.level.addFreshEntity(visual);return visual;
+        return sand(c,pos,0);
     }
-    static Entity guard(SpellEngine.Cast c,Vec3 pos){
-        var visual=GUARD.get().create(c.level);visual.setPos(pos);visual.setYRot(c.caster.getYRot());
-        c.level.addFreshEntity(visual);return visual;
+    static Entity sand(SpellEngine.Cast c,Vec3 pos,int delay){
+        var visual=SAND.get().create(c.level);visual.setOwner(c.caster);visual.setPos(pos);visual.delay=delay;visual.setInvisible(delay>0);c.level.addFreshEntity(visual);return visual;
+    }
+    static Entity flame(SpellEngine.Cast c,Vec3 pos){
+        var visual=FLAME.get().create(c.level);visual.setOwner(c.caster);visual.setPos(pos);c.level.addFreshEntity(visual);return visual;
     }
     static Entity sword(SpellEngine.Cast c,Vec3 pos){
         var visual=SWORD.get().create(c.level);
         visual.getSlot(0).set(BossesRiseItems.KNIGHT_SWORD.get().getDefaultInstance());
-        visual.setPos(pos);visual.setYRot(c.caster.getYRot());visual.setInvulnerable(true);
+        // The held model has a native -90 degree bone turn; compensate so its blade face
+        // is visible from the caster rather than presenting only its thin edge.
+        visual.setPos(pos);visual.setYRot(c.caster.getYRot()+90);visual.setInvulnerable(true);
         c.level.addFreshEntity(visual);return visual;
     }
     static void tentacleRise(ServerLevel level,Vec3 pos){
@@ -120,6 +136,22 @@ final class BossesRiseBridge {
         @Override public boolean isPickable(){return false;}
         @Override public boolean canBeCollidedWith(){return false;}
     }
+    static final class FlameOrb extends BlazingFireBallEntity implements BossSpellVisual {
+        private static final net.minecraft.world.item.ItemStack CORE=net.minecraft.world.item.Items.FIRE_CHARGE.getDefaultInstance();
+        private int visualAge;
+        FlameOrb(EntityType<FlameOrb> type,Level level){super(type,level);setNoGravity(true);setInvulnerable(true);setSilent(true);}
+        // Bosses'Rise uses an invisible placeholder item and generates its body in combat ticks.
+        // Our harmless adapter needs an explicit visible core because those ticks are disabled.
+        @Override public net.minecraft.world.item.ItemStack getItem(){return CORE;}
+        @Override public void tick(){
+            // The original projectile tick explodes and edits terrain. Only SpellEngine may hit anything.
+            if(!level().isClientSide()&&++visualAge>90)discard();
+        }
+        @Override public void onHitEntity(net.minecraft.world.phys.EntityHitResult hit){}
+        @Override public void onHitBlock(net.minecraft.world.phys.BlockHitResult hit){}
+        @Override public boolean isPickable(){return false;}
+        @Override public boolean canBeCollidedWith(){return false;}
+    }
     static final class Tentacle extends GhostTentacleEntity implements BossSpellVisual {
         private int visualAge;
         @SuppressWarnings("unchecked") Tentacle(EntityType<Tentacle> type,Level level){
@@ -127,8 +159,12 @@ final class BossesRiseBridge {
         }
         @Override public void tick(){
             // Deliberately do not call the parent tick: its baseTick performs boss melee attacks.
-            tickCount++;
-            if(level().isClientSide())return;
+            // The level already increments tickCount; incrementing again doubles client animation speed.
+            if(level().isClientSide()){
+                // Body/head yaw fields are not spawn-packet data, and our visual skips LivingEntity AI.
+                // Copy the synchronized entity yaw so GeckoLib does not render every tentacle at yaw zero.
+                float yaw=getYRot();setYBodyRot(yaw);yBodyRotO=yaw;setYHeadRot(yaw);yHeadRotO=yaw;return;
+            }
             int age=++visualAge;
             if(age==30)triggerAnim("main_controller","slam");
             if(age==56)triggerAnim("main_controller","despawn");
@@ -144,14 +180,16 @@ final class BossesRiseBridge {
         @Override protected boolean shouldDropLoot(){return false;}
     }
     static final class Ice extends IceSpikeEntity implements BossSpellVisual {
-        private int visualAge;
+        private int visualAge,holdTicks;
         @SuppressWarnings("unchecked") Ice(EntityType<Ice> type,Level level){super((EntityType<IceSpikeEntity>)(EntityType<?>)type,level);setNoGravity(true);setInvulnerable(true);}
         @Override public void tick(){
             // The original baseTick freezes entities even when damage is zero; never invoke it.
             if(level().isClientSide())return;
             int age=++visualAge;
-            getEntityData().set(DATA_SPAWN_ANIM_TIME,Math.max(0,age-getDelay()));
-            if(age>=getDelay()+12)discard();
+            int animationAge=age-getDelay();
+            if(holdTicks>0&&animationAge>=8)animationAge=Math.max(8,animationAge-holdTicks);
+            getEntityData().set(DATA_SPAWN_ANIM_TIME,Math.max(0,animationAge));
+            if(age>=getDelay()+12+holdTicks)discard();
         }
         @Override public java.util.Collection<net.unusual.block_factorys_bosses.geckolib.DangerZonesProvider.DangerZone> getDangerZones(){return List.of();}
         @Override public boolean isPickable(){return false;}
@@ -169,22 +207,14 @@ final class BossesRiseBridge {
         @Override public boolean isPickable(){return false;}
     }
     static final class Sand extends SandColumnEntity implements BossSpellVisual {
-        private int visualAge;
+        private int visualAge,delay;
         @SuppressWarnings("unchecked") Sand(EntityType<Sand> type,Level level){super((EntityType<SandColumnEntity>)(EntityType<?>)type,level);setNoGravity(true);setInvulnerable(true);}
         @Override public void tick(){
-            tickCount++;if(level().isClientSide())return;
-            if(++visualAge==1)triggerAnim("base_controller","emerge");
-            if(visualAge>=62)discard();
+            if(level().isClientSide())return;
+            if(++visualAge==delay+1){setInvisible(false);triggerAnim("base_controller","emerge");}
+            if(visualAge>=delay+62)discard();
         }
         @Override public boolean isPickable(){return false;}
         @Override public boolean canBeCollidedWith(){return false;}
-    }
-    static final class Guard extends FlamingSkeletonGuardFireballEntity implements BossSpellVisual {
-        private int visualAge;
-        @SuppressWarnings("unchecked") Guard(EntityType<Guard> type,Level level){super((EntityType<FlamingSkeletonGuardFireballEntity>)(EntityType<?>)type,level);setNoAi(true);setNoGravity(true);setInvulnerable(true);setSilent(true);}
-        @Override public void tick(){tickCount++;if(!level().isClientSide()&&++visualAge>=85)discard();}
-        @Override public boolean isPickable(){return false;}
-        @Override public boolean canBeCollidedWith(){return false;}
-        @Override protected boolean shouldDropLoot(){return false;}
     }
 }

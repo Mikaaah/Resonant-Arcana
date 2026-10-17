@@ -39,9 +39,15 @@ def main(only=None):
                 line([(x,y+14),(x-3,90)],3,white)
             d.arc((11,86,117,115),180,355,fill=white,width=4)
         elif kind=='BOSS_DRAGON':
-            d.polygon([(64,12),(85,48),(100,39),(92,76),(77,109),(49,113),(30,84),(40,52)],fill=c)
-            d.polygon([(66,29),(61,72),(78,64),(68,98),(48,95),(54,66)],fill=white)
-            line([(24,107),(105,107)],4)
+            if name=='DRAGONS_GUARD':
+                for x,y in [(27,90),(62,65),(96,40)]:
+                    line([(x,y),(x+15,y-30)],10)
+                    d.ellipse((x-12,y-12,x+12,y+12),fill=c)
+                    d.ellipse((x-5,y-5,x+5,y+5),fill=white)
+            else:
+                line([(50,62),(54,13)],12);line([(70,62),(79,18)],10)
+                d.ellipse((37,39,90,92),fill=c);d.ellipse((51,50,78,80),fill=white)
+                d.arc((12,86,116,119),180,360,fill=white,width=6)
         elif kind=='COUNTER':
             d.polygon([(64,12),(108,32),(99,83),(64,116),(29,83),(20,32)],outline=c,width=9)
             for i in range(3):line([(36+i*18,48),(64,79),(91-i*18,48)],5,white)
