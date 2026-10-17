@@ -59,6 +59,9 @@ public final class IntegrationChecks {
                 var a=new WandNetwork.Action(2);WandNetwork.Action.CODEC.encode(buffer,a);check(WandNetwork.Action.CODEC.decode(buffer).equals(a),"action packet codec round trip");
                 buffer.clear();var selection=new WandNetwork.Select(ResonantArcana.DEBUG.getId(),11);WandNetwork.Select.CODEC.encode(buffer,selection);check(WandNetwork.Select.CODEC.decode(buffer).equals(selection),"wand selection packet round trip");
                 buffer.clear();var b=new WandNetwork.Burst(1,82,-3,0xDE1342);WandNetwork.Burst.CODEC.encode(buffer,b);check(WandNetwork.Burst.CODEC.decode(buffer).equals(b),"burst packet codec round trip");
+                buffer.clear();var chant=new WandNetwork.Chant(player.getId(),true,1.2f,1.5f);WandNetwork.Chant.CODEC.encode(buffer,chant);
+                check(WandNetwork.Chant.CODEC.decode(buffer).equals(chant),"caster-scoped chant packet round trip");
+                check(chant.valid()&&!new WandNetwork.Chant(-1,true,1,1).valid()&&!new WandNetwork.Chant(1,true,Float.NaN,1).valid(),"chant packets reject invalid source and pitch");
                 buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_SCREAM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
                 WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
                 check(visual.valid(),"finite beam packet accepted");
@@ -104,7 +107,7 @@ public final class IntegrationChecks {
             SpellVisuals.tick();SpellVisuals.send(level,Spell.SPARK,SpellVisuals.Stage.CAST,new Vec3(0,82,0),new Vec3(0,82,1),1);
             check(visuals.size()==97,"visual budgets recover on the next tick");
             check(ResonantArcana.TABS.getEntries().size()==2,"one equipment tab and one combined spell tab");
-            for(String id:List.of("ward_magic","ward_fire","doom_well_dark"))
+            for(String id:List.of("ward_magic","ward_fire","doom_well_dark","explosion_seal"))
                 check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/"+id+".efkefc")!=null,"selective AAA asset packaged: "+id);
             for(Spell spell:Spell.enabledValues()){
                 if(AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
@@ -631,6 +634,10 @@ public final class IntegrationChecks {
             check(SpellEngine.cast(player,Spell.SOUL_AURA),"area audio test casts");casts=player.heard.size();SpellEngine.tick();
             check(a.getHealth()<20&&b.getHealth()<20&&c.getHealth()<20,"area audio test affects three targets");
             check(player.heard.size()==casts+2,"area hit audio is limited to one layered impact per cast");a.discard();b.discard();c.discard();
+            SpellEngine.clear();resetPlayer(player);player.heard.clear();Zombie blastTarget=spawn(level,0,81,6);
+            check(SpellEngine.cast(player,Spell.EXPLOSION)&&player.heard.isEmpty(),"Explosion release suppresses generic cast cues");SpellEngine.tick();
+            check(blastTarget.getHealth()<20&&player.heard.equals(List.of("resonant_arcana:explosion_blast")),"Explosion plays only its supplied blast at the first damage tick");blastTarget.discard();
+            check(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.EXPLOSION)).getCastStartSound().isEmpty(),"Explosion native start cannot duplicate the dedicated chant");
         }finally{
             SpellEngine.clear();ArcanaConfig.CASTER_IMPACTS.set(oldFeedback);ArcanaConfig.SOUND_VOLUME.set(oldVolume);ArcanaConfig.IMPACT_VOLUME.set(oldImpact);
         }

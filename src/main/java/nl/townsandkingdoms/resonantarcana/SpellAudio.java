@@ -186,7 +186,8 @@ final class SpellAudio {
         cue(player,pos,"entity.warden.sonic_boom",1.8f,.65f,true);
     }
     static void ritualPulse(ServerPlayer player,Spell spell,Vec3 pos,double progress,int elapsed){
-        if(elapsed%16!=0)return;
+        if(spell==Spell.EXPLOSION||elapsed%16!=0)return; // The supplied chant already includes its own buildup.
+
         String id=switch(spell){
             case DOOM->"entity.warden.heartbeat";case ASTRAL_APOCALYPSE->"block.enchantment_table.use";
             case CRIMSON_ECLIPSE->"block.bubble_column.whirlpool_inside";case WORLD_PYRE->"block.fire.ambient";

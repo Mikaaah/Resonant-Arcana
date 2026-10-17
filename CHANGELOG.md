@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.23.0-alpha
+
+- Include the owner-supplied Explosion chant and bass-heavy blast as two streamed OGG assets split at 20.95 seconds. Preserve the full decoded recording and keep the original MP3 untouched.
+- Extend Explosion’s base native cast to 21 seconds. Match chant playback to native cast speed, bounded to the supported audio pitch range. Detonate on the first release tick, without the old 1.2-second delay.
+- Track chant sound instances by caster. Cancellation, death and dimension changes clean up that instance without silencing another player’s ritual. Play the recorded blast at the locked target and provide direct caster feedback.
+- Suppress competing Explosion charge/release/impact cues. Existing audio sliders and server gain still apply.
+- Rework Explosion’s charge to crimson/red seals, amber counter-rotating ember ribbons and a warm pale core that brightens near completion. Add one dedicated crimson AAA seal; other spells retain their current palettes.
+- Document audio attribution, regeneration and resource-pack overrides. Extend server fixtures for timing, native cast-speed alignment, target locking and packet validation.
+
 ## 0.22.0-alpha
 
 - Combine scrolls into one Spells creative tab; keep Equipment separate and retain category filters in the debug archive.

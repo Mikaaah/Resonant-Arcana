@@ -176,9 +176,9 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Lock the aimed location at the start of a twelve-second chant. A diagonal beacon forms five seals that gather fire at different heights. After release, the marked area detonates for 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five.
+Lock the aimed location and channel the supplied Explosion chant for twenty-one seconds before equipment modifiers. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion immediately detonates the marked area for 256 base damage over sixteen blocks, with the recorded blast. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed.
 
-**Fire** · Cast **12s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
+**Fire** · Cast **21s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |

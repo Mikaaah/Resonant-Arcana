@@ -72,17 +72,28 @@ final class EquipmentChecks {
         for(var v:java.util.List.of(first,second)){v.setNoAi(true);v.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);v.getAttribute(Attributes.ARMOR).setBaseValue(0);v.setHealth(1024);level.addFreshEntity(v);}
         try{
             SpellEngine.clear();p.setPos(0,81,0);p.setYRot(0);p.setXRot(0);data.resetCastingState();data.setMana(1000);data.getPlayerCooldowns().clearCooldowns();
-            data.initiateCast(spell,1,240,io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,"mainhand");spell.onServerPreCast(level,1,p,data);
+            data.initiateCast(spell,1,spell.getEffectiveCastTime(1,p),io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,"mainhand");spell.onServerPreCast(level,1,p,data);
+            check.accept(spell.getEffectiveCastTime(1,p)==420,"Explosion base windup uses the full twenty-one-second chant");
+            check.accept(Math.abs(ExplosionRitual.chantPitch(420)*420-419)<.001,"chant pitch aligns the source recording to the native cast duration");
+            var attribute=p.getAttribute(AttributeRegistry.CAST_TIME_REDUCTION);double old=attribute.getBaseValue();
+            try{attribute.setBaseValue(old+.25);int accelerated=spell.getEffectiveCastTime(1,p);
+                check.accept(accelerated<420&&Math.abs(ExplosionRitual.chantPitch(accelerated)*accelerated-419)<.01,"native cast reduction keeps the chant aligned");
+                attribute.setBaseValue(old+4);check.accept(spell.getEffectiveCastTime(1,p)>=210,"extreme casting speed stays inside the supported audio pitch range");
+            }finally{attribute.setBaseValue(old);}
+            for(String id:java.util.List.of("explosion_chant","explosion_blast"))
+                check.accept(EquipmentChecks.class.getResource("/assets/resonant_arcana/sounds/"+id+".ogg")!=null,"recorded audio is packaged: "+id);
             var locked=ExplosionRitual.locked(p);
             check.accept(locked!=null&&locked.point().distanceToSqr(first.getBoundingBox().getCenter())<.1,"Explosion marks its initial aimed enemy");
             check.accept(locked.top().y>locked.point().y+5&&locked.top().subtract(locked.point()).horizontalDistance()>2,"Explosion beacon is elevated and diagonal");
             p.setYRot(-90);
             check.accept(ExplosionRitual.locked(p)==locked,"turning during the charge preserves the original target");
             spell.castSpell(level,1,p,io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,true);
-            for(int i=0;i<32;i++){first.invulnerableTime=0;second.invulnerableTime=0;SpellEngine.tick();}
+            check.accept(first.getHealth()==1024,"Explosion does not damage before its release tick");
+            SpellEngine.tick();check.accept(first.getHealth()==768,"Explosion detonates on the first release tick, aligned with the blast recording");
+            for(int i=1;i<32;i++){first.invulnerableTime=0;second.invulnerableTime=0;SpellEngine.tick();}
             check.accept(first.getHealth()==768&&second.getHealth()==1024,"Explosion detonates the original mark after looking elsewhere");
             data.resetCastingState();data.getPlayerCooldowns().clearCooldowns();SpellEngine.clear();
-            data.initiateCast(spell,1,240,io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,"mainhand");spell.onServerPreCast(level,1,p,data);
+            data.initiateCast(spell,1,spell.getEffectiveCastTime(1,p),io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,"mainhand");spell.onServerPreCast(level,1,p,data);
             check.accept(ExplosionRitual.locked(p).point().distanceToSqr(second.getBoundingBox().getCenter())<.1,"a new cast acquires a fresh target");
             IronsCompat.cancel(p);
             check.accept(!data.isCasting()&&ExplosionRitual.locked(p)==null,"cancelled Explosion clears its target snapshot");

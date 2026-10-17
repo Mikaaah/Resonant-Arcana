@@ -17,20 +17,19 @@ final class CataclysmSpells {
             var lock=c.book!=null&&c.book.prepared()?ExplosionRitual.locked(c.caster):null;
             if(lock!=null){c.pos=lock.point();c.travel=lock.top();}
             else {c.pos=c.anchor;c.travel=ExplosionRitual.beamTop(c.caster,c.pos);}
+            SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.RITUAL_TARGET,c.pos,c.travel,7);
         }
         if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.holySword(c);return true;
     }
     static boolean tick(Cast c){
         double t=c.age/(double)c.duration;
-        if(c.spell==Spell.EXPLOSION&&c.age<24&&c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.RITUAL_TARGET,c.pos,c.travel,7);
         if(c.spell!=Spell.EXPLOSION&&c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,t,0),c.spell.radius);
         if(c.spell==Spell.FINAL_JUDGEMENT)SpellCentrepieces.moveHolySword(c);
         switch(c.spell){
             case EXPLOSION -> {
-                if(c.age==24){
+                if(c.age==1){
                     pulse(c,c.pos,c.spell.radius,1);effect(c.caster,MobEffects.MOVEMENT_SLOWDOWN,80,3);effect(c.caster,MobEffects.WEAKNESS,100,0);
-                    SpellAudio.world(c.level,c.pos,"entity.generic.explode",3.5f,.55f);
-                    SpellAudio.world(c.level,c.pos,"entity.warden.sonic_boom",2.5f,.5f);
+                    ExplosionRitual.blast(c);
                 }
             }
             case ASTRAL_APOCALYPSE -> {
@@ -125,7 +124,7 @@ final class CataclysmSpells {
             }
         }}finally{c.weaponBonus=old;}
         SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,center,center,radius);
-        SpellAudio.world(c.level,center,SpellAudio.impactId(c.spell.theme),1.4f,.65f);
+        if(c.spell!=Spell.EXPLOSION)SpellAudio.world(c.level,center,SpellAudio.impactId(c.spell.theme),1.4f,.65f);
     }
     static void pull(Cast c,double speed){
         for(var v:near(c.caster,c.pos,c.spell.radius))if(seen(c,v)&&!v.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES)){

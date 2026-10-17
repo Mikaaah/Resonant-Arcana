@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.22.0-alpha'
+version = '0.23.0-alpha'
 group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -22,7 +22,7 @@ neoForge {
     mods { resonant_arcana { sourceSet sourceSets.main } }
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 21 }
-tasks.named('jar') { from('LICENSE') }
+tasks.named('jar') { from('LICENSE'); from('AUDIO_CREDITS.md') }
 // Copy tasks retain removed files; clear resource output before a changed resource set is copied.
 tasks.named('processResources') { doFirst { delete destinationDir } }
 
@@ -33,22 +33,26 @@ tasks.register('verifyPackagedAssets') {
         def jar = new java.util.zip.ZipFile(tasks.named('jar').get().archiveFile.get().asFile)
         try {
             def paths = jar.entries().collect { it.name }
-            ['ward_magic','ward_fire','doom_well_dark'].each { id ->
+            ['ward_magic','ward_fire','doom_well_dark','explosion_seal'].each { id ->
                 def entry = jar.getEntry('assets/resonant_arcana/effeks/'+id+'.efkefc')
                 if (entry == null) throw new GradleException('Missing selective AAA effect '+id)
                 if (new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'EFKE') throw new GradleException('Invalid AAA effect '+id)
             }
+            ['explosion_chant','explosion_blast'].each { id ->
+                def entry = jar.getEntry('assets/resonant_arcana/sounds/'+id+'.ogg')
+                if (entry == null || new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'OggS') throw new GradleException('Missing or invalid Explosion audio '+id)
+            }
             ['sigil','star','flame','glow','halo','shard'].each { id ->
                 if (!paths.contains('assets/resonant_arcana/effeks/textures/'+id+'.png')) throw new GradleException('Missing AAA texture '+id)
             }
-            if (paths.count { it.endsWith('.efkefc') } != 3) throw new GradleException('Only three selective AAA effects are allowed')
+            if (paths.count { it.endsWith('.efkefc') } != 4) throw new GradleException('Only four selective AAA effects are allowed')
             ['debug_wand','runic_echoes_spell_book','phoenix_spell_book','deathchill_spell_book'].each { id ->
                 ['models/item/'+id+'.json','textures/item/'+id+'.png'].each { asset ->
                     if (!paths.contains('assets/resonant_arcana/'+asset)) throw new GradleException('Missing '+asset)
                 }
             }
             if (paths.any { it.endsWith('_wand.png') && !it.endsWith('debug_wand.png') }) throw new GradleException('Retired wand textures in JAR')
-            logger.lifecycle('Verified item assets, three selective AAA effects and absence of retired wand textures.')
+            logger.lifecycle('Verified item assets, four selective AAA effects and absence of retired wand textures.')
         } finally { jar.close() }
     }
 }

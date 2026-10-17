@@ -84,7 +84,7 @@ final class CataclysmEffects {
     }
     private static void ritual(ClientLevel level,Spell s,Vec3 p,double size,double time){
         double progress=Math.clamp((size-5)/2,0,1),radius=5+progress*2;
-        int color=s==Spell.DOOM?0x9b1028:s.theme.color;
+        int color=s==Spell.DOOM?0x9b1028:s==Spell.EXPLOSION?0xe81b39:s.theme.color;
         var dust=new DustParticleOptions(new Vector3f(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f),.7f);
         // Two ground circles and a few runic ticks. The empty centre preserves first-person sight.
         for(int ring=0;ring<2;ring++)for(int i=0;i<96;i++){
@@ -128,14 +128,17 @@ final class CataclysmEffects {
         Vec3 axis=top.subtract(p).normalize();if(axis.lengthSqr()<.01)return;
         Vec3 side=axis.cross(new Vec3(0,0,1)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
         Vec3 up=axis.cross(side).normalize();
-        var core=new DustParticleOptions(new Vector3f(1,.92f,.6f),1.5f);
-        var red=new DustParticleOptions(new Vector3f(1,.07f,.008f),1.25f);
+        var core=new DustParticleOptions(new Vector3f(1,.86f,.78f),1.1f);
+        var red=new DustParticleOptions(new Vector3f(.95f,.015f,.11f),1.35f);
+        var amber=new DustColorTransitionOptions(new Vector3f(1,.5f,.06f),new Vector3f(.85f,.015f,.07f),1.1f);
         // The beacon is present from the very first charge tick. Five seals appear in order.
         int segments=(int)Math.clamp(p.distanceTo(top)*7,32,196);
         for(int i=0;i<=segments;i++){
             double t=i/(double)segments,a=t*24-time*2;
-            Vec3 q=p.lerp(top,t),off=side.scale(Math.cos(a)*.24).add(up.scale(Math.sin(a)*.24));
-            point(l,core,q,Vec3.ZERO,10);point(l,red,q.add(off),Vec3.ZERO,12);
+            Vec3 q=p.lerp(top,t),off=side.scale(Math.cos(a)*(.12+progress*.16)).add(up.scale(Math.sin(a)*(.12+progress*.16)));
+            point(l,red,q,Vec3.ZERO,10);
+            if(progress>.55)point(l,core,q,Vec3.ZERO,9);
+            point(l,amber,q.add(off),off.normalize().scale(-.015),12);
         }
         int rings=explosionRings(progress);
         for(int ring=0;ring<rings;ring++){
@@ -144,14 +147,15 @@ final class CataclysmEffects {
             for(int j=0;j<112;j++){
                 double a=j*Math.PI/56+time*(ring%2==0?.3:-.3);
                 Vec3 off=side.scale(Math.cos(a)*radius).add(up.scale(Math.sin(a)*radius));
-                point(l,ring%2==0?red:core,center.add(off),Vec3.ZERO,12);
+                point(l,ring%2==0?red:amber,center.add(off),Vec3.ZERO,12);
             }
-            for(int j=0;j<36;j++){
-                double a=j*2.39996+time*2+ring,r=radius+1+(j%5)*.35;
-                Vec3 off=side.scale(Math.cos(a)*r).add(up.scale(Math.sin(a)*r)).add(axis.scale(1+j%3));
-                Vec3 destination=center.add(side.scale(Math.cos(a+.7)*radius*.7)).add(up.scale(Math.sin(a+.7)*radius*.7));
-                Vec3 q=center.add(off);
-                point(l,j%4==0?ParticleTypes.FLAME:red,q,destination.subtract(q).scale(.09),20);
+            // Counter-rotating ember ribbons feed each seal, then tighten into the beam.
+            for(int arm=0;arm<2;arm++)for(int j=0;j<24;j++){
+                double t=j/24.0,a=arm*Math.PI+time*(ring%2==0?1.6:-1.6)+t*6.5;
+                double r=radius*(1.65-t*.9);
+                Vec3 off=side.scale(Math.cos(a)*r).add(up.scale(Math.sin(a)*r)).add(axis.scale((1-t)*2));
+                Vec3 tangent=side.scale(-Math.sin(a)*.14-Math.cos(a)*.06).add(up.scale(Math.cos(a)*.14-Math.sin(a)*.06)).add(axis.scale(-.07));
+                point(l,j%5==0?core:j%3==0?amber:red,center.add(off),tangent,22);
             }
         }
     }
@@ -186,7 +190,7 @@ final class CataclysmEffects {
         if(s==Spell.VOID_CORONATION)return i%2==0?ParticleTypes.SMOKE:ParticleTypes.DRAGON_BREATH;
         if(s==Spell.SOUL_REQUIEM)return i%2==0?ParticleTypes.SCULK_SOUL:ParticleTypes.SOUL_FIRE_FLAME;
         if(s==Spell.ETERNAL_WINTER)return ParticleTypes.SNOWFLAKE;
-        if(s==Spell.EXPLOSION)return i%3==0?ParticleTypes.SMOKE:ParticleTypes.FLAME;
+        if(s==Spell.EXPLOSION)return i%5==0?ParticleTypes.FLAME:new DustColorTransitionOptions(new Vector3f(.95f,.015f,.11f),new Vector3f(1,.42f,.04f),1.1f);
         return SpellParticles.particle(s.theme);
     }
     private static void point(ClientLevel l,ParticleOptions o,Vec3 p,Vec3 v,int life){NativeSpellEffects.point(l,o,p,v,life,false);}

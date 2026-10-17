@@ -3349,7 +3349,7 @@
       "radius": 16,
       "range": 48,
       "cooldown": 2400,
-      "castTicks": 240,
+      "castTicks": 420,
       "mana": 480,
       "manaStep": 0,
       "maxLevel": 1,
@@ -3360,7 +3360,7 @@
       "role": "Cataclysm",
       "category": "CATACLYSM",
       "bookId": "explosion",
-      "description": "Lock the aimed location at the start of a twelve-second chant. A diagonal beacon forms five seals that gather fire at different heights. After release, the marked area detonates for 256 base damage over sixteen blocks without destroying terrain. Leaves you heavily slowed for four seconds and weakened for five."
+      "description": "Lock the aimed location and channel the supplied Explosion chant for twenty-one seconds before equipment modifiers. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion immediately detonates the marked area for 256 base damage over sixteen blocks, with the recorded blast. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed."
     },
     "SERAPH_ASCENDANT": {
       "title": "Seraph Ascendant",

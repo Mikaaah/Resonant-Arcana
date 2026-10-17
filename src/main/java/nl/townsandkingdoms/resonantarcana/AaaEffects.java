@@ -46,9 +46,9 @@ final class AaaEffects {
             int count=CataclysmEffects.explosionRings(progress);
             for(int i=0;i<count;i++){
                 Vec3 center=p.lerp(end,.12+i*.17);double r=2.4+i*.3;
-                emit("ward_fire",center,r,.015,r,angles);
+                emit("explosion_seal",center,r,.015,r,angles);
             }
-        }else emit(s.theme==Spell.Theme.FIRE?"ward_fire":"ward_magic",p.add(0,.025,0),charge?m.size():m.size()*.7,.015,charge?m.size():m.size()*.7,new Vector3f());
+        }else emit(s==Spell.EXPLOSION?"explosion_seal":s.theme==Spell.Theme.FIRE?"ward_fire":"ward_magic",p.add(0,.025,0),charge?m.size():m.size()*.7,.015,charge?m.size():m.size()*.7,new Vector3f());
     }
     private static void emit(String name,Vec3 p,double x,double y,double z,Vector3f angles){
         if(budget--<=0)return;

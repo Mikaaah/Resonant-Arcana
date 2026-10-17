@@ -1,3 +1,20 @@
 {
-  "explosion_chant": {"sounds": []}
+  "explosion_chant": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:explosion_chant",
+        "stream": true,
+        "preload": true
+      }
+    ]
+  },
+  "explosion_blast": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:explosion_blast",
+        "stream": true,
+        "preload": true
+      }
+    ]
+  }
 }

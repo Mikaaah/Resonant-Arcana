@@ -121,7 +121,7 @@ public final class SpellEngine {
             trail(level,muzzle.add(side.scale(Math.cos(a)*.35)).add(0,Math.sin(a)*.25,0).add(direction.scale(t*.6)),spell.theme,.02);
         }
         if(spell.theme==Spell.Theme.SOUL)level.sendParticles(ParticleTypes.SCULK_CHARGE_POP,start.x,start.y,start.z,6,0.15,0.15,0.15,0.02);
-        if(book==null||!book.prepared())SpellAudio.cast(player,spell);
+        if(spell!=Spell.EXPLOSION&&(book==null||!book.prepared()))SpellAudio.cast(player,spell);
         SpellVisuals.send(level,spell,SpellVisuals.Stage.CAST,muzzle,muzzle.add(direction),0.65);
 
         if(SpellActions.handles(spell.kind))timed=SpellActions.begin(cast);else switch(spell.kind){
@@ -623,7 +623,7 @@ public final class SpellEngine {
         for(int i=0;i<count;i++){double a=i*Math.PI*2/count+offset;trail(level,center.add(Math.cos(a)*radius,0,Math.sin(a)*radius),theme,0.015);}
     }
     static void impactFeedback(Cast c,Vec3 pos){
-        if(c.spell.kind==Spell.Kind.CANNON)return;
+        if(c.spell.kind==Spell.Kind.CANNON||c.spell==Spell.EXPLOSION)return;
         // One layered hit per cast every eight ticks, including area and chain attacks.
         if(ticks-c.lastImpactTick<8)return;
         if(c.spell.kind!=Spell.Kind.METEOR&&c.spell.kind!=Spell.Kind.RAIL&&c.spell.kind!=Spell.Kind.COLLAPSE&&c.spell.kind!=Spell.Kind.DOOM)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.HIT,pos,pos,0.65);

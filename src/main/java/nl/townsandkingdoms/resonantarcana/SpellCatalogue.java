@@ -56,7 +56,7 @@ final class SpellCatalogue {
             if(title==null||title.isBlank()||kind==null||theme==null||role==null||description==null||description.isBlank()
                 ||category==null||!java.util.Arrays.stream(SpellCategory.values()).anyMatch(c->c.name().equals(category))||bookId==null||!bookId.matches("[a-z0-9_]+")||!Float.isFinite(damage)||damage<0||damage>256
                 ||!Double.isFinite(radius)||radius<0||radius>16||!Double.isFinite(range)||range<0||range>64
-                ||cooldown<1||castTicks<0||castTicks>400||mana<1||mana>500||manaStep<0||maxLevel<1||maxLevel>5
+                ||cooldown<1||castTicks<0||castTicks>840||mana<1||mana>500||manaStep<0||maxLevel<1||maxLevel>5
                 ||!Float.isFinite(healing)||healing<0||duration<0||duration>600||interval<0||pulses<1||pulses>16)
                 throw new IllegalStateException("Invalid spell definition: "+id);
         }

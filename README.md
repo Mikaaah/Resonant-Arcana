@@ -4,7 +4,7 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **150 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.22.0-alpha](downloads/resonant-arcana-0.22.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.23.0-alpha](downloads/resonant-arcana-0.23.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -28,9 +28,9 @@ All scrolls share **one Spells creative tab**, alongside the Equipment tab. Func
 
 ## Rituals and new spells
 
-Cataclysms charge through a **large seal beneath the caster**. Dense native particles spiral down from 8–13 blocks above into the seal, with a small amount flowing into the caster. Individual charge sounds repeat at stronger volume throughout the cast. Optional **AAAParticles** are limited to floor seals, Explosion’s five seals and the original Doom black-hole effect, now centred with its red spirals five blocks higher. Native particles remain available without AAA. The actual anime chant is not bundled; see the [optional chant sound slot](CONFIGURATION.md#optional-explosion-chant).
+Cataclysms charge through a **large seal beneath the caster**. Dense native particles spiral down from 8–13 blocks above into the seal, with a small amount flowing into the caster. Individual charge sounds repeat at stronger volume throughout the cast. Optional **AAAParticles** are limited to floor seals, Explosion’s five seals and the original Doom black-hole effect, now centred with its red spirals five blocks higher. Native particles remain available without AAA. Explosion includes the owner-supplied chant and blast recording; see [audio timing and overrides](CONFIGURATION.md#explosion-recording-in-023).
 
-- **Explosion:** target locks when the twelve-second charge begins. A diagonal beacon appears first, then five seals assemble along it and gather particles at different heights. Sixteen-block detonation and 256 base damage. Causes brief slowness and weakness from exhaustion; does not destroy terrain.
+- **Explosion:** target locks when the twenty-one-second base charge begins. A crimson diagonal beacon appears first, then five red/amber seals gather counter-rotating ember ribbons at different heights. The complete chant plays during the windup, and the recorded blast begins with the first damage tick. Sixteen-block detonation and 256 base damage. Causes brief slowness and weakness from exhaustion; does not destroy terrain.
 - **Seraph Ascendant:** twenty seconds of flight with radiant particle wings. Nearby allies gain +15% spell power and periodic healing. Cleanup removes its own flight modifier and grants brief Slow Falling.
 - **Arcane Devastator:** a six-second charge followed by a broad, piercing arcane cannon beam. Cover stops it.
 - **Final Judgement:** an actual descending golden sword accompanies holy damage, healing and the final cleansing verdict. Its visual scale adapts to available overhead room.
@@ -70,8 +70,8 @@ Supply compile-only API JARs, then run with Java 21:
 ./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar
 ```
 
-The packaged-asset check verifies the four item assets, exactly three selective AAA effects and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.22.0-alpha:** 10,188 dedicated-server checks pass without Bosses’Rise and 10,967 with it. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies the four item assets, exactly four selective AAA effects and both recorded OGG streams and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.23.0-alpha:** 10,374 dedicated-server checks pass without Bosses’Rise and 11,153 with it. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 
-By Towns & Kingdoms. [MIT license](LICENSE). User-supplied item artwork is retained unchanged. Vanilla/Iron’s particles and installed Bosses’Rise assets remain owned by their respective authors. Spell ideas draw on RPG class roles and familiar fantasy magic; no anime voice clips or third-party artwork are bundled.
+By Towns & Kingdoms. [MIT license](LICENSE). User-supplied item artwork is retained unchanged. Vanilla/Iron’s particles and installed Bosses’Rise assets remain owned by their respective authors. Spell ideas draw on RPG class roles and familiar fantasy magic; the owner-supplied Explosion recording is credited separately in [Audio credits](AUDIO_CREDITS.md).

@@ -93,20 +93,23 @@ The Spells creative tab contains every enabled scroll. Categories remain availab
 
 Explosion snapshots the aimed entity position or block/range mark at the beginning of its native cast. Turning does not move it. A new cast acquires a new mark; cancellation clears the snapshot and cannot detonate it. The mark must remain loaded and within 64 blocks with line of sight at release.
 
-### Optional Explosion chant
+### Explosion recording in 0.23
 
-No Megumin recording is included. A Minecraft 1.21.1 resource pack can supply audio you have permission to use:
+The owner-supplied recording is included as two streamed OGG assets: `explosion_chant` (20.95 seconds) and `explosion_blast` (the remaining 6.75 seconds). The base native windup is 420 ticks / 21 seconds. Native cast-speed equipment adjusts the chant pitch so its end stays aligned with the cast bar. Explosion's effective windup is bounded to 210–838 ticks, keeping playback inside the supported pitch range of 0.5–2.0. Other spells' cast-speed rules are unchanged.
 
-1. Put the recording at `assets/resonant_arcana/sounds/megumin_explosion.ogg`.
-2. Put the following in `assets/resonant_arcana/sounds.json`:
+The target locks at the beginning. The recorded blast and damage start on the first release tick; there is no extra warning delay. The caster hears its blast directly, while nearby players hear it at the marked position. Generic Explosion charging pulses and overlapping vanilla blast cues are suppressed so the recording can be heard clearly.
+
+Chants are tracked per caster on the client. Cancellation, death and dimension changes stop that instance. Completing or cancelling one caster's ritual does not stop another caster's chant. Server audio gain and the client's Players slider still apply.
+
+Resource packs can replace `resonant_arcana:explosion_chant` and `resonant_arcana:explosion_blast` through `assets/resonant_arcana/sounds.json`; use streamed OGG files. A replacement chant should have the same 20.95-second source duration to keep the default timing. For example:
 
 ```json
 {
   "explosion_chant": {
     "replace": true,
-    "sounds": [{"name": "resonant_arcana:megumin_explosion", "stream": true}]
+    "sounds": [{"name": "resonant_arcana:my_explosion_chant", "stream": true}]
   }
 }
 ```
 
-The chant starts when the target is locked and stops when the cast completes or is interrupted. Its slot is silent until a pack provides the recording. The twelve-second cast can be reduced by native equipment; the audio stops at that effective cast length.
+Explosion's native particles and dedicated AAA seal use crimson/red, amber and a pale warm core. The two ember ribbons at each seal counter-rotate into the diagonal beacon; the core brightens in the second half of charging. Optional AAA usage remains limited to seals and Doom. The native particle fallback remains available.
