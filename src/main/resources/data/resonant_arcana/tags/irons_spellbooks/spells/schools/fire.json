@@ -24,6 +24,10 @@
     },
     "resonant_arcana:ashen_rebirth",
     "resonant_arcana:world_pyre",
-    "resonant_arcana:explosion"
+    "resonant_arcana:explosion",
+    {
+      "id": "resonant_arcana:lux_extinction",
+      "required": false
+    }
   ]
 }

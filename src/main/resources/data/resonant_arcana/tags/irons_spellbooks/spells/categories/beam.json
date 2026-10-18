@@ -9,6 +9,14 @@
     "resonant_arcana:dragon_breath",
     "resonant_arcana:judgement_ray",
     "resonant_arcana:cryo_lance",
-    "resonant_arcana:arcane_devastator"
+    "resonant_arcana:arcane_devastator",
+    {
+      "id": "resonant_arcana:tremorzilla_breath",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_sonar",
+      "required": false
+    }
   ]
 }

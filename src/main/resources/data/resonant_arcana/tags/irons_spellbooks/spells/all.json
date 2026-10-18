@@ -202,6 +202,78 @@
     "resonant_arcana:i_am_atomic",
     "resonant_arcana:doom_beam",
     "resonant_arcana:void_exile",
-    "resonant_arcana:void_domain"
+    "resonant_arcana:void_domain",
+    {
+      "id": "resonant_arcana:polarity_bolt",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:emp_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:magnetar_annihilation",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:amber_talon",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tectonic_stampede",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:lux_extinction",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:acid_glob",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_breath",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:nuclear_strike",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:brine_bubble",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:hullbreaker_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_deluge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:desolate_dagger",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_sonar",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forlorn_reckoning",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:gumball_volley",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:frostmint_hex",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:candy_catastrophe",
+      "required": false
+    }
   ]
 }

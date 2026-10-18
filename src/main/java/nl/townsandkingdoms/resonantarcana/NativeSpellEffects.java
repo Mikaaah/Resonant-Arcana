@@ -42,6 +42,7 @@ final class NativeSpellEffects {
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
+        if(CavesCompat.optional(spell)){if(CavesCompat.available())CavesClientEffects.visual(level,spell,stage,p,end,size);return;}
         if(spell==Spell.VOID_DOMAIN){VoidDomainEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.VOID_EXILE){VoidExileEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicEffects.visual(level,stage,p,end,size);return;}
@@ -267,6 +268,11 @@ final class NativeSpellEffects {
         if(detail--<=0)return;
         var result=Minecraft.getInstance().particleEngine.createParticle(particle,p.x,p.y,p.z,v.x,v.y,v.z);
         if(result!=null){result.setColor(((rgb>>16)&255)/255f,((rgb>>8)&255)/255f,(rgb&255)/255f);result.setLifetime(life);result.scale(scale);}
+    }
+    /** Preserve specialized factory parameters and native animation lifetimes. */
+    static net.minecraft.client.particle.Particle nativeParticle(ParticleOptions particle,Vec3 p,Vec3 parameters,boolean boundary){
+        if(boundary){if(outline--<=0)return null;}else if(detail--<=0)return null;
+        return Minecraft.getInstance().particleEngine.createParticle(particle,p.x,p.y,p.z,parameters.x,parameters.y,parameters.z);
     }
     static void point(ClientLevel level,ParticleOptions particle,Vec3 p,Vec3 v,int life,boolean boundary){
         if(boundary){if(outline--<=0)return;}else if(detail--<=0)return;

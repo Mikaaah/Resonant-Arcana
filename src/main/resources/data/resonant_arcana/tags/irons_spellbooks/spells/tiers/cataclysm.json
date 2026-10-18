@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:magnetar_annihilation",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:lux_extinction",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:nuclear_strike",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_deluge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forlorn_reckoning",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:candy_catastrophe",
+      "required": false
+    }
+  ]
+}

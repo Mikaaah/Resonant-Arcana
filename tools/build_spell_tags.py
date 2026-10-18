@@ -7,9 +7,11 @@ data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json'
 groups={}
 for name,spell in data['spells'].items():
     school=next(s['id'] for s in data['schools'] if name in s['spells'])
-    for group in ['all','categories/'+spell['category'].lower(),'schools/'+school]:
+    extra=[]
+    if spell.get('integration')=='alexscaves':extra=['integrations/alexscaves','caves/'+spell['area'],'tiers/'+spell['tier'].lower()]
+    for group in ['all','categories/'+spell['category'].lower(),'schools/'+school]+extra:
         entry='resonant_arcana:'+spell['bookId']
-        if spell['kind'].startswith('BOSS_'):entry={'id':entry,'required':False}
+        if spell['kind'].startswith('BOSS_') or spell.get('integration'):entry={'id':entry,'required':False}
         groups.setdefault(group,[]).append(entry)
 folder=ROOT/'src/main/resources/data/resonant_arcana/tags/irons_spellbooks/spells'
 for name,values in groups.items():

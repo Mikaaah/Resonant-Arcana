@@ -23,6 +23,22 @@
       "required": false
     },
     "resonant_arcana:glacial_counter",
-    "resonant_arcana:eternal_winter"
+    "resonant_arcana:eternal_winter",
+    {
+      "id": "resonant_arcana:brine_bubble",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:hullbreaker_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_deluge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:frostmint_hex",
+      "required": false
+    }
   ]
 }

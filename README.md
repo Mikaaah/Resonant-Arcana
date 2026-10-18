@@ -2,9 +2,9 @@
 
 [Project status](https://github.com/Mikaaah/Mikaaah/blob/master/STATUS.md) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues) · [Creator’s CurseForge projects](https://www.curseforge.com/members/mikaaah/projects)
 
-An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **154 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
+An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **154 core spells**, twelve optional Bosses’Rise spells, **eighteen optional Alex’s Caves spells**, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.28.0-alpha](downloads/resonant-arcana-0.28.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.29.0-alpha](downloads/resonant-arcana-0.29.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -23,6 +23,23 @@ Each recipe uses a netherite Iron’s spellbook, a nether star and themed materi
 ## Spell categories
 
 All scrolls share **one Spells creative tab**, alongside the Equipment tab. Scrolls are ordered by school, category and name; server-disabled spells are hidden. Functional categories remain in descriptions and as filters in the debug archive. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
+
+## Alex’s Caves spells
+
+Install **Alex’s Caves 2.0.10** and its Citadel dependency on **both client and server** to unlock these eighteen arts. The adapter uses the installed mod’s particles, sounds, models and attack themes. Other versions leave the adapter disabled; the core addon works without Alex’s Caves.
+
+| Cave area | Novice | Master | Cataclysm |
+| --- | --- | --- | --- |
+| Magnetic Caves | Polarity Bolt | EMP Surge | Magnetar Annihilation |
+| Primordial Caves | Amber Talon | Tectonic Stampede | Luxtructosaurus Extinction |
+| Toxic Caves | Acid Glob | Tremorzilla Breath | Nuclear Strike |
+| Abyssal Chasm | Brine Bubble | Hullbreaker Surge | Abyssal Deluge |
+| Forlorn Hollows | Desolate Dagger | Forsaken Sonar | Forlorn Reckoning |
+| Candy Cavity | Gumball Volley | Frostmint Hex | Candyland Catastrophe |
+
+Cataclysms have **11–13-second base casts**, **480–500 mana costs** and a single Legendary rank. The two large beams follow the caster’s current aim and hit each enemy once. Nuclear Strike marks a location and drops a visual bomb, giving two seconds of warning before a protected blast and native mushroom cloud. No native boss AI or destructive nuclear explosion runs. All offensive spells retain ally protection and solid-cover checks.
+
+Search the spell archive with `alexscaves`, a biome name or a tier; native spell tags include `integrations/alexscaves`, `caves/<biome>` and `tiers/<tier>`. These scrolls use the existing single Spells tab.
 
 ## Rituals and new spells
 
@@ -75,11 +92,11 @@ Offensive spells respect server PvP, scoreboard friendly-fire settings and owned
 Supply compile-only API JARs, then run with Java 21:
 
 ```sh
-./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar
+./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar -PalexsCavesJar=/path/alexscaves-2.0.10.jar -PcitadelJar=/path/citadel.jar
 ```
 
-The packaged-asset check verifies equipment, spell icons and tags, exactly four selective AAA effects and eight recorded OGG streams, and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.28.0-alpha:** 11,469 dedicated-server checks pass without Bosses’Rise and 12,284 with it. Coverage includes native casting and cancellation, rank damage, ally/PvP protection, beam movement and cover, Void Exile persistence, Void Domain effects and boundaries, spell tags, scroll keywords and corrected multi-hit cadence. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies equipment, spell icons and tags, exactly four selective AAA effects and eight recorded OGG streams, and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.29.0-alpha:** dedicated-server checks pass in all four configurations: **11,491** core only, **12,306** with Bosses’Rise only, **13,964** with Alex’s Caves only, and **14,779** with both. Coverage includes native charging and cancellation, mana, exact cave-art hit schedules, ally and cover rules, following beams, projectile protection, cave ceiling clearance, finite visual cleanup, tags and tooltips. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 
-By Towns & Kingdoms. [MIT license](LICENSE). User-supplied item artwork is retained unchanged. Vanilla/Iron’s particles and installed Bosses’Rise assets remain owned by their respective authors. Spell ideas draw on RPG class roles and familiar fantasy magic; the owner-supplied Explosion recording is credited separately in [Audio credits](AUDIO_CREDITS.md).
+By Towns & Kingdoms. [MIT license](LICENSE). User-supplied item artwork is retained unchanged. Vanilla/Iron’s particles and installed Bosses’Rise / Alex’s Caves assets remain owned by their respective authors. Spell ideas draw on RPG class roles and familiar fantasy magic; the owner-supplied Explosion recording is credited separately in [Audio credits](AUDIO_CREDITS.md).

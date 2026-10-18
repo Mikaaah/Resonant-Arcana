@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:acid_glob",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_breath",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:nuclear_strike",
+      "required": false
+    }
+  ]
+}

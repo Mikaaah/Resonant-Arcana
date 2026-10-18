@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:gumball_volley",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:frostmint_hex",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:candy_catastrophe",
+      "required": false
+    }
+  ]
+}

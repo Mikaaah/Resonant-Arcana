@@ -25,6 +25,26 @@
       "id": "resonant_arcana:krakens_undertow",
       "required": false
     },
-    "resonant_arcana:worldroot_catastrophe"
+    "resonant_arcana:worldroot_catastrophe",
+    {
+      "id": "resonant_arcana:amber_talon",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tectonic_stampede",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:acid_glob",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_breath",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:nuclear_strike",
+      "required": false
+    }
   ]
 }

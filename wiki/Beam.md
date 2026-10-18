@@ -150,4 +150,44 @@ Base release / active phase: **7.4s**.
 
 Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarcana spell arcane_devastator <rank>`.
 
+### Tremorzilla Breath
+
+Manifest Tremorzilla’s charged breath as a green atomic beam following your hands and aim for five seconds. Each enemy entering its path takes one hit. Solid cover stops the breath.
+
+**Nature** · Cast **4s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 180 |
+| II | 90 | — | 188 |
+| III | 108 | — | 196 |
+| IV | 126 | — | 204 |
+| V | 144 | — | 212 |
+
+Base release / active phase: **5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tremorzilla_breath`. Inspect ranks with `/resonantarcana spell tremorzilla_breath <rank>`.
+
+### Forsaken Sonar
+
+Manifest the Forsaken’s jaws and release three aimed sonar waves. Each wave damages visible enemies in a broad forward cone, reveals them and briefly slows them.
+
+**Ender** · Cast **3s** · Cooldown **37.5s** · Range **28 blocks** · Radius / half-width **4 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 22 | — | 140 |
+| II | 27.5 | — | 148 |
+| III | 33 | — | 156 |
+| IV | 38.5 | — | 164 |
+| V | 44 | — | 172 |
+
+Base release / active phase: **3.3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:forsaken_sonar`. Inspect ranks with `/resonantarcana spell forsaken_sonar <rank>`.
+
 [← Home](Home.md)

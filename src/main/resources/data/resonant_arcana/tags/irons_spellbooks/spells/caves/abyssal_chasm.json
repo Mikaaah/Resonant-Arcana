@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:brine_bubble",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:hullbreaker_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_deluge",
+      "required": false
+    }
+  ]
+}

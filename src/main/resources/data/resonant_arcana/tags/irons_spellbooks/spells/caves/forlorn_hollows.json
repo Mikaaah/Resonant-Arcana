@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:desolate_dagger",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_sonar",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forlorn_reckoning",
+      "required": false
+    }
+  ]
+}

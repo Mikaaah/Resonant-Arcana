@@ -18,7 +18,7 @@ final class SpellAudio {
         case GRAVITY->"spell.gust.cast";case SOUL->"spell.eldritch_blast.cast";
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
-    static String chargeId(Spell spell){return switch(spell){
+    static String chargeId(Spell spell){if(CavesCompat.optional(spell))return CavesCompat.chargeSound(spell);return switch(spell){
         case VOID_DOMAIN->"block.portal.trigger";case VOID_EXILE->"block.respawn_anchor.charge";
         case EXPLOSION->"entity.ghast.warn";case SERAPH_ASCENDANT->"block.beacon.activate";case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.charge");
         case ASTRAL_APOCALYPSE->"block.amethyst_block.resonate";
@@ -99,7 +99,7 @@ final class SpellAudio {
     };}
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
-    static String spellCastId(Spell spell){return switch(spell){
+    static String spellCastId(Spell spell){if(CavesCompat.optional(spell))return CavesCompat.castSound(spell);return switch(spell){
         case VOID_DOMAIN->"block.respawn_anchor.deplete";case VOID_EXILE->"entity.enderman.teleport";
         case EXPLOSION->"entity.blaze.shoot";case SERAPH_ASCENDANT->irons("spell.cleanse.cast");case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.cast");
         case ASTRAL_APOCALYPSE->irons("spell.summon_swords.cast");case CRIMSON_ECLIPSE->irons("cast.generic.blood");

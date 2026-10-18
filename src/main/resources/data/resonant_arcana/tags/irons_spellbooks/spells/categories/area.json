@@ -35,6 +35,10 @@
     "resonant_arcana:hailstorm",
     "resonant_arcana:absolute_zero",
     "resonant_arcana:soulblast",
-    "resonant_arcana:funeral_bell"
+    "resonant_arcana:funeral_bell",
+    {
+      "id": "resonant_arcana:hullbreaker_surge",
+      "required": false
+    }
   ]
 }

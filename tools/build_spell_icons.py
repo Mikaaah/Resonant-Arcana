@@ -15,7 +15,64 @@ def main(only=None):
         if only and ident not in only:continue
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c='#ab3036' if kind in ('BOSS_TENTACLE','BOSS_WRATH') else '#c49b60' if kind=='BOSS_SAND' else PALETTES[theme];white='#ff7355' if kind=='DOOM' else '#edfff8';c='#ed1936' if kind=='DOOM' else c;rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if name=='VOID_DOMAIN':
+        if kind=='CAVE_ART':
+            entry=catalogue['spells'][name];area=entry['area'];tier=entry['tier']
+            c={'magnetic_caves':'#80caff','primordial_caves':'#ffbe54','toxic_caves':'#90ff42','abyssal_chasm':'#4bdfdd','forlorn_hollows':'#bd89ed','candy_cavity':'#ff9edb'}[area]
+            if tier=='CATACLYSM':
+                d.ellipse((8,8,120,120),outline=c,width=5)
+                for a in range(8):
+                    a*=math.pi/4;d.ellipse((61+math.cos(a)*54,61+math.sin(a)*54,67+math.cos(a)*54,67+math.sin(a)*54),fill=white)
+            if name=='AMBER_TALON':
+                d.polygon([(12,29),(55,54),(64,25),(72,53),(116,29),(92,72),(75,67),(64,101),(53,67),(35,72)],fill=c)
+                line([(61,35),(64,21),(69,36)],4,white)
+            elif name=='ACID_GLOB':
+                d.polygon([(64,17),(98,66),(97,91),(82,107),(44,106),(28,88),(30,66)],fill=c)
+                d.ellipse((40,56,52,68),fill=white);d.ellipse((75,78,85,88),fill='#386f18')
+                for x,y in [(19,35),(99,24),(14,95)]:d.ellipse((x,y,x+10,y+10),outline=c,width=3)
+            elif name=='BRINE_BUBBLE':
+                d.ellipse((22,18,106,102),outline=c,width=8)
+                d.arc((31,27,94,90),190,256,fill=white,width=6)
+                d.arc((32,57,95,92),3,175,fill=c,width=6)
+                d.ellipse((95,101,110,116),outline=white,width=3)
+            elif name=='DESOLATE_DAGGER':
+                d.polygon([(94,15),(84,54),(55,83),(43,72),(73,42)],fill=c,outline=white,width=3)
+                line([(31,65),(62,96)],8,white);line([(46,82),(25,105)],10,c)
+                d.ellipse((18,100,32,114),fill=white)
+            elif name=='GUMBALL_VOLLEY':
+                for x,y,col in [(38,81,'#ff9edb'),(69,56,'#a6f9ed'),(94,27,'#ffbd77')]:
+                    d.ellipse((x-15,y-15,x+15,y+15),fill=col);d.ellipse((x-8,y-9,x-1,y-2),fill=white)
+                    line([(x-21,y+6),(x-33,y+16)],5,col)
+            elif area=='magnetic_caves':
+                d.arc((28,21,100,105),0,180,fill='#ff525d',width=17)
+                line([(28,57),(28,27)],15,'#ff525d');line([(100,57),(100,27)],15,'#66cfff')
+                if tier!='NOVICE':
+                    for r in [43,55]:d.arc((64-r,64-r,64+r,64+r),196,342,fill=c,width=4)
+            elif area=='primordial_caves':
+                d.polygon([(21,75),(34,44),(69,34),(92,48),(108,46),(103,65),(83,68),(72,95),(51,94),(44,75)],fill=c)
+                d.ellipse((77,47,85,55),fill='#231810')
+                for x in [34,51,69]:line([(x,74),(x-9,104)],6,white)
+                if tier=='CATACLYSM':line([(30,60),(22,21),(45,47),(57,17),(64,39)],6,'#ff6130')
+            elif area=='toxic_caves':
+                for a in range(3):
+                    a=a*math.pi*2/3;points=[(64,64)]+[(64+math.cos(a+t)*43,64+math.sin(a+t)*43) for t in [.15,.45,.75,.95]];d.polygon(points,fill=c)
+                d.ellipse((55,55,73,73),fill=white)
+                if tier=='NOVICE':d.ellipse((36,26,50,40),outline=white,width=4)
+                elif tier=='MASTER':line([(64,64),(107,18)],9,white)
+            elif area=='abyssal_chasm':
+                for i in range(3):d.arc((17+i*6,26+i*17,111-i*6,74+i*17),180,348,fill=c,width=9)
+                d.polygon([(47,47),(64,16),(82,47)],fill=white)
+                if tier=='CATACLYSM':d.ellipse((54,61,74,81),fill='#122b54',outline=white,width=3)
+            elif area=='forlorn_hollows':
+                d.polygon([(35,33),(52,44),(64,29),(77,44),(94,33),(87,80),(73,104),(55,104),(40,80)],fill=c)
+                for x in [48,74]:d.ellipse((x-4,57,x+5,68),fill='#170b25')
+                for r in [49,57] if tier!='NOVICE' else [49]:d.arc((64-r,64-r,64+r,64+r),22,157,fill=white,width=4)
+            else:
+                d.ellipse((29,25,99,95),fill='#ffb1e2',outline=white,width=5)
+                for i in range(5):
+                    a=i*math.pi*2/5;d.polygon([(64,60),(64+math.cos(a)*32,60+math.sin(a)*32),(64+math.cos(a+.5)*32,60+math.sin(a+.5)*32)],fill='#b5f7f6')
+                line([(64,95),(64,115)],8,white)
+            if tier=='MASTER':d.polygon([(98,94),(104,103),(115,105),(105,112),(102,121),(96,111),(87,107),(97,103)],fill=white)
+        elif name=='VOID_DOMAIN':
             d.ellipse((13,13,115,115),fill='#080210',outline='#ac70ef',width=7)
             d.arc((21,40,107,88),0,360,fill='#d8b9ff',width=5)
             line([(40,98),(64,77),(88,98)],6,white)

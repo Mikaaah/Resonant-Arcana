@@ -1,6 +1,6 @@
 # Spell reference
 
-**154 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
+**154 core spells + 12 optional Bosses’Rise spells + 18 optional Alex’s Caves spells.** Every spell has one functional category and one native Iron’s school.
 
 Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
@@ -14,30 +14,30 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 
 | Category | Spells |
 | --- | ---: |
-| [Projectiles](#projectile) | 19 |
-| [Beams & Channels](#beam) | 9 |
-| [Area Magic](#area) | 35 |
-| [Control](#control) | 16 |
+| [Projectiles](#projectile) | 24 |
+| [Beams & Channels](#beam) | 11 |
+| [Area Magic](#area) | 36 |
+| [Control](#control) | 18 |
 | [Movement](#mobility) | 11 |
 | [Support & Defense](#support) | 21 |
-| [Summons & Constructs](#summon) | 9 |
+| [Summons & Constructs](#summon) | 11 |
 | [Strikes & Drains](#melee) | 20 |
 | [Boss Arts](#boss_art) | 12 |
-| [Cataclysms](#cataclysm) | 14 |
+| [Cataclysms](#cataclysm) | 20 |
 
 ## Schools
 
 | School | Spells |
 | --- | ---: |
-| Evocation | 17 |
+| Evocation | 19 |
 | Blood | 15 |
-| Fire | 18 |
-| Ender | 36 |
-| Lightning | 15 |
+| Fire | 19 |
+| Ender | 39 |
+| Lightning | 18 |
 | Eldritch | 15 |
-| Nature | 16 |
+| Nature | 21 |
 | Holy | 17 |
-| Ice | 17 |
+| Ice | 21 |
 
 <a id="projectile"></a>
 ## Projectiles
@@ -348,6 +348,106 @@ Release five divergent crystal projectiles. Damage is per projectile; their impa
 
 Spell ID: `resonant_arcana:crystal_barrage`. Inspect ranks with `/resonantarcana spell crystal_barrage <rank>`.
 
+### Polarity Bolt
+
+Fire a scarlet-and-azure magnetic bolt. Its first enemy impact deals damage and pulls the target toward you; solid cover stops it.
+
+**Lightning** · Cast **0.4s** · Cooldown **3.5s** · Range **24 blocks** · Radius / half-width **1.2 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 24 |
+| II | 11.25 | — | 32 |
+| III | 13.5 | — | 40 |
+| IV | 15.75 | — | 48 |
+| V | 18 | — | 56 |
+
+Base release / active phase: **2.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:polarity_bolt`. Inspect ranks with `/resonantarcana spell polarity_bolt <rank>`.
+
+### Acid Glob
+
+Lob a glowing acid glob along your aim. It splashes on the first enemy or solid surface, damaging enemies in a small area and poisoning them for three seconds.
+
+**Nature** · Cast **0.5s** · Cooldown **4.5s** · Range **24 blocks** · Radius / half-width **2 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 25 |
+| II | 10 | — | 33 |
+| III | 12 | — | 41 |
+| IV | 14 | — | 49 |
+| V | 16 | — | 57 |
+
+Base release / active phase: **2.25s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:acid_glob`. Inspect ranks with `/resonantarcana spell acid_glob <rank>`.
+
+### Brine Bubble
+
+Launch a Deep One water bolt. Its first enemy impact deals damage and traps non-boss targets in Alex’s Caves bubble effect for two seconds.
+
+**Ice** · Cast **0.6s** · Cooldown **5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 26 |
+| II | 12.5 | — | 34 |
+| III | 15 | — | 42 |
+| IV | 17.5 | — | 50 |
+| V | 20 | — | 58 |
+
+Base release / active phase: **2.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:brine_bubble`. Inspect ranks with `/resonantarcana spell brine_bubble <rank>`.
+
+### Desolate Dagger
+
+Send a spectral Desolate Dagger along your aim. It pierces up to three enemies, dealing one hit and Weakness I to each before fading. Solid cover stops the blade.
+
+**Ender** · Cast **0.5s** · Cooldown **5.5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 28 |
+| II | 15 | — | 36 |
+| III | 18 | — | 44 |
+| IV | 21 | — | 52 |
+| V | 24 | — | 60 |
+
+Base release / active phase: **2.25s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:desolate_dagger`. Inspect ranks with `/resonantarcana spell desolate_dagger <rank>`.
+
+### Gumball Volley
+
+Fire three native gumballs half a second apart. Each projectile bounces off one solid surface and damages the first enemy it reaches.
+
+**Evocation** · Cast **0.6s** · Cooldown **6s** · Range **24 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 30 |
+| II | 6.25 | — | 38 |
+| III | 7.5 | — | 46 |
+| IV | 8.75 | — | 54 |
+| V | 10 | — | 62 |
+
+Base release / active phase: **3.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:gumball_volley`. Inspect ranks with `/resonantarcana spell gumball_volley <rank>`.
+
 
 <a id="beam"></a>
 ## Beams & Channels
@@ -501,6 +601,46 @@ Channel cosmic energy, then release a sustained beam along your final aim. Each 
 Base release / active phase: **7.4s**.
 
 Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarcana spell arcane_devastator <rank>`.
+
+### Tremorzilla Breath
+
+Manifest Tremorzilla’s charged breath as a green atomic beam following your hands and aim for five seconds. Each enemy entering its path takes one hit. Solid cover stops the breath.
+
+**Nature** · Cast **4s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 180 |
+| II | 90 | — | 188 |
+| III | 108 | — | 196 |
+| IV | 126 | — | 204 |
+| V | 144 | — | 212 |
+
+Base release / active phase: **5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tremorzilla_breath`. Inspect ranks with `/resonantarcana spell tremorzilla_breath <rank>`.
+
+### Forsaken Sonar
+
+Manifest the Forsaken’s jaws and release three aimed sonar waves. Each wave damages visible enemies in a broad forward cone, reveals them and briefly slows them.
+
+**Ender** · Cast **3s** · Cooldown **37.5s** · Range **28 blocks** · Radius / half-width **4 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 22 | — | 140 |
+| II | 27.5 | — | 148 |
+| III | 33 | — | 156 |
+| IV | 38.5 | — | 164 |
+| V | 44 | — | 172 |
+
+Base release / active phase: **3.3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:forsaken_sonar`. Inspect ranks with `/resonantarcana spell forsaken_sonar <rank>`.
 
 
 <a id="area"></a>
@@ -1092,6 +1232,26 @@ Base release / active phase: **3.1s**.
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect ranks with `/resonantarcana spell funeral_bell <rank>`.
 
+### Hullbreaker Surge
+
+Call a Hullbreaker apparition through a rushing tidal wave. The advancing surge damages each enemy once, knocks it away and briefly slows it.
+
+**Ice** · Cast **3.2s** · Cooldown **36s** · Range **28 blocks** · Radius / half-width **6 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 60 | — | 135 |
+| II | 75 | — | 143 |
+| III | 90 | — | 151 |
+| IV | 105 | — | 159 |
+| V | 120 | — | 167 |
+
+Base release / active phase: **3.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:hullbreaker_surge`. Inspect ranks with `/resonantarcana spell hullbreaker_surge <rank>`.
+
 
 <a id="control"></a>
 ## Control
@@ -1367,6 +1527,46 @@ Banish one hostile living target for ten seconds, leaving a violet rift. On retu
 Base release / active phase: **10s**.
 
 Spell ID: `resonant_arcana:void_exile`. Inspect ranks with `/resonantarcana spell void_exile <rank>`.
+
+### EMP Surge
+
+Release an electromagnetic pulse around yourself. Damage enemies, stun non-bosses for three seconds, interrupt eligible spellcasts and destroy hostile projectiles.
+
+**Lightning** · Cast **3s** · Cooldown **30s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 56 | — | 120 |
+| II | 70 | — | 128 |
+| III | 84 | — | 136 |
+| IV | 98 | — | 144 |
+| V | 112 | — | 152 |
+
+Base release / active phase: **1.2s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:emp_surge`. Inspect ranks with `/resonantarcana spell emp_surge <rank>`.
+
+### Frostmint Hex
+
+Place a sugar-staff hex surrounded by orbiting frostmint discs. Five pulses damage and freeze enemies inside; eligible allies gain Sugar Rush while holding the circle.
+
+**Ice** · Cast **3.2s** · Cooldown **37.5s** · Range **28 blocks** · Radius / half-width **7 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 140 |
+| II | 15 | — | 148 |
+| III | 18 | — | 156 |
+| IV | 21 | — | 164 |
+| V | 24 | — | 172 |
+
+Base release / active phase: **5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:frostmint_hex`. Inspect ranks with `/resonantarcana spell frostmint_hex <rank>`.
 
 
 <a id="mobility"></a>
@@ -2097,6 +2297,46 @@ Summon four to eight spectral swords for ten seconds. Each successful player mel
 Base release / active phase: **10s**.
 
 Spell ID: `resonant_arcana:phantom_formation`. Inspect ranks with `/resonantarcana spell phantom_formation <rank>`.
+
+### Amber Talon
+
+Conjure a spectral Subterranodon that dives along your aim. Its first collision slashes one enemy and briefly lifts it; the spirit fades after the strike.
+
+**Nature** · Cast **0.6s** · Cooldown **5s** · Range **18 blocks** · Radius / half-width **1.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 28 |
+| II | 15 | — | 36 |
+| III | 18 | — | 44 |
+| IV | 21 | — | 52 |
+| V | 24 | — | 60 |
+
+Base release / active phase: **2.25s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:amber_talon`. Inspect ranks with `/resonantarcana spell amber_talon <rank>`.
+
+### Tectonic Stampede
+
+Summon three Tremorsaurus spirits that charge the marked ground in sequence. Each charge releases a ground shockwave that damages and staggers visible enemies.
+
+**Nature** · Cast **3s** · Cooldown **35s** · Range **24 blocks** · Radius / half-width **5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 22 | — | 130 |
+| II | 27.5 | — | 138 |
+| III | 33 | — | 146 |
+| IV | 38.5 | — | 154 |
+| V | 44 | — | 162 |
+
+Base release / active phase: **4.3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
 
 
 <a id="melee"></a>
@@ -2887,3 +3127,99 @@ Compress a black singularity that turns emerald halfway through the charge. Rele
 Base release / active phase: **9.5s**.
 
 Spell ID: `resonant_arcana:doom_beam`. Inspect ranks with `/resonantarcana spell doom_beam <rank>`.
+
+### Magnetar Annihilation
+
+Compress opposing magnetic poles, then unleash a blue-white annihilation beam following your aim for seven seconds. Each enemy entering it takes one heavy hit. Solid cover stops the beam.
+
+**Lightning** · Cast **11s** · Cooldown **130s** · Range **64 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 320 | — | 480 |
+
+Base release / active phase: **7s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:magnetar_annihilation`. Inspect ranks with `/resonantarcana spell magnetar_annihilation <rank>`.
+
+### Luxtructosaurus Extinction
+
+Manifest a Luxtructosaurus at the mark. Four tephra eruptions scorch the area before a double-damage extinction blast. Allies and terrain are protected.
+
+**Fire** · Cast **12s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 80 | — | 500 |
+
+Base release / active phase: **6.3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:lux_extinction`. Inspect ranks with `/resonantarcana spell lux_extinction <rank>`.
+
+### Nuclear Strike
+
+Mark a nuclear strike. A descending warhead detonates after a visible warning, releasing one immense blast and Alex’s Caves mushroom cloud. Enemies are weakened by the fallout; allies and terrain remain protected.
+
+**Nature** · Cast **13s** · Cooldown **150s** · Range **48 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 384 | — | 500 |
+
+Base release / active phase: **9s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:nuclear_strike`. Inspect ranks with `/resonantarcana spell nuclear_strike <rank>`.
+
+### Abyssal Deluge
+
+Open a deep-sea vortex at the mark. Four tidal pulses drag enemies inward before a double-damage pressure collapse. Deep One magic and towering splashes trace the battlefield.
+
+**Ice** · Cast **11s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 480 |
+
+Base release / active phase: **6.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:abyssal_deluge`. Inspect ranks with `/resonantarcana spell abyssal_deluge <rank>`.
+
+### Forlorn Reckoning
+
+Call forth a colossal Forsaken apparition. Three growing sonar shockwaves damage, reveal and darken enemies before a double-damage final roar.
+
+**Ender** · Cast **12s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 88 | — | 490 |
+
+Base release / active phase: **6s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:forlorn_reckoning`. Inspect ranks with `/resonantarcana spell forlorn_reckoning <rank>`.
+
+### Candyland Catastrophe
+
+Raise a candy-witch vortex over the mark. Four peppermint storms batter enemies while a Gum Worm emerges below, then a double-damage candy burst ends the spell. Allies and terrain are protected.
+
+**Evocation** · Cast **11s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 480 |
+
+Base release / active phase: **6.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:candy_catastrophe`. Inspect ranks with `/resonantarcana spell candy_catastrophe <rank>`.

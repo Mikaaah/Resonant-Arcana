@@ -51,6 +51,18 @@
     "resonant_arcana:i_am_atomic",
     "resonant_arcana:doom_beam",
     "resonant_arcana:void_exile",
-    "resonant_arcana:void_domain"
+    "resonant_arcana:void_domain",
+    {
+      "id": "resonant_arcana:desolate_dagger",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_sonar",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forlorn_reckoning",
+      "required": false
+    }
   ]
 }

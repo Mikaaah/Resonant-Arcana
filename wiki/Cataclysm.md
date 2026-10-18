@@ -220,4 +220,100 @@ Base release / active phase: **9.5s**.
 
 Spell ID: `resonant_arcana:doom_beam`. Inspect ranks with `/resonantarcana spell doom_beam <rank>`.
 
+### Magnetar Annihilation
+
+Compress opposing magnetic poles, then unleash a blue-white annihilation beam following your aim for seven seconds. Each enemy entering it takes one heavy hit. Solid cover stops the beam.
+
+**Lightning** · Cast **11s** · Cooldown **130s** · Range **64 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 320 | — | 480 |
+
+Base release / active phase: **7s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:magnetar_annihilation`. Inspect ranks with `/resonantarcana spell magnetar_annihilation <rank>`.
+
+### Luxtructosaurus Extinction
+
+Manifest a Luxtructosaurus at the mark. Four tephra eruptions scorch the area before a double-damage extinction blast. Allies and terrain are protected.
+
+**Fire** · Cast **12s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 80 | — | 500 |
+
+Base release / active phase: **6.3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:lux_extinction`. Inspect ranks with `/resonantarcana spell lux_extinction <rank>`.
+
+### Nuclear Strike
+
+Mark a nuclear strike. A descending warhead detonates after a visible warning, releasing one immense blast and Alex’s Caves mushroom cloud. Enemies are weakened by the fallout; allies and terrain remain protected.
+
+**Nature** · Cast **13s** · Cooldown **150s** · Range **48 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 384 | — | 500 |
+
+Base release / active phase: **9s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:nuclear_strike`. Inspect ranks with `/resonantarcana spell nuclear_strike <rank>`.
+
+### Abyssal Deluge
+
+Open a deep-sea vortex at the mark. Four tidal pulses drag enemies inward before a double-damage pressure collapse. Deep One magic and towering splashes trace the battlefield.
+
+**Ice** · Cast **11s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 480 |
+
+Base release / active phase: **6.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:abyssal_deluge`. Inspect ranks with `/resonantarcana spell abyssal_deluge <rank>`.
+
+### Forlorn Reckoning
+
+Call forth a colossal Forsaken apparition. Three growing sonar shockwaves damage, reveal and darken enemies before a double-damage final roar.
+
+**Ender** · Cast **12s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 88 | — | 490 |
+
+Base release / active phase: **6s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:forlorn_reckoning`. Inspect ranks with `/resonantarcana spell forlorn_reckoning <rank>`.
+
+### Candyland Catastrophe
+
+Raise a candy-witch vortex over the mark. Four peppermint storms batter enemies while a Gum Worm emerges below, then a double-damage candy burst ends the spell. Allies and terrain are protected.
+
+**Evocation** · Cast **11s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 72 | — | 480 |
+
+Base release / active phase: **6.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:candy_catastrophe`. Inspect ranks with `/resonantarcana spell candy_catastrophe <rank>`.
+
 [← Home](Home.md)

@@ -16,6 +16,14 @@
     "resonant_arcana:thorn_lash",
     "resonant_arcana:gorgon_gaze",
     "resonant_arcana:glacial_prison",
-    "resonant_arcana:void_exile"
+    "resonant_arcana:void_exile",
+    {
+      "id": "resonant_arcana:emp_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:frostmint_hex",
+      "required": false
+    }
   ]
 }

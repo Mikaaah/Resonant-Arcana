@@ -9,6 +9,14 @@
     "resonant_arcana:spore_totem",
     "resonant_arcana:consecration",
     "resonant_arcana:last_stand",
-    "resonant_arcana:phantom_formation"
+    "resonant_arcana:phantom_formation",
+    {
+      "id": "resonant_arcana:amber_talon",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tectonic_stampede",
+      "required": false
+    }
   ]
 }

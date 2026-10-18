@@ -19,6 +19,26 @@
     "resonant_arcana:luminous_dart",
     "resonant_arcana:frost_needle",
     "resonant_arcana:ice_serpent",
-    "resonant_arcana:crystal_barrage"
+    "resonant_arcana:crystal_barrage",
+    {
+      "id": "resonant_arcana:polarity_bolt",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:acid_glob",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:brine_bubble",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:desolate_dagger",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:gumball_volley",
+      "required": false
+    }
   ]
 }

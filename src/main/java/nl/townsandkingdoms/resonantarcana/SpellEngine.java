@@ -64,6 +64,7 @@ public final class SpellEngine {
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
+        if(CavesCompat.optional(spell)){CavesCompat.charge(player,spell,progress,elapsed);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicRitual.charge(player,progress,elapsed);return;}
         if(spell==Spell.DOOM_BEAM){
             if(elapsed%4==0){
@@ -590,12 +591,12 @@ public final class SpellEngine {
         if(c.spell.damage==0)impactFeedback(c,victim.getBoundingBox().getCenter());
         if(c.spell==Spell.WITHERING_HEX)effect(victim,MobEffects.WITHER,60,0);
         if(c.spell==Spell.SOUL_PRISON)effect(victim,MobEffects.DARKNESS,60,0);
-        if(c.spell.theme==Spell.Theme.ICE){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,0);victim.setTicksFrozen(Math.min(240,victim.getTicksFrozen()+40));}
+        if(c.spell.theme==Spell.Theme.ICE&&!CavesCompat.optional(c.spell)){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,0);victim.setTicksFrozen(Math.min(240,victim.getTicksFrozen()+40));}
         if(c.spell==Spell.BRAMBLE_RING)effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,1);
         if(c.spell.kind==Spell.Kind.DOMAIN){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,50,3);victim.setTicksFrozen(Math.max(160,victim.getTicksFrozen()));}
-        if(c.spell.theme==Spell.Theme.FIRE)victim.igniteForSeconds(3);
-        if(c.spell.theme==Spell.Theme.DARK){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
-        if(c.spell.theme==Spell.Theme.POISON&&!BossesRiseCompat.optional(c.spell))effect(victim,MobEffects.POISON,80,0);
+        if(c.spell.theme==Spell.Theme.FIRE&&!CavesCompat.optional(c.spell))victim.igniteForSeconds(3);
+        if(c.spell.theme==Spell.Theme.DARK&&!CavesCompat.optional(c.spell)){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
+        if(c.spell.theme==Spell.Theme.POISON&&!BossesRiseCompat.optional(c.spell)&&!CavesCompat.optional(c.spell))effect(victim,MobEffects.POISON,80,0);
         switch(c.spell.kind){
             case CONFUSE->{effect(victim,MobEffects.CONFUSION,100,0);effect(victim,MobEffects.BLINDNESS,40,0);}
             case STUN->{effect(victim,MobEffects.MOVEMENT_SLOWDOWN,60,5);effect(victim,MobEffects.WEAKNESS,60,1);}
@@ -692,7 +693,7 @@ public final class SpellEngine {
         final List<Entity> bossVisuals=new ArrayList<>();final List<Vec3> eruptionPoints=new ArrayList<>();
         final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
         AdvancedSpells.State advanced;
-        BossesRiseCompat.State bossState;
+        BossesRiseCompat.State bossState;CavesSpells.State cave;
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){
             owner=player.getUUID();level=player.serverLevel();caster=player;testOwner=player;this.spell=spell;pos=start;this.dir=dir;travel=dir;anchor=aim;this.target=target;

@@ -272,4 +272,44 @@ Base release / active phase: **10s**.
 
 Spell ID: `resonant_arcana:void_exile`. Inspect ranks with `/resonantarcana spell void_exile <rank>`.
 
+### EMP Surge
+
+Release an electromagnetic pulse around yourself. Damage enemies, stun non-bosses for three seconds, interrupt eligible spellcasts and destroy hostile projectiles.
+
+**Lightning** · Cast **3s** · Cooldown **30s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 56 | — | 120 |
+| II | 70 | — | 128 |
+| III | 84 | — | 136 |
+| IV | 98 | — | 144 |
+| V | 112 | — | 152 |
+
+Base release / active phase: **1.2s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:emp_surge`. Inspect ranks with `/resonantarcana spell emp_surge <rank>`.
+
+### Frostmint Hex
+
+Place a sugar-staff hex surrounded by orbiting frostmint discs. Five pulses damage and freeze enemies inside; eligible allies gain Sugar Rush while holding the circle.
+
+**Ice** · Cast **3.2s** · Cooldown **37.5s** · Range **28 blocks** · Radius / half-width **7 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 140 |
+| II | 15 | — | 148 |
+| III | 18 | — | 156 |
+| IV | 21 | — | 164 |
+| V | 24 | — | 172 |
+
+Base release / active phase: **5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:frostmint_hex`. Inspect ranks with `/resonantarcana spell frostmint_hex <rank>`.
+
 [← Home](Home.md)

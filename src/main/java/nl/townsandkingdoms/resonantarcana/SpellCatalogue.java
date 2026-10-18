@@ -51,8 +51,9 @@ final class SpellCatalogue {
     }
     record Definition(String title,String kind,String theme,float damage,double radius,double range,int cooldown,
                       int castTicks,int mana,int manaStep,int maxLevel,float healing,int duration,int interval,
-                      int pulses,String role,String description,String bookId,String category){
+                      int pulses,String role,String description,String bookId,String category,String integration,String area,String tier){
         void validate(String id){
+            if(integration!=null&&(!integration.equals("alexscaves")||area==null||!Set.of("NOVICE","MASTER","CATACLYSM").contains(tier)))throw new IllegalStateException("Invalid optional integration: "+id);
             if(title==null||title.isBlank()||kind==null||theme==null||role==null||description==null||description.isBlank()
                 ||category==null||!java.util.Arrays.stream(SpellCategory.values()).anyMatch(c->c.name().equals(category))||bookId==null||!bookId.matches("[a-z0-9_]+")||!Float.isFinite(damage)||damage<0||damage>512
                 ||!Double.isFinite(radius)||radius<0||radius>16||!Double.isFinite(range)||range<0||range>64

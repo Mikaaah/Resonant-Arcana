@@ -60,7 +60,7 @@ public final class WandNetwork {
             &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("19");
+        var r=e.registrar("20");
         r.playToClient(BeamFocus.TYPE,BeamFocus.CODEC,(msg,ctx)->ctx.enqueueWork(()->DoomBeamEffects.track(msg)));
         r.playToClient(Chant.TYPE,Chant.CODEC,(msg,ctx)->ctx.enqueueWork(()->RecordedAudio.handle(msg)));
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{

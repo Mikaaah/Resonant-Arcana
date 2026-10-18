@@ -33,6 +33,8 @@ final class SpellInfo {
             case CHANNEL,LANCE,RAIL,DEVASTATOR,BLADE_THRUST -> "Beam half-width: ";
             default -> "Area radius: ";
         };
+        if(s==Spell.TREMORZILLA_BREATH||s==Spell.MAGNETAR_ANNIHILATION)extent="Beam half-width: ";
+        if(CavesCompat.optional(s))out.add(Component.literal("Alex’s Caves • "+s.definition.area().replace('_',' ')).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
         if(s.radius>0&&!extent.isEmpty())out.add(Component.literal(extent+format(s.radius)+" blocks").withStyle(net.minecraft.ChatFormatting.GRAY));
         if(s.duration()>0&&s!=Spell.WARSCREAM&&s!=Spell.EXPLOSION&&s!=Spell.I_AM_ATOMIC)out.add(Component.literal("Base duration: "+format(s.duration()/20.0)+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
         if(castSeconds>0)out.add(Component.literal("Cast time: "+format(castSeconds)+"s"+(RecordedSpells.handles(s)?" (fixed)":"")).withStyle(net.minecraft.ChatFormatting.GRAY));
@@ -40,6 +42,12 @@ final class SpellInfo {
         return out;
     }
     static String sequence(Spell s){return switch(s){
+        case LUX_EXTINCTION,ABYSSAL_DELUGE,CANDY_CATASTROPHE -> "Four pulses; final area hit ×2.";
+        case FORLORN_RECKONING -> "Three pulses; final area hit ×2.";
+        case NUCLEAR_STRIKE -> "Two-second warning; one blast per enemy.";
+        case TREMORZILLA_BREATH,MAGNETAR_ANNIHILATION -> "Follows your aim; one damage hit per enemy.";
+        case GUMBALL_VOLLEY -> "Three projectiles; each can bounce once.";
+        case DESOLATE_DAGGER -> "Pierces up to three enemies; one hit each.";
         case ASTRAL_APOCALYPSE -> "Nine local star impacts; final area hit ×2.";
         case WORLD_PYRE -> "Five local meteor impacts; final area hit ×2.5.";
         case HEAVENS_THUNDER -> "Six local lightning impacts; final area hit ×2.";

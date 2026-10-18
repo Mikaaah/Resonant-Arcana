@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text())
 spells=data['spells'];ids=set();homes=Counter(name for school in data['schools'] for name in school['spells'])
-lines=['# Catalogue audit — 0.28.0-alpha','',
+lines=['# Catalogue audit — 0.29.0-alpha','',
        'All damage values are rank-one health points per direct hit, before equipment, defenses and server multipliers. Two health points equal one heart. Burning, poison, wither and melee contributions are additional. Multi-stage totals depend on coverage, damage immunity and the individual sequence; a beam hits each enemy once per cast.','',
        'The balance pass raises underpowered basic, sustained and heavy spells, with heavy releases bridging into the 44–72 damage range. Cinematic single hits remain 120–512. Several repeated cataclysm sequences have lower per-hit damage to account for their full release. Utility and support spells retain their roles.','',
        'Flamethrower now delivers six pulses over three seconds. Arcane Volley launches three bolts half a second apart. Both respect normal hurt immunity. These timings allow every advertised pulse to land against a stationary unprotected target without bypassing vanilla immunity.','',

@@ -306,4 +306,104 @@ Release five divergent crystal projectiles. Damage is per projectile; their impa
 
 Spell ID: `resonant_arcana:crystal_barrage`. Inspect ranks with `/resonantarcana spell crystal_barrage <rank>`.
 
+### Polarity Bolt
+
+Fire a scarlet-and-azure magnetic bolt. Its first enemy impact deals damage and pulls the target toward you; solid cover stops it.
+
+**Lightning** · Cast **0.4s** · Cooldown **3.5s** · Range **24 blocks** · Radius / half-width **1.2 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 9 | — | 24 |
+| II | 11.25 | — | 32 |
+| III | 13.5 | — | 40 |
+| IV | 15.75 | — | 48 |
+| V | 18 | — | 56 |
+
+Base release / active phase: **2.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:polarity_bolt`. Inspect ranks with `/resonantarcana spell polarity_bolt <rank>`.
+
+### Acid Glob
+
+Lob a glowing acid glob along your aim. It splashes on the first enemy or solid surface, damaging enemies in a small area and poisoning them for three seconds.
+
+**Nature** · Cast **0.5s** · Cooldown **4.5s** · Range **24 blocks** · Radius / half-width **2 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 8 | — | 25 |
+| II | 10 | — | 33 |
+| III | 12 | — | 41 |
+| IV | 14 | — | 49 |
+| V | 16 | — | 57 |
+
+Base release / active phase: **2.25s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:acid_glob`. Inspect ranks with `/resonantarcana spell acid_glob <rank>`.
+
+### Brine Bubble
+
+Launch a Deep One water bolt. Its first enemy impact deals damage and traps non-boss targets in Alex’s Caves bubble effect for two seconds.
+
+**Ice** · Cast **0.6s** · Cooldown **5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 10 | — | 26 |
+| II | 12.5 | — | 34 |
+| III | 15 | — | 42 |
+| IV | 17.5 | — | 50 |
+| V | 20 | — | 58 |
+
+Base release / active phase: **2.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:brine_bubble`. Inspect ranks with `/resonantarcana spell brine_bubble <rank>`.
+
+### Desolate Dagger
+
+Send a spectral Desolate Dagger along your aim. It pierces up to three enemies, dealing one hit and Weakness I to each before fading. Solid cover stops the blade.
+
+**Ender** · Cast **0.5s** · Cooldown **5.5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 28 |
+| II | 15 | — | 36 |
+| III | 18 | — | 44 |
+| IV | 21 | — | 52 |
+| V | 24 | — | 60 |
+
+Base release / active phase: **2.25s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:desolate_dagger`. Inspect ranks with `/resonantarcana spell desolate_dagger <rank>`.
+
+### Gumball Volley
+
+Fire three native gumballs half a second apart. Each projectile bounces off one solid surface and damages the first enemy it reaches.
+
+**Evocation** · Cast **0.6s** · Cooldown **6s** · Range **24 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 30 |
+| II | 6.25 | — | 38 |
+| III | 7.5 | — | 46 |
+| IV | 8.75 | — | 54 |
+| V | 10 | — | 62 |
+
+Base release / active phase: **3.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:gumball_volley`. Inspect ranks with `/resonantarcana spell gumball_volley <rank>`.
+
 [← Home](Home.md)

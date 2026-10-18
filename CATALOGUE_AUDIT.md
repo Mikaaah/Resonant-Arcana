@@ -1,4 +1,4 @@
-# Catalogue audit — 0.28.0-alpha
+# Catalogue audit — 0.29.0-alpha
 
 All damage values are rank-one health points per direct hit, before equipment, defenses and server multipliers. Two health points equal one heart. Burning, poison, wither and melee contributions are additional. Multi-stage totals depend on coverage, damage immunity and the individual sequence; a beam hits each enemy once per cast.
 
@@ -174,6 +174,24 @@ Flamethrower now delivers six pulses over three seconds. Arcane Volley launches 
 | Doom Beam | Cataclysm | Ender | 320 | 1 | 500 | 13 | 150 |
 | Void Exile | Control | Ender | 20 | 1 | 110 | 4 | 30 |
 | Void Domain | Support | Ender | 0 | 1 | 240 | 5 | 90 |
+| Polarity Bolt | Projectile | Lightning | 9 | 1 | 24 | 0.4 | 3.5 |
+| EMP Surge | Control | Lightning | 56 | 1 | 120 | 3 | 30 |
+| Magnetar Annihilation | Cataclysm | Lightning | 320 | 1 | 480 | 11 | 130 |
+| Amber Talon | Summon | Nature | 12 | 1 | 28 | 0.6 | 5 |
+| Tectonic Stampede | Summon | Nature | 22 | 3 | 130 | 3 | 35 |
+| Luxtructosaurus Extinction | Cataclysm | Fire | 80 | 5 | 500 | 12 | 140 |
+| Acid Glob | Projectile | Nature | 8 | 1 | 25 | 0.5 | 4.5 |
+| Tremorzilla Breath | Beam | Nature | 72 | 1 | 180 | 4 | 50 |
+| Nuclear Strike | Cataclysm | Nature | 384 | 1 | 500 | 13 | 150 |
+| Brine Bubble | Projectile | Ice | 10 | 1 | 26 | 0.6 | 5 |
+| Hullbreaker Surge | Area | Ice | 60 | 1 | 135 | 3.2 | 36 |
+| Abyssal Deluge | Cataclysm | Ice | 72 | 5 | 480 | 11 | 140 |
+| Desolate Dagger | Projectile | Ender | 12 | 1 | 28 | 0.5 | 5.5 |
+| Forsaken Sonar | Beam | Ender | 22 | 3 | 140 | 3 | 37.5 |
+| Forlorn Reckoning | Cataclysm | Ender | 88 | 4 | 490 | 12 | 140 |
+| Gumball Volley | Projectile | Evocation | 5 | 3 | 30 | 0.6 | 6 |
+| Frostmint Hex | Control | Ice | 12 | 5 | 140 | 3.2 | 37.5 |
+| Candyland Catastrophe | Cataclysm | Evocation | 72 | 5 | 480 | 11 | 140 |
 
 ¹ Catalogue pulse count is not a guaranteed hit count. Cataclysm sequences, reactive weapon enchantments and projectile fans are described in [the spell reference](SPELLS.md).
 

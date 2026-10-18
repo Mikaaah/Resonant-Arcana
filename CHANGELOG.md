@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.29.0-alpha
+
+- Added eighteen optional Alex’s Caves arts: one Novice, Master and Cataclysm for each of its six cave areas. Requires the supplied 2.0.10 build and its Citadel dependency on both sides.
+- Magnetic: Polarity Bolt, EMP Surge and Magnetar Annihilation. Primordial: Amber Talon, Tectonic Stampede and Luxtructosaurus Extinction.
+- Toxic: Acid Glob, Tremorzilla Breath and Nuclear Strike. Abyssal: Brine Bubble, Hullbreaker Surge and Abyssal Deluge.
+- Forlorn: Desolate Dagger, Forsaken Sonar and Forlorn Reckoning. Candy: Gumball Volley, Frostmint Hex and Candyland Catastrophe.
+- Added native particles, sounds, client render proxies and animations, following beam cores, sonar rings, dinosaur spirits, candy constructs and a bounded native mushroom cloud.
+- Matched native charge-cue repeat intervals to clip lengths and avoided stacking the 24-second nuclear siren. Nuclear Strike uses shorter reactor and placement cues before the native explosion ambience.
+- Added distinct projectile, pierce, bounce, stun/interrupt, hostile-projectile clearing, wave, vortex, allied Sugar Rush and multi-stage impact behaviours. Native boss AI and destructive explosions never run.
+- Added eighteen icons, biome/tier keywords, optional native spell tags and formatted spell information. Kept the single Spells creative tab and all saved core IDs.
+- Added dedicated-server fixtures for cave spell registration, exact hit schedules, teammate protection, cover, beam tracking, warning timing and cleanup; verify optional startup independently of Bosses’Rise.
+- Network protocol 20 requires matching client and server updates.
+
 ## 0.28.0-alpha
 
 - Added Void Domain: a vast fixed black sphere with strong allied benefits and enemy suppression. Five-second base cast, fourteen-block radius, fifteen-second base duration.

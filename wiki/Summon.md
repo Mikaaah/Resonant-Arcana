@@ -160,4 +160,44 @@ Base release / active phase: **10s**.
 
 Spell ID: `resonant_arcana:phantom_formation`. Inspect ranks with `/resonantarcana spell phantom_formation <rank>`.
 
+### Amber Talon
+
+Conjure a spectral Subterranodon that dives along your aim. Its first collision slashes one enemy and briefly lifts it; the spirit fades after the strike.
+
+**Nature** · Cast **0.6s** · Cooldown **5s** · Range **18 blocks** · Radius / half-width **1.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 28 |
+| II | 15 | — | 36 |
+| III | 18 | — | 44 |
+| IV | 21 | — | 52 |
+| V | 24 | — | 60 |
+
+Base release / active phase: **2.25s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:amber_talon`. Inspect ranks with `/resonantarcana spell amber_talon <rank>`.
+
+### Tectonic Stampede
+
+Summon three Tremorsaurus spirits that charge the marked ground in sequence. Each charge releases a ground shockwave that damages and staggers visible enemies.
+
+**Nature** · Cast **3s** · Cooldown **35s** · Range **24 blocks** · Radius / half-width **5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 22 | — | 130 |
+| II | 27.5 | — | 138 |
+| III | 33 | — | 146 |
+| IV | 38.5 | — | 154 |
+| V | 44 | — | 162 |
+
+Base release / active phase: **4.3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
+
 [← Home](Home.md)

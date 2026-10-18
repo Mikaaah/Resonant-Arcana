@@ -17,6 +17,14 @@
     "resonant_arcana:phantom_formation",
     "resonant_arcana:spellbreaker",
     "resonant_arcana:astral_apocalypse",
-    "resonant_arcana:arcane_devastator"
+    "resonant_arcana:arcane_devastator",
+    {
+      "id": "resonant_arcana:gumball_volley",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:candy_catastrophe",
+      "required": false
+    }
   ]
 }

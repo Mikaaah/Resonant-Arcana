@@ -143,3 +143,13 @@ Void Domain has a 100-tick base cast, 240 base mana (+20 per rank), a 1,800-tick
 Individual scrolls share Iron's scroll item ID. Search their normal tooltip keywords or use the debug archive's text box; combine terms such as `ender buff aoe`, `ice slow` or `cataclysm`. Real spell-registry datapack tags live under `resonant_arcana:categories/<category>` and `resonant_arcana:schools/<school>` in the `irons_spellbooks:spells` registry. Optional boss entries are marked non-required. These are spell tags, not per-scroll item tags. Equipment item tags are `resonant_arcana:spellbooks` and `resonant_arcana:debug_tools`.
 
 The 0.28 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same version (protocol 19). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.
+
+## Alex’s Caves integration in 0.29
+
+Install **Alex’s Caves 2.0.10** and its required Citadel dependency on client and server. All eighteen cave arts and the visual marker entity register only when that supported version is present. Other versions leave the adapter disabled. Removing the mod hides its spells from the debug archive and creative scrolls; optional spell tags do not prevent startup. Core spells and the separate Bosses’Rise adapter remain available.
+
+The normal Iron’s per-spell configuration applies to cave arts, including enablement, mana and cooldown. The six cave cataclysms have one Legendary rank; novice and master arts have five ranks. Spellbook and school power scale damage normally. Native `stunned`, `bubbled` and `sugar_rush` effects are supplied by Alex’s Caves. Bosses resist the stun, bubble and vortex pull.
+
+Visual proxies are harmless, expire with their cast, have no loot or AI, and are not saved. Nuclear Strike does not place a functional bomb or change blocks. Native client particles share the addon’s detail and outline budgets; at most two native mushroom clouds are started concurrently per client. The native cloud supplies its own explosion ambience and screen effects.
+
+Both sides must update to **0.29.0-alpha / protocol 20**. No Alex’s Caves or Citadel assets/classes are distributed in the addon.

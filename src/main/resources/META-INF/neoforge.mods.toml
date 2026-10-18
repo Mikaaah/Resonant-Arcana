@@ -4,11 +4,11 @@ license="MIT"
 issueTrackerURL="https://github.com/Mikaaah/Resonant-Arcana/issues"
 [[mods]]
 modId="resonant_arcana"
-version="0.28.0-alpha"
+version="0.29.0-alpha"
 displayName="Resonant Arcana"
 authors="Towns & Kingdoms"
 displayURL="https://github.com/Mikaaah/Resonant-Arcana"
-description='''Categorized elemental magic, three legendary Iron's spellbooks, a debug spell archive, native particles, selective AAA rituals and optional Bosses'Rise arts. An Iron's Spells 'n Spellbooks addon. Experimental alpha.'''
+description='''Categorized elemental magic, three legendary Iron's spellbooks, a debug spell archive, native particles, selective AAA rituals and optional Bosses'Rise and Alex's Caves arts. An Iron's Spells 'n Spellbooks addon. Experimental alpha.'''
 [[dependencies.resonant_arcana]]
 modId="neoforge"
 type="required"
@@ -42,3 +42,10 @@ type="optional"
 versionRange="[0,)"
 ordering="AFTER"
 side="CLIENT"
+
+[[dependencies.resonant_arcana]]
+modId="alexscaves"
+type="optional"
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"

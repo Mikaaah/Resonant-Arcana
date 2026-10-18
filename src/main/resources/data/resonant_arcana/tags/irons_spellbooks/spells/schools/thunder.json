@@ -15,6 +15,18 @@
     "resonant_arcana:arc_ricochet",
     "resonant_arcana:battle_tempo",
     "resonant_arcana:thunderbrand",
-    "resonant_arcana:heavens_thunder"
+    "resonant_arcana:heavens_thunder",
+    {
+      "id": "resonant_arcana:polarity_bolt",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:emp_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:magnetar_annihilation",
+      "required": false
+    }
   ]
 }

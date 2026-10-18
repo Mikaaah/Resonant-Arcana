@@ -586,4 +586,24 @@ Base release / active phase: **3.1s**.
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect ranks with `/resonantarcana spell funeral_bell <rank>`.
 
+### Hullbreaker Surge
+
+Call a Hullbreaker apparition through a rushing tidal wave. The advancing surge damages each enemy once, knocks it away and briefly slows it.
+
+**Ice** · Cast **3.2s** · Cooldown **36s** · Range **28 blocks** · Radius / half-width **6 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 60 | — | 135 |
+| II | 75 | — | 143 |
+| III | 90 | — | 151 |
+| IV | 105 | — | 159 |
+| V | 120 | — | 167 |
+
+Base release / active phase: **3.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:hullbreaker_surge`. Inspect ranks with `/resonantarcana spell hullbreaker_surge <rank>`.
+
 [← Home](Home.md)

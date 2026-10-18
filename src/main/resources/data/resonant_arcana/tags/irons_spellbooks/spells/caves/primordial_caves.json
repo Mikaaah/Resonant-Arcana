@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:amber_talon",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tectonic_stampede",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:lux_extinction",
+      "required": false
+    }
+  ]
+}

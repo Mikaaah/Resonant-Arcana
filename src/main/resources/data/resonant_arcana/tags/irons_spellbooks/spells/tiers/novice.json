@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:polarity_bolt",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:amber_talon",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:acid_glob",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:brine_bubble",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:desolate_dagger",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:gumball_volley",
+      "required": false
+    }
+  ]
+}

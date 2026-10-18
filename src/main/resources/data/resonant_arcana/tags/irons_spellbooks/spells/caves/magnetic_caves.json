@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:polarity_bolt",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:emp_surge",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:magnetar_annihilation",
+      "required": false
+    }
+  ]
+}
