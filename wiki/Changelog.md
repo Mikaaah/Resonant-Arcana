@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.26.0-alpha
+
+- Fix the double camera rotation that displaced Doom’s black core and Atomic’s containment membrane.
+- Attach Doom Beam to its caster’s hands and current aim during its entire release. Damage, range clipping and visuals now follow movement and turning.
+- Add caster-owned, validated visual leases with cancellation/death/dimension cleanup, and a continuous beacon core using the same Iron’s helpers as Sunbeam/Ray of Siphoning.
+- Add original procedural scrolling plasma and fireball textures, plus green-tinted Iron’s wisp/electricity particles. No Iron’s textures are redistributed.
+- Match Explosion’s reference with multicoloured charge sparks, vertical ignition column, five orange-gold seals, expanding fireball and ground shockwave. Keep its existing chant, locked target and single protected damage hit.
+- Bump network protocol to 17 for caster-owned beam visual updates.
+
 ## 0.25.0-alpha
 
 - Shorten I Am Atomic’s post-detonation audio from 18.57 to nine seconds, with a clean 1.5-second fade. Keep the 13.5-second chant unchanged.

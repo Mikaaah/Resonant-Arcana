@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.25.0-alpha'
+version = '0.26.0-alpha'
 group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -48,6 +48,12 @@ tasks.register('verifyPackagedAssets') {
                 def asset = 'assets/resonant_arcana/sounds/'+sound.name.split(':')[1]+'.ogg'
                 if (!paths.contains(asset)) throw new GradleException('Unresolved sound resource '+asset)
             } }
+            ['plasma_noise','fire_sphere'].each { id ->
+                def entry = jar.getEntry('assets/resonant_arcana/textures/effect/'+id+'.png')
+                if (entry == null) throw new GradleException('Missing original plasma asset '+id)
+                def image = javax.imageio.ImageIO.read(jar.getInputStream(entry))
+                if (image == null || image.width != 64 || image.height != 64) throw new GradleException('Invalid original plasma asset '+id)
+            }
             ['sigil','star','flame','glow','halo','shard'].each { id ->
                 if (!paths.contains('assets/resonant_arcana/effeks/textures/'+id+'.png')) throw new GradleException('Missing AAA texture '+id)
             }

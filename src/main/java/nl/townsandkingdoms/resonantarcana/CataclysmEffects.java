@@ -11,6 +11,7 @@ final class CataclysmEffects {
     private CataclysmEffects(){}
     static boolean visual(ClientLevel level,Spell s,SpellVisuals.Stage stage,Vec3 p,Vec3 end,double size){
         double time=level.getGameTime()*.08;
+        if(s==Spell.EXPLOSION){ExplosionEffects.visual(level,stage,p,end,size);return true;}
         if(stage==SpellVisuals.Stage.RITUAL_TARGET){
             if(s==Spell.EXPLOSION)explosionTarget(level,p,end,Math.clamp((size-5)/2,0,1),time);
             else groundSeal(level,s,p,size,time);

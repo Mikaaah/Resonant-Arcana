@@ -25,7 +25,7 @@ final class SingularityEffects {
         var mc=Minecraft.getInstance();CORES.removeIf(c->c.level()!=mc.level||c.expires()<(mc.level==null?Long.MAX_VALUE:mc.level.getGameTime()));
         if(CORES.isEmpty())return;
         var buffers=mc.renderBuffers().bufferSource();var type=RenderType.debugStructureQuads();var vertex=buffers.getBuffer(type);
-        var camera=e.getCamera().getPosition();var pose=new PoseStack();pose.mulPose(e.getModelViewMatrix());
+        var camera=e.getCamera().getPosition();var pose=new PoseStack(); // LevelRenderer already applied the camera rotation.
         for(var c:CORES){
             pose.pushPose();pose.translate(c.center().x-camera.x,c.center().y-camera.y,c.center().z-camera.z);var m=pose.last().pose();
             for(int lat=0;lat<16;lat++)for(int lon=0;lon<32;lon++){

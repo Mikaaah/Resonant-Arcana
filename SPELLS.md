@@ -2808,7 +2808,7 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Lock the aimed location and charge for 7.7 seconds at the original recording pitch. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion detonates the marked area for 256 base damage over sixteen blocks with the redesigned blast audio. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed. This recorded ritual has a fixed windup.
+Lock a target and chant for 7.7 seconds. Five orange-gold seals feed a vertical ignition column while coloured sparks gather around you. Detonate for 256 damage over sixteen blocks, followed by a rising fireball and expanding ground shockwave. The spectacle does not repeat damage or break terrain. Brief exhaustion follows the blast.
 
 **Fire** · Cast **7.7s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 
@@ -2816,7 +2816,7 @@ Lock the aimed location and charge for 7.7 seconds at the original recording pit
 | --- | ---: | ---: | ---: |
 | I | 256 | — | 480 |
 
-Base release / active phase: **1.6s**.
+Base release / active phase: **4.5s**.
 
 Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.
 
@@ -2840,7 +2840,7 @@ Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spe
 
 ### Doom Beam
 
-Compress a small black hole for 13 seconds. Halfway through, its rim and converging trails turn emerald. Release a giant white-hot green plasma beam for 9.5 seconds along your final aim. Branching lightning wraps the beam; each visible enemy entering it takes one 320-damage hit. Solid terrain blocks it. Fixed recorded windup.
+Compress a centred black hole for 13 seconds; its rim turns emerald halfway through. Release a green beacon-core plasma beam for 9.5 seconds, connected to your hands and following your position and aim. Each visible enemy entering it takes one 320-damage hit. Solid cover blocks it. Fixed recorded windup.
 
 **Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
 

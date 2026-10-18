@@ -62,6 +62,9 @@ public final class IntegrationChecks {
                 buffer.clear();var chant=new WandNetwork.Chant(player.getId(),Spell.EXPLOSION.ordinal(),true,1,1.5f);WandNetwork.Chant.CODEC.encode(buffer,chant);
                 check(WandNetwork.Chant.CODEC.decode(buffer).equals(chant),"caster-scoped chant packet round trip");
                 check(chant.valid()&&!new WandNetwork.Chant(-1,Spell.EXPLOSION.ordinal(),true,1,1).valid()&&!new WandNetwork.Chant(1,Spell.EXPLOSION.ordinal(),true,Float.NaN,1).valid(),"chant packets reject invalid source and pitch");
+                buffer.clear();var focus=new WandNetwork.BeamFocus(player.getId(),2,.5f,48);WandNetwork.BeamFocus.CODEC.encode(buffer,focus);
+                check(focus.equals(WandNetwork.BeamFocus.CODEC.decode(buffer)),"caster-owned beam packet roundtrip");
+                check(focus.valid()&&!new WandNetwork.BeamFocus(1,3,.5f,48).valid()&&!new WandNetwork.BeamFocus(1,1,Float.NaN,48).valid()&&!new WandNetwork.BeamFocus(1,2,.5f,65).valid(),"beam leases reject invalid phases, progress and excessive range");
                 buffer.clear();var visual=new WandNetwork.Visual(Spell.SONIC_SCREAM.ordinal(),SpellVisuals.Stage.LINK.ordinal(),1,82,-3,1,82,25,1);
                 WandNetwork.Visual.CODEC.encode(buffer,visual);check(WandNetwork.Visual.CODEC.decode(buffer).equals(visual),"visual packet codec round trip");
                 check(visual.valid(),"finite beam packet accepted");

@@ -68,7 +68,7 @@ public final class SpellEngine {
         if(spell==Spell.DOOM_BEAM){
             if(elapsed%4==0){
                 Vec3 focus=clipLoaded(player.serverLevel(),eye,dir,3,player);
-                SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,focus,focus.add(dir),5+progress*2);
+                BeamRitual.sync(player,1,progress,eye.distanceTo(focus));
                 SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.RITUAL_TARGET,player.position().add(0,.06,0),player.position().add(dir),3.5+progress);
             }
             return;

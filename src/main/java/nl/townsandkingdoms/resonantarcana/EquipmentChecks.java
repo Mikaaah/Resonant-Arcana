@@ -84,7 +84,7 @@ final class EquipmentChecks {
                 check.accept(EquipmentChecks.class.getResource("/assets/resonant_arcana/sounds/"+id+".ogg")!=null,"recorded audio is packaged: "+id);
             var locked=ExplosionRitual.locked(p);
             check.accept(locked!=null&&locked.point().distanceToSqr(first.getBoundingBox().getCenter())<.1,"Explosion marks its initial aimed enemy");
-            check.accept(locked.top().y>locked.point().y+5&&locked.top().subtract(locked.point()).horizontalDistance()>2,"Explosion beacon is elevated and diagonal");
+            check.accept(locked.top().y>locked.point().y+5&&locked.top().subtract(locked.point()).horizontalDistance()<.01,"Explosion beacon is elevated and vertical, matching the reference");
             p.setYRot(-90);
             check.accept(ExplosionRitual.locked(p)==locked,"turning during the charge preserves the original target");
             spell.castSpell(level,1,p,io.redspace.ironsspellbooks.api.spells.CastSource.SPELLBOOK,true);

@@ -147,6 +147,7 @@ final class IronsCompat {
             if(entity instanceof ServerPlayer player){
                 if(RecordedSpells.handles(spell))RecordedSpells.stop(player,spell);
                 if(spell==Spell.I_AM_ATOMIC&&cancelled)AtomicRitual.end(player,data);
+                if(spell==Spell.DOOM_BEAM&&cancelled)BeamRitual.stop(player);
             }
             super.onServerCastComplete(level,spellLevel,entity,data,cancelled);
         }

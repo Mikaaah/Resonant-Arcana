@@ -3354,13 +3354,13 @@
       "manaStep": 0,
       "maxLevel": 1,
       "healing": 0,
-      "duration": 32,
+      "duration": 90,
       "interval": 0,
       "pulses": 1,
       "role": "Cataclysm",
       "category": "CATACLYSM",
       "bookId": "explosion",
-      "description": "Lock the aimed location and charge for 7.7 seconds at the original recording pitch. Five crimson and amber seals gather ember ribbons into a diagonal beacon. Completion detonates the marked area for 256 base damage over sixteen blocks with the redesigned blast audio. Leaves you heavily slowed for four seconds and weakened for five. Terrain is not destroyed. This recorded ritual has a fixed windup."
+      "description": "Lock a target and chant for 7.7 seconds. Five orange-gold seals feed a vertical ignition column while coloured sparks gather around you. Detonate for 256 damage over sixteen blocks, followed by a rising fireball and expanding ground shockwave. The spectacle does not repeat damage or break terrain. Brief exhaustion follows the blast."
     },
     "SERAPH_ASCENDANT": {
       "title": "Seraph Ascendant",
@@ -3444,7 +3444,7 @@
       "role": "Attack",
       "category": "CATACLYSM",
       "bookId": "doom_beam",
-      "description": "Compress a small black hole for 13 seconds. Halfway through, its rim and converging trails turn emerald. Release a giant white-hot green plasma beam for 9.5 seconds along your final aim. Branching lightning wraps the beam; each visible enemy entering it takes one 320-damage hit. Solid terrain blocks it. Fixed recorded windup."
+      "description": "Compress a centred black hole for 13 seconds; its rim turns emerald halfway through. Release a green beacon-core plasma beam for 9.5 seconds, connected to your hands and following your position and aim. Each visible enemy entering it takes one 320-damage hit. Solid cover blocks it. Fixed recorded windup."
     }
   },
   "schools": [

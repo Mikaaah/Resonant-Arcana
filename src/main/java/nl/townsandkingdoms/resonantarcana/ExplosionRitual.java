@@ -39,8 +39,8 @@ final class ExplosionRitual {
     static Locked locked(ServerPlayer p){return MagicData.getPlayerMagicData(p).getAdditionalCastData() instanceof Locked l?l:null;}
     static Vec3 beamTop(ServerPlayer p,Vec3 point){
         Vec3 side=point.subtract(p.position()).multiply(1,0,1).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
-        // A diagonal beacon, not a vertical fire column. Clip against loaded terrain/ceilings.
-        Vec3 offset=side.scale(10).add(0,24,0);
+        // The reference uses a vertical ignition column with stacked horizontal seals. Clip against loaded ceilings.
+        Vec3 offset=new Vec3(0,24,0);
         return SpellEngine.clipLoaded(p.serverLevel(),point,offset.normalize(),offset.length(),p);
     }
     static void charge(ServerPlayer p,double progress,int elapsed){

@@ -245,6 +245,11 @@ final class NativeSpellEffects {
             case SOUL -> ParticleTypes.SCULK_SOUL;case MAGIC -> ParticleTypes.ENCHANT;
         };
     };}
+    static void tinted(ClientLevel level,ParticleOptions particle,Vec3 p,Vec3 v,int life,int rgb,float scale){
+        if(detail--<=0)return;
+        var result=Minecraft.getInstance().particleEngine.createParticle(particle,p.x,p.y,p.z,v.x,v.y,v.z);
+        if(result!=null){result.setColor(((rgb>>16)&255)/255f,((rgb>>8)&255)/255f,(rgb&255)/255f);result.setLifetime(life);result.scale(scale);}
+    }
     static void point(ClientLevel level,ParticleOptions particle,Vec3 p,Vec3 v,int life,boolean boundary){
         if(boundary){if(outline--<=0)return;}else if(detail--<=0)return;
         var result=Minecraft.getInstance().particleEngine.createParticle(particle,p.x,p.y,p.z,v.x,v.y,v.z);

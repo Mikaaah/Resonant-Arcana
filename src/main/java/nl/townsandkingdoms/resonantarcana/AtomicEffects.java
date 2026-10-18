@@ -64,7 +64,7 @@ final class AtomicEffects {
         if(e.getStage()!=RenderLevelStageEvent.Stage.AFTER_PARTICLES)return;
         var mc=Minecraft.getInstance();BARRIERS.removeIf(b->b.level()!=mc.level||b.expires()<(mc.level==null?Long.MAX_VALUE:mc.level.getGameTime()));if(BARRIERS.isEmpty())return;
         var buffers=mc.renderBuffers().bufferSource();var type=RenderType.debugStructureQuads();var vertex=buffers.getBuffer(type);
-        var camera=e.getCamera().getPosition();var pose=new PoseStack();pose.mulPose(e.getModelViewMatrix());
+        var camera=e.getCamera().getPosition();var pose=new PoseStack(); // LevelRenderer already applied the camera rotation.
         for(var b:BARRIERS){
             pose.pushPose();pose.translate(b.center().x-camera.x,b.center().y-camera.y,b.center().z-camera.z);var m=pose.last().pose();
             for(int lat=0;lat<16;lat++)for(int lon=0;lon<32;lon++){

@@ -89,11 +89,11 @@ The ten survival wands and their assets are removed. One debug wand exposes all 
 
 ## Selective rituals in 0.22
 
-The Spells creative tab contains every enabled scroll. Categories remain available in the debug archive. The client `particles.aaaRituals` option (default true) enables only floor seals, Explosion seals and Doom when AAAParticles is installed and supported. Native detail uses the existing budget. Without AAA, native circles, the diagonal Explosion beacon and incoming streams still render.
+The Spells creative tab contains every enabled scroll. Categories remain available in the debug archive. The client `particles.aaaRituals` option (default true) enables only floor seals, Explosion seals and Doom when AAAParticles is installed and supported. Native detail uses the existing budget. Without AAA, native circles, the vertical Explosion beacon and incoming streams still render.
 
 Explosion snapshots the aimed entity position or block/range mark at the beginning of its native cast. Turning does not move it. A new cast acquires a new mark; cancellation clears the snapshot and cannot detonate it. The mark must remain loaded and within 64 blocks with line of sight at release.
 
-### Recorded spells in 0.25
+### Recorded spells in 0.26
 
 These four spells have fixed windups so voices and sound effects keep their original pitch. Cast-speed equipment still affects other spells. Native mana, cooldowns, interruption, spell power and enabled-state settings remain active.
 
@@ -117,3 +117,11 @@ The focus is a temporary, invulnerable netherite sword display. Interruption and
 Arcane Devastator now sustains its beam for 7.4 seconds after a fixed 6.5-second windup. Each enemy can be damaged once, including enemies entering after release. The path is clipped against current loaded terrain each tick, so newly placed cover also stops it.
 
 Doom uses native Warden heartbeat, portal ambience, respawn-anchor hum, beacon hum, sculk clicks, amethyst resonance and Enderman tension. These are staggered throughout charging and the active black hole. Doom Beam uses the Laser of Doom recording instead.
+
+### Attached Doom Beam and reference Explosion in 0.26
+
+Doom Beam's damage path follows the caster's hands and current look direction on every server tick. A target can still take damage only once over the full release, even if you sweep across it again. Every path is clipped against currently loaded terrain. Client geometry follows the interpolated caster on each rendered frame; short visual leases expire after interruption, death, dimension changes or missing updates. The centre uses Iron's beacon texture and ray hull helper; the outer plasma texture is original. Iron's wisp and electricity sprites receive per-particle green tint, without changing other spells or copying their assets. Native particle budgets still apply.
+
+Doom/Atomic's core and membrane renderers no longer apply the world camera rotation twice. The core and its rings now share the same world-space centre.
+
+Explosion keeps its 7.7-second chant, locked target and single 256-damage release. A vertical ignition column and five orange-gold seals build over the mark, with coloured mana sparks around the caster. An original textured fireball expands, rises and fades over 4.5 seconds with an expanding ground shockwave. The extended release spectacle adds no repeated damage or terrain destruction. Existing audio and particle sliders apply.

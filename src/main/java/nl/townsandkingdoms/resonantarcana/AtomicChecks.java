@@ -91,6 +91,12 @@ final class AtomicChecks {
             late.setPos(0,81,8);
             for(int i=0;i<12;i++){first.invulnerableTime=0;late.invulnerableTime=0;SpellEngine.tick();}
             check.accept(first.getHealth()==704&&late.getHealth()==704,"Doom Beam catches late entrants without repeating hits");
+            var followed=enemy(level,16,0);var abandoned=enemy(level,0,14);
+            try{
+                p.setPos(10,81,0);p.setYRot(-90);SpellEngine.tick();
+                check.accept(followed.getHealth()==704&&abandoned.getHealth()==1024,"Doom Beam moves with its caster and turns its damage path away from the old ray");
+                check.accept(BeamRitual.origin(p).distanceToSqr(p.getEyePosition().add(0,-.25,0))<.0001,"Doom Beam remains connected to the caster's hands");
+            }finally{followed.discard();abandoned.discard();p.setPos(0,81,0);p.setYRot(0);}
             for(int x=-3;x<=3;x++)for(int y=81;y<=86;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());
             var hidden=enemy(level,0,14);
             try{for(int i=0;i<200;i++)SpellEngine.tick();check.accept(hidden.getHealth()==1024&&SpellEngine.activeCount()==0,"Doom Beam respects new cover and expires");}finally{hidden.discard();}

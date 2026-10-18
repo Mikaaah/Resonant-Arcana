@@ -4,7 +4,7 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **152 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.25.0-alpha](downloads/resonant-arcana-0.25.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.26.0-alpha](downloads/resonant-arcana-0.26.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -28,12 +28,12 @@ All scrolls share **one Spells creative tab**, alongside the Equipment tab. Func
 
 ## Rituals and new spells
 
-Cataclysms charge through a **large seal beneath the caster**. Dense native particles spiral down from 8–13 blocks above into the seal, with a small amount flowing into the caster. Individual charge sounds repeat at stronger volume throughout the cast. Optional **AAAParticles** are limited to floor seals, Explosion’s five seals and the original Doom black-hole effect, now centred with its red spirals five blocks higher. Native particles remain available without AAA. Four spells use owner-supplied recordings at their original pitch; see [timing and overrides](CONFIGURATION.md#recorded-spells-in-025).
+Cataclysms charge through a **large seal beneath the caster**. Dense native particles spiral down from 8–13 blocks above into the seal, with a small amount flowing into the caster. Individual charge sounds repeat at stronger volume throughout the cast. Optional **AAAParticles** are limited to floor seals, Explosion’s five seals and the original Doom black-hole effect, now centred with its red spirals five blocks higher. Native particles remain available without AAA. Four spells use owner-supplied recordings at their original pitch; see [timing and overrides](CONFIGURATION.md#recorded-spells-in-026).
 
 - **I Am Atomic:** thirteen-and-a-half-second anchored ritual. A translucent violet sphere contains captured enemies, absorbs hostile boundary-crossing projectiles and shelters allies. Mana gathers at a summoned netherite sword before one 512-base-damage detonation over sixteen blocks. Allies and terrain are protected. The full chant and initial blast play, followed by a shortened, faded tail.
-- **Explosion:** redesigned Megumin audio, a fixed 7.7-second charge and immediate 256-damage detonation over sixteen blocks. The target locks at the start; five crimson/amber seals feed the diagonal beacon. Brief slowness and weakness follow the blast.
+- **Explosion:** redesigned Megumin audio, a fixed 7.7-second charge and immediate 256-damage detonation over sixteen blocks. The target locks at the start; five orange-gold seals feed a vertical ignition column; multicoloured charge sparks lead into an expanding, rising fireball and ground shockwave. Brief slowness and weakness follow the blast.
 - **Seraph Ascendant:** twenty seconds of flight with radiant particle wings. Nearby allies gain +15% spell power and periodic healing. Cleanup removes its own flight modifier and grants brief Slow Falling.
-- **Doom Beam:** a thirteen-second black-hole charge turns emerald halfway through, then releases a giant green plasma beam with white core and branching lightning. Doom keeps its own gold/red black-hole visuals and seven-layer native ambience.
+- **Doom Beam:** a thirteen-second black-hole charge turns emerald halfway through, then releases a giant green plasma beam that follows the caster’s position and aim, with an Iron’s beacon core, original scrolling plasma texture, green-tinted wisps and electricity. Doom keeps its own gold/red black-hole visuals and seven-layer native ambience.
 - **Arcane Devastator:** a fixed 6.5-second charge followed by a 7.4-second cosmic beam. Each enemy entering the beam can take one hit. New cover clips the beam as it fires.
 - **Final Judgement:** an actual descending golden sword accompanies holy damage, healing and the final cleansing verdict. Its visual scale adapts to available overhead room.
 - **Eternal Winter:** a sixteen-block, ten-second blizzard with eight freezing pulses and a triple-damage final burst.
@@ -72,7 +72,7 @@ Supply compile-only API JARs, then run with Java 21:
 ./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar
 ```
 
-The packaged-asset check verifies the four item assets, exactly four selective AAA effects and eight recorded OGG streams and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.25.0-alpha:** 10,505 dedicated-server checks pass without Bosses’Rise and 11,284 with it. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies the four item assets, exactly four selective AAA effects and eight recorded OGG streams and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.26.0-alpha:** 10,929 dedicated-server checks pass without Bosses’Rise and 11,708 with it, including moving/turning Doom Beam, caster-owned visual packet validation and the vertical Explosion mark. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 
