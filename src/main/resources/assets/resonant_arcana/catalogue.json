@@ -1314,7 +1314,7 @@
       "cooldown": 2400,
       "castTicks": 200,
       "mana": 500,
-      "description": "Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Fixed ten-second recorded windup; terrain remains intact.",
+      "description": "Open an elevated black hole with a gold photon rim, flattened accretion disc and red infalling trails. It draws visible enemies inward before collapsing for one 256-damage hit per enemy. A heartbeat, portal hum and five atmospheric layers build throughout the ritual. Terrain remains intact.",
       "manaStep": 10,
       "maxLevel": 1,
       "healing": 0,
@@ -2539,7 +2539,7 @@
       "interval": 12,
       "pulses": 3,
       "role": "Battle cry",
-      "description": "Unleash three ground-shaking roars over eight blocks. Each pulse damages visible enemies; the roar draws them closer and taunts hostile mobs. You and nearby eligible allies gain Resistance I. Taunt and defense last 3/4/5/6/7 seconds at levels I–V.",
+      "description": "Unleash three ground-shaking roars over eight blocks. Each pulse damages visible enemies; the roar draws them closer and taunts hostile mobs. You and nearby eligible allies gain Resistance I. Taunt and defense last 3/4/5/6/7 seconds at levels I\u2013V.",
       "bookId": "warscream",
       "category": "SUPPORT"
     },
@@ -2581,7 +2581,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Weapon enchantment",
-      "description": "Empower yourself with flat melee attack damage and faster attacks for 8–16 seconds. Refreshes the existing enchantment.",
+      "description": "Empower yourself with flat melee attack damage and faster attacks for 8\u201316 seconds. Refreshes the existing enchantment.",
       "bookId": "arcane_edge",
       "category": "SUPPORT"
     },
@@ -2602,7 +2602,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Party defence",
-      "description": "Grant visible nearby allies Resistance I and temporary health for 8–16 seconds. Shields refresh rather than stack.",
+      "description": "Grant visible nearby allies Resistance I and temporary health for 8\u201316 seconds. Shields refresh rather than stack.",
       "bookId": "bulwark_chant",
       "category": "SUPPORT"
     },
@@ -2623,7 +2623,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Party haste",
-      "description": "A rallying rhythm grants visible nearby allies faster attacks and movement for 8–16 seconds.",
+      "description": "A rallying rhythm grants visible nearby allies faster attacks and movement for 8\u201316 seconds.",
       "bookId": "battle_tempo",
       "category": "SUPPORT"
     },
@@ -2686,12 +2686,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Spellsword sustain",
-      "description": "Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3–6 health for the entire cast.",
+      "description": "Rend a 90-degree crescent. Damage includes half your melee attack attribute. Restore 40% of health actually removed, capped at 3\u20136 health for the entire cast.",
       "bookId": "blood_rend",
       "category": "MELEE"
     },
     "KRAKENS_GRASP": {
-      "title": "Kraken’s Grasp",
+      "title": "Kraken\u2019s Grasp",
       "kind": "BOSS_TENTACLE",
       "theme": "POISON",
       "damage": 18,
@@ -2733,7 +2733,7 @@
       "category": "BOSS_ART"
     },
     "HELVARS_RIFT": {
-      "title": "Helvar’s Rift",
+      "title": "Helvar\u2019s Rift",
       "kind": "BOSS_RIFT",
       "theme": "DARK",
       "damage": 14,
@@ -2749,12 +2749,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Boss magic / projectile",
-      "description": "Launch a rift projectile with Helvar’s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.",
+      "description": "Launch a rift projectile with Helvar\u2019s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.",
       "bookId": "helvars_rift",
       "category": "BOSS_ART"
     },
     "KRAKENS_WRATH": {
-      "title": "Kraken’s Wrath",
+      "title": "Kraken\u2019s Wrath",
       "kind": "BOSS_WRATH",
       "theme": "POISON",
       "damage": 12,
@@ -2775,7 +2775,7 @@
       "category": "BOSS_ART"
     },
     "KRAKENS_UNDERTOW": {
-      "title": "Kraken’s Undertow",
+      "title": "Kraken\u2019s Undertow",
       "kind": "BOSS_TENTACLE",
       "theme": "POISON",
       "damage": 12,
@@ -2791,12 +2791,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Kraken / water control",
-      "description": "A Kraken tentacle rises at a visible ground location. Its undertow pulls nearby enemies toward the water before one heavy slam. Uses the Kraken’s red model and texture; allies and bosses are not pulled.",
+      "description": "A Kraken tentacle rises at a visible ground location. Its undertow pulls nearby enemies toward the water before one heavy slam. Uses the Kraken\u2019s red model and texture; allies and bosses are not pulled.",
       "bookId": "krakens_undertow",
       "category": "BOSS_ART"
     },
     "YETIS_GLACIAL_WALL": {
-      "title": "Yeti’s Glacial Wall",
+      "title": "Yeti\u2019s Glacial Wall",
       "kind": "BOSS_ICE",
       "theme": "ICE",
       "damage": 9,
@@ -2812,12 +2812,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Yeti / ice barrier",
-      "description": "Seven of the Yeti’s ice spikes rise together in a crescent across the aimed ground. The spikes linger with frost shards instead of flashing away. Each visible enemy is hit at most once, slowed and chilled; no blocks are placed.",
+      "description": "Seven of the Yeti\u2019s ice spikes rise together in a crescent across the aimed ground. The spikes linger with frost shards instead of flashing away. Each visible enemy is hit at most once, slowed and chilled; no blocks are placed.",
       "bookId": "yetis_glacial_wall",
       "category": "BOSS_ART"
     },
     "HELVARS_FRACTURE": {
-      "title": "Helvar’s Fracture",
+      "title": "Helvar\u2019s Fracture",
       "kind": "BOSS_RIFT",
       "theme": "DARK",
       "damage": 10,
@@ -2833,12 +2833,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Helvar / rift burst",
-      "description": "Helvar’s rift projectile breaks against the first enemy or wall, releasing an area burst that weakens visible enemies. Terrain remains intact.",
+      "description": "Helvar\u2019s rift projectile breaks against the first enemy or wall, releasing an area burst that weakens visible enemies. Terrain remains intact.",
       "bookId": "helvars_fracture",
       "category": "BOSS_ART"
     },
     "HELVARS_SWORDFALL": {
-      "title": "Helvar’s Swordfall",
+      "title": "Helvar\u2019s Swordfall",
       "kind": "BOSS_SWORD",
       "theme": "DARK",
       "damage": 16,
@@ -2854,12 +2854,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Helvar / falling sword",
-      "description": "Summon Helvar’s original sword above the marked ground. After a short warning, it drops point-first and damages and weakens nearby enemies. Requires space above the impact point.",
+      "description": "Summon Helvar\u2019s original sword above the marked ground. After a short warning, it drops point-first and damages and weakens nearby enemies. Requires space above the impact point.",
       "bookId": "helvars_swordfall",
       "category": "BOSS_ART"
     },
     "SANDWORMS_ERUPTION": {
-      "title": "Sandworm’s Eruption",
+      "title": "Sandworm\u2019s Eruption",
       "kind": "BOSS_SAND",
       "theme": "GRAVITY",
       "damage": 11,
@@ -2875,12 +2875,12 @@
       "interval": 0,
       "pulses": 1,
       "role": "Sandworm / eruption",
-      "description": "The Sandworm’s own sand columns emerge in a row toward the aimed ground. The rising columns strike enemies once per cast; terrain stays intact.",
+      "description": "The Sandworm\u2019s own sand columns emerge in a row toward the aimed ground. The rising columns strike enemies once per cast; terrain stays intact.",
       "bookId": "sandworms_eruption",
       "category": "BOSS_ART"
     },
     "SANDWORMS_QUICKSAND": {
-      "title": "Sandworm’s Quicksand",
+      "title": "Sandworm\u2019s Quicksand",
       "kind": "BOSS_SAND",
       "theme": "GRAVITY",
       "damage": 8,
@@ -2922,7 +2922,7 @@
       "category": "BOSS_ART"
     },
     "DRAGONS_PYRE": {
-      "title": "Dragon’s Cataclysm",
+      "title": "Dragon\u2019s Cataclysm",
       "kind": "BOSS_DRAGON",
       "theme": "FIRE",
       "damage": 16,
@@ -3127,7 +3127,7 @@
       "interval": 0,
       "pulses": 1,
       "role": "Anti-magic sweep",
-      "description": "Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hostile or unowned projectiles and interrupt eligible Iron’s casts. Allies, owned projectiles, protected casts and unrelated magic systems are not cancelled.",
+      "description": "Sweep a close cone, adding half your melee attack damage. Destroy up to 32 hostile or unowned projectiles and interrupt eligible Iron\u2019s casts. Allies, owned projectiles, protected casts and unrelated magic systems are not cancelled.",
       "bookId": "spellbreaker",
       "category": "MELEE"
     },
@@ -3216,7 +3216,7 @@
       "category": "CATACLYSM"
     },
     "HEAVENS_THUNDER": {
-      "title": "Heaven’s Thunder",
+      "title": "Heaven\u2019s Thunder",
       "kind": "CATACLYSM",
       "theme": "THUNDER",
       "damage": 100,
@@ -3391,18 +3391,18 @@
       "radius": 2.5,
       "range": 48,
       "cooldown": 1000,
-      "castTicks": 84,
+      "castTicks": 130,
       "mana": 220,
       "manaStep": 20,
       "maxLevel": 5,
       "healing": 0,
-      "duration": 194,
+      "duration": 148,
       "interval": 0,
       "pulses": 1,
       "role": "Attack",
       "category": "BEAM",
       "bookId": "arcane_devastator",
-      "description": "Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along the released aim. Each visible enemy entering it can take one 120-base-damage hit. Solid cover stops the beam. The recording uses its original pitch and this spell has a fixed windup."
+      "description": "Charge for 6.5 seconds to the recording\u2019s second attack, then release a broad cosmic beam for 7.4 seconds along your final aim. Each visible enemy entering it takes one 120-base-damage hit. Solid cover stops the beam. Fixed windup, original recording pitch."
     },
     "I_AM_ATOMIC": {
       "title": "I Am Atomic",
@@ -3424,6 +3424,27 @@
       "category": "CATACLYSM",
       "bookId": "i_am_atomic",
       "description": "Anchor a sixteen-block violet containment sphere and compress mana at a spectral sword tip for 13.5 seconds. Captured enemies are held within the boundary; bosses and fully knockback-resistant foes resist containment. Allies gain brief Resistance I and hostile projectiles crossing the sphere are absorbed. Release one 512-damage violet detonation, sparing allies and terrain. Moving more than three blocks interrupts the ritual. The full recording plays at its original pitch; cast-speed bonuses do not shorten this ritual."
+    },
+    "DOOM_BEAM": {
+      "title": "Doom Beam",
+      "kind": "DEVASTATOR",
+      "theme": "DARK",
+      "damage": 320,
+      "radius": 3.0,
+      "range": 64,
+      "cooldown": 3000,
+      "castTicks": 260,
+      "mana": 500,
+      "manaStep": 0,
+      "maxLevel": 1,
+      "healing": 0,
+      "duration": 190,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Attack",
+      "category": "CATACLYSM",
+      "bookId": "doom_beam",
+      "description": "Compress a small black hole for 13 seconds. Halfway through, its rim and converging trails turn emerald. Release a giant white-hot green plasma beam for 9.5 seconds along your final aim. Branching lightning wraps the beam; each visible enemy entering it takes one 320-damage hit. Solid terrain blocks it. Fixed recorded windup."
     }
   },
   "schools": [
@@ -3531,7 +3552,8 @@
         "SANDWORMS_ERUPTION",
         "SANDWORMS_QUICKSAND",
         "RIFT_COLLISION",
-        "I_AM_ATOMIC"
+        "I_AM_ATOMIC",
+        "DOOM_BEAM"
       ]
     },
     {

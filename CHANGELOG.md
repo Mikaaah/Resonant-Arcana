@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.25.0-alpha
+
+- Shorten I Am Atomic’s post-detonation audio from 18.57 to nine seconds, with a clean 1.5-second fade. Keep the 13.5-second chant unchanged.
+- Move Arcane Devastator’s charge/release boundary from 4.2 to 6.5 seconds and match the beam lifetime to the remaining recording.
+- Give Doom a gold photon rim, flattened accretion disc and red infalling trails. Replace its laser recording with seven staggered native ambience layers: heartbeat, portal, respawn anchor, beacon, sculk, amethyst and Enderman.
+- Add Doom Beam: a small singularity turns emerald halfway through a fixed thirteen-second charge, then fires a white-core green plasma beam wrapped in branching lightning. 320 base damage once per enemy, 500 mana, 150-second cooldown, 64-block range; cover blocks the beam.
+- Keep one Spells creative tab; add the new spell to the Ender school and Cataclysm category. Update network protocol for the appended spell ID.
+
 ## 0.24.0-alpha
 
 - Add Legendary I Am Atomic: a fixed 13.5-second anchored ritual, translucent violet containment sphere, captured-enemy boundary control, hostile-projectile absorption, temporary netherite sword focus and one protected 512-damage detonation over sixteen blocks. Moving more than three blocks interrupts it. Bosses and fully knockback-resistant foes resist containment; terrain is preserved.

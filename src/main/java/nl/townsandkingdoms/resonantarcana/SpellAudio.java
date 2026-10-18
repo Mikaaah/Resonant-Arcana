@@ -37,7 +37,7 @@ final class SpellAudio {
         case WARSCREAM->"entity.ender_dragon.growl";case SOULBLAST->"entity.warden.sonic_boom";
         case CINDER_CLEAVE,BLOOD_REND,RIME_THRUST->irons("entity.generic.swing_blade");
         case SOUL_CANNON->"entity.warden.sonic_charge";case SONIC_SCREAM->"entity.enderman.stare";
-        case DOOM->"entity.ender_dragon.growl";case SANCTUARY->irons("cast.generic.holy");
+        case DOOM->"entity.warden.heartbeat";case SANCTUARY->irons("cast.generic.holy");
         case GLACIAL_RUPTURE->irons("spell.frostwave.prepare");case EVOKERS_EDICT->"entity.evoker.prepare_attack";
         case SOLAR_CATACLYSM->irons("spell.fire_bomb.charge");
         case TEMPEST_SPEAR->irons("spell.thunderstorm.prepare");case EVENT_HORIZON->irons("spell.black_hole.charge");
@@ -158,15 +158,21 @@ final class SpellAudio {
         default->1.0f;
     };}
     static void charge(ServerPlayer player,Spell spell){
+        if(spell==Spell.DOOM){doom(player,player.position(),0,0);return;}
         if(spell==Spell.SOUL_CANNON){cast(player,spell);return;}
         cue(player,player.position(),chargeId(spell),spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM?2.2f:1.5f,1.0f,true);
         cue(player,player.position(),castAccentId(spell.theme),.75f,0.85f,true);
     }
     static void cast(ServerPlayer player,Spell spell){
+        if(spell==Spell.DOOM){doom(player,player.position(),1,0);return;}
         cue(player,player.position(),spellCastId(spell),1.3f,castPitch(spell),true);
         cue(player,player.position(),castAccentId(spell.theme),0.85f,castPitch(spell)+0.12f,true);
     }
     static void impact(ServerPlayer player,Vec3 pos,Spell spell){
+        if(spell==Spell.DOOM){
+            cue(player,pos,"block.respawn_anchor.deplete",2,.6f,true);
+            cue(player,pos,"entity.warden.sonic_boom",1.8f,.55f,true);return;
+        }
         float weight=switch(spell.kind){case COMET,BURST,PULSE,SMITE,SONIC,MARK,METEOR,RAIL,COLLAPSE->1.15f;default->1.0f;};
         float gain=(float)(weight*ArcanaConfig.IMPACT_VOLUME.get());
         boolean direct=ArcanaConfig.CASTER_IMPACTS.get();
@@ -186,6 +192,7 @@ final class SpellAudio {
         cue(player,pos,"entity.warden.sonic_boom",1.8f,.65f,true);
     }
     static void ritualPulse(ServerPlayer player,Spell spell,Vec3 pos,double progress,int elapsed){
+        if(spell==Spell.DOOM){doom(player,pos,progress,elapsed);return;}
         if(RecordedSpells.handles(spell)||elapsed%16!=0)return; // The supplied chant already includes its own buildup.
 
         String id=switch(spell){
@@ -199,6 +206,17 @@ final class SpellAudio {
         };
         cue(player,pos,id,1.5f+(float)progress*.8f,(float)(.55+progress*.65),true);
         if(elapsed%32==0)cue(player,pos,chargeId(spell),1.25f+(float)progress*.6f,(float)(.7+progress*.45),true);
+    }
+    /** Seven independent native layers, staggered so the heartbeat stays intelligible. */
+    static void doom(ServerPlayer player,Vec3 pos,double progress,int elapsed){
+        int beat=progress<.5?20:12;
+        if(elapsed%beat==0)cue(player,pos,"entity.warden.heartbeat",1.65f,(float)(.65+progress*.35),true);
+        if(elapsed%60==0)cue(player,pos,"block.portal.ambient",1.25f,.65f,true);
+        if(elapsed%40==8)cue(player,pos,"block.respawn_anchor.ambient",.8f,.65f,true);
+        if(elapsed%48==16)cue(player,pos,"block.beacon.ambient",.65f,.5f,true);
+        if(elapsed%36==12)cue(player,pos,"block.sculk_sensor.clicking",.8f,.6f,true);
+        if(elapsed%56==24)cue(player,pos,"block.amethyst_block.resonate",.65f,.5f,true);
+        if(elapsed%64==32)cue(player,pos,"entity.enderman.stare",.55f,.6f,true);
     }
     static void charging(ServerPlayer player,Spell spell,double progress,int elapsed){
         if(!RecordedSpells.handles(spell)&&elapsed>0&&elapsed%24==0)cue(player,player.position(),chargeId(spell),1.35f,(float)(.8+progress*.35),true);

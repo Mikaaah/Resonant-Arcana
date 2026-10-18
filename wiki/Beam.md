@@ -134,9 +134,9 @@ Spell ID: `resonant_arcana:cryo_lance`. Inspect ranks with `/resonantarcana spel
 
 ### Arcane Devastator
 
-Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along the released aim. Each visible enemy entering it can take one 120-base-damage hit. Solid cover stops the beam. The recording uses its original pitch and this spell has a fixed windup.
+Charge for 6.5 seconds to the recording’s second attack, then release a broad cosmic beam for 7.4 seconds along your final aim. Each visible enemy entering it takes one 120-base-damage hit. Solid cover stops the beam. Fixed windup, original recording pitch.
 
-**Evocation** · Cast **4.2s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
+**Evocation** · Cast **6.5s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -146,7 +146,7 @@ Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along t
 | IV | 210 | — | 280 |
 | V | 240 | — | 300 |
 
-Base release / active phase: **9.7s**.
+Base release / active phase: **7.4s**.
 
 Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarcana spell arcane_devastator <rank>`.
 

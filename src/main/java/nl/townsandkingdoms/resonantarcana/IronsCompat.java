@@ -84,7 +84,7 @@ final class IronsCompat {
             baseManaCost=spell.manaCost();
             manaCostPerLevel=spell.manaStep();baseSpellPower=100;spellPowerPerLevel=SpellCatalogue.POWER_PER_LEVEL;
             castTime=spell.castTicks();
-            defaults=new DefaultConfig().setMinRarity((spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
+            defaults=new DefaultConfig().setMinRarity((spell==Spell.DOOM||spell==Spell.DOOM_BEAM||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
                 .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(true).build();
         }
         @Override public boolean attemptInitiateCast(net.minecraft.world.item.ItemStack stack,int rank,Level level,Player player,CastSource source,boolean triggerCooldown,String slot){
@@ -110,7 +110,7 @@ final class IronsCompat {
         @Override public CastType getCastType(){return castTime>0?CastType.LONG:CastType.INSTANT;}
         @Override public MutableComponent getDisplayName(Player player){return Component.literal(spell.title);}
         @Override public boolean requiresLearning(){return false;}
-        @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0&&!RecordedSpells.handles(spell)?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
+        @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0&&spell!=Spell.DOOM&&!RecordedSpells.handles(spell)?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
         @Override public Optional<net.minecraft.sounds.SoundEvent> getCastFinishSound(){return Optional.empty();}
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL,PIERCING_ORB,CONE_CHANNEL->SpellAnimations.ONE_HANDED_RAY_CHARGE;

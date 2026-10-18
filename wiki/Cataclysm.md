@@ -2,7 +2,7 @@
 
 ### DOOM
 
-Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Fixed ten-second recorded windup; terrain remains intact.
+Open an elevated black hole with a gold photon rim, flattened accretion disc and red infalling trails. It draws visible enemies inward before collapsing for one 256-damage hit per enemy. A heartbeat, portal hum and five atmospheric layers build throughout the ritual. Terrain remains intact.
 
 **Ender** · Cast **10s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
 
@@ -205,5 +205,19 @@ Base release / active phase: **4s**.
 Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.
 
 Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spell i_am_atomic <rank>`.
+
+### Doom Beam
+
+Compress a small black hole for 13 seconds. Halfway through, its rim and converging trails turn emerald. Release a giant white-hot green plasma beam for 9.5 seconds along your final aim. Branching lightning wraps the beam; each visible enemy entering it takes one 320-damage hit. Solid terrain blocks it. Fixed recorded windup.
+
+**Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 320 | — | 500 |
+
+Base release / active phase: **9.5s**.
+
+Spell ID: `resonant_arcana:doom_beam`. Inspect ranks with `/resonantarcana spell doom_beam <rank>`.
 
 [← Home](Home.md)

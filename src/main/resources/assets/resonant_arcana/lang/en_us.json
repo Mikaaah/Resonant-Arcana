@@ -182,8 +182,9 @@
   "subtitles.resonant_arcana.atomic_release": "Atomic detonation",
   "subtitles.resonant_arcana.cosmic_charge": "Cosmic energy gathers",
   "subtitles.resonant_arcana.cosmic_release": "Cosmic beam fires",
-  "subtitles.resonant_arcana.doom_laser_charge": "Doom charges",
-  "subtitles.resonant_arcana.doom_laser_release": "Doom tears open",
+  "subtitles.resonant_arcana.doom_laser_charge": "Doom Beam compresses",
+  "subtitles.resonant_arcana.doom_laser_release": "Doom Beam erupts",
   "subtitles.resonant_arcana.explosion_chant": "Explosion ritual",
-  "subtitles.resonant_arcana.explosion_blast": "Explosion detonates"
+  "subtitles.resonant_arcana.explosion_blast": "Explosion detonates",
+  "spell.resonant_arcana.doom_beam": "Doom Beam"
 }

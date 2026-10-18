@@ -93,16 +93,16 @@ The Spells creative tab contains every enabled scroll. Categories remain availab
 
 Explosion snapshots the aimed entity position or block/range mark at the beginning of its native cast. Turning does not move it. A new cast acquires a new mark; cancellation clears the snapshot and cannot detonate it. The mark must remain loaded and within 64 blocks with line of sight at release.
 
-### Recorded spells in 0.24
+### Recorded spells in 0.25
 
 These four spells have fixed windups so voices and sound effects keep their original pitch. Cast-speed equipment still affects other spells. Native mana, cooldowns, interruption, spell power and enabled-state settings remain active.
 
 | Spell | Fixed charge | Audio after release | Source |
 | --- | ---: | ---: | --- |
 | Explosion | 7.7 s | 6.28 s | Megumin Explosion (Sound Redesign), entire recording |
-| I Am Atomic | 13.5 s | 18.57 s | iamatomic, entire recording |
-| Arcane Devastator | 4.2 s | 9.66 s | Cosmic Beam, entire recording |
-| Doom | 10 s | 12.5 s | Laser of Doom, selected consecutive excerpts |
+| I Am Atomic | 13.5 s | 9 s | iamatomic, shortened blast tail with 1.5 s fade |
+| Arcane Devastator | 6.5 s | 7.36 s | Cosmic Beam, entire recording |
+| Doom Beam | 13 s | 9.5 s | Laser of Doom, selected consecutive excerpts |
 
 Each complete source is loudness-normalized before splitting; neither phase is independently amplified. The old bass-boosted Explosion recording and pitch scaling are removed. Voices and buildup follow their caster, while released audio comes from the spell origin. Optional direct caster impact feedback and all existing audio sliders still apply. Caster/spell-specific sound instances stop on interruption, death and dimension changes without silencing another ritual. Released tails finish naturally.
 
@@ -114,4 +114,6 @@ I Am Atomic anchors a sixteen-block sphere at the start of its native cast. Movi
 
 The focus is a temporary, invulnerable netherite sword display. Interruption and release remove it; it cannot save into chunks or drop an item. The violet membrane is translucent, with native energy streams gathering at the sword tip. One 512-base-damage detonation occurs at the first release tick. Its expanding shock fronts are visual only. Caster/allied protection, PvP rules and line of sight remain authoritative, and terrain is never destroyed.
 
-Arcane Devastator now sustains its beam for 9.7 seconds. Each enemy can be damaged once, including enemies entering after release. The path is clipped against current loaded terrain each tick, so newly placed cover also stops it.
+Arcane Devastator now sustains its beam for 7.4 seconds after a fixed 6.5-second windup. Each enemy can be damaged once, including enemies entering after release. The path is clipped against current loaded terrain each tick, so newly placed cover also stops it.
+
+Doom uses native Warden heartbeat, portal ambience, respawn-anchor hum, beacon hum, sculk clicks, amethyst resonance and Enderman tension. These are staggered throughout charging and the active black hole. Doom Beam uses the Laser of Doom recording instead.

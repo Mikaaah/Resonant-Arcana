@@ -39,6 +39,7 @@ final class NativeSpellEffects {
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicEffects.visual(level,stage,p,end,size);return;}
+        if(spell==Spell.DOOM_BEAM){DoomBeamEffects.visual(level,stage,p,end,size);return;}
         if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
             case RITUAL_TARGET,RITUAL_END -> {} // Explosion target choreography is owned by CataclysmEffects.

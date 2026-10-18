@@ -163,8 +163,20 @@ final class CataclysmEffects {
         if(stage==SpellVisuals.Stage.HIT)return;
         if(stage==SpellVisuals.Stage.IMPACT){for(int ring=0;ring<3;ring++)doomRing(l,p,size*(.35+ring*.25),time,ring*.6,80,true);return;}
         double core=Math.clamp(size*.17,.6,2.1),outer=Math.max(3,size);
-        // Co-centred, perpendicular dark rings replace the opaque orb.
-        for(int ring=0;ring<3;ring++)doomRing(l,p,core*(1+ring*.08),time,ring*Math.PI/3,64,false);
+        SingularityEffects.refresh(l,p,core*.88);
+        // Gold photon rim and a flattened, co-centred accretion disc match the reference.
+        var gold=new DustColorTransitionOptions(new Vector3f(1,.85f,.4f),new Vector3f(1,.19f,.015f),1.1f);
+        // Vertical photon ring, then bright lensing arcs over the horizontal disc.
+        for(int layer=0;layer<2;layer++)for(int i=0;i<128;i++){
+            double a=i*Math.PI/64,r=core*(1+layer*.09);
+            point(l,gold,p.add(Math.cos(a)*r,Math.sin(a)*r,0),Vec3.ZERO,12);
+        }
+        for(int lane=0;lane<5;lane++)for(int i=0;i<96;i++){
+            double a=i*Math.PI/48+time*.6,r=core*1.15+lane*(outer-core)*.18;
+            double lens=Math.max(0,Math.sin(a))*core*.75*Math.exp(-lane*.5);
+            Vec3 off=new Vec3(Math.cos(a)*r,lens+Math.sin(a)*.12*r,Math.sin(a)*r);
+            point(l,lane<2?gold:new DustParticleOptions(new Vector3f(1,.04f,.008f),.85f),p.add(off),Vec3.ZERO,12);
+        }
         var red=new DustColorTransitionOptions(new Vector3f(1,.015f,.035f),new Vector3f(.14f,0,.005f),1.05f);
         for(int arm=0;arm<4;arm++)for(int i=0;i<48;i++){
             double t=(i/48.0+time*.18)%1,r=core+(outer-core)*(1-t),a=arm*Math.PI/2+t*7+time;

@@ -16,7 +16,7 @@ final class RecordedSpells {
     static final DeferredRegister<SoundEvent> SOUNDS=DeferredRegister.create(Registries.SOUND_EVENT,ResonantArcana.ID);
     static final Map<Spell,String> PREFIX=new EnumMap<>(Spell.class);
     private static final Map<Spell,Supplier<SoundEvent>> CHARGE=new EnumMap<>(Spell.class),RELEASE=new EnumMap<>(Spell.class);
-    static {PREFIX.put(Spell.EXPLOSION,"explosion");PREFIX.put(Spell.I_AM_ATOMIC,"atomic");PREFIX.put(Spell.ARCANE_DEVASTATOR,"cosmic");PREFIX.put(Spell.DOOM,"doom_laser");PREFIX.forEach((spell,prefix)->{
+    static {PREFIX.put(Spell.EXPLOSION,"explosion");PREFIX.put(Spell.I_AM_ATOMIC,"atomic");PREFIX.put(Spell.ARCANE_DEVASTATOR,"cosmic");PREFIX.put(Spell.DOOM_BEAM,"doom_laser");PREFIX.forEach((spell,prefix)->{
         CHARGE.put(spell,register(spell==Spell.EXPLOSION?"explosion_chant":prefix+"_charge"));RELEASE.put(spell,register(spell==Spell.EXPLOSION?"explosion_blast":prefix+"_release"));
     });}
     private static Supplier<SoundEvent> register(String id){return SOUNDS.register(id,()->SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,id)));}

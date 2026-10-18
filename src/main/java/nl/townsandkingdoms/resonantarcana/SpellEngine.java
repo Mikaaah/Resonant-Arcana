@@ -65,6 +65,14 @@ public final class SpellEngine {
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
         if(spell==Spell.I_AM_ATOMIC){AtomicRitual.charge(player,progress,elapsed);return;}
+        if(spell==Spell.DOOM_BEAM){
+            if(elapsed%4==0){
+                Vec3 focus=clipLoaded(player.serverLevel(),eye,dir,3,player);
+                SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.CHARGE,focus,focus.add(dir),5+progress*2);
+                SpellVisuals.send(player.serverLevel(),spell,SpellVisuals.Stage.RITUAL_TARGET,player.position().add(0,.06,0),player.position().add(dir),3.5+progress);
+            }
+            return;
+        }
         if(spell==Spell.EXPLOSION)ExplosionRitual.charge(player,progress,elapsed);
         if(spell!=Spell.SOUL_CANNON&&spell!=Spell.DOOM&&spell.kind!=Spell.Kind.CATACLYSM)SpellAudio.charging(player,spell,progress,elapsed);
         Vec3 center=clipLoaded(player.serverLevel(),eye,dir,spell==Spell.DOOM?3:2,player).add(0,spell==Spell.DOOM?1.8:-0.18,0);
@@ -204,7 +212,7 @@ public final class SpellEngine {
             case DOOM -> {
                 double radius=Math.min(c.spell.radius,2+c.age*.25);
                 if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos.add(0,5,0),c.pos.add(0,5,0),radius);
-                if(c.age==1)RecordedSpells.release(c);
+                SpellAudio.doom(c.caster,c.pos,c.age/90.0,c.age);
                 for(var victim:near(c.caster,c.pos,radius))if(visible(c,c.pos,victim.getBoundingBox().getCenter())){
                     Vec3 pull=c.pos.subtract(victim.getBoundingBox().getCenter());
                     victim.setDeltaMovement(pull.normalize().scale(Math.min(.5,pull.length()*.13)));victim.hurtMarked=true;

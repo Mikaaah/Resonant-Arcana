@@ -69,6 +69,11 @@ def main(only=None):
                 d.polygon([(64,93),(64+sign*51,20),(64+sign*45,63),(64+sign*20,99)],fill=c)
                 for feather in range(4):line([(64+sign*(12+feather*7),81-feather*8),(64+sign*(26+feather*8),39-feather*4)],4,white)
             d.ellipse((52,12,76,28),outline=white,width=4)
+        elif name=='DOOM_BEAM':
+            c='#65ff20'
+            d.ellipse((11,52,59,100),fill='#080e08',outline=c,width=6)
+            line([(35,77),(109,20)],24,c);line([(35,77),(109,20)],10,white)
+            for i in range(3):d.arc((18+i*16,23+i*6,70+i*16,100-i*6),120,340,fill=c,width=4)
         elif kind=='DEVASTATOR':
             line([(13,104),(104,24)],21);line([(16,104),(105,24)],9,white)
             for x,y in [(37,82),(62,58),(86,36)]:d.ellipse((x-13,y-13,x+13,y+13),outline=c,width=4)

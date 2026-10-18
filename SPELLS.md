@@ -1,6 +1,6 @@
 # Spell reference
 
-**151 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
+**152 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
 
 Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
@@ -23,7 +23,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | [Summons & Constructs](#summon) | 9 |
 | [Strikes & Drains](#melee) | 20 |
 | [Boss Arts](#boss_art) | 12 |
-| [Cataclysms](#cataclysm) | 13 |
+| [Cataclysms](#cataclysm) | 14 |
 
 ## Schools
 
@@ -32,7 +32,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | Evocation | 17 |
 | Blood | 15 |
 | Fire | 18 |
-| Ender | 33 |
+| Ender | 34 |
 | Lightning | 15 |
 | Eldritch | 15 |
 | Nature | 16 |
@@ -486,9 +486,9 @@ Spell ID: `resonant_arcana:cryo_lance`. Inspect ranks with `/resonantarcana spel
 
 ### Arcane Devastator
 
-Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along the released aim. Each visible enemy entering it can take one 120-base-damage hit. Solid cover stops the beam. The recording uses its original pitch and this spell has a fixed windup.
+Charge for 6.5 seconds to the recording’s second attack, then release a broad cosmic beam for 7.4 seconds along your final aim. Each visible enemy entering it takes one 120-base-damage hit. Solid cover stops the beam. Fixed windup, original recording pitch.
 
-**Evocation** · Cast **4.2s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
+**Evocation** · Cast **6.5s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -498,7 +498,7 @@ Charge for 4.2 seconds, then sustain a broad cosmic beam for 9.7 seconds along t
 | IV | 210 | — | 280 |
 | V | 240 | — | 300 |
 
-Base release / active phase: **9.7s**.
+Base release / active phase: **7.4s**.
 
 Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarcana spell arcane_devastator <rank>`.
 
@@ -2634,7 +2634,7 @@ Spell ID: `resonant_arcana:dragons_pyre`. Inspect ranks with `/resonantarcana sp
 
 ### DOOM
 
-Open a black hole that pulls visible enemies toward its centre. Red streams spiral through three dark rings before the hole collapses. Each enemy can take one 256-damage hit. Fixed ten-second recorded windup; terrain remains intact.
+Open an elevated black hole with a gold photon rim, flattened accretion disc and red infalling trails. It draws visible enemies inward before collapsing for one 256-damage hit per enemy. A heartbeat, portal hum and five atmospheric layers build throughout the ritual. Terrain remains intact.
 
 **Ender** · Cast **10s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
 
@@ -2837,3 +2837,17 @@ Base release / active phase: **4s**.
 Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.
 
 Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spell i_am_atomic <rank>`.
+
+### Doom Beam
+
+Compress a small black hole for 13 seconds. Halfway through, its rim and converging trails turn emerald. Release a giant white-hot green plasma beam for 9.5 seconds along your final aim. Branching lightning wraps the beam; each visible enemy entering it takes one 320-damage hit. Solid terrain blocks it. Fixed recorded windup.
+
+**Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 320 | — | 500 |
+
+Base release / active phase: **9.5s**.
+
+Spell ID: `resonant_arcana:doom_beam`. Inspect ranks with `/resonantarcana spell doom_beam <rank>`.

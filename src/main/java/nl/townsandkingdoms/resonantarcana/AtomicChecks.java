@@ -60,6 +60,10 @@ final class AtomicChecks {
             for(var v:java.util.List.of(enemy,friend,hidden,resistant))v.discard();hostileShot.discard();friendlyShot.discard();fastShot.discard();level.getScoreboard().removePlayerTeam(party);
         }
         cosmicBeam(level,p,check);
+        check.accept(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.ARCANE_DEVASTATOR)).getEffectiveCastTime(1,p)==130,"cosmic beam waits for the later 6.5-second audio attack");
+        check.accept(!RecordedSpells.handles(Spell.DOOM)&&RecordedSpells.handles(Spell.DOOM_BEAM),"laser recording belongs to Doom Beam, not black-hole Doom");
+        check.accept(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.DOOM)).getCastStartSound().isEmpty(),"Doom uses only its staggered native ambience, without an automatic start loop");
+        doomBeam(level,p,check);
     }
     private static void cosmicBeam(ServerLevel level,net.minecraft.server.level.ServerPlayer p,BiConsumer<Boolean,String> check){
         p.setPos(0,81,0);p.setYRot(0);p.setXRot(0);SpellEngine.clear();
@@ -75,6 +79,24 @@ final class AtomicChecks {
         }finally{
             first.discard();late.discard();covered.discard();SpellEngine.clear();
             for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.AIR.defaultBlockState());
+        }
+    }
+    private static void doomBeam(ServerLevel level,net.minecraft.server.level.ServerPlayer p,BiConsumer<Boolean,String> check){
+        p.setPos(0,81,0);p.setYRot(0);p.setXRot(0);SpellEngine.clear();
+        Zombie first=enemy(level,0,6),late=enemy(level,8,8);
+        try{
+            check.accept(Spell.DOOM_BEAM.castTicks()==260,"Doom Beam has a thirteen-second native charge");
+            check.accept(SpellEngine.cast(p,Spell.DOOM_BEAM),"Doom Beam releases");SpellEngine.tick();
+            check.accept(first.getHealth()==704&&late.getHealth()==1024,"Doom Beam deals 320 damage only along its path");
+            late.setPos(0,81,8);
+            for(int i=0;i<12;i++){first.invulnerableTime=0;late.invulnerableTime=0;SpellEngine.tick();}
+            check.accept(first.getHealth()==704&&late.getHealth()==704,"Doom Beam catches late entrants without repeating hits");
+            for(int x=-3;x<=3;x++)for(int y=81;y<=86;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());
+            var hidden=enemy(level,0,14);
+            try{for(int i=0;i<200;i++)SpellEngine.tick();check.accept(hidden.getHealth()==1024&&SpellEngine.activeCount()==0,"Doom Beam respects new cover and expires");}finally{hidden.discard();}
+        }finally{
+            first.discard();late.discard();SpellEngine.clear();
+            for(int x=-3;x<=3;x++)for(int y=81;y<=86;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.AIR.defaultBlockState());
         }
     }
     private static Zombie enemy(ServerLevel level,double x,double z){var v=new Zombie(EntityType.ZOMBIE,level);v.setPos(x,81,z);v.setNoAi(true);v.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1024);v.getAttribute(Attributes.ARMOR).setBaseValue(0);v.setHealth(1024);level.addFreshEntity(v);return v;}
