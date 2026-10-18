@@ -19,6 +19,7 @@ final class SpellAudio {
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
     static String chargeId(Spell spell){return switch(spell){
+        case VOID_EXILE->"block.respawn_anchor.charge";
         case EXPLOSION->"entity.ghast.warn";case SERAPH_ASCENDANT->"block.beacon.activate";case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.charge");
         case ASTRAL_APOCALYPSE->"block.amethyst_block.resonate";
         case CRIMSON_ECLIPSE->irons("heartstop_cast");case WORLD_PYRE->irons("spell.fire_bomb.charge");
@@ -99,6 +100,7 @@ final class SpellAudio {
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
     static String spellCastId(Spell spell){return switch(spell){
+        case VOID_EXILE->"entity.enderman.teleport";
         case EXPLOSION->"entity.blaze.shoot";case SERAPH_ASCENDANT->irons("spell.cleanse.cast");case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.cast");
         case ASTRAL_APOCALYPSE->irons("spell.summon_swords.cast");case CRIMSON_ECLIPSE->irons("cast.generic.blood");
         case WORLD_PYRE->irons("spell.fire_bomb.cast");case VOID_CORONATION->irons("spell.black_hole.cast");

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.27.0-alpha
+
+- Added Void Exile: four-second native cast, ten-second banishment to an isolated void cell, then 20 base damage followed by five seconds of Weakness II. Five ranks, 110 base mana and a 30-second cooldown.
+- Added violet rift visuals, a native charge circle and a dedicated spell icon.
+- Preserved entity UUID, equipment and original AI/gravity/invulnerability state; durable return records survive normal server restarts and target logout.
+- Added boss/mount/leash/dimension immunity, safe return placement, ally/PvP checks and integration coverage.
+- Client and server must both update (network protocol 18).
+
 ## 0.26.0-alpha
 
 - Fix the double camera rotation that displaced Doom’s black core and Atomic’s containment membrane.

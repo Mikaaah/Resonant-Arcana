@@ -254,4 +254,22 @@ Base release / active phase: **3s**.
 
 Spell ID: `resonant_arcana:glacial_prison`. Inspect ranks with `/resonantarcana spell glacial_prison <rank>`.
 
+### Void Exile
+
+Cast for four seconds to banish one hostile living target into an isolated void cell for ten seconds, leaving a violet rift behind. It returns to its original spot or nearby clear space, takes 20 base damage, then receives Weakness II for five seconds. No damage is dealt during exile. Bosses, mounted or leashed targets and dimension-immune creatures resist. Ally and PvP protections apply.
+
+**Ender** · Cast **4s** · Cooldown **30s** · Range **24 blocks** · Radius / half-width **1.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 20 | — | 110 |
+| II | 25 | — | 120 |
+| III | 30 | — | 130 |
+| IV | 35 | — | 140 |
+| V | 40 | — | 150 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:void_exile`. Inspect ranks with `/resonantarcana spell void_exile <rank>`.
+
 [← Home](Home.md)

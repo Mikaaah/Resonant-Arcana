@@ -1,12 +1,12 @@
 # Spell reference
 
-**152 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
+**153 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
 
 Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
 Values are defaults before school power, equipment, resistances and server settings. Damage and healing use health points: two health points equal one heart. Damage is per normal hit or pulse; descriptions explain final multipliers. Travel time and release sequences occur after the cast bar. Ordinary spells have up to five ranks; Doom and cataclysms have one Legendary rank.
 
-Offensive spells protect the caster, eligible teammates and owned pets. Healing affects the caster, owned pets and visible scoreboard teammates, plus teamless players when enabled. Cover, enemy movement, normal damage immunity and status immunities can change results. Spells do not destroy terrain or intentionally load new chunks.
+Offensive spells protect the caster, eligible teammates and owned pets. Healing affects the caster, owned pets and visible scoreboard teammates, plus teamless players when enabled. Cover, enemy movement, normal damage immunity and status immunities can change results. Spells do not destroy terrain. Void Exile temporarily loads its isolated cell and return chunks; ordinary spells use loaded terrain.
 
 Cataclysm windups use a large seal at the caster’s feet, with dense native particles spiralling down from above and a small stream into the caster. Optional AAAParticles are limited to floor seals, Explosion’s five beam seals and Doom. Without AAA, native outlines remain. Charge cues repeat throughout the cast.
 
@@ -17,7 +17,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | [Projectiles](#projectile) | 19 |
 | [Beams & Channels](#beam) | 9 |
 | [Area Magic](#area) | 35 |
-| [Control](#control) | 15 |
+| [Control](#control) | 16 |
 | [Movement](#mobility) | 11 |
 | [Support & Defense](#support) | 20 |
 | [Summons & Constructs](#summon) | 9 |
@@ -32,7 +32,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | Evocation | 17 |
 | Blood | 15 |
 | Fire | 18 |
-| Ender | 34 |
+| Ender | 35 |
 | Lightning | 15 |
 | Eldritch | 15 |
 | Nature | 16 |
@@ -1349,6 +1349,24 @@ Hold an aimed enemy in spectral ice for three seconds at level I. Cover, distanc
 Base release / active phase: **3s**.
 
 Spell ID: `resonant_arcana:glacial_prison`. Inspect ranks with `/resonantarcana spell glacial_prison <rank>`.
+
+### Void Exile
+
+Cast for four seconds to banish one hostile living target into an isolated void cell for ten seconds, leaving a violet rift behind. It returns to its original spot or nearby clear space, takes 20 base damage, then receives Weakness II for five seconds. No damage is dealt during exile. Bosses, mounted or leashed targets and dimension-immune creatures resist. Ally and PvP protections apply.
+
+**Ender** · Cast **4s** · Cooldown **30s** · Range **24 blocks** · Radius / half-width **1.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 20 | — | 110 |
+| II | 25 | — | 120 |
+| III | 30 | — | 130 |
+| IV | 35 | — | 140 |
+| V | 40 | — | 150 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:void_exile`. Inspect ranks with `/resonantarcana spell void_exile <rank>`.
 
 
 <a id="mobility"></a>

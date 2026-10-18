@@ -125,3 +125,13 @@ Doom Beam's damage path follows the caster's hands and current look direction on
 Doom/Atomic's core and membrane renderers no longer apply the world camera rotation twice. The core and its rings now share the same world-space centre.
 
 Explosion keeps its 7.7-second chant, locked target and single 256-damage release. A vertical ignition column and five orange-gold seals build over the mark, with coloured mana sparks around the caster. An original textured fireball expands, rises and fades over 4.5 seconds with an expanding ground shockwave. The extended release spectacle adds no repeated damage or terrain destruction. Existing audio and particle sliders apply.
+
+## Void Exile
+
+Void Exile is Ender / Control, with an 80-tick base cast (normal cast-speed bonuses apply), 200-tick banishment and a 600-tick cooldown. Rank one costs 110 mana; each of five ranks adds 10 mana and normal spell power. It returns the target before applying 20 base Ender damage, then Weakness II for 100 ticks. Damage multipliers are captured at release.
+
+Targets actually enter `resonant_arcana:void_exile`; UUID, equipment, NBT and original AI, gravity and invulnerability flags are preserved. Return records use overworld SavedData, independently of the caster or active spell list. Offline players return after login if their timer has elapsed. The timer uses server ticks and pauses with the server.
+
+Bosses, creative/spectator players, invulnerable or dimension-immune targets, passengers, mounts and leashed creatures resist. Add entity types to `resonant_arcana:exile_immune` with a datapack to extend immunity. Ally and PvP protections are checked again on return.
+
+If the origin becomes obstructed, the spell checks nearby clear positions and then world spawn. If no clear return is available it retries rather than suffocating or deleting the target. This spell temporarily loads its private void cell and return chunks; it does not edit battlefield blocks. Up to 128 active cells are supported.

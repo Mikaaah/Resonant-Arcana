@@ -186,10 +186,11 @@ public final class SpellEngine {
         if(book==null||!spell.cooldownKey().equals(spell.name()))cooldowns.put(spell.cooldownKey(),ticks+cooldown);
         message(player,spell.title);return true;
     }
-    private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE->true;default->false;};}
+    private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE,EXILE->true;default->false;};}
     private static void cleanup(Cast c){BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);SpecialSpells.cleanup(c);}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
+        VoidExile.tick(net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer());
         for(Iterator<Cast> it=ACTIVE.iterator();it.hasNext();){Cast c=it.next();
             ServerPlayer owner=c.level.getServer().getPlayerList().getPlayer(c.owner);
             // Fake players are only allowed through the explicitly gated integration fixture.

@@ -113,7 +113,7 @@ public final class IntegrationChecks {
             for(String id:List.of("ward_magic","ward_fire","doom_well_dark","explosion_seal"))
                 check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/"+id+".efkefc")!=null,"selective AAA asset packaged: "+id);
             for(Spell spell:Spell.enabledValues()){
-                if(AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
+                if(spell.kind==Spell.Kind.EXILE||AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
                 if(spell.healing()>0)player.setHealth(5);
@@ -287,7 +287,7 @@ public final class IntegrationChecks {
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
             CataclysmChecks.run(level,IntegrationChecks::check);
-            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);
+            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{

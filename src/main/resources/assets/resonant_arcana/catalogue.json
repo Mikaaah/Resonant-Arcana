@@ -3445,6 +3445,27 @@
       "category": "CATACLYSM",
       "bookId": "doom_beam",
       "description": "Compress a centred black hole for 13 seconds; its rim turns emerald halfway through. Release a green beacon-core plasma beam for 9.5 seconds, connected to your hands and following your position and aim. Each visible enemy entering it takes one 320-damage hit. Solid cover blocks it. Fixed recorded windup."
+    },
+    "VOID_EXILE": {
+      "title": "Void Exile",
+      "kind": "EXILE",
+      "theme": "DARK",
+      "damage": 20,
+      "radius": 1.5,
+      "range": 24,
+      "cooldown": 600,
+      "castTicks": 80,
+      "mana": 110,
+      "manaStep": 10,
+      "maxLevel": 5,
+      "healing": 0,
+      "duration": 200,
+      "interval": 0,
+      "pulses": 1,
+      "role": "Control",
+      "category": "CONTROL",
+      "bookId": "void_exile",
+      "description": "Cast for four seconds to banish one hostile living target into an isolated void cell for ten seconds, leaving a violet rift behind. It returns to its original spot or nearby clear space, takes 20 base damage, then receives Weakness II for five seconds. No damage is dealt during exile. Bosses, mounted or leashed targets and dimension-immune creatures resist. Ally and PvP protections apply."
     }
   },
   "schools": [
@@ -3553,7 +3574,8 @@
         "SANDWORMS_QUICKSAND",
         "RIFT_COLLISION",
         "I_AM_ATOMIC",
-        "DOOM_BEAM"
+        "DOOM_BEAM",
+        "VOID_EXILE"
       ]
     },
     {

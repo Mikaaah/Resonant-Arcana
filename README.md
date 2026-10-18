@@ -2,9 +2,9 @@
 
 [Project status](https://github.com/Mikaaah/Mikaaah/blob/master/STATUS.md) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues) · [Creator’s CurseForge projects](https://www.curseforge.com/members/mikaaah/projects)
 
-An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **152 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
+An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **153 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.26.0-alpha](downloads/resonant-arcana-0.26.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.27.0-alpha](downloads/resonant-arcana-0.27.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -27,6 +27,10 @@ The ten old school wands, their recipes and their textures have been removed. Ex
 All scrolls share **one Spells creative tab**, alongside the Equipment tab. Functional categories remain in descriptions and as filters in the debug archive. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
 
 ## Rituals and new spells
+
+### Void Exile
+
+Four-second Ender control spell: banish one hostile target for ten seconds, leaving a violet rift. On return it takes 20 base damage, then Weakness II for five seconds. Bosses and mounted or leashed creatures resist. Ally and PvP protection apply.
 
 Cataclysms charge through a **large seal beneath the caster**. Dense native particles spiral down from 8–13 blocks above into the seal, with a small amount flowing into the caster. Individual charge sounds repeat at stronger volume throughout the cast. Optional **AAAParticles** are limited to floor seals, Explosion’s five seals and the original Doom black-hole effect, now centred with its red spirals five blocks higher. Native particles remain available without AAA. Four spells use owner-supplied recordings at their original pitch; see [timing and overrides](CONFIGURATION.md#recorded-spells-in-026).
 
@@ -72,7 +76,7 @@ Supply compile-only API JARs, then run with Java 21:
 ./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar
 ```
 
-The packaged-asset check verifies the four item assets, exactly four selective AAA effects and eight recorded OGG streams and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.26.0-alpha:** 10,929 dedicated-server checks pass without Bosses’Rise and 11,708 with it, including moving/turning Doom Beam, caster-owned visual packet validation and the vertical Explosion mark. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies the four item assets, exactly four selective AAA effects and eight recorded OGG streams and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.27.0-alpha:** 10,972 dedicated-server checks pass without Bosses’Rise and 11,751 with it, including moving/turning Doom Beam, caster-owned visual packet validation the vertical Explosion mark, and Void Exile transfer/persistence, native casting, damage order and PvP returns. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 
