@@ -1,6 +1,6 @@
 # Spell reference
 
-**153 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
+**154 core spells + 12 optional Bosses’Rise spells.** Every spell has one functional category and one native Iron’s school.
 
 Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
@@ -19,7 +19,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | [Area Magic](#area) | 35 |
 | [Control](#control) | 16 |
 | [Movement](#mobility) | 11 |
-| [Support & Defense](#support) | 20 |
+| [Support & Defense](#support) | 21 |
 | [Summons & Constructs](#summon) | 9 |
 | [Strikes & Drains](#melee) | 20 |
 | [Boss Arts](#boss_art) | 12 |
@@ -32,7 +32,7 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | Evocation | 17 |
 | Blood | 15 |
 | Fire | 18 |
-| Ender | 35 |
+| Ender | 36 |
 | Lightning | 15 |
 | Eldritch | 15 |
 | Nature | 16 |
@@ -50,11 +50,11 @@ Loose a compact arcane spark along your aim. It stops at the first enemy or soli
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 15 |
-| II | 3.75 | — | 18 |
-| III | 4.5 | — | 21 |
-| IV | 5.25 | — | 24 |
-| V | 6 | — | 27 |
+| I | 5 | — | 15 |
+| II | 6.25 | — | 18 |
+| III | 7.5 | — | 21 |
+| IV | 8.75 | — | 24 |
+| V | 10 | — | 27 |
 
 Spell ID: `resonant_arcana:spark`. Inspect ranks with `/resonantarcana spell spark <rank>`.
 
@@ -66,11 +66,11 @@ Launch a slow astral comet with a bright core and trailing star motes. It bursts
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 45 |
-| II | 17.5 | — | 54 |
-| III | 21 | — | 63 |
-| IV | 24.5 | — | 72 |
-| V | 28 | — | 81 |
+| I | 22 | — | 45 |
+| II | 27.5 | — | 54 |
+| III | 33 | — | 63 |
+| IV | 38.5 | — | 72 |
+| V | 44 | — | 81 |
 
 Spell ID: `resonant_arcana:astral_comet`. Inspect ranks with `/resonantarcana spell astral_comet <rank>`.
 
@@ -82,11 +82,11 @@ Hurl a slow ember comet with a burning wake. Its first collision releases an are
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 45 |
-| II | 15 | — | 54 |
-| III | 18 | — | 63 |
-| IV | 21 | — | 72 |
-| V | 24 | — | 81 |
+| I | 20 | — | 45 |
+| II | 25 | — | 54 |
+| III | 30 | — | 63 |
+| IV | 35 | — | 72 |
+| V | 40 | — | 81 |
 
 Spell ID: `resonant_arcana:fire_comet`. Inspect ranks with `/resonantarcana spell fire_comet <rank>`.
 
@@ -98,11 +98,11 @@ Throw a compact fireball with a coiling ember trail. Its first collision release
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 25 |
-| II | 7.5 | — | 30 |
-| III | 9 | — | 35 |
-| IV | 10.5 | — | 40 |
-| V | 12 | — | 45 |
+| I | 8 | — | 25 |
+| II | 10 | — | 30 |
+| III | 12 | — | 35 |
+| IV | 14 | — | 40 |
+| V | 16 | — | 45 |
 
 Spell ID: `resonant_arcana:fireball`. Inspect ranks with `/resonantarcana spell fireball <rank>`.
 
@@ -114,11 +114,11 @@ Launch a twisting shadow bolt. Its first collision releases a small void impact,
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 20 |
-| II | 6.25 | — | 24 |
-| III | 7.5 | — | 28 |
-| IV | 8.75 | — | 32 |
-| V | 10 | — | 36 |
+| I | 7 | — | 20 |
+| II | 8.75 | — | 24 |
+| III | 10.5 | — | 28 |
+| IV | 12.25 | — | 32 |
+| V | 14 | — | 36 |
 
 Spell ID: `resonant_arcana:shadow_bolt`. Inspect ranks with `/resonantarcana spell shadow_bolt <rank>`.
 
@@ -130,11 +130,11 @@ Release a dark wisp that steers toward the enemy selected at release. Its impact
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 27 |
-| II | 7.5 | — | 32 |
-| III | 9 | — | 37 |
-| IV | 10.5 | — | 42 |
-| V | 12 | — | 47 |
+| I | 10 | — | 27 |
+| II | 12.5 | — | 32 |
+| III | 15 | — | 37 |
+| IV | 17.5 | — | 42 |
+| V | 20 | — | 47 |
 
 Spell ID: `resonant_arcana:soul_seeker`. Inspect ranks with `/resonantarcana spell soul_seeker <rank>`.
 
@@ -146,11 +146,11 @@ Fire a compact electric bolt with a jagged spark wake. The first enemy or solid 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 23 |
-| II | 7.5 | — | 27 |
-| III | 9 | — | 31 |
-| IV | 10.5 | — | 35 |
-| V | 12 | — | 39 |
+| I | 8 | — | 23 |
+| II | 10 | — | 27 |
+| III | 12 | — | 31 |
+| IV | 14 | — | 35 |
+| V | 16 | — | 39 |
 
 Spell ID: `resonant_arcana:thunder_bolt`. Inspect ranks with `/resonantarcana spell thunder_bolt <rank>`.
 
@@ -162,11 +162,11 @@ Send a compressed spatial orb along your aim, trailed by inward-curling portal m
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 21 |
-| II | 6.25 | — | 25 |
-| III | 7.5 | — | 29 |
-| IV | 8.75 | — | 33 |
-| V | 10 | — | 37 |
+| I | 7 | — | 21 |
+| II | 8.75 | — | 25 |
+| III | 10.5 | — | 29 |
+| IV | 12.25 | — | 33 |
+| V | 14 | — | 37 |
 
 Spell ID: `resonant_arcana:gravity_bolt`. Inspect ranks with `/resonantarcana spell gravity_bolt <rank>`.
 
@@ -178,27 +178,27 @@ Fire a resonant soul bolt with blue sculk motes. It ends at the first enemy or s
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 20 |
-| II | 6.25 | — | 24 |
-| III | 7.5 | — | 28 |
-| IV | 8.75 | — | 32 |
-| V | 10 | — | 36 |
+| I | 7 | — | 20 |
+| II | 8.75 | — | 24 |
+| III | 10.5 | — | 28 |
+| IV | 12.25 | — | 32 |
+| V | 14 | — | 36 |
 
 Spell ID: `resonant_arcana:echo_bolt`. Inspect ranks with `/resonantarcana spell echo_bolt <rank>`.
 
 ### Arcane Volley
 
-Fire three arcane bolts staggered 0.3 seconds apart. Each bolt follows your aim when it leaves, stops at cover and releases its own small impact; normal damage immunity still applies.
+Fire three arcane bolts half a second apart. Each bolt follows your aim when released and bursts on the first enemy or solid surface.
 
 **Evocation** · Cast **0.5s** · Cooldown **4.5s** · Range **32 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 23 |
-| II | 3.75 | — | 27 |
-| III | 4.5 | — | 31 |
-| IV | 5.25 | — | 35 |
-| V | 6 | — | 39 |
+| I | 5 | — | 23 |
+| II | 6.25 | — | 27 |
+| III | 7.5 | — | 31 |
+| IV | 8.75 | — | 35 |
+| V | 10 | — | 39 |
 
 Base release / active phase: **2.2s**.
 
@@ -212,11 +212,11 @@ Spit a travelling acid orb with a spore-speckled wake. Its first collision relea
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 17 |
-| II | 3.75 | — | 20 |
-| III | 4.5 | — | 23 |
-| IV | 5.25 | — | 26 |
-| V | 6 | — | 29 |
+| I | 4 | — | 17 |
+| II | 5 | — | 20 |
+| III | 6 | — | 23 |
+| IV | 7 | — | 26 |
+| V | 8 | — | 29 |
 
 Spell ID: `resonant_arcana:venom_bolt`. Inspect ranks with `/resonantarcana spell venom_bolt <rank>`.
 
@@ -228,11 +228,11 @@ Release five divergent blood needles. Damage is per projectile; projectiles stop
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 28 |
-| II | 5 | — | 33 |
-| III | 6 | — | 38 |
-| IV | 7 | — | 43 |
-| V | 8 | — | 48 |
+| I | 5 | — | 28 |
+| II | 6.25 | — | 33 |
+| III | 7.5 | — | 38 |
+| IV | 8.75 | — | 43 |
+| V | 10 | — | 48 |
 
 Spell ID: `resonant_arcana:blood_needles`. Inspect ranks with `/resonantarcana spell blood_needles <rank>`.
 
@@ -244,11 +244,11 @@ Throw a travelling lightning orb that can ricochet between three visible enemies
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 40 |
-| II | 7.5 | — | 48 |
-| III | 9 | — | 56 |
-| IV | 10.5 | — | 64 |
-| V | 12 | — | 72 |
+| I | 10 | — | 40 |
+| II | 12.5 | — | 48 |
+| III | 15 | — | 56 |
+| IV | 17.5 | — | 64 |
+| V | 20 | — | 72 |
 
 Spell ID: `resonant_arcana:arc_ricochet`. Inspect ranks with `/resonantarcana spell arc_ricochet <rank>`.
 
@@ -270,17 +270,17 @@ Spell ID: `resonant_arcana:prismatic_ruin`. Inspect ranks with `/resonantarcana 
 
 ### Viper Fangs
 
-Release five venom fangs in a spreading fan. Each projectile can poison the enemy it hits. Nature hits poison for four seconds.
+Release five venom fangs in a spreading fan. Each projectile can poison the enemy it hits.
 
 **Nature** · Cast **0.5s** · Cooldown **4.5s** · Range **24 blocks** · Radius / half-width **0.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 28 |
-| II | 3.75 | — | 33 |
-| III | 4.5 | — | 38 |
-| IV | 5.25 | — | 43 |
-| V | 6 | — | 48 |
+| I | 4 | — | 28 |
+| II | 5 | — | 33 |
+| III | 6 | — | 38 |
+| IV | 7 | — | 43 |
+| V | 8 | — | 48 |
 
 Spell ID: `resonant_arcana:viper_fangs`. Inspect ranks with `/resonantarcana spell viper_fangs <rank>`.
 
@@ -292,59 +292,59 @@ Fire a quick dart of holy light. It stops at solid cover.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 16 |
-| II | 5 | — | 19 |
-| III | 6 | — | 22 |
-| IV | 7 | — | 25 |
-| V | 8 | — | 28 |
+| I | 6 | — | 16 |
+| II | 7.5 | — | 19 |
+| III | 9 | — | 22 |
+| IV | 10.5 | — | 25 |
+| V | 12 | — | 28 |
 
 Spell ID: `resonant_arcana:luminous_dart`. Inspect ranks with `/resonantarcana spell luminous_dart <rank>`.
 
 ### Frost Needle
 
-Fire a fast ice needle that chills its target and stops at solid cover. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Fire a fast ice needle that chills its target and stops at solid cover.
 
 **Ice** · Cast **0s** · Cooldown **1s** · Range **32 blocks** · Radius / half-width **0.7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 16 |
-| II | 5 | — | 19 |
-| III | 6 | — | 22 |
-| IV | 7 | — | 25 |
-| V | 8 | — | 28 |
+| I | 6 | — | 16 |
+| II | 7.5 | — | 19 |
+| III | 9 | — | 22 |
+| IV | 10.5 | — | 25 |
+| V | 12 | — | 28 |
 
 Spell ID: `resonant_arcana:frost_needle`. Inspect ranks with `/resonantarcana spell frost_needle <rank>`.
 
 ### Ice Serpent
 
-Send a low, weaving ice serpent horizontally along your aim. It chills each enemy struck and stops at solid cover; it does not climb terrain. Ice hits chill for two seconds and add 40 freezing ticks.
+Send a low, weaving ice serpent horizontally along your aim. It chills each enemy struck and stops at solid cover; it does not climb terrain.
 
 **Ice** · Cast **0.7s** · Cooldown **5.5s** · Range **24 blocks** · Radius / half-width **1.4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 7 | — | 34 |
-| II | 8.75 | — | 40 |
-| III | 10.5 | — | 46 |
-| IV | 12.25 | — | 52 |
-| V | 14 | — | 58 |
+| I | 12 | — | 34 |
+| II | 15 | — | 40 |
+| III | 18 | — | 46 |
+| IV | 21 | — | 52 |
+| V | 24 | — | 58 |
 
 Spell ID: `resonant_arcana:ice_serpent`. Inspect ranks with `/resonantarcana spell ice_serpent <rank>`.
 
 ### Crystal Barrage
 
-Release five divergent crystal projectiles. Damage is per projectile; their impacts chill enemies. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Release five divergent crystal projectiles. Damage is per projectile; their impacts chill enemies.
 
 **Ice** · Cast **0.7s** · Cooldown **6s** · Range **30 blocks** · Radius / half-width **0.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 36 |
-| II | 5 | — | 43 |
-| III | 6 | — | 50 |
-| IV | 7 | — | 57 |
-| V | 8 | — | 64 |
+| I | 5 | — | 36 |
+| II | 6.25 | — | 43 |
+| III | 7.5 | — | 50 |
+| IV | 8.75 | — | 57 |
+| V | 10 | — | 64 |
 
 Spell ID: `resonant_arcana:crystal_barrage`. Inspect ranks with `/resonantarcana spell crystal_barrage <rank>`.
 
@@ -354,19 +354,19 @@ Spell ID: `resonant_arcana:crystal_barrage`. Inspect ranks with `/resonantarcana
 
 ### Flamethrower
 
-Channel a narrow stream of flame following your current aim for 1.5 seconds. Six quarter-second pulses can hit enemies intersecting the stream; solid cover stops it. Hits ignite for three seconds.
+Channel a narrow flame stream along your aim for three seconds. Six pulses damage enemies and ignite them for three seconds. Solid cover stops the stream.
 
 **Fire** · Cast **0.4s** · Cooldown **5s** · Range **12 blocks** · Radius / half-width **1.4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 22 |
-| II | 2.5 | — | 26 |
-| III | 3 | — | 30 |
-| IV | 3.5 | — | 34 |
-| V | 4 | — | 38 |
+| I | 4 | — | 40 |
+| II | 5 | — | 44 |
+| III | 6 | — | 48 |
+| IV | 7 | — | 52 |
+| V | 8 | — | 56 |
 
-Base release / active phase: **1.5s**.
+Base release / active phase: **3s**.
 
 Spell ID: `resonant_arcana:flame_thrower`. Inspect ranks with `/resonantarcana spell flame_thrower <rank>`.
 
@@ -378,11 +378,11 @@ Connect up to five distinct visible enemies with jagged lightning links. Each ju
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 32 |
-| II | 7.5 | — | 38 |
-| III | 9 | — | 44 |
-| IV | 10.5 | — | 50 |
-| V | 12 | — | 56 |
+| I | 9 | — | 32 |
+| II | 11.25 | — | 38 |
+| III | 13.5 | — | 44 |
+| IV | 15.75 | — | 50 |
+| V | 18 | — | 56 |
 
 Spell ID: `resonant_arcana:chain_lightning`. Inspect ranks with `/resonantarcana spell chain_lightning <rank>`.
 
@@ -394,27 +394,27 @@ Drive a straight crimson lance through visible enemies along your aim. Each enem
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 35 |
-| II | 11.25 | — | 42 |
-| III | 13.5 | — | 49 |
-| IV | 15.75 | — | 56 |
-| V | 18 | — | 63 |
+| I | 16 | — | 35 |
+| II | 20 | — | 42 |
+| III | 24 | — | 49 |
+| IV | 28 | — | 56 |
+| V | 32 | — | 63 |
 
 Spell ID: `resonant_arcana:blood_lance`. Inspect ranks with `/resonantarcana spell blood_lance <rank>`.
 
 ### Soul Cannon
 
-Charge for two seconds, then launch a massive echo blast. Switch away to cancel charging.
+Charge an echo cannon for two seconds, then launch a travelling soul blast. It bursts against the first enemy or solid surface.
 
 **Eldritch** · Cast **2s** · Cooldown **14s** · Range **48 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 90 |
-| II | 20 | — | 100 |
-| III | 24 | — | 110 |
-| IV | 28 | — | 120 |
-| V | 32 | — | 130 |
+| I | 48 | — | 90 |
+| II | 60 | — | 100 |
+| III | 72 | — | 110 |
+| IV | 84 | — | 120 |
+| V | 96 | — | 130 |
 
 Spell ID: `resonant_arcana:soul_cannon`. Inspect ranks with `/resonantarcana spell soul_cannon <rank>`.
 
@@ -426,11 +426,11 @@ Charge for 2.5 seconds, then fire a piercing storm lance. Solid cover stops the 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 30 | — | 85 |
-| II | 37.5 | — | 95 |
-| III | 45 | — | 105 |
-| IV | 52.5 | — | 115 |
-| V | 60 | — | 125 |
+| I | 56 | — | 85 |
+| II | 70 | — | 95 |
+| III | 84 | — | 105 |
+| IV | 98 | — | 115 |
+| V | 112 | — | 125 |
 
 Spell ID: `resonant_arcana:tempest_spear`. Inspect ranks with `/resonantarcana spell tempest_spear <rank>`.
 
@@ -442,11 +442,11 @@ Exhale a broad cone of flame following your aim for 1.5 seconds. Three pulses ca
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 50 |
-| II | 3.75 | — | 60 |
-| III | 4.5 | — | 70 |
-| IV | 5.25 | — | 80 |
-| V | 6 | — | 90 |
+| I | 7 | — | 50 |
+| II | 8.75 | — | 60 |
+| III | 10.5 | — | 70 |
+| IV | 12.25 | — | 80 |
+| V | 14 | — | 90 |
 
 Base release / active phase: **1.5s**.
 
@@ -460,33 +460,33 @@ Charge a piercing ray of holy light, striking each visible enemy on its line onc
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 22 | — | 70 |
-| II | 27.5 | — | 80 |
-| III | 33 | — | 90 |
-| IV | 38.5 | — | 100 |
-| V | 44 | — | 110 |
+| I | 44 | — | 70 |
+| II | 55 | — | 80 |
+| III | 66 | — | 90 |
+| IV | 77 | — | 100 |
+| V | 88 | — | 110 |
 
 Spell ID: `resonant_arcana:judgement_ray`. Inspect ranks with `/resonantarcana spell judgement_ray <rank>`.
 
 ### Cryo Lance
 
-Fire a precise piercing ice lance through visible enemies. Solid cover blocks it. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Fire a precise piercing ice lance through visible enemies. Solid cover blocks it.
 
 **Ice** · Cast **0.9s** · Cooldown **6s** · Range **28 blocks** · Radius / half-width **0.7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 38 |
-| II | 12.5 | — | 45 |
-| III | 15 | — | 52 |
-| IV | 17.5 | — | 59 |
-| V | 20 | — | 66 |
+| I | 18 | — | 38 |
+| II | 22.5 | — | 45 |
+| III | 27 | — | 52 |
+| IV | 31.5 | — | 59 |
+| V | 36 | — | 66 |
 
 Spell ID: `resonant_arcana:cryo_lance`. Inspect ranks with `/resonantarcana spell cryo_lance <rank>`.
 
 ### Arcane Devastator
 
-Charge for 6.5 seconds to the recording’s second attack, then release a broad cosmic beam for 7.4 seconds along your final aim. Each visible enemy entering it takes one 120-base-damage hit. Solid cover stops the beam. Fixed windup, original recording pitch.
+Channel cosmic energy, then release a sustained beam along your final aim. Each enemy entering its path takes one hit. New cover stops the beam.
 
 **Evocation** · Cast **6.5s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 
@@ -514,11 +514,11 @@ Send a broad crimson crescent along your aim. Its moving front cuts each visible
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 24 |
-| II | 6.25 | — | 28 |
-| III | 7.5 | — | 32 |
-| IV | 8.75 | — | 36 |
-| V | 10 | — | 40 |
+| I | 7 | — | 24 |
+| II | 8.75 | — | 28 |
+| III | 10.5 | — | 32 |
+| IV | 12.25 | — | 36 |
+| V | 14 | — | 40 |
 
 Spell ID: `resonant_arcana:blood_wave`. Inspect ranks with `/resonantarcana spell blood_wave <rank>`.
 
@@ -530,11 +530,11 @@ Roll a low green acid wave forwards. Each enemy crossed by its broad front takes
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 19 |
-| II | 2.5 | — | 22 |
-| III | 3 | — | 25 |
-| IV | 3.5 | — | 28 |
-| V | 4 | — | 31 |
+| I | 3 | — | 19 |
+| II | 3.75 | — | 22 |
+| III | 4.5 | — | 25 |
+| IV | 5.25 | — | 28 |
+| V | 6 | — | 31 |
 
 Spell ID: `resonant_arcana:poison_wave`. Inspect ranks with `/resonantarcana spell poison_wave <rank>`.
 
@@ -546,11 +546,11 @@ Drive a broad wall of flickering embers forwards. Its advancing front hits each 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 24 |
-| II | 6.25 | — | 28 |
-| III | 7.5 | — | 32 |
-| IV | 8.75 | — | 36 |
-| V | 10 | — | 40 |
+| I | 7 | — | 24 |
+| II | 8.75 | — | 28 |
+| III | 10.5 | — | 32 |
+| IV | 12.25 | — | 36 |
+| V | 14 | — | 40 |
 
 Spell ID: `resonant_arcana:flame_wave`. Inspect ranks with `/resonantarcana spell flame_wave <rank>`.
 
@@ -562,27 +562,27 @@ Release an expanding arcane pressure ring from your feet. Enemies touched by the
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 36 |
-| II | 10 | — | 43 |
-| III | 12 | — | 50 |
-| IV | 14 | — | 57 |
-| V | 16 | — | 64 |
+| I | 12 | — | 36 |
+| II | 15 | — | 43 |
+| III | 18 | — | 50 |
+| IV | 21 | — | 57 |
+| V | 24 | — | 64 |
 
 Spell ID: `resonant_arcana:arcane_repulse`. Inspect ranks with `/resonantarcana spell arcane_repulse <rank>`.
 
 ### Lightning
 
-Call a vertical lightning strike onto your aim, damaging eligible visible enemies near the strike point. Uses addon damage rather than a terrain-igniting vanilla lightning entity.
+Call a vertical lightning strike onto your aim. Enemies near the strike take one hit; the spell leaves terrain intact.
 
 **Lightning** · Cast **0.4s** · Cooldown **5s** · Range **32 blocks** · Radius / half-width **2 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 7 | — | 32 |
-| II | 8.75 | — | 38 |
-| III | 10.5 | — | 44 |
-| IV | 12.25 | — | 50 |
-| V | 14 | — | 56 |
+| I | 12 | — | 32 |
+| II | 15 | — | 38 |
+| III | 18 | — | 44 |
+| IV | 21 | — | 50 |
+| V | 24 | — | 56 |
 
 Spell ID: `resonant_arcana:lightning`. Inspect ranks with `/resonantarcana spell lightning <rank>`.
 
@@ -594,11 +594,11 @@ Mark your aim with holy light, then deliver a vertical judgement strike. Visible
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 18 | — | 65 |
-| II | 22.5 | — | 75 |
-| III | 27 | — | 85 |
-| IV | 31.5 | — | 95 |
-| V | 36 | — | 105 |
+| I | 32 | — | 65 |
+| II | 40 | — | 75 |
+| III | 48 | — | 85 |
+| IV | 56 | — | 95 |
+| V | 64 | — | 105 |
 
 Spell ID: `resonant_arcana:smite`. Inspect ranks with `/resonantarcana spell smite <rank>`.
 
@@ -610,11 +610,11 @@ Raise a stationary ember funnel at your aim for two seconds. Four half-second pu
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 7 | — | 34 |
-| II | 8.75 | — | 40 |
-| III | 10.5 | — | 46 |
-| IV | 12.25 | — | 52 |
-| V | 14 | — | 58 |
+| I | 9 | — | 34 |
+| II | 11.25 | — | 40 |
+| III | 13.5 | — | 46 |
+| IV | 15.75 | — | 52 |
+| V | 18 | — | 58 |
 
 Base release / active phase: **2s**.
 
@@ -628,11 +628,11 @@ Send an expanding ember ring across the ground around you. Its advancing rim dam
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 41 |
-| II | 11.25 | — | 49 |
-| III | 13.5 | — | 57 |
-| IV | 15.75 | — | 65 |
-| V | 18 | — | 73 |
+| I | 16 | — | 41 |
+| II | 20 | — | 49 |
+| III | 24 | — | 57 |
+| IV | 28 | — | 65 |
+| V | 32 | — | 73 |
 
 Spell ID: `resonant_arcana:flame_shock_wave`. Inspect ranks with `/resonantarcana spell flame_shock_wave <rank>`.
 
@@ -644,11 +644,11 @@ Detonate a crimson bloom at the aimed enemy or reachable aim point. Its radial b
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 46 |
-| II | 15 | — | 55 |
-| III | 18 | — | 64 |
-| IV | 21 | — | 73 |
-| V | 24 | — | 82 |
+| I | 20 | — | 46 |
+| II | 25 | — | 55 |
+| III | 30 | — | 64 |
+| IV | 35 | — | 73 |
+| V | 40 | — | 82 |
 
 Spell ID: `resonant_arcana:blood_explode`. Inspect ranks with `/resonantarcana spell blood_explode <rank>`.
 
@@ -660,11 +660,11 @@ Advance a broad curtain of shadow along your aim. Each enemy touched by the movi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 24 |
-| II | 6.25 | — | 28 |
-| III | 7.5 | — | 32 |
-| IV | 8.75 | — | 36 |
-| V | 10 | — | 40 |
+| I | 7 | — | 24 |
+| II | 8.75 | — | 28 |
+| III | 10.5 | — | 32 |
+| IV | 12.25 | — | 36 |
+| V | 14 | — | 40 |
 
 Spell ID: `resonant_arcana:dark_wave`. Inspect ranks with `/resonantarcana spell dark_wave <rank>`.
 
@@ -676,11 +676,11 @@ Collapse a cloud of shadow at your aim. Visible enemies in the burst take one hi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 46 |
-| II | 15 | — | 55 |
-| III | 18 | — | 64 |
-| IV | 21 | — | 73 |
-| V | 24 | — | 82 |
+| I | 20 | — | 46 |
+| II | 25 | — | 55 |
+| III | 30 | — | 64 |
+| IV | 35 | — | 73 |
+| V | 40 | — | 82 |
 
 Spell ID: `resonant_arcana:nightfall`. Inspect ranks with `/resonantarcana spell nightfall <rank>`.
 
@@ -692,11 +692,11 @@ Carry a dark soul aura with you for three seconds. Three one-second pulses damag
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 30 |
-| II | 3.75 | — | 36 |
-| III | 4.5 | — | 42 |
-| IV | 5.25 | — | 48 |
-| V | 6 | — | 54 |
+| I | 5 | — | 30 |
+| II | 6.25 | — | 36 |
+| III | 7.5 | — | 42 |
+| IV | 8.75 | — | 48 |
+| V | 10 | — | 54 |
 
 Base release / active phase: **3s**.
 
@@ -710,11 +710,11 @@ Send a broad, crackling electric front forwards. Each enemy crossed by its movin
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 24 |
-| II | 6.25 | — | 28 |
-| III | 7.5 | — | 32 |
-| IV | 8.75 | — | 36 |
-| V | 10 | — | 40 |
+| I | 7 | — | 24 |
+| II | 8.75 | — | 28 |
+| III | 10.5 | — | 32 |
+| IV | 12.25 | — | 36 |
+| V | 14 | — | 40 |
 
 Spell ID: `resonant_arcana:thunder_wave`. Inspect ranks with `/resonantarcana spell thunder_wave <rank>`.
 
@@ -726,11 +726,11 @@ Establish a lightning storm at your aim for 4.8 seconds. Five one-second pulses 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 70 |
-| II | 6.25 | — | 80 |
-| III | 7.5 | — | 90 |
-| IV | 8.75 | — | 100 |
-| V | 10 | — | 110 |
+| I | 8 | — | 70 |
+| II | 10 | — | 80 |
+| III | 12 | — | 90 |
+| IV | 14 | — | 100 |
+| V | 16 | — | 110 |
 
 Base release / active phase: **4.8s**.
 
@@ -744,11 +744,11 @@ Unleash an expanding electric ring from your feet. The moving rim damages and pu
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 43 |
-| II | 12.5 | — | 51 |
-| III | 15 | — | 59 |
-| IV | 17.5 | — | 67 |
-| V | 20 | — | 75 |
+| I | 16 | — | 43 |
+| II | 20 | — | 51 |
+| III | 24 | — | 59 |
+| IV | 28 | — | 67 |
+| V | 32 | — | 75 |
 
 Spell ID: `resonant_arcana:thunder_pulse`. Inspect ranks with `/resonantarcana spell thunder_pulse <rank>`.
 
@@ -760,11 +760,11 @@ Open a stationary gravity well for 4.8 seconds. Pull visible enemies horizontall
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 55 |
-| II | 3.75 | — | 65 |
-| III | 4.5 | — | 75 |
-| IV | 5.25 | — | 85 |
-| V | 6 | — | 95 |
+| I | 5 | — | 55 |
+| II | 6.25 | — | 65 |
+| III | 7.5 | — | 75 |
+| IV | 8.75 | — | 85 |
+| V | 10 | — | 95 |
 
 Base release / active phase: **4.8s**.
 
@@ -778,11 +778,11 @@ Collapse a concentrated spatial orb at your aim. One radial force burst damages 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 18 | — | 70 |
-| II | 22.5 | — | 80 |
-| III | 27 | — | 90 |
-| IV | 31.5 | — | 100 |
-| V | 36 | — | 110 |
+| I | 32 | — | 70 |
+| II | 40 | — | 80 |
+| III | 48 | — | 90 |
+| IV | 56 | — | 100 |
+| V | 64 | — | 110 |
 
 Spell ID: `resonant_arcana:singularity`. Inspect ranks with `/resonantarcana spell singularity <rank>`.
 
@@ -794,11 +794,11 @@ Roll a broad sculk resonance front forwards. Each visible enemy crossed by the a
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 24 |
-| II | 6.25 | — | 28 |
-| III | 7.5 | — | 32 |
-| IV | 8.75 | — | 36 |
-| V | 10 | — | 40 |
+| I | 7 | — | 24 |
+| II | 8.75 | — | 28 |
+| III | 10.5 | — | 32 |
+| IV | 12.25 | — | 36 |
+| V | 14 | — | 40 |
 
 Spell ID: `resonant_arcana:sculk_wave`. Inspect ranks with `/resonantarcana spell sculk_wave <rank>`.
 
@@ -810,11 +810,11 @@ Charge for one second, then unleash a deafening, wide sonic scream over 12 block
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 55 |
-| II | 17.5 | — | 65 |
-| III | 21 | — | 75 |
-| IV | 24.5 | — | 85 |
-| V | 28 | — | 95 |
+| I | 28 | — | 55 |
+| II | 35 | — | 65 |
+| III | 42 | — | 75 |
+| IV | 49 | — | 85 |
+| V | 56 | — | 95 |
 
 Spell ID: `resonant_arcana:sonic_scream`. Inspect ranks with `/resonantarcana spell sonic_scream <rank>`.
 
@@ -826,11 +826,11 @@ Release a radial sculk shriek. An expanding soul ring damages and pushes each vi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 41 |
-| II | 11.25 | — | 49 |
-| III | 13.5 | — | 57 |
-| IV | 15.75 | — | 65 |
-| V | 18 | — | 73 |
+| I | 16 | — | 41 |
+| II | 20 | — | 49 |
+| III | 24 | — | 57 |
+| IV | 28 | — | 65 |
+| V | 32 | — | 73 |
 
 Spell ID: `resonant_arcana:shrieking_pulse`. Inspect ranks with `/resonantarcana spell shrieking_pulse <rank>`.
 
@@ -842,11 +842,11 @@ Shatter a resonant amethyst bloom at your aim. Crystal motes radiate from one ar
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 55 |
-| II | 17.5 | — | 65 |
-| III | 21 | — | 75 |
-| IV | 24.5 | — | 85 |
-| V | 28 | — | 95 |
+| I | 24 | — | 55 |
+| II | 30 | — | 65 |
+| III | 36 | — | 75 |
+| IV | 42 | — | 85 |
+| V | 48 | — | 95 |
 
 Spell ID: `resonant_arcana:amethyst_nova`. Inspect ranks with `/resonantarcana spell amethyst_nova <rank>`.
 
@@ -858,11 +858,11 @@ Carry a low ring of embers for three seconds. Three one-second pulses damage vis
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 27 |
-| II | 2.5 | — | 32 |
-| III | 3 | — | 37 |
-| IV | 3.5 | — | 42 |
-| V | 4 | — | 47 |
+| I | 4 | — | 27 |
+| II | 5 | — | 32 |
+| III | 6 | — | 37 |
+| IV | 7 | — | 42 |
+| V | 8 | — | 47 |
 
 Base release / active phase: **3s**.
 
@@ -876,11 +876,11 @@ Leave a low poisonous cloud at your aim for 4.8 seconds. Five one-second pulses 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 50 |
-| II | 3.75 | — | 60 |
-| III | 4.5 | — | 70 |
-| IV | 5.25 | — | 80 |
-| V | 6 | — | 90 |
+| I | 5 | — | 50 |
+| II | 6.25 | — | 60 |
+| III | 7.5 | — | 70 |
+| IV | 8.75 | — | 80 |
+| V | 10 | — | 90 |
 
 Base release / active phase: **4.8s**.
 
@@ -894,11 +894,11 @@ Charge for three seconds, mark your aim, then drop a blazing meteor. Ceilings li
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 32 | — | 90 |
-| II | 40 | — | 100 |
-| III | 48 | — | 110 |
-| IV | 56 | — | 120 |
-| V | 64 | — | 130 |
+| I | 64 | — | 90 |
+| II | 80 | — | 100 |
+| III | 96 | — | 110 |
+| IV | 112 | — | 120 |
+| V | 128 | — | 130 |
 
 Spell ID: `resonant_arcana:solar_cataclysm`. Inspect ranks with `/resonantarcana spell solar_cataclysm <rank>`.
 
@@ -910,11 +910,11 @@ Charge for 3.2 seconds, then pull visible enemies inward for 1.5 seconds before 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 36 | — | 100 |
-| II | 45 | — | 110 |
-| III | 54 | — | 120 |
-| IV | 63 | — | 130 |
-| V | 72 | — | 140 |
+| I | 72 | — | 100 |
+| II | 90 | — | 110 |
+| III | 108 | — | 120 |
+| IV | 126 | — | 130 |
+| V | 144 | — | 140 |
 
 Base release / active phase: **1.5s**.
 
@@ -922,17 +922,17 @@ Spell ID: `resonant_arcana:event_horizon`. Inspect ranks with `/resonantarcana s
 
 ### Glacial Rupture
 
-Send a broad glacial front forwards, damaging and chilling each visible enemy once. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Send a broad glacial front forwards, damaging and chilling each visible enemy once.
 
 **Ice** · Cast **2.5s** · Cooldown **18s** · Range **18 blocks** · Radius / half-width **6 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 28 | — | 85 |
-| II | 35 | — | 95 |
-| III | 42 | — | 105 |
-| IV | 49 | — | 115 |
-| V | 56 | — | 125 |
+| I | 52 | — | 85 |
+| II | 65 | — | 95 |
+| III | 78 | — | 105 |
+| IV | 91 | — | 115 |
+| V | 104 | — | 125 |
 
 Spell ID: `resonant_arcana:glacial_rupture`. Inspect ranks with `/resonantarcana spell glacial_rupture <rank>`.
 
@@ -944,11 +944,11 @@ Mark your aim for one second, then crush visible enemies with a vertical spatial
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 18 | — | 55 |
-| II | 22.5 | — | 65 |
-| III | 27 | — | 75 |
-| IV | 31.5 | — | 85 |
-| V | 36 | — | 95 |
+| I | 20 | — | 55 |
+| II | 25 | — | 65 |
+| III | 30 | — | 75 |
+| IV | 35 | — | 85 |
+| V | 40 | — | 95 |
 
 Base release / active phase: **1s**.
 
@@ -956,33 +956,33 @@ Spell ID: `resonant_arcana:gravity_stamp`. Inspect ranks with `/resonantarcana s
 
 ### Bramble Ring
 
-Expand a ring of thorns around yourself. Each visible enemy is damaged once, poisoned and briefly slowed. Nature hits poison for four seconds.
+Expand a ring of thorns around yourself. Each visible enemy is damaged once, poisoned and briefly slowed.
 
 **Nature** · Cast **0.7s** · Cooldown **7.5s** · Range **0 blocks** · Radius / half-width **7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 40 |
-| II | 6.25 | — | 48 |
-| III | 7.5 | — | 56 |
-| IV | 8.75 | — | 64 |
-| V | 10 | — | 72 |
+| I | 10 | — | 40 |
+| II | 12.5 | — | 48 |
+| III | 15 | — | 56 |
+| IV | 17.5 | — | 64 |
+| V | 20 | — | 72 |
 
 Spell ID: `resonant_arcana:bramble_ring`. Inspect ranks with `/resonantarcana spell bramble_ring <rank>`.
 
 ### Corrosive Rain
 
-Call an acid cloud at your aim. Five falling pulses damage and poison visible enemies over four seconds. Nature hits poison for four seconds.
+Call an acid cloud at your aim. Five falling pulses damage and poison visible enemies over four seconds.
 
 **Nature** · Cast **1.4s** · Cooldown **12s** · Range **28 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 60 |
-| II | 2.5 | — | 70 |
-| III | 3 | — | 80 |
-| IV | 3.5 | — | 90 |
-| V | 4 | — | 100 |
+| I | 5 | — | 60 |
+| II | 6.25 | — | 70 |
+| III | 7.5 | — | 80 |
+| IV | 8.75 | — | 90 |
+| V | 10 | — | 100 |
 
 Base release / active phase: **4.05s**.
 
@@ -996,11 +996,11 @@ Mark your aim for one second, then deliver a pillar of light. It damages enemies
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 28 | 6 | 90 |
-| II | 35 | 7.5 | 100 |
-| III | 42 | 9 | 110 |
-| IV | 49 | 10.5 | 120 |
-| V | 56 | 12 | 130 |
+| I | 56 | 6 | 90 |
+| II | 70 | 7.5 | 100 |
+| III | 84 | 9 | 110 |
+| IV | 98 | 10.5 | 120 |
+| V | 112 | 12 | 130 |
 
 Base release / active phase: **1s**.
 
@@ -1008,33 +1008,33 @@ Spell ID: `resonant_arcana:seraphic_descent`. Inspect ranks with `/resonantarcan
 
 ### Rime Nova
 
-Expand a frozen ring around yourself, chilling and damaging each visible enemy once. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Expand a frozen ring around yourself, chilling and damaging each visible enemy once.
 
 **Ice** · Cast **0.9s** · Cooldown **8s** · Range **0 blocks** · Radius / half-width **7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 44 |
-| II | 11.25 | — | 52 |
-| III | 13.5 | — | 60 |
-| IV | 15.75 | — | 68 |
-| V | 18 | — | 76 |
+| I | 16 | — | 44 |
+| II | 20 | — | 52 |
+| III | 24 | — | 60 |
+| IV | 28 | — | 68 |
+| V | 32 | — | 76 |
 
 Spell ID: `resonant_arcana:rime_nova`. Inspect ranks with `/resonantarcana spell rime_nova <rank>`.
 
 ### Hailstorm
 
-Call a hail cloud at your aim. Five pulses damage and chill visible enemies over four seconds. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Call a hail cloud at your aim. Five pulses damage and chill visible enemies over four seconds.
 
 **Ice** · Cast **1.4s** · Cooldown **12s** · Range **28 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2.5 | — | 60 |
-| II | 3.125 | — | 70 |
-| III | 3.75 | — | 80 |
-| IV | 4.375 | — | 90 |
-| V | 5 | — | 100 |
+| I | 5 | — | 60 |
+| II | 6.25 | — | 70 |
+| III | 7.5 | — | 80 |
+| IV | 8.75 | — | 90 |
+| V | 10 | — | 100 |
 
 Base release / active phase: **4.05s**.
 
@@ -1042,17 +1042,17 @@ Spell ID: `resonant_arcana:hailstorm`. Inspect ranks with `/resonantarcana spell
 
 ### Absolute Zero
 
-Establish a frozen domain for four seconds. Four pulses chill and freeze visible enemies in its area. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Establish a frozen domain for four seconds. Four pulses chill and freeze visible enemies in its area.
 
 **Ice** · Cast **2.5s** · Cooldown **20s** · Range **28 blocks** · Radius / half-width **7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 85 |
-| II | 3.75 | — | 95 |
-| III | 4.5 | — | 105 |
-| IV | 5.25 | — | 115 |
-| V | 6 | — | 125 |
+| I | 8 | — | 85 |
+| II | 10 | — | 95 |
+| III | 12 | — | 105 |
+| IV | 14 | — | 115 |
+| V | 16 | — | 125 |
 
 Base release / active phase: **4s**.
 
@@ -1066,11 +1066,11 @@ Blast a forward cone of enemies away. Aim sharply downward to launch yourself wi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 25 |
-| II | 7.5 | — | 30 |
-| III | 9 | — | 35 |
-| IV | 10.5 | — | 40 |
-| V | 12 | — | 45 |
+| I | 10 | — | 25 |
+| II | 12.5 | — | 30 |
+| III | 15 | — | 35 |
+| IV | 17.5 | — | 40 |
+| V | 20 | — | 45 |
 
 Spell ID: `resonant_arcana:soulblast`. Inspect ranks with `/resonantarcana spell soulblast <rank>`.
 
@@ -1082,11 +1082,11 @@ Charge a funeral bell. Two expanding sonic rings deal the listed damage; a third
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 95 |
-| II | 10 | — | 105 |
-| III | 12 | — | 115 |
-| IV | 14 | — | 125 |
-| V | 16 | — | 135 |
+| I | 16 | — | 95 |
+| II | 20 | — | 105 |
+| III | 24 | — | 115 |
+| IV | 28 | — | 125 |
+| V | 32 | — | 135 |
 
 Base release / active phase: **3.1s**.
 
@@ -1098,7 +1098,7 @@ Spell ID: `resonant_arcana:funeral_bell`. Inspect ranks with `/resonantarcana sp
 
 ### Mind Haze
 
-Wrap one visible aimed enemy in a spiralling hex. Apply Nausea for five seconds and Blindness for two seconds, with one direct hit.
+Disorient one visible enemy with Nausea for five seconds and Blindness for two seconds. Deals no direct damage.
 
 **Evocation** · Cast **0.4s** · Cooldown **5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
 
@@ -1120,11 +1120,11 @@ Bind one visible aimed enemy with arcane sparks. Apply Slowness VI and Weakness 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 1 | — | 20 |
-| II | 1.25 | — | 24 |
-| III | 1.5 | — | 28 |
-| IV | 1.75 | — | 32 |
-| V | 2 | — | 36 |
+| I | 2 | — | 20 |
+| II | 2.5 | — | 24 |
+| III | 3 | — | 28 |
+| IV | 3.5 | — | 32 |
+| V | 4 | — | 36 |
 
 Spell ID: `resonant_arcana:stun`. Inspect ranks with `/resonantarcana spell stun <rank>`.
 
@@ -1170,11 +1170,11 @@ Close a crimson binding around one visible aimed enemy. One hit applies Slowness
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 22 |
-| II | 2.5 | — | 26 |
-| III | 3 | — | 30 |
-| IV | 3.5 | — | 34 |
-| V | 4 | — | 38 |
+| I | 3 | — | 22 |
+| II | 3.75 | — | 26 |
+| III | 4.5 | — | 30 |
+| IV | 5.25 | — | 34 |
+| V | 6 | — | 38 |
 
 Spell ID: `resonant_arcana:blood_stun`. Inspect ranks with `/resonantarcana spell blood_stun <rank>`.
 
@@ -1186,11 +1186,11 @@ Fasten an orbiting shadow curse to one aimed enemy. After two seconds it bursts 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 52 |
-| II | 17.5 | — | 62 |
-| III | 21 | — | 72 |
-| IV | 24.5 | — | 82 |
-| V | 28 | — | 92 |
+| I | 24 | — | 52 |
+| II | 30 | — | 62 |
+| III | 36 | — | 72 |
+| IV | 42 | — | 82 |
+| V | 48 | — | 92 |
 
 Base release / active phase: **2s**.
 
@@ -1198,17 +1198,17 @@ Spell ID: `resonant_arcana:shadow_cage`. Inspect ranks with `/resonantarcana spe
 
 ### Static Shock
 
-Overload one visible aimed enemy with static. One direct hit applies Slowness VI and Weakness II for three seconds; it is a slowing debuff rather than an AI freeze.
+Overload one visible enemy with static. Deal one hit and apply Slowness VI and Weakness II for three seconds.
 
 **Lightning** · Cast **0.4s** · Cooldown **4s** · Range **28 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 22 |
-| II | 3.75 | — | 26 |
-| III | 4.5 | — | 30 |
-| IV | 5.25 | — | 34 |
-| V | 6 | — | 38 |
+| I | 4 | — | 22 |
+| II | 5 | — | 26 |
+| III | 6 | — | 30 |
+| IV | 7 | — | 34 |
+| V | 8 | — | 38 |
 
 Spell ID: `resonant_arcana:static_shock`. Inspect ranks with `/resonantarcana spell static_shock <rank>`.
 
@@ -1220,11 +1220,11 @@ Strike one visible aimed enemy with an outward spatial impulse. Deal direct dama
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 18 |
-| II | 2.5 | — | 21 |
-| III | 3 | — | 24 |
-| IV | 3.5 | — | 27 |
-| V | 4 | — | 30 |
+| I | 3 | — | 18 |
+| II | 3.75 | — | 21 |
+| III | 4.5 | — | 24 |
+| IV | 5.25 | — | 27 |
+| V | 6 | — | 30 |
 
 Spell ID: `resonant_arcana:force_push`. Inspect ranks with `/resonantarcana spell force_push <rank>`.
 
@@ -1236,11 +1236,11 @@ Catch one visible aimed enemy with a spatial link. Deal direct damage and pull i
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 18 |
-| II | 2.5 | — | 21 |
-| III | 3 | — | 24 |
-| IV | 3.5 | — | 27 |
-| V | 4 | — | 30 |
+| I | 3 | — | 18 |
+| II | 3.75 | — | 21 |
+| III | 4.5 | — | 24 |
+| IV | 5.25 | — | 27 |
+| V | 6 | — | 30 |
 
 Spell ID: `resonant_arcana:force_pull`. Inspect ranks with `/resonantarcana spell force_pull <rank>`.
 
@@ -1252,11 +1252,11 @@ Suspend one visible aimed enemy above its starting point for two seconds. Deal o
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 26 |
-| II | 2.5 | — | 31 |
-| III | 3 | — | 36 |
-| IV | 3.5 | — | 41 |
-| V | 4 | — | 46 |
+| I | 3 | — | 26 |
+| II | 3.75 | — | 31 |
+| III | 4.5 | — | 36 |
+| IV | 5.25 | — | 41 |
+| V | 6 | — | 46 |
 
 Base release / active phase: **2s**.
 
@@ -1270,11 +1270,11 @@ Imprison one aimed enemy in a winding soul cage for three seconds at level I. Th
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 26 |
-| II | 2.5 | — | 31 |
-| III | 3 | — | 36 |
-| IV | 3.5 | — | 41 |
-| V | 4 | — | 46 |
+| I | 3 | — | 26 |
+| II | 3.75 | — | 31 |
+| III | 4.5 | — | 36 |
+| IV | 5.25 | — | 41 |
+| V | 6 | — | 46 |
 
 Base release / active phase: **3s**.
 
@@ -1288,11 +1288,11 @@ Tether an aimed enemy for 3 seconds, gently pulling it and dealing three damage 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 42 |
-| II | 2.5 | — | 50 |
-| III | 3 | — | 58 |
-| IV | 3.5 | — | 66 |
-| V | 4 | — | 74 |
+| I | 5 | — | 42 |
+| II | 6.25 | — | 50 |
+| III | 7.5 | — | 58 |
+| IV | 8.75 | — | 66 |
+| V | 10 | — | 74 |
 
 Base release / active phase: **3s**.
 
@@ -1300,33 +1300,33 @@ Spell ID: `resonant_arcana:crimson_tether`. Inspect ranks with `/resonantarcana 
 
 ### Thorn Lash
 
-Catch an aimed enemy with a thorn tether, pull it towards you and poison it. Nature hits poison for four seconds.
+Catch an aimed enemy with a thorn tether, pull it towards you and poison it.
 
 **Nature** · Cast **0.5s** · Cooldown **5.5s** · Range **20 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 30 |
-| II | 5 | — | 36 |
-| III | 6 | — | 42 |
-| IV | 7 | — | 48 |
-| V | 8 | — | 54 |
+| I | 16 | — | 30 |
+| II | 20 | — | 36 |
+| III | 24 | — | 42 |
+| IV | 28 | — | 48 |
+| V | 32 | — | 54 |
 
 Spell ID: `resonant_arcana:thorn_lash`. Inspect ranks with `/resonantarcana spell thorn_lash <rank>`.
 
 ### Gorgon Gaze
 
-Fix visible enemies in a wide forward cone with a petrifying gaze, applying heavy slowness and weakness for two seconds at level I. Nature hits poison for four seconds.
+Fix visible enemies in a wide forward cone with a petrifying gaze, applying heavy slowness and weakness for two seconds at level I.
 
 **Nature** · Cast **1.2s** · Cooldown **10s** · Range **10 blocks** · Radius / half-width **0 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 48 |
-| II | 2.5 | — | 57 |
-| III | 3 | — | 66 |
-| IV | 3.5 | — | 75 |
-| V | 4 | — | 84 |
+| I | 4 | — | 48 |
+| II | 5 | — | 57 |
+| III | 6 | — | 66 |
+| IV | 7 | — | 75 |
+| V | 8 | — | 84 |
 
 Base release / active phase: **2s**.
 
@@ -1352,7 +1352,7 @@ Spell ID: `resonant_arcana:glacial_prison`. Inspect ranks with `/resonantarcana 
 
 ### Void Exile
 
-Cast for four seconds to banish one hostile living target into an isolated void cell for ten seconds, leaving a violet rift behind. It returns to its original spot or nearby clear space, takes 20 base damage, then receives Weakness II for five seconds. No damage is dealt during exile. Bosses, mounted or leashed targets and dimension-immune creatures resist. Ally and PvP protections apply.
+Banish one hostile living target for ten seconds, leaving a violet rift. On return, it takes damage before receiving Weakness II for five seconds. Bosses, mounted, leashed and dimension-immune targets resist.
 
 **Ender** · Cast **4s** · Cooldown **30s** · Range **24 blocks** · Radius / half-width **1.5 blocks**.
 
@@ -1428,11 +1428,11 @@ Launch forwards in a rising rush and hit nearby enemies in a four-block launch b
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 45 |
-| II | 15 | — | 54 |
-| III | 18 | — | 63 |
-| IV | 21 | — | 72 |
-| V | 24 | — | 81 |
+| I | 20 | — | 45 |
+| II | 25 | — | 54 |
+| III | 30 | — | 63 |
+| IV | 35 | — | 72 |
+| V | 40 | — | 81 |
 
 Spell ID: `resonant_arcana:phoenix_rush`. Inspect ranks with `/resonantarcana spell phoenix_rush <rank>`.
 
@@ -1524,11 +1524,11 @@ Blink forward with a blood slash along the clear path, adding half your melee at
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 35 |
-| II | 12.5 | — | 40 |
-| III | 15 | — | 45 |
-| IV | 17.5 | — | 50 |
-| V | 20 | — | 55 |
+| I | 16 | — | 35 |
+| II | 20 | — | 40 |
+| III | 24 | — | 45 |
+| IV | 28 | — | 50 |
+| V | 32 | — | 55 |
 
 Weapon contribution: add half the melee attack attribute at release before spell-power scaling.
 
@@ -1542,11 +1542,11 @@ Burst forward along a clear path as a phoenix, leaving a burning silhouette. Aft
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 18 | — | 45 |
-| II | 22.5 | — | 51 |
-| III | 27 | — | 57 |
-| IV | 31.5 | — | 63 |
-| V | 36 | — | 69 |
+| I | 32 | — | 45 |
+| II | 40 | — | 51 |
+| III | 48 | — | 57 |
+| IV | 56 | — | 63 |
+| V | 64 | — | 69 |
 
 Base release / active phase: **1.2s**.
 
@@ -1556,7 +1556,7 @@ Spell ID: `resonant_arcana:ashen_rebirth`. Inspect ranks with `/resonantarcana s
 <a id="support"></a>
 ## Support & Defense
 
-### Blood Ward
+### Crimson Ward
 
 Deflect incoming hostile projectiles for 4 seconds at level I. Higher spell power extends the duration, up to 8 seconds.
 
@@ -1788,17 +1788,17 @@ Spell ID: `resonant_arcana:frozen_aegis`. Inspect ranks with `/resonantarcana sp
 
 ### Warscream
 
-Unleash three ground-shaking roars over eight blocks. Each pulse damages visible enemies; the roar draws them closer and taunts hostile mobs. You and nearby eligible allies gain Resistance I. Taunt and defense last 3/4/5/6/7 seconds at levels I–V.
+Release three ground-shaking roars that damage, pull and taunt nearby enemies. You and eligible allies gain Resistance I for 3–7 seconds, depending on rank.
 
 **Holy** · Cast **0.6s** · Cooldown **20s** · Range **8 blocks** · Radius / half-width **8 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 45 |
-| II | 3.75 | — | 50 |
-| III | 4.5 | — | 55 |
-| IV | 5.25 | — | 60 |
-| V | 6 | — | 65 |
+| I | 5 | — | 45 |
+| II | 6.25 | — | 50 |
+| III | 7.5 | — | 55 |
+| IV | 8.75 | — | 60 |
+| V | 10 | — | 65 |
 
 Base release / active phase: **8s**.
 
@@ -1868,11 +1868,11 @@ Guard for 0.9 seconds against one frontal, blockable hostile hit. The first 0.3 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 30 |
-| II | 15 | — | 34 |
-| III | 18 | — | 38 |
-| IV | 21 | — | 42 |
-| V | 24 | — | 46 |
+| I | 18 | — | 30 |
+| II | 22.5 | — | 34 |
+| III | 27 | — | 38 |
+| IV | 31.5 | — | 42 |
+| V | 36 | — | 46 |
 
 Base release / active phase: **0.9s**.
 
@@ -1886,11 +1886,11 @@ Enchant your weapon for ten seconds. Every third successful player melee hit rel
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 55 |
-| II | 10 | — | 61 |
-| III | 12 | — | 67 |
-| IV | 14 | — | 73 |
-| V | 16 | — | 79 |
+| I | 12 | — | 55 |
+| II | 15 | — | 61 |
+| III | 18 | — | 67 |
+| IV | 21 | — | 73 |
+| V | 24 | — | 79 |
 
 Base release / active phase: **10s**.
 
@@ -1898,7 +1898,7 @@ Spell ID: `resonant_arcana:thunderbrand`. Inspect ranks with `/resonantarcana sp
 
 ### Seraph Ascendant
 
-Unfurl radiant wings and gain flight for twenty seconds. Double-jump to fly. Nearby allies receive 15% more spell power and one base health per second while in your eight-block aura. Ending the spell grants brief Slow Falling.
+Gain flight for twenty seconds; double-jump to fly. Nearby eligible allies gain 15% spell power and receive healing once per second. Slow Falling protects you when the blessing ends.
 
 **Holy** · Cast **4s** · Cooldown **60s** · Range **0 blocks** · Radius / half-width **8 blocks**.
 
@@ -1916,6 +1916,24 @@ Flight lasts twenty seconds at every rank. Healing scales with spell power; the 
 
 Spell ID: `resonant_arcana:seraph_ascendant`. Inspect ranks with `/resonantarcana spell seraph_ascendant <rank>`.
 
+### Void Domain
+
+Raise a vast black sphere at your casting location for fifteen seconds. Enemies inside suffer Slowness III, Weakness II and Darkness. You and eligible allies gain Resistance II, Regeneration II, Speed II and 25% spell power. Effects fade shortly after leaving; walls block their influence.
+
+**Ender** · Cast **5s** · Cooldown **90s** · Range **0 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 240 |
+| II | — | — | 260 |
+| III | — | — | 280 |
+| IV | — | — | 300 |
+| V | — | — | 320 |
+
+Base release / active phase: **15s**.
+
+Spell ID: `resonant_arcana:void_domain`. Inspect ranks with `/resonantarcana spell void_domain <rank>`.
+
 
 <a id="summon"></a>
 ## Summons & Constructs
@@ -1928,27 +1946,27 @@ Send three staggered rows of spectral fangs along your aim. Each enemy takes one
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 26 | — | 80 |
-| II | 32.5 | — | 90 |
-| III | 39 | — | 100 |
-| IV | 45.5 | — | 110 |
-| V | 52 | — | 120 |
+| I | 44 | — | 80 |
+| II | 55 | — | 90 |
+| III | 66 | — | 100 |
+| IV | 77 | — | 110 |
+| V | 88 | — | 120 |
 
 Spell ID: `resonant_arcana:evokers_edict`. Inspect ranks with `/resonantarcana spell evokers_edict <rank>`.
 
 ### Dread Effigy
 
-Place a blackstone effigy with a carved head and soul torch at your aim for four seconds. Four pulses damage and weaken visible enemies near it. Ender shadow hits weaken for three seconds. Pulses suppress nearby enemies with Weakness II for 1.5 seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
+Place a blackstone effigy on visible ground for four seconds. Four pulses damage nearby enemies and refresh Weakness II for 1.5 seconds.
 
 **Ender** · Cast **1.2s** · Cooldown **11s** · Range **24 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 55 |
-| II | 2.5 | — | 65 |
-| III | 3 | — | 75 |
-| IV | 3.5 | — | 85 |
-| V | 4 | — | 95 |
+| I | 5 | — | 55 |
+| II | 6.25 | — | 65 |
+| III | 7.5 | — | 75 |
+| IV | 8.75 | — | 85 |
+| V | 10 | — | 95 |
 
 Base release / active phase: **4s**.
 
@@ -1956,17 +1974,17 @@ Spell ID: `resonant_arcana:dread_effigy`. Inspect ranks with `/resonantarcana sp
 
 ### Night Bloom
 
-Place a shadow trap. After a half-second arming period, an enemy within two blocks triggers one area explosion. Untriggered traps expire after four seconds. Ender shadow hits weaken for three seconds.
+Place a shadow trap. After a half-second arming period, an enemy within two blocks triggers one area explosion. Untriggered traps expire after four seconds.
 
 **Ender** · Cast **1.1s** · Cooldown **11s** · Range **24 blocks** · Radius / half-width **4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 52 |
-| II | 20 | — | 62 |
-| III | 24 | — | 72 |
-| IV | 28 | — | 82 |
-| V | 32 | — | 92 |
+| I | 28 | — | 52 |
+| II | 35 | — | 62 |
+| III | 42 | — | 72 |
+| IV | 49 | — | 82 |
+| V | 56 | — | 92 |
 
 Base release / active phase: **4s**.
 
@@ -1980,11 +1998,11 @@ Orbit three spatial blades around yourself for three seconds. Enemies can take o
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 48 |
-| II | 5 | — | 57 |
-| III | 6 | — | 66 |
-| IV | 7 | — | 75 |
-| V | 8 | — | 84 |
+| I | 6 | — | 48 |
+| II | 7.5 | — | 57 |
+| III | 9 | — | 66 |
+| IV | 10.5 | — | 75 |
+| V | 12 | — | 84 |
 
 Base release / active phase: **3s**.
 
@@ -1998,11 +2016,11 @@ Place a soul lantern on a deepslate post for four seconds. Four echo pulses dama
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 52 |
-| II | 2.5 | — | 62 |
-| III | 3 | — | 72 |
-| IV | 3.5 | — | 82 |
-| V | 4 | — | 92 |
+| I | 5 | — | 52 |
+| II | 6.25 | — | 62 |
+| III | 7.5 | — | 72 |
+| IV | 8.75 | — | 82 |
+| V | 10 | — | 92 |
 
 Base release / active phase: **4s**.
 
@@ -2010,17 +2028,17 @@ Spell ID: `resonant_arcana:wisp_lantern`. Inspect ranks with `/resonantarcana sp
 
 ### Spore Totem
 
-Plant a mushroom totem with a glowing shroomlight cap for four seconds. Four pulses poison and damage visible enemies near it. Nature hits poison for four seconds. Requires visible solid ground; the boundary ring shows its pulse radius.
+Plant a mushroom totem on visible ground for four seconds. Four pulses damage nearby enemies and refresh Poison I for four seconds.
 
 **Nature** · Cast **1.2s** · Cooldown **11s** · Range **24 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 50 |
-| II | 2.5 | — | 60 |
-| III | 3 | — | 70 |
-| IV | 3.5 | — | 80 |
-| V | 4 | — | 90 |
+| I | 4 | — | 50 |
+| II | 5 | — | 60 |
+| III | 6 | — | 70 |
+| IV | 7 | — | 80 |
+| V | 8 | — | 90 |
 
 Base release / active phase: **4s**.
 
@@ -2028,17 +2046,17 @@ Spell ID: `resonant_arcana:spore_totem`. Inspect ranks with `/resonantarcana spe
 
 ### Consecration
 
-Place a quartz altar topped with an end rod for four seconds. Each of four pulses damages enemies and restores 1 health at level I to eligible allies in its area. Requires visible solid ground; the boundary ring shows its pulse radius.
+Place a radiant altar on visible ground for four seconds. Four pulses damage enemies and heal eligible allies in the marked area.
 
 **Holy** · Cast **1.2s** · Cooldown **12s** · Range **24 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | 1 | 55 |
-| II | 2.5 | 1.25 | 65 |
-| III | 3 | 1.5 | 75 |
-| IV | 3.5 | 1.75 | 85 |
-| V | 4 | 2 | 95 |
+| I | 4 | 1 | 55 |
+| II | 5 | 1.25 | 65 |
+| III | 6 | 1.5 | 75 |
+| IV | 7 | 1.75 | 85 |
+| V | 8 | 2 | 95 |
 
 Base release / active phase: **4s**.
 
@@ -2070,11 +2088,11 @@ Summon four to eight spectral swords for ten seconds. Each successful player mel
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 60 |
-| II | 10 | — | 67 |
-| III | 12 | — | 74 |
-| IV | 14 | — | 81 |
-| V | 16 | — | 88 |
+| I | 12 | — | 60 |
+| II | 15 | — | 67 |
+| III | 18 | — | 74 |
+| IV | 21 | — | 81 |
+| V | 24 | — | 88 |
 
 Base release / active phase: **10s**.
 
@@ -2092,11 +2110,11 @@ Focus arcane energy directly on one visible aimed enemy. A woven link identifies
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 21 |
-| II | 6.25 | — | 25 |
-| III | 7.5 | — | 29 |
-| IV | 8.75 | — | 33 |
-| V | 10 | — | 37 |
+| I | 8 | — | 21 |
+| II | 10 | — | 25 |
+| III | 12 | — | 29 |
+| IV | 14 | — | 33 |
+| V | 16 | — | 37 |
 
 Spell ID: `resonant_arcana:arcane_strike`. Inspect ranks with `/resonantarcana spell arcane_strike <rank>`.
 
@@ -2108,11 +2126,11 @@ Snap a crimson spark onto one visible aimed enemy. Blood droplets mark the impac
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 21 |
-| II | 6.25 | — | 25 |
-| III | 7.5 | — | 29 |
-| IV | 8.75 | — | 33 |
-| V | 10 | — | 37 |
+| I | 7 | — | 21 |
+| II | 8.75 | — | 25 |
+| III | 10.5 | — | 29 |
+| IV | 12.25 | — | 33 |
+| V | 14 | — | 37 |
 
 Spell ID: `resonant_arcana:blood_spark`. Inspect ranks with `/resonantarcana spell blood_spark <rank>`.
 
@@ -2124,11 +2142,11 @@ Burst an acid bubble on one visible aimed enemy, dealing direct damage and apply
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 17 |
-| II | 2.5 | — | 20 |
-| III | 3 | — | 23 |
-| IV | 3.5 | — | 26 |
-| V | 4 | — | 29 |
+| I | 3 | — | 17 |
+| II | 3.75 | — | 20 |
+| III | 4.5 | — | 23 |
+| IV | 5.25 | — | 26 |
+| V | 6 | — | 29 |
 
 Spell ID: `resonant_arcana:poison_spark`. Inspect ranks with `/resonantarcana spell poison_spark <rank>`.
 
@@ -2140,11 +2158,11 @@ Kindle one visible aimed enemy directly. Deal the listed impact damage and set i
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 17 |
-| II | 2.5 | — | 20 |
-| III | 3 | — | 23 |
-| IV | 3.5 | — | 26 |
-| V | 4 | — | 29 |
+| I | 3 | — | 17 |
+| II | 3.75 | — | 20 |
+| III | 4.5 | — | 23 |
+| IV | 5.25 | — | 26 |
+| V | 6 | — | 29 |
 
 Spell ID: `resonant_arcana:ignite`. Inspect ranks with `/resonantarcana spell ignite <rank>`.
 
@@ -2156,11 +2174,11 @@ Damage a visible aimed target and restore 40% of health actually removed, capped
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 28 |
-| II | 6.25 | — | 33 |
-| III | 7.5 | — | 38 |
-| IV | 8.75 | — | 43 |
-| V | 10 | — | 48 |
+| I | 8 | — | 28 |
+| II | 10 | — | 33 |
+| III | 12 | — | 38 |
+| IV | 14 | — | 43 |
+| V | 16 | — | 48 |
 
 Spell ID: `resonant_arcana:soul_siphon`. Inspect ranks with `/resonantarcana spell soul_siphon <rank>`.
 
@@ -2172,27 +2190,27 @@ Damage a visible aimed target and restore 40% of health actually removed, capped
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 28 |
-| II | 6.25 | — | 33 |
-| III | 7.5 | — | 38 |
-| IV | 8.75 | — | 43 |
-| V | 10 | — | 48 |
+| I | 8 | — | 28 |
+| II | 10 | — | 33 |
+| III | 12 | — | 38 |
+| IV | 14 | — | 43 |
+| V | 16 | — | 48 |
 
 Spell ID: `resonant_arcana:sanguine_drain`. Inspect ranks with `/resonantarcana spell sanguine_drain <rank>`.
 
 ### Withering Hex
 
-Inflict poison and wither on an aimed target. Nature hits poison for four seconds.
+Hex one visible enemy with direct damage, Poison I for four seconds and Wither I for three seconds.
 
 **Nature** · Cast **0.25s** · Cooldown **5.5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 25 |
-| II | 3.75 | — | 30 |
-| III | 4.5 | — | 35 |
-| IV | 5.25 | — | 40 |
-| V | 6 | — | 45 |
+| I | 4 | — | 25 |
+| II | 5 | — | 30 |
+| III | 6 | — | 35 |
+| IV | 7 | — | 40 |
+| V | 8 | — | 45 |
 
 Spell ID: `resonant_arcana:withering_hex`. Inspect ranks with `/resonantarcana spell withering_hex <rank>`.
 
@@ -2204,11 +2222,11 @@ Sweep a crimson crescent across a 120-degree forward arc. Each visible enemy is 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 34 |
-| II | 11.25 | — | 40 |
-| III | 13.5 | — | 46 |
-| IV | 15.75 | — | 52 |
-| V | 18 | — | 58 |
+| I | 16 | — | 34 |
+| II | 20 | — | 40 |
+| III | 24 | — | 46 |
+| IV | 28 | — | 52 |
+| V | 32 | — | 58 |
 
 Spell ID: `resonant_arcana:blood_reap`. Inspect ranks with `/resonantarcana spell blood_reap <rank>`.
 
@@ -2220,27 +2238,27 @@ Strike an aimed enemy. Deal 50% more direct damage below 35% maximum health; a k
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 48 |
-| II | 15 | — | 57 |
-| III | 18 | — | 66 |
-| IV | 21 | — | 75 |
-| V | 24 | — | 84 |
+| I | 22 | — | 48 |
+| II | 27.5 | — | 57 |
+| III | 33 | — | 66 |
+| IV | 38.5 | — | 75 |
+| V | 44 | — | 84 |
 
 Spell ID: `resonant_arcana:crimson_harvest`. Inspect ranks with `/resonantarcana spell crimson_harvest <rank>`.
 
 ### Dusk Cleave
 
-Carve a shadow crescent across the space in front of you, weakening enemies hit by the arc. Ender shadow hits weaken for three seconds.
+Carve a shadow crescent across the space in front of you, weakening enemies hit by the arc.
 
 **Ender** · Cast **0.7s** · Cooldown **6s** · Range **6 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 36 |
-| II | 12.5 | — | 43 |
-| III | 15 | — | 50 |
-| IV | 17.5 | — | 57 |
-| V | 20 | — | 64 |
+| I | 18 | — | 36 |
+| II | 22.5 | — | 43 |
+| III | 27 | — | 50 |
+| IV | 31.5 | — | 57 |
+| V | 36 | — | 64 |
 
 Spell ID: `resonant_arcana:dusk_cleave`. Inspect ranks with `/resonantarcana spell dusk_cleave <rank>`.
 
@@ -2252,11 +2270,11 @@ Release a broad thunder crescent and knock visible enemies away. Each target is 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 11 | — | 42 |
-| II | 13.75 | — | 50 |
-| III | 16.5 | — | 58 |
-| IV | 19.25 | — | 66 |
-| V | 22 | — | 74 |
+| I | 20 | — | 42 |
+| II | 25 | — | 50 |
+| III | 30 | — | 58 |
+| IV | 35 | — | 66 |
+| V | 40 | — | 74 |
 
 Spell ID: `resonant_arcana:thunderclap`. Inspect ranks with `/resonantarcana spell thunderclap <rank>`.
 
@@ -2268,11 +2286,11 @@ Cut a wide crescent through nearby space, striking each visible enemy in front o
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 42 |
-| II | 15 | — | 50 |
-| III | 18 | — | 58 |
-| IV | 21 | — | 66 |
-| V | 24 | — | 74 |
+| I | 26 | — | 42 |
+| II | 32.5 | — | 50 |
+| III | 39 | — | 58 |
+| IV | 45.5 | — | 66 |
+| V | 52 | — | 74 |
 
 Spell ID: `resonant_arcana:spatial_shear`. Inspect ranks with `/resonantarcana spell spatial_shear <rank>`.
 
@@ -2284,11 +2302,11 @@ Strike an aimed enemy. If it is affected by Darkness, direct damage increases by
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 42 |
-| II | 12.5 | — | 50 |
-| III | 15 | — | 58 |
-| IV | 17.5 | — | 66 |
-| V | 20 | — | 74 |
+| I | 24 | — | 42 |
+| II | 30 | — | 50 |
+| III | 36 | — | 58 |
+| IV | 42 | — | 66 |
+| V | 48 | — | 74 |
 
 Spell ID: `resonant_arcana:memory_fracture`. Inspect ranks with `/resonantarcana spell memory_fracture <rank>`.
 
@@ -2300,27 +2318,27 @@ Sweep a radiant crescent through visible enemies in front of you.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 30 |
-| II | 10 | — | 36 |
-| III | 12 | — | 42 |
-| IV | 14 | — | 48 |
-| V | 16 | — | 54 |
+| I | 14 | — | 30 |
+| II | 17.5 | — | 36 |
+| III | 21 | — | 42 |
+| IV | 24.5 | — | 48 |
+| V | 28 | — | 54 |
 
 Spell ID: `resonant_arcana:radiant_sweep`. Inspect ranks with `/resonantarcana spell radiant_sweep <rank>`.
 
 ### Shatter
 
-Strike an aimed enemy. Direct damage increases by 50% at 140 freezing ticks or Slowness III or stronger; combine with Glacial Prison or Absolute Zero. Ice hits chill for two seconds and add 40 freezing ticks.
+Strike one aimed enemy for 50% more direct damage while it is deeply frozen or affected by Slowness III or stronger. Combine with Glacial Prison or Absolute Zero.
 
 **Ice** · Cast **0.9s** · Cooldown **8s** · Range **24 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 42 |
-| II | 12.5 | — | 50 |
-| III | 15 | — | 58 |
-| IV | 17.5 | — | 66 |
-| V | 20 | — | 74 |
+| I | 20 | — | 42 |
+| II | 25 | — | 50 |
+| III | 30 | — | 58 |
+| IV | 35 | — | 66 |
+| V | 40 | — | 74 |
 
 Spell ID: `resonant_arcana:shatter`. Inspect ranks with `/resonantarcana spell shatter <rank>`.
 
@@ -2386,11 +2404,11 @@ Draw a thin distortion along your aim. After a 0.6-second warning, a piercing sl
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 50 |
-| II | 20 | — | 56 |
-| III | 24 | — | 62 |
-| IV | 28 | — | 68 |
-| V | 32 | — | 74 |
+| I | 28 | — | 50 |
+| II | 35 | — | 56 |
+| III | 42 | — | 62 |
+| IV | 49 | — | 68 |
+| V | 56 | — | 74 |
 
 Base release / active phase: **0.7s**.
 
@@ -2428,11 +2446,11 @@ The full Kraken rises from beneath the marked ground, curls its tentacles and sl
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 18 | — | 60 |
-| II | 22.5 | — | 65 |
-| III | 27 | — | 70 |
-| IV | 31.5 | — | 75 |
-| V | 36 | — | 80 |
+| I | 32 | — | 60 |
+| II | 40 | — | 65 |
+| III | 48 | — | 70 |
+| IV | 56 | — | 75 |
+| V | 64 | — | 80 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2446,11 +2464,11 @@ Five ice spikes erupt in a line across a visible ground location. Each enemy can
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 40 |
-| II | 12.5 | — | 45 |
-| III | 15 | — | 50 |
-| IV | 17.5 | — | 55 |
-| V | 20 | — | 60 |
+| I | 18 | — | 40 |
+| II | 22.5 | — | 45 |
+| III | 27 | — | 50 |
+| IV | 31.5 | — | 55 |
+| V | 36 | — | 60 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2458,17 +2476,17 @@ Spell ID: `resonant_arcana:ice_spike_eruption`. Inspect ranks with `/resonantarc
 
 ### Helvar’s Rift
 
-Launch a rift projectile with Helvar’s own model and sounds. It stops at walls and the first enemy hit, applies brief Weakness, and uses your spell power rather than fixed boss damage.
+Launch Helvar’s rift projectile. It stops at the first enemy or solid surface, dealing damage and applying brief Weakness.
 
 **Ender** · Cast **0.9s** · Cooldown **8s** · Range **28 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 40 |
-| II | 17.5 | — | 45 |
-| III | 21 | — | 50 |
-| IV | 24.5 | — | 55 |
-| V | 28 | — | 60 |
+| I | 24 | — | 40 |
+| II | 30 | — | 45 |
+| III | 36 | — | 50 |
+| IV | 42 | — | 55 |
+| V | 48 | — | 60 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2476,17 +2494,17 @@ Spell ID: `resonant_arcana:helvars_rift`. Inspect ranks with `/resonantarcana sp
 
 ### Kraken’s Wrath
 
-Four red Kraken tentacles strike around the aimed ground location, then a central tentacle delivers a triple-damage slam. Each enemy takes at most one outer hit and one central hit.
+Four Kraken tentacles strike around the marked ground before a central, triple-damage slam. Each enemy can take one outer hit and one central hit.
 
 **Nature** · Cast **3.6s** · Cooldown **30s** · Range **20 blocks** · Radius / half-width **4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 110 |
-| II | 15 | — | 122 |
-| III | 18 | — | 134 |
-| IV | 21 | — | 146 |
-| V | 24 | — | 158 |
+| I | 18 | — | 110 |
+| II | 22.5 | — | 122 |
+| III | 27 | — | 134 |
+| IV | 31.5 | — | 146 |
+| V | 36 | — | 158 |
 
 Base release / active phase: **7.5s**.
 
@@ -2502,11 +2520,11 @@ A Kraken tentacle rises at a visible ground location. Its undertow pulls nearby 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 65 |
-| II | 15 | — | 71 |
-| III | 18 | — | 77 |
-| IV | 21 | — | 83 |
-| V | 24 | — | 89 |
+| I | 26 | — | 65 |
+| II | 32.5 | — | 71 |
+| III | 39 | — | 77 |
+| IV | 45.5 | — | 83 |
+| V | 52 | — | 89 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2514,17 +2532,17 @@ Spell ID: `resonant_arcana:krakens_undertow`. Inspect ranks with `/resonantarcan
 
 ### Yeti’s Glacial Wall
 
-Seven of the Yeti’s ice spikes rise together in a crescent across the aimed ground. The spikes linger with frost shards instead of flashing away. Each visible enemy is hit at most once, slowed and chilled; no blocks are placed.
+Raise seven lingering ice spikes in a crescent across visible ground. Each enemy takes at most one hit and is slowed and chilled. Terrain remains intact.
 
 **Ice** · Cast **1s** · Cooldown **11s** · Range **16 blocks** · Radius / half-width **2 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 50 |
-| II | 11.25 | — | 55 |
-| III | 13.5 | — | 60 |
-| IV | 15.75 | — | 65 |
-| V | 18 | — | 70 |
+| I | 20 | — | 50 |
+| II | 25 | — | 55 |
+| III | 30 | — | 60 |
+| IV | 35 | — | 65 |
+| V | 40 | — | 70 |
 
 Base release / active phase: **3.1s**.
 
@@ -2540,11 +2558,11 @@ Helvar’s rift projectile breaks against the first enemy or wall, releasing an 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 60 |
-| II | 12.5 | — | 66 |
-| III | 15 | — | 72 |
-| IV | 17.5 | — | 78 |
-| V | 20 | — | 84 |
+| I | 22 | — | 60 |
+| II | 27.5 | — | 66 |
+| III | 33 | — | 72 |
+| IV | 38.5 | — | 78 |
+| V | 44 | — | 84 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2552,17 +2570,17 @@ Spell ID: `resonant_arcana:helvars_fracture`. Inspect ranks with `/resonantarcan
 
 ### Helvar’s Swordfall
 
-Summon Helvar’s original sword above the marked ground. After a short warning, it drops point-first and damages and weakens nearby enemies. Requires space above the impact point.
+Mark visible ground and summon Helvar’s sword above it. The blade drops point-first after a brief warning, damaging and weakening enemies. Requires clear space overhead.
 
 **Ender** · Cast **1.3s** · Cooldown **12s** · Range **18 blocks** · Radius / half-width **3 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 60 |
-| II | 20 | — | 66 |
-| III | 24 | — | 72 |
-| IV | 28 | — | 78 |
-| V | 32 | — | 84 |
+| I | 36 | — | 60 |
+| II | 45 | — | 66 |
+| III | 54 | — | 72 |
+| IV | 63 | — | 78 |
+| V | 72 | — | 84 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2576,11 +2594,11 @@ The Sandworm’s own sand columns emerge in a row toward the aimed ground. The r
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 11 | — | 50 |
-| II | 13.75 | — | 55 |
-| III | 16.5 | — | 60 |
-| IV | 19.25 | — | 65 |
-| V | 22 | — | 70 |
+| I | 22 | — | 50 |
+| II | 27.5 | — | 55 |
+| III | 33 | — | 60 |
+| IV | 38.5 | — | 65 |
+| V | 44 | — | 70 |
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -2594,11 +2612,11 @@ A spiralling sand vortex slows and draws visible enemies inward. Three sand colu
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 65 |
-| II | 10 | — | 71 |
-| III | 12 | — | 77 |
-| IV | 14 | — | 83 |
-| V | 16 | — | 89 |
+| I | 24 | — | 65 |
+| II | 30 | — | 71 |
+| III | 36 | — | 77 |
+| IV | 42 | — | 83 |
+| V | 48 | — | 89 |
 
 Base release / active phase: **3s**.
 
@@ -2606,19 +2624,19 @@ Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its i
 
 Spell ID: `resonant_arcana:sandworms_quicksand`. Inspect ranks with `/resonantarcana spell sandworms_quicksand <rank>`.
 
-### Infernal Barrage
+### Dragon’s Volley
 
-Conjure three blazing orbs beside you, then launch them one after another toward the aimed ground. Each orb travels visibly and bursts against the first enemy or wall. No guard mobs are summoned; allies and terrain are protected.
+Conjure three blazing orbs, then launch them in sequence toward the marked ground. Each orb explodes against the first enemy or solid surface.
 
 **Fire** · Cast **1.2s** · Cooldown **14s** · Range **16 blocks** · Radius / half-width **4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 7 | — | 60 |
-| II | 8.75 | — | 65 |
-| III | 10.5 | — | 70 |
-| IV | 12.25 | — | 75 |
-| V | 14 | — | 80 |
+| I | 14 | — | 60 |
+| II | 17.5 | — | 65 |
+| III | 21 | — | 70 |
+| IV | 24.5 | — | 75 |
+| V | 28 | — | 80 |
 
 Base release / active phase: **4s**.
 
@@ -2628,17 +2646,17 @@ Spell ID: `resonant_arcana:dragons_guard`. Inspect ranks with `/resonantarcana s
 
 ### Dragon’s Cataclysm
 
-Mark visible ground with an ember ring and call down a blazing fireball. After one second of warning it descends, detonating once in a heavy expanding fire shockwave. Requires space overhead; allies and terrain are protected.
+Mark visible ground with an ember ring. After a one-second warning, a descending fireball releases one heavy shockwave. Requires clear space overhead.
 
 **Fire** · Cast **1.6s** · Cooldown **18s** · Range **18 blocks** · Radius / half-width **4.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 85 |
-| II | 20 | — | 93 |
-| III | 24 | — | 101 |
-| IV | 28 | — | 109 |
-| V | 32 | — | 117 |
+| I | 44 | — | 85 |
+| II | 55 | — | 93 |
+| III | 66 | — | 101 |
+| IV | 77 | — | 109 |
+| V | 88 | — | 117 |
 
 Base release / active phase: **2.7s**.
 
@@ -2652,7 +2670,7 @@ Spell ID: `resonant_arcana:dragons_pyre`. Inspect ranks with `/resonantarcana sp
 
 ### DOOM
 
-Open an elevated black hole with a gold photon rim, flattened accretion disc and red infalling trails. It draws visible enemies inward before collapsing for one 256-damage hit per enemy. A heartbeat, portal hum and five atmospheric layers build throughout the ritual. Terrain remains intact.
+Open an elevated black hole that draws visible enemies inward, then collapses for one heavy area hit. Allies and terrain are protected.
 
 **Ender** · Cast **10s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
 
@@ -2672,7 +2690,7 @@ Call three groups of falling stars around the mark. Each star damages enemies wi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 96 | — | 440 |
+| I | 80 | — | 440 |
 
 Base release / active phase: **4.4s**.
 
@@ -2688,7 +2706,7 @@ Release three blood tides around the mark, followed by a double-damage final tid
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 96 | — | 460 |
+| I | 80 | — | 460 |
 
 Base release / active phase: **4.5s**.
 
@@ -2704,7 +2722,7 @@ Call five meteors around the mark. Each erupts in a five-block blast. A final fo
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 100 | — | 500 |
+| I | 72 | — | 500 |
 
 Base release / active phase: **5s**.
 
@@ -2720,7 +2738,7 @@ Flood the marked area with shadow and drifting void embers. Three expanding dama
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 104 | — | 480 |
+| I | 88 | — | 480 |
 
 Base release / active phase: **4.8s**.
 
@@ -2736,7 +2754,7 @@ Call six lightning columns around the mark, each striking a six-block area. A fi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 100 | — | 480 |
+| I | 64 | — | 480 |
 
 Base release / active phase: **5.6s**.
 
@@ -2752,7 +2770,7 @@ Pull visible enemies inward, then cut the area along two perpendicular lines. A 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 112 | — | 500 |
+| I | 96 | — | 500 |
 
 Base release / active phase: **5.2s**.
 
@@ -2768,7 +2786,7 @@ Unleash three soul pulses at four, eight and twelve blocks from the mark. Enemie
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 104 | — | 460 |
+| I | 96 | — | 460 |
 
 Base release / active phase: **4.6s**.
 
@@ -2778,13 +2796,13 @@ Spell ID: `resonant_arcana:soul_requiem`. Inspect ranks with `/resonantarcana sp
 
 ### Worldroot Blessing
 
-Bless an area with moss, flowering leaves and drifting spores. Three pulses damage and poison enemies while slowing them. The final bloom deals double damage and heals nearby allies for eight base health.
+Overgrow the mark with moss, flowering leaves and spores. Three pulses damage, poison and slow enemies. A final bloom deals double damage and heals eligible allies.
 
 **Nature** · Cast **10s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 88 | — | 440 |
+| I | 72 | — | 440 |
 
 Base release / active phase: **4.8s**.
 
@@ -2794,13 +2812,13 @@ Spell ID: `resonant_arcana:worldroot_catastrophe`. Inspect ranks with `/resonant
 
 ### Final Judgement
 
-Summon a giant golden sword above the mark. Three holy pulses damage enemies and heal allies for four base health each. Its final verdict deals double damage, heals twelve, cleanses afflictions and grants five seconds of Resistance I.
+Summon a golden sword over the mark. Three holy pulses damage enemies and heal allies; the final verdict deals double damage, heals, cleanses afflictions and grants Resistance I for five seconds.
 
 **Holy** · Cast **12s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 96 | — | 500 |
+| I | 80 | — | 500 |
 
 Base release / active phase: **5.2s**.
 
@@ -2810,13 +2828,13 @@ Spell ID: `resonant_arcana:final_judgement`. Inspect ranks with `/resonantarcana
 
 ### Eternal Winter
 
-Bury a sixteen-block area in a ten-second blizzard. Eight cold pulses damage enemies, applying Slowness IV and freezing buildup. The final burst deals triple damage. Terrain is not changed.
+Unleash a ten-second blizzard over the marked area. Eight pulses damage and freeze enemies with Slowness IV. A final burst deals triple damage. Terrain remains intact.
 
 **Ice** · Cast **11s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 64 | — | 480 |
+| I | 40 | — | 480 |
 
 Base release / active phase: **10s**.
 
@@ -2826,7 +2844,7 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Lock a target and chant for 7.7 seconds. Five orange-gold seals feed a vertical ignition column while coloured sparks gather around you. Detonate for 256 damage over sixteen blocks, followed by a rising fireball and expanding ground shockwave. The spectacle does not repeat damage or break terrain. Brief exhaustion follows the blast.
+Lock your aim and channel five golden seals into a towering ignition beam. Release one immense explosion; the rising fireball and shockwave deal no extra hits. Brief Slowness and Weakness follow the blast.
 
 **Fire** · Cast **7.7s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 
@@ -2842,7 +2860,7 @@ Spell ID: `resonant_arcana:explosion`. Inspect ranks with `/resonantarcana spell
 
 ### I Am Atomic
 
-Anchor a sixteen-block violet containment sphere and compress mana at a spectral sword tip for 13.5 seconds. Captured enemies are held within the boundary; bosses and fully knockback-resistant foes resist containment. Allies gain brief Resistance I and hostile projectiles crossing the sphere are absorbed. Release one 512-damage violet detonation, sparing allies and terrain. Moving more than three blocks interrupts the ritual. The full recording plays at its original pitch; cast-speed bonuses do not shorten this ritual.
+Anchor a violet containment sphere and compress mana at a spectral sword. Hold enemies inside, shelter allies and absorb hostile projectiles crossing the boundary. Release one devastating detonation. Moving more than three blocks interrupts the ritual; bosses resist containment.
 
 **Ender** · Cast **13.5s** · Cooldown **180s** · Range **32 blocks** · Radius / half-width **16 blocks**.
 
@@ -2858,7 +2876,7 @@ Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spe
 
 ### Doom Beam
 
-Compress a centred black hole for 13 seconds; its rim turns emerald halfway through. Release a green beacon-core plasma beam for 9.5 seconds, connected to your hands and following your position and aim. Each visible enemy entering it takes one 320-damage hit. Solid cover blocks it. Fixed recorded windup.
+Compress a black singularity that turns emerald halfway through the charge. Release a green plasma beam that follows your movement and aim. Each enemy entering its path takes one hit; solid cover stops it.
 
 **Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
 

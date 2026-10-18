@@ -2,7 +2,7 @@
 
 ### Mind Haze
 
-Wrap one visible aimed enemy in a spiralling hex. Apply Nausea for five seconds and Blindness for two seconds, with one direct hit.
+Disorient one visible enemy with Nausea for five seconds and Blindness for two seconds. Deals no direct damage.
 
 **Evocation** · Cast **0.4s** · Cooldown **5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
 
@@ -24,11 +24,11 @@ Bind one visible aimed enemy with arcane sparks. Apply Slowness VI and Weakness 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 1 | — | 20 |
-| II | 1.25 | — | 24 |
-| III | 1.5 | — | 28 |
-| IV | 1.75 | — | 32 |
-| V | 2 | — | 36 |
+| I | 2 | — | 20 |
+| II | 2.5 | — | 24 |
+| III | 3 | — | 28 |
+| IV | 3.5 | — | 32 |
+| V | 4 | — | 36 |
 
 Spell ID: `resonant_arcana:stun`. Inspect ranks with `/resonantarcana spell stun <rank>`.
 
@@ -74,11 +74,11 @@ Close a crimson binding around one visible aimed enemy. One hit applies Slowness
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 22 |
-| II | 2.5 | — | 26 |
-| III | 3 | — | 30 |
-| IV | 3.5 | — | 34 |
-| V | 4 | — | 38 |
+| I | 3 | — | 22 |
+| II | 3.75 | — | 26 |
+| III | 4.5 | — | 30 |
+| IV | 5.25 | — | 34 |
+| V | 6 | — | 38 |
 
 Spell ID: `resonant_arcana:blood_stun`. Inspect ranks with `/resonantarcana spell blood_stun <rank>`.
 
@@ -90,11 +90,11 @@ Fasten an orbiting shadow curse to one aimed enemy. After two seconds it bursts 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 52 |
-| II | 17.5 | — | 62 |
-| III | 21 | — | 72 |
-| IV | 24.5 | — | 82 |
-| V | 28 | — | 92 |
+| I | 24 | — | 52 |
+| II | 30 | — | 62 |
+| III | 36 | — | 72 |
+| IV | 42 | — | 82 |
+| V | 48 | — | 92 |
 
 Base release / active phase: **2s**.
 
@@ -102,17 +102,17 @@ Spell ID: `resonant_arcana:shadow_cage`. Inspect ranks with `/resonantarcana spe
 
 ### Static Shock
 
-Overload one visible aimed enemy with static. One direct hit applies Slowness VI and Weakness II for three seconds; it is a slowing debuff rather than an AI freeze.
+Overload one visible enemy with static. Deal one hit and apply Slowness VI and Weakness II for three seconds.
 
 **Lightning** · Cast **0.4s** · Cooldown **4s** · Range **28 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 22 |
-| II | 3.75 | — | 26 |
-| III | 4.5 | — | 30 |
-| IV | 5.25 | — | 34 |
-| V | 6 | — | 38 |
+| I | 4 | — | 22 |
+| II | 5 | — | 26 |
+| III | 6 | — | 30 |
+| IV | 7 | — | 34 |
+| V | 8 | — | 38 |
 
 Spell ID: `resonant_arcana:static_shock`. Inspect ranks with `/resonantarcana spell static_shock <rank>`.
 
@@ -124,11 +124,11 @@ Strike one visible aimed enemy with an outward spatial impulse. Deal direct dama
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 18 |
-| II | 2.5 | — | 21 |
-| III | 3 | — | 24 |
-| IV | 3.5 | — | 27 |
-| V | 4 | — | 30 |
+| I | 3 | — | 18 |
+| II | 3.75 | — | 21 |
+| III | 4.5 | — | 24 |
+| IV | 5.25 | — | 27 |
+| V | 6 | — | 30 |
 
 Spell ID: `resonant_arcana:force_push`. Inspect ranks with `/resonantarcana spell force_push <rank>`.
 
@@ -140,11 +140,11 @@ Catch one visible aimed enemy with a spatial link. Deal direct damage and pull i
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 18 |
-| II | 2.5 | — | 21 |
-| III | 3 | — | 24 |
-| IV | 3.5 | — | 27 |
-| V | 4 | — | 30 |
+| I | 3 | — | 18 |
+| II | 3.75 | — | 21 |
+| III | 4.5 | — | 24 |
+| IV | 5.25 | — | 27 |
+| V | 6 | — | 30 |
 
 Spell ID: `resonant_arcana:force_pull`. Inspect ranks with `/resonantarcana spell force_pull <rank>`.
 
@@ -156,11 +156,11 @@ Suspend one visible aimed enemy above its starting point for two seconds. Deal o
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 26 |
-| II | 2.5 | — | 31 |
-| III | 3 | — | 36 |
-| IV | 3.5 | — | 41 |
-| V | 4 | — | 46 |
+| I | 3 | — | 26 |
+| II | 3.75 | — | 31 |
+| III | 4.5 | — | 36 |
+| IV | 5.25 | — | 41 |
+| V | 6 | — | 46 |
 
 Base release / active phase: **2s**.
 
@@ -174,11 +174,11 @@ Imprison one aimed enemy in a winding soul cage for three seconds at level I. Th
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 26 |
-| II | 2.5 | — | 31 |
-| III | 3 | — | 36 |
-| IV | 3.5 | — | 41 |
-| V | 4 | — | 46 |
+| I | 3 | — | 26 |
+| II | 3.75 | — | 31 |
+| III | 4.5 | — | 36 |
+| IV | 5.25 | — | 41 |
+| V | 6 | — | 46 |
 
 Base release / active phase: **3s**.
 
@@ -192,11 +192,11 @@ Tether an aimed enemy for 3 seconds, gently pulling it and dealing three damage 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 42 |
-| II | 2.5 | — | 50 |
-| III | 3 | — | 58 |
-| IV | 3.5 | — | 66 |
-| V | 4 | — | 74 |
+| I | 5 | — | 42 |
+| II | 6.25 | — | 50 |
+| III | 7.5 | — | 58 |
+| IV | 8.75 | — | 66 |
+| V | 10 | — | 74 |
 
 Base release / active phase: **3s**.
 
@@ -204,33 +204,33 @@ Spell ID: `resonant_arcana:crimson_tether`. Inspect ranks with `/resonantarcana 
 
 ### Thorn Lash
 
-Catch an aimed enemy with a thorn tether, pull it towards you and poison it. Nature hits poison for four seconds.
+Catch an aimed enemy with a thorn tether, pull it towards you and poison it.
 
 **Nature** · Cast **0.5s** · Cooldown **5.5s** · Range **20 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 30 |
-| II | 5 | — | 36 |
-| III | 6 | — | 42 |
-| IV | 7 | — | 48 |
-| V | 8 | — | 54 |
+| I | 16 | — | 30 |
+| II | 20 | — | 36 |
+| III | 24 | — | 42 |
+| IV | 28 | — | 48 |
+| V | 32 | — | 54 |
 
 Spell ID: `resonant_arcana:thorn_lash`. Inspect ranks with `/resonantarcana spell thorn_lash <rank>`.
 
 ### Gorgon Gaze
 
-Fix visible enemies in a wide forward cone with a petrifying gaze, applying heavy slowness and weakness for two seconds at level I. Nature hits poison for four seconds.
+Fix visible enemies in a wide forward cone with a petrifying gaze, applying heavy slowness and weakness for two seconds at level I.
 
 **Nature** · Cast **1.2s** · Cooldown **10s** · Range **10 blocks** · Radius / half-width **0 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 48 |
-| II | 2.5 | — | 57 |
-| III | 3 | — | 66 |
-| IV | 3.5 | — | 75 |
-| V | 4 | — | 84 |
+| I | 4 | — | 48 |
+| II | 5 | — | 57 |
+| III | 6 | — | 66 |
+| IV | 7 | — | 75 |
+| V | 8 | — | 84 |
 
 Base release / active phase: **2s**.
 
@@ -256,7 +256,7 @@ Spell ID: `resonant_arcana:glacial_prison`. Inspect ranks with `/resonantarcana 
 
 ### Void Exile
 
-Cast for four seconds to banish one hostile living target into an isolated void cell for ten seconds, leaving a violet rift behind. It returns to its original spot or nearby clear space, takes 20 base damage, then receives Weakness II for five seconds. No damage is dealt during exile. Bosses, mounted or leashed targets and dimension-immune creatures resist. Ally and PvP protections apply.
+Banish one hostile living target for ten seconds, leaving a violet rift. On return, it takes damage before receiving Weakness II for five seconds. Bosses, mounted, leashed and dimension-immune targets resist.
 
 **Ender** · Cast **4s** · Cooldown **30s** · Range **24 blocks** · Radius / half-width **1.5 blocks**.
 

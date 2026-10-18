@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:glacial_rupture",
+    "resonant_arcana:frost_needle",
+    "resonant_arcana:ice_serpent",
+    "resonant_arcana:rime_nova",
+    "resonant_arcana:cryo_lance",
+    "resonant_arcana:frozen_aegis",
+    "resonant_arcana:glacier_step",
+    "resonant_arcana:shatter",
+    "resonant_arcana:hailstorm",
+    "resonant_arcana:glacial_prison",
+    "resonant_arcana:crystal_barrage",
+    "resonant_arcana:absolute_zero",
+    "resonant_arcana:rime_thrust",
+    {
+      "id": "resonant_arcana:ice_spike_eruption",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:yetis_glacial_wall",
+      "required": false
+    },
+    "resonant_arcana:glacial_counter",
+    "resonant_arcana:eternal_winter"
+  ]
+}

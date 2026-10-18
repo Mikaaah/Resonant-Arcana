@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:sanctuary",
+    "resonant_arcana:luminous_dart",
+    "resonant_arcana:mending_light",
+    "resonant_arcana:blessing_of_vigor",
+    "resonant_arcana:consecration",
+    "resonant_arcana:radiant_sweep",
+    "resonant_arcana:pilgrim_step",
+    "resonant_arcana:absolution",
+    "resonant_arcana:dawn_ward",
+    "resonant_arcana:judgement_ray",
+    "resonant_arcana:seraphic_descent",
+    "resonant_arcana:renewal_hymn",
+    "resonant_arcana:warscream",
+    "resonant_arcana:bulwark_chant",
+    "resonant_arcana:last_stand",
+    "resonant_arcana:final_judgement",
+    "resonant_arcana:seraph_ascendant"
+  ]
+}

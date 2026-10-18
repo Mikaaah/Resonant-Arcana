@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:evokers_edict",
+    "resonant_arcana:dread_effigy",
+    "resonant_arcana:night_bloom",
+    "resonant_arcana:orbital_blades",
+    "resonant_arcana:wisp_lantern",
+    "resonant_arcana:spore_totem",
+    "resonant_arcana:consecration",
+    "resonant_arcana:last_stand",
+    "resonant_arcana:phantom_formation"
+  ]
+}

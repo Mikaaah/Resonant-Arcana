@@ -8,11 +8,11 @@ Focus arcane energy directly on one visible aimed enemy. A woven link identifies
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 21 |
-| II | 6.25 | — | 25 |
-| III | 7.5 | — | 29 |
-| IV | 8.75 | — | 33 |
-| V | 10 | — | 37 |
+| I | 8 | — | 21 |
+| II | 10 | — | 25 |
+| III | 12 | — | 29 |
+| IV | 14 | — | 33 |
+| V | 16 | — | 37 |
 
 Spell ID: `resonant_arcana:arcane_strike`. Inspect ranks with `/resonantarcana spell arcane_strike <rank>`.
 
@@ -24,11 +24,11 @@ Snap a crimson spark onto one visible aimed enemy. Blood droplets mark the impac
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 21 |
-| II | 6.25 | — | 25 |
-| III | 7.5 | — | 29 |
-| IV | 8.75 | — | 33 |
-| V | 10 | — | 37 |
+| I | 7 | — | 21 |
+| II | 8.75 | — | 25 |
+| III | 10.5 | — | 29 |
+| IV | 12.25 | — | 33 |
+| V | 14 | — | 37 |
 
 Spell ID: `resonant_arcana:blood_spark`. Inspect ranks with `/resonantarcana spell blood_spark <rank>`.
 
@@ -40,11 +40,11 @@ Burst an acid bubble on one visible aimed enemy, dealing direct damage and apply
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 17 |
-| II | 2.5 | — | 20 |
-| III | 3 | — | 23 |
-| IV | 3.5 | — | 26 |
-| V | 4 | — | 29 |
+| I | 3 | — | 17 |
+| II | 3.75 | — | 20 |
+| III | 4.5 | — | 23 |
+| IV | 5.25 | — | 26 |
+| V | 6 | — | 29 |
 
 Spell ID: `resonant_arcana:poison_spark`. Inspect ranks with `/resonantarcana spell poison_spark <rank>`.
 
@@ -56,11 +56,11 @@ Kindle one visible aimed enemy directly. Deal the listed impact damage and set i
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 17 |
-| II | 2.5 | — | 20 |
-| III | 3 | — | 23 |
-| IV | 3.5 | — | 26 |
-| V | 4 | — | 29 |
+| I | 3 | — | 17 |
+| II | 3.75 | — | 20 |
+| III | 4.5 | — | 23 |
+| IV | 5.25 | — | 26 |
+| V | 6 | — | 29 |
 
 Spell ID: `resonant_arcana:ignite`. Inspect ranks with `/resonantarcana spell ignite <rank>`.
 
@@ -72,11 +72,11 @@ Damage a visible aimed target and restore 40% of health actually removed, capped
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 28 |
-| II | 6.25 | — | 33 |
-| III | 7.5 | — | 38 |
-| IV | 8.75 | — | 43 |
-| V | 10 | — | 48 |
+| I | 8 | — | 28 |
+| II | 10 | — | 33 |
+| III | 12 | — | 38 |
+| IV | 14 | — | 43 |
+| V | 16 | — | 48 |
 
 Spell ID: `resonant_arcana:soul_siphon`. Inspect ranks with `/resonantarcana spell soul_siphon <rank>`.
 
@@ -88,27 +88,27 @@ Damage a visible aimed target and restore 40% of health actually removed, capped
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 28 |
-| II | 6.25 | — | 33 |
-| III | 7.5 | — | 38 |
-| IV | 8.75 | — | 43 |
-| V | 10 | — | 48 |
+| I | 8 | — | 28 |
+| II | 10 | — | 33 |
+| III | 12 | — | 38 |
+| IV | 14 | — | 43 |
+| V | 16 | — | 48 |
 
 Spell ID: `resonant_arcana:sanguine_drain`. Inspect ranks with `/resonantarcana spell sanguine_drain <rank>`.
 
 ### Withering Hex
 
-Inflict poison and wither on an aimed target. Nature hits poison for four seconds.
+Hex one visible enemy with direct damage, Poison I for four seconds and Wither I for three seconds.
 
 **Nature** · Cast **0.25s** · Cooldown **5.5s** · Range **24 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 25 |
-| II | 3.75 | — | 30 |
-| III | 4.5 | — | 35 |
-| IV | 5.25 | — | 40 |
-| V | 6 | — | 45 |
+| I | 4 | — | 25 |
+| II | 5 | — | 30 |
+| III | 6 | — | 35 |
+| IV | 7 | — | 40 |
+| V | 8 | — | 45 |
 
 Spell ID: `resonant_arcana:withering_hex`. Inspect ranks with `/resonantarcana spell withering_hex <rank>`.
 
@@ -120,11 +120,11 @@ Sweep a crimson crescent across a 120-degree forward arc. Each visible enemy is 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 34 |
-| II | 11.25 | — | 40 |
-| III | 13.5 | — | 46 |
-| IV | 15.75 | — | 52 |
-| V | 18 | — | 58 |
+| I | 16 | — | 34 |
+| II | 20 | — | 40 |
+| III | 24 | — | 46 |
+| IV | 28 | — | 52 |
+| V | 32 | — | 58 |
 
 Spell ID: `resonant_arcana:blood_reap`. Inspect ranks with `/resonantarcana spell blood_reap <rank>`.
 
@@ -136,27 +136,27 @@ Strike an aimed enemy. Deal 50% more direct damage below 35% maximum health; a k
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 48 |
-| II | 15 | — | 57 |
-| III | 18 | — | 66 |
-| IV | 21 | — | 75 |
-| V | 24 | — | 84 |
+| I | 22 | — | 48 |
+| II | 27.5 | — | 57 |
+| III | 33 | — | 66 |
+| IV | 38.5 | — | 75 |
+| V | 44 | — | 84 |
 
 Spell ID: `resonant_arcana:crimson_harvest`. Inspect ranks with `/resonantarcana spell crimson_harvest <rank>`.
 
 ### Dusk Cleave
 
-Carve a shadow crescent across the space in front of you, weakening enemies hit by the arc. Ender shadow hits weaken for three seconds.
+Carve a shadow crescent across the space in front of you, weakening enemies hit by the arc.
 
 **Ender** · Cast **0.7s** · Cooldown **6s** · Range **6 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 36 |
-| II | 12.5 | — | 43 |
-| III | 15 | — | 50 |
-| IV | 17.5 | — | 57 |
-| V | 20 | — | 64 |
+| I | 18 | — | 36 |
+| II | 22.5 | — | 43 |
+| III | 27 | — | 50 |
+| IV | 31.5 | — | 57 |
+| V | 36 | — | 64 |
 
 Spell ID: `resonant_arcana:dusk_cleave`. Inspect ranks with `/resonantarcana spell dusk_cleave <rank>`.
 
@@ -168,11 +168,11 @@ Release a broad thunder crescent and knock visible enemies away. Each target is 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 11 | — | 42 |
-| II | 13.75 | — | 50 |
-| III | 16.5 | — | 58 |
-| IV | 19.25 | — | 66 |
-| V | 22 | — | 74 |
+| I | 20 | — | 42 |
+| II | 25 | — | 50 |
+| III | 30 | — | 58 |
+| IV | 35 | — | 66 |
+| V | 40 | — | 74 |
 
 Spell ID: `resonant_arcana:thunderclap`. Inspect ranks with `/resonantarcana spell thunderclap <rank>`.
 
@@ -184,11 +184,11 @@ Cut a wide crescent through nearby space, striking each visible enemy in front o
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 42 |
-| II | 15 | — | 50 |
-| III | 18 | — | 58 |
-| IV | 21 | — | 66 |
-| V | 24 | — | 74 |
+| I | 26 | — | 42 |
+| II | 32.5 | — | 50 |
+| III | 39 | — | 58 |
+| IV | 45.5 | — | 66 |
+| V | 52 | — | 74 |
 
 Spell ID: `resonant_arcana:spatial_shear`. Inspect ranks with `/resonantarcana spell spatial_shear <rank>`.
 
@@ -200,11 +200,11 @@ Strike an aimed enemy. If it is affected by Darkness, direct damage increases by
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 42 |
-| II | 12.5 | — | 50 |
-| III | 15 | — | 58 |
-| IV | 17.5 | — | 66 |
-| V | 20 | — | 74 |
+| I | 24 | — | 42 |
+| II | 30 | — | 50 |
+| III | 36 | — | 58 |
+| IV | 42 | — | 66 |
+| V | 48 | — | 74 |
 
 Spell ID: `resonant_arcana:memory_fracture`. Inspect ranks with `/resonantarcana spell memory_fracture <rank>`.
 
@@ -216,27 +216,27 @@ Sweep a radiant crescent through visible enemies in front of you.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 30 |
-| II | 10 | — | 36 |
-| III | 12 | — | 42 |
-| IV | 14 | — | 48 |
-| V | 16 | — | 54 |
+| I | 14 | — | 30 |
+| II | 17.5 | — | 36 |
+| III | 21 | — | 42 |
+| IV | 24.5 | — | 48 |
+| V | 28 | — | 54 |
 
 Spell ID: `resonant_arcana:radiant_sweep`. Inspect ranks with `/resonantarcana spell radiant_sweep <rank>`.
 
 ### Shatter
 
-Strike an aimed enemy. Direct damage increases by 50% at 140 freezing ticks or Slowness III or stronger; combine with Glacial Prison or Absolute Zero. Ice hits chill for two seconds and add 40 freezing ticks.
+Strike one aimed enemy for 50% more direct damage while it is deeply frozen or affected by Slowness III or stronger. Combine with Glacial Prison or Absolute Zero.
 
 **Ice** · Cast **0.9s** · Cooldown **8s** · Range **24 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 42 |
-| II | 12.5 | — | 50 |
-| III | 15 | — | 58 |
-| IV | 17.5 | — | 66 |
-| V | 20 | — | 74 |
+| I | 20 | — | 42 |
+| II | 25 | — | 50 |
+| III | 30 | — | 58 |
+| IV | 35 | — | 66 |
+| V | 40 | — | 74 |
 
 Spell ID: `resonant_arcana:shatter`. Inspect ranks with `/resonantarcana spell shatter <rank>`.
 
@@ -302,11 +302,11 @@ Draw a thin distortion along your aim. After a 0.6-second warning, a piercing sl
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 50 |
-| II | 20 | — | 56 |
-| III | 24 | — | 62 |
-| IV | 28 | — | 68 |
-| V | 32 | — | 74 |
+| I | 28 | — | 50 |
+| II | 35 | — | 56 |
+| III | 42 | — | 62 |
+| IV | 49 | — | 68 |
+| V | 56 | — | 74 |
 
 Base release / active phase: **0.7s**.
 

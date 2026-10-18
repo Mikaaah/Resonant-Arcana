@@ -11,16 +11,51 @@ final class SpellInfo {
         case MAGIC->"Evocation";case BLOOD->"Blood";case FIRE->"Fire";case DARK,GRAVITY->"Ender";
         case THUNDER->"Lightning";case SOUL->"Eldritch";case POISON->"Nature";case HOLY->"Holy";case ICE->"Ice";
     };}
+    static List<String> wrap(String text,int width){
+        var lines=new ArrayList<String>();StringBuilder line=new StringBuilder();
+        for(String word:text.trim().split("\\s+")){
+            if(!line.isEmpty()&&line.length()+word.length()+1>width){lines.add(line.toString());line.setLength(0);}
+            if(!line.isEmpty())line.append(' ');line.append(word);
+        }
+        if(!line.isEmpty())lines.add(line.toString());return lines;
+    }
+    static List<MutableComponent> overview(Spell s,float power,double castSeconds){
+        var out=new ArrayList<MutableComponent>();
+        out.add(Component.literal(SpellInfo.school(s.theme)+" • "+s.category().title+" • "+SpellIndex.tier(s)).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+        for(String line:wrap(s.description(),52))out.add(Component.literal(line).withStyle(net.minecraft.ChatFormatting.GRAY));
+        if(s.damage>0)out.add(Component.literal("Damage / hit: "+format(s.damage*power)).withStyle(net.minecraft.ChatFormatting.GOLD));
+        String sequence=sequence(s);if(!sequence.isEmpty())for(String line:wrap(sequence,52))out.add(Component.literal(line).withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        if(s.healing()>0)out.add(Component.literal("Healing / pulse: "+format(s.healing()*power)+" health").withStyle(net.minecraft.ChatFormatting.GREEN));
+        if(s.range>0)out.add(Component.literal("Range: "+format(s.range)+" blocks").withStyle(net.minecraft.ChatFormatting.GRAY));
+        String extent=switch(s.kind){
+            case TARGET,CONFUSE,STUN,CAPTURE,CHOKE,SUSPEND,LAUNCH,PUSH,PULL,SIPHON,TETHER,EXECUTE,EXILE -> "";
+            case CANNON -> "Blast radius: ";
+            case CHANNEL,LANCE,RAIL,DEVASTATOR,BLADE_THRUST -> "Beam half-width: ";
+            default -> "Area radius: ";
+        };
+        if(s.radius>0&&!extent.isEmpty())out.add(Component.literal(extent+format(s.radius)+" blocks").withStyle(net.minecraft.ChatFormatting.GRAY));
+        if(s.duration()>0&&s!=Spell.WARSCREAM&&s!=Spell.EXPLOSION&&s!=Spell.I_AM_ATOMIC)out.add(Component.literal("Base duration: "+format(s.duration()/20.0)+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
+        if(castSeconds>0)out.add(Component.literal("Cast time: "+format(castSeconds)+"s"+(RecordedSpells.handles(s)?" (fixed)":"")).withStyle(net.minecraft.ChatFormatting.GRAY));
+        for(var line:martial(s,power))for(String wrapped:wrap(line.getString(),52))out.add(Component.literal(wrapped).withStyle(net.minecraft.ChatFormatting.GRAY));
+        return out;
+    }
+    static String sequence(Spell s){return switch(s){
+        case ASTRAL_APOCALYPSE -> "Nine local star impacts; final area hit ×2.";
+        case WORLD_PYRE -> "Five local meteor impacts; final area hit ×2.5.";
+        case HEAVENS_THUNDER -> "Six local lightning impacts; final area hit ×2.";
+        case RIFT_COLLISION -> "Two crossing cuts; final area hit ×3.";
+        case ETERNAL_WINTER -> "Eight pulses; final area hit ×3.";
+        case CRIMSON_ECLIPSE,VOID_CORONATION,WORLDROOT_CATASTROPHE,FINAL_JUDGEMENT -> "Three pulses; final area hit ×2.";
+        case SOUL_REQUIEM -> "Three expanding rings; final area hit ×2.";
+        case KRAKENS_WRATH -> "One outer hit and one central hit ×3 per enemy.";
+        case FUNERAL_BELL -> "Two normal tolls; final toll ×3.";
+        case I_AM_ATOMIC,EXPLOSION,DOOM,DOOM_BEAM,ARCANE_DEVASTATOR -> "One damage hit per enemy per cast.";
+        default -> s.pulses()>1?(s.kind==Spell.Kind.FAN?"Projectiles: ":"Damage pulses: ")+s.pulses():"";
+    };}
     static List<MutableComponent> details(Spell s,int level){
-        var out=new ArrayList<MutableComponent>();out.add(Component.literal(s.description()));
-        out.add(Component.literal(s.category().title+" • "+school(s.theme)+" • Level "+WandItem.roman(level)));
-        if(s.damage>0)out.add(Component.literal(String.format(Locale.ROOT,"Base damage: %.1f%s",s.damageAtLevel(level),s.pulses()>1?" per hit / pulse":"")));
-        if(s.healing()>0)out.add(Component.literal(String.format(Locale.ROOT,"Base healing: %.1f health%s",s.healingAtLevel(level),s.pulses()>1?" per pulse":"")));
-        out.add(Component.literal(String.format(Locale.ROOT,"Mana %d • Windup %.2fs • Cooldown %.1fs",s.manaAtLevel(level),s.castTicks()/20.0,s.cooldown/20.0)));
-        if(s.range>0)out.add(Component.literal("Range: "+format(s.range)+" blocks"));
-        if(s.radius>0)out.add(Component.literal("Radius / half-width: "+format(s.radius)+" blocks"));
-        if(s.duration()>0&&s!=Spell.WARSCREAM)out.add(Component.literal(String.format(Locale.ROOT,"Base duration: %.1fs",s.duration()/20.0)));
-        out.addAll(martial(s,s.power(level)));return out;
+        var out=new ArrayList<MutableComponent>();
+        out.add(Component.literal("Rank "+WandItem.roman(level)+" • Mana: "+s.manaAtLevel(level)+" • Cooldown: "+format(s.cooldown/20.0)+"s").withStyle(net.minecraft.ChatFormatting.AQUA));
+        out.addAll(overview(s,s.power(level),s.castTicks()/20.0));return out;
     }
     static List<MutableComponent> martial(Spell s,float power){
         var out=new ArrayList<MutableComponent>();int rank=Math.clamp(Math.round((power-1)*4),0,4);
@@ -40,5 +75,5 @@ final class SpellInfo {
         if(s==Spell.CRIMSON_REVERSAL)out.add(Component.literal("Free native recast: 3s • Cooldown after return or expiry"));
         return out;
     }
-    private static String format(double n){return n==(int)n?Integer.toString((int)n):Double.toString(n);}
+    private static String format(double n){return n==(int)n?Integer.toString((int)n):String.format(Locale.ROOT,"%.2f",n).replaceAll("0+$", "");}
 }

@@ -8,11 +8,11 @@ Loose a compact arcane spark along your aim. It stops at the first enemy or soli
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 15 |
-| II | 3.75 | — | 18 |
-| III | 4.5 | — | 21 |
-| IV | 5.25 | — | 24 |
-| V | 6 | — | 27 |
+| I | 5 | — | 15 |
+| II | 6.25 | — | 18 |
+| III | 7.5 | — | 21 |
+| IV | 8.75 | — | 24 |
+| V | 10 | — | 27 |
 
 Spell ID: `resonant_arcana:spark`. Inspect ranks with `/resonantarcana spell spark <rank>`.
 
@@ -24,11 +24,11 @@ Launch a slow astral comet with a bright core and trailing star motes. It bursts
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 14 | — | 45 |
-| II | 17.5 | — | 54 |
-| III | 21 | — | 63 |
-| IV | 24.5 | — | 72 |
-| V | 28 | — | 81 |
+| I | 22 | — | 45 |
+| II | 27.5 | — | 54 |
+| III | 33 | — | 63 |
+| IV | 38.5 | — | 72 |
+| V | 44 | — | 81 |
 
 Spell ID: `resonant_arcana:astral_comet`. Inspect ranks with `/resonantarcana spell astral_comet <rank>`.
 
@@ -40,11 +40,11 @@ Hurl a slow ember comet with a burning wake. Its first collision releases an are
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 45 |
-| II | 15 | — | 54 |
-| III | 18 | — | 63 |
-| IV | 21 | — | 72 |
-| V | 24 | — | 81 |
+| I | 20 | — | 45 |
+| II | 25 | — | 54 |
+| III | 30 | — | 63 |
+| IV | 35 | — | 72 |
+| V | 40 | — | 81 |
 
 Spell ID: `resonant_arcana:fire_comet`. Inspect ranks with `/resonantarcana spell fire_comet <rank>`.
 
@@ -56,11 +56,11 @@ Throw a compact fireball with a coiling ember trail. Its first collision release
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 25 |
-| II | 7.5 | — | 30 |
-| III | 9 | — | 35 |
-| IV | 10.5 | — | 40 |
-| V | 12 | — | 45 |
+| I | 8 | — | 25 |
+| II | 10 | — | 30 |
+| III | 12 | — | 35 |
+| IV | 14 | — | 40 |
+| V | 16 | — | 45 |
 
 Spell ID: `resonant_arcana:fireball`. Inspect ranks with `/resonantarcana spell fireball <rank>`.
 
@@ -72,11 +72,11 @@ Launch a twisting shadow bolt. Its first collision releases a small void impact,
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 20 |
-| II | 6.25 | — | 24 |
-| III | 7.5 | — | 28 |
-| IV | 8.75 | — | 32 |
-| V | 10 | — | 36 |
+| I | 7 | — | 20 |
+| II | 8.75 | — | 24 |
+| III | 10.5 | — | 28 |
+| IV | 12.25 | — | 32 |
+| V | 14 | — | 36 |
 
 Spell ID: `resonant_arcana:shadow_bolt`. Inspect ranks with `/resonantarcana spell shadow_bolt <rank>`.
 
@@ -88,11 +88,11 @@ Release a dark wisp that steers toward the enemy selected at release. Its impact
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 27 |
-| II | 7.5 | — | 32 |
-| III | 9 | — | 37 |
-| IV | 10.5 | — | 42 |
-| V | 12 | — | 47 |
+| I | 10 | — | 27 |
+| II | 12.5 | — | 32 |
+| III | 15 | — | 37 |
+| IV | 17.5 | — | 42 |
+| V | 20 | — | 47 |
 
 Spell ID: `resonant_arcana:soul_seeker`. Inspect ranks with `/resonantarcana spell soul_seeker <rank>`.
 
@@ -104,11 +104,11 @@ Fire a compact electric bolt with a jagged spark wake. The first enemy or solid 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 23 |
-| II | 7.5 | — | 27 |
-| III | 9 | — | 31 |
-| IV | 10.5 | — | 35 |
-| V | 12 | — | 39 |
+| I | 8 | — | 23 |
+| II | 10 | — | 27 |
+| III | 12 | — | 31 |
+| IV | 14 | — | 35 |
+| V | 16 | — | 39 |
 
 Spell ID: `resonant_arcana:thunder_bolt`. Inspect ranks with `/resonantarcana spell thunder_bolt <rank>`.
 
@@ -120,11 +120,11 @@ Send a compressed spatial orb along your aim, trailed by inward-curling portal m
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 21 |
-| II | 6.25 | — | 25 |
-| III | 7.5 | — | 29 |
-| IV | 8.75 | — | 33 |
-| V | 10 | — | 37 |
+| I | 7 | — | 21 |
+| II | 8.75 | — | 25 |
+| III | 10.5 | — | 29 |
+| IV | 12.25 | — | 33 |
+| V | 14 | — | 37 |
 
 Spell ID: `resonant_arcana:gravity_bolt`. Inspect ranks with `/resonantarcana spell gravity_bolt <rank>`.
 
@@ -136,27 +136,27 @@ Fire a resonant soul bolt with blue sculk motes. It ends at the first enemy or s
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 5 | — | 20 |
-| II | 6.25 | — | 24 |
-| III | 7.5 | — | 28 |
-| IV | 8.75 | — | 32 |
-| V | 10 | — | 36 |
+| I | 7 | — | 20 |
+| II | 8.75 | — | 24 |
+| III | 10.5 | — | 28 |
+| IV | 12.25 | — | 32 |
+| V | 14 | — | 36 |
 
 Spell ID: `resonant_arcana:echo_bolt`. Inspect ranks with `/resonantarcana spell echo_bolt <rank>`.
 
 ### Arcane Volley
 
-Fire three arcane bolts staggered 0.3 seconds apart. Each bolt follows your aim when it leaves, stops at cover and releases its own small impact; normal damage immunity still applies.
+Fire three arcane bolts half a second apart. Each bolt follows your aim when released and bursts on the first enemy or solid surface.
 
 **Evocation** · Cast **0.5s** · Cooldown **4.5s** · Range **32 blocks** · Radius / half-width **1 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 23 |
-| II | 3.75 | — | 27 |
-| III | 4.5 | — | 31 |
-| IV | 5.25 | — | 35 |
-| V | 6 | — | 39 |
+| I | 5 | — | 23 |
+| II | 6.25 | — | 27 |
+| III | 7.5 | — | 31 |
+| IV | 8.75 | — | 35 |
+| V | 10 | — | 39 |
 
 Base release / active phase: **2.2s**.
 
@@ -170,11 +170,11 @@ Spit a travelling acid orb with a spore-speckled wake. Its first collision relea
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 17 |
-| II | 3.75 | — | 20 |
-| III | 4.5 | — | 23 |
-| IV | 5.25 | — | 26 |
-| V | 6 | — | 29 |
+| I | 4 | — | 17 |
+| II | 5 | — | 20 |
+| III | 6 | — | 23 |
+| IV | 7 | — | 26 |
+| V | 8 | — | 29 |
 
 Spell ID: `resonant_arcana:venom_bolt`. Inspect ranks with `/resonantarcana spell venom_bolt <rank>`.
 
@@ -186,11 +186,11 @@ Release five divergent blood needles. Damage is per projectile; projectiles stop
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 28 |
-| II | 5 | — | 33 |
-| III | 6 | — | 38 |
-| IV | 7 | — | 43 |
-| V | 8 | — | 48 |
+| I | 5 | — | 28 |
+| II | 6.25 | — | 33 |
+| III | 7.5 | — | 38 |
+| IV | 8.75 | — | 43 |
+| V | 10 | — | 48 |
 
 Spell ID: `resonant_arcana:blood_needles`. Inspect ranks with `/resonantarcana spell blood_needles <rank>`.
 
@@ -202,11 +202,11 @@ Throw a travelling lightning orb that can ricochet between three visible enemies
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 40 |
-| II | 7.5 | — | 48 |
-| III | 9 | — | 56 |
-| IV | 10.5 | — | 64 |
-| V | 12 | — | 72 |
+| I | 10 | — | 40 |
+| II | 12.5 | — | 48 |
+| III | 15 | — | 56 |
+| IV | 17.5 | — | 64 |
+| V | 20 | — | 72 |
 
 Spell ID: `resonant_arcana:arc_ricochet`. Inspect ranks with `/resonantarcana spell arc_ricochet <rank>`.
 
@@ -228,17 +228,17 @@ Spell ID: `resonant_arcana:prismatic_ruin`. Inspect ranks with `/resonantarcana 
 
 ### Viper Fangs
 
-Release five venom fangs in a spreading fan. Each projectile can poison the enemy it hits. Nature hits poison for four seconds.
+Release five venom fangs in a spreading fan. Each projectile can poison the enemy it hits.
 
 **Nature** · Cast **0.5s** · Cooldown **4.5s** · Range **24 blocks** · Radius / half-width **0.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 28 |
-| II | 3.75 | — | 33 |
-| III | 4.5 | — | 38 |
-| IV | 5.25 | — | 43 |
-| V | 6 | — | 48 |
+| I | 4 | — | 28 |
+| II | 5 | — | 33 |
+| III | 6 | — | 38 |
+| IV | 7 | — | 43 |
+| V | 8 | — | 48 |
 
 Spell ID: `resonant_arcana:viper_fangs`. Inspect ranks with `/resonantarcana spell viper_fangs <rank>`.
 
@@ -250,59 +250,59 @@ Fire a quick dart of holy light. It stops at solid cover.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 16 |
-| II | 5 | — | 19 |
-| III | 6 | — | 22 |
-| IV | 7 | — | 25 |
-| V | 8 | — | 28 |
+| I | 6 | — | 16 |
+| II | 7.5 | — | 19 |
+| III | 9 | — | 22 |
+| IV | 10.5 | — | 25 |
+| V | 12 | — | 28 |
 
 Spell ID: `resonant_arcana:luminous_dart`. Inspect ranks with `/resonantarcana spell luminous_dart <rank>`.
 
 ### Frost Needle
 
-Fire a fast ice needle that chills its target and stops at solid cover. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Fire a fast ice needle that chills its target and stops at solid cover.
 
 **Ice** · Cast **0s** · Cooldown **1s** · Range **32 blocks** · Radius / half-width **0.7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 16 |
-| II | 5 | — | 19 |
-| III | 6 | — | 22 |
-| IV | 7 | — | 25 |
-| V | 8 | — | 28 |
+| I | 6 | — | 16 |
+| II | 7.5 | — | 19 |
+| III | 9 | — | 22 |
+| IV | 10.5 | — | 25 |
+| V | 12 | — | 28 |
 
 Spell ID: `resonant_arcana:frost_needle`. Inspect ranks with `/resonantarcana spell frost_needle <rank>`.
 
 ### Ice Serpent
 
-Send a low, weaving ice serpent horizontally along your aim. It chills each enemy struck and stops at solid cover; it does not climb terrain. Ice hits chill for two seconds and add 40 freezing ticks.
+Send a low, weaving ice serpent horizontally along your aim. It chills each enemy struck and stops at solid cover; it does not climb terrain.
 
 **Ice** · Cast **0.7s** · Cooldown **5.5s** · Range **24 blocks** · Radius / half-width **1.4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 7 | — | 34 |
-| II | 8.75 | — | 40 |
-| III | 10.5 | — | 46 |
-| IV | 12.25 | — | 52 |
-| V | 14 | — | 58 |
+| I | 12 | — | 34 |
+| II | 15 | — | 40 |
+| III | 18 | — | 46 |
+| IV | 21 | — | 52 |
+| V | 24 | — | 58 |
 
 Spell ID: `resonant_arcana:ice_serpent`. Inspect ranks with `/resonantarcana spell ice_serpent <rank>`.
 
 ### Crystal Barrage
 
-Release five divergent crystal projectiles. Damage is per projectile; their impacts chill enemies. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Release five divergent crystal projectiles. Damage is per projectile; their impacts chill enemies.
 
 **Ice** · Cast **0.7s** · Cooldown **6s** · Range **30 blocks** · Radius / half-width **0.5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 4 | — | 36 |
-| II | 5 | — | 43 |
-| III | 6 | — | 50 |
-| IV | 7 | — | 57 |
-| V | 8 | — | 64 |
+| I | 5 | — | 36 |
+| II | 6.25 | — | 43 |
+| III | 7.5 | — | 50 |
+| IV | 8.75 | — | 57 |
+| V | 10 | — | 64 |
 
 Spell ID: `resonant_arcana:crystal_barrage`. Inspect ranks with `/resonantarcana spell crystal_barrage <rank>`.
 

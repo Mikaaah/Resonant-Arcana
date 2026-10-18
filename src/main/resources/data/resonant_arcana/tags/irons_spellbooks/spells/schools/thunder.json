@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:lightning",
+    "resonant_arcana:smite",
+    "resonant_arcana:thunder_bolt",
+    "resonant_arcana:chain_lightning",
+    "resonant_arcana:thunder_wave",
+    "resonant_arcana:storm_call",
+    "resonant_arcana:thunder_pulse",
+    "resonant_arcana:static_shock",
+    "resonant_arcana:tempest_spear",
+    "resonant_arcana:storm_step",
+    "resonant_arcana:thunderclap",
+    "resonant_arcana:arc_ricochet",
+    "resonant_arcana:battle_tempo",
+    "resonant_arcana:thunderbrand",
+    "resonant_arcana:heavens_thunder"
+  ]
+}

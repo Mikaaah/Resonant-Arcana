@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.28.0-alpha
+
+- Added Void Domain: a vast fixed black sphere with strong allied benefits and enemy suppression. Five-second base cast, fourteen-block radius, fifteen-second base duration.
+- Moved player-origin beams 0.9 blocks forward with a wall-clipped muzzle shared by server and client.
+- Rebalanced 124 offensive spell values to strengthen basic and mid-tier progression and account for multi-stage cataclysm totals.
+- Fixed Flamethrower and Arcane Volley timing against vanilla hurt immunity, and prevented the volley from ending before its third shot.
+- Fixed shared area damage extending beyond its advertised radius.
+- Unified wrapped, styled descriptions and damage/sequence information across native spellbooks, debug-wand tooltips and commands.
+- Kept one Spells creative tab, sorted by school/category/name, hiding disabled spells. Added scroll keywords, archive text search, twenty real spell tags and two equipment tags.
+- Refined native floor seals, beam accents, narrow projectile silhouettes, inward charge wisps and moss particles; retained the four selective AAA effects.
+- Reduced beam entity-query volumes, cached native dust particles and the domain sphere mesh, and stopped ripple generation while paused.
+- Improved names without changing saved IDs: Flamethrower, Crimson Ward and Dragon’s Volley.
+- Added complete catalogue auditing and coverage for tags, keywords, domain rules, muzzle clipping and multi-hit cadence. Network protocol 19 requires both sides to update.
+
 ## 0.27.0-alpha
 
 - Added Void Exile: four-second native cast, ten-second banishment to an isolated void cell, then 20 base damage followed by five seconds of Weakness II. Five ranks, 110 base mana and a 30-second cooldown.

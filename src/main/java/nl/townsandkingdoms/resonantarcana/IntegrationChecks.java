@@ -113,7 +113,7 @@ public final class IntegrationChecks {
             for(String id:List.of("ward_magic","ward_fire","doom_well_dark","explosion_seal"))
                 check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/"+id+".efkefc")!=null,"selective AAA asset packaged: "+id);
             for(Spell spell:Spell.enabledValues()){
-                if(spell.kind==Spell.Kind.EXILE||AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
+                if(spell.kind==Spell.Kind.VOID_DOMAIN||spell.kind==Spell.Kind.EXILE||AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
                 if(spell.healing()>0)player.setHealth(5);
@@ -194,10 +194,11 @@ public final class IntegrationChecks {
             check(SpellEngine.cast(player,Spell.GRAVITY_WELL),"well casts");SpellEngine.tick();
             check(edge.getDeltaMovement().x<0,"gravity well pulls nearby target inward");centre.discard();edge.discard();
             SpellEngine.clear();resetPlayer(player);Zombie sonicFront=spawn(level,0,81,5),sonicBack=spawn(level,0,81,9),sonicFlank=spawn(level,6,81,3),sonicBehind=spawn(level,0,81,-5),sonicFar=spawn(level,0,81,16);
+            for(var z:List.of(sonicFront,sonicBack,sonicFlank)){z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);}
             check(SpellEngine.cast(player,Spell.SONIC_SCREAM),"sonic scream begins charge");
             for(int t=0;t<19;t++)SpellEngine.tick();
-            check(sonicFront.getHealth()==20&&sonicBack.getHealth()==20,"sonic scream does no damage during charge");
-            for(int t=0;t<8;t++)SpellEngine.tick();check(sonicFront.getHealth()==6&&sonicBack.getHealth()==6&&sonicFlank.getHealth()==6,"sonic scream fills a wide forward cone and hits once");
+            check(sonicFront.getHealth()==100&&sonicBack.getHealth()==100,"sonic scream does no damage during charge");
+            for(int t=0;t<8;t++)SpellEngine.tick();check(sonicFront.getHealth()==72&&sonicBack.getHealth()==72&&sonicFlank.getHealth()==72,"sonic scream fills a wide forward cone and hits once");
             check(sonicBehind.getHealth()==20&&sonicFar.getHealth()==20,"sonic scream excludes rear and distant targets");
             check(SpellEngine.activeCount()==0,"sonic charge task ends on release");sonicFront.discard();sonicBack.discard();sonicFlank.discard();sonicBehind.discard();sonicFar.discard();
             SpellEngine.clear();resetPlayer(player);player.setHealth(10);Zombie drain=spawn(level,0,81,6);
@@ -232,8 +233,8 @@ public final class IntegrationChecks {
             check(SpellEngine.cast(player,Spell.WITHERING_HEX),"withering hex casts");check(hex.hasEffect(MobEffects.WITHER),"withering hex applies wither");hex.discard();
             SpellEngine.clear();resetPlayer(player);check(SpellEngine.cast(player,Spell.ARCANE_VOLLEY),"arcane volley casts");
             Zombie volleyA=spawn(level,0,81,3);for(int t=0;t<4;t++)SpellEngine.tick();check(volleyA.getHealth()<20,"volley first projectile hits");volleyA.discard();
-            Zombie volleyB=spawn(level,0,81,3);for(int t=0;t<6;t++)SpellEngine.tick();check(volleyB.getHealth()<20,"volley second projectile hits");volleyB.discard();
-            Zombie volleyC=spawn(level,0,81,3);for(int t=0;t<8;t++)SpellEngine.tick();check(volleyC.getHealth()<20,"volley third projectile hits");volleyC.discard();
+            Zombie volleyB=spawn(level,0,81,3);for(int t=0;t<10;t++)SpellEngine.tick();check(volleyB.getHealth()<20,"volley second projectile hits");volleyB.discard();
+            Zombie volleyC=spawn(level,0,81,3);for(int t=0;t<10;t++)SpellEngine.tick();check(volleyC.getHealth()<20,"volley third projectile hits");volleyC.discard();
             SpellEngine.clear();resetPlayer(player);Zombie outsideFire=spawn(level,0,81,7);
             check(SpellEngine.cast(player,Spell.EMBER_VEIL),"ember veil casts for radius test");for(int t=0;t<60;t++)SpellEngine.tick();
             check(outsideFire.getHealth()==20,"ember veil leaves distant target unharmed");outsideFire.discard();
@@ -287,7 +288,7 @@ public final class IntegrationChecks {
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
             CataclysmChecks.run(level,IntegrationChecks::check);
-            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);
+            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);PolishChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{
@@ -405,6 +406,7 @@ public final class IntegrationChecks {
         player.removeAllEffects();check(Math.abs(player.getAttributeValue(attack)-baseAttack)<.001,"edge expiry removes attributes");
         for(int rank=1;rank<=5;rank++){
             SpellEngine.clear();resetPlayer(player);Zombie enemy=spawn(level,0,81,4),behind=spawn(level,0,81,-4);
+            for(var z:List.of(enemy,behind)){z.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);z.setHealth(100);}
             double spellPower=player.getAttributeValue(io.redspace.ironsspellbooks.api.registry.AttributeRegistry.SPELL_POWER);
             check(SpellEngine.castFromSpellbook(player,Spell.WARSCREAM,Spell.WARSCREAM.power(rank),level.damageSources().indirectMagic(player,player),400,false),"warscream rank casts "+rank);
             check(Math.abs(player.getAttributeValue(attack)-baseAttack)<.001,"warcry preserves melee attributes "+rank);
@@ -414,7 +416,7 @@ public final class IntegrationChecks {
             enemy.setTarget(null);for(int i=0;i<10;i++){enemy.invulnerableTime=0;behind.invulnerableTime=0;SpellEngine.tick();}check(enemy.getTarget()==player,"taunt reasserts target");
             check(enemy.getDeltaMovement().z<0&&behind.getDeltaMovement().z>0,"warcry pulls enemies inward "+rank);
             for(int i=10;i<26;i++){enemy.invulnerableTime=0;behind.invulnerableTime=0;SpellEngine.tick();}
-            check(Math.abs(enemy.getHealth()-(20-9*Spell.WARSCREAM.power(rank)))<.01,"warcry deals three distinct pulses "+rank);
+            check(Math.abs(enemy.getHealth()-(100-15*Spell.WARSCREAM.power(rank)))<.01,"warcry deals three distinct pulses "+rank);
             for(int i=26;i<(rank+2)*20-1;i++)SpellEngine.tick();check(SpellEngine.activeCount()==1,"taunt remains active for rank duration "+rank);
             SpellEngine.tick();enemy.setTarget(null);SpellEngine.tick();check(enemy.getTarget()==null&&SpellEngine.activeCount()==0,"taunt expires");
             enemy.discard();behind.discard();
@@ -468,7 +470,7 @@ public final class IntegrationChecks {
         Zombie victim=spawn(level,0,81,6);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).setBaseValue(0);
         SpellEngine.castFromSpellbook(player,Spell.FROST_NEEDLE,2,nativeSpell.getDamageSource(player),80,true);
         for(int i=0;i<30;i++)SpellEngine.tick();
-        check(Math.abs(victim.getHealth()-12)<.01,"level V projectile deals twice level I direct damage (health="+victim.getHealth()+")");
+        check(Math.abs(victim.getHealth()-8)<.01,"level V projectile deals twice level I direct damage (health="+victim.getHealth()+")");
         check(victim.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)&&victim.getTicksFrozen()>0,"Frost attacks apply chill and freeze buildup");victim.discard();
         SpellEngine.clear();resetPlayer(player);player.setHealth(5);
         var healSpell=io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.MENDING_LIGHT));
@@ -571,15 +573,15 @@ public final class IntegrationChecks {
         var player=new AudioPlayer(level,new GameProfile(UUID.fromString("ab438590-0c2e-4559-819e-31116824450f"),"CannonTest"));
         player.setGameMode(GameType.SURVIVAL);resetPlayer(player);
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
-        SpellEngine.clear();visuals.clear();Zombie victim=spawn(level,0,81,20);
+        SpellEngine.clear();visuals.clear();Zombie victim=spawn(level,0,81,20);victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(200);victim.setHealth(200);
         check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon begins charge");
         for(int t=0;t<39;t++)SpellEngine.tick();
-        check(victim.getHealth()==20,"cannon cannot damage during two second charge");
+        check(victim.getHealth()==200,"cannon cannot damage during two second charge");
         check(visuals.stream().noneMatch(v->v.stage()==SpellVisuals.Stage.FLIGHT.ordinal()),"cannon has no flight before release");
         check(visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.CHARGE.ordinal()).count()==13,"cannon sends bounded inward charge cues");
-        SpellEngine.tick();check(victim.getHealth()==20,"cannon travels instead of instantly hitting distant target");
+        SpellEngine.tick();check(victim.getHealth()==200,"cannon travels instead of instantly hitting distant target");
         player.setYRot(90);for(int t=0;t<30;t++)SpellEngine.tick();
-        check(victim.getHealth()==4,"cannon deals sixteen damage once and keeps released direction");
+        check(victim.getHealth()==152,"cannon deals forty-eight damage once and keeps released direction");
         var mini=visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.TRAIL_BURST.ordinal()).toList();
         check(mini.size()==4,"cannon produces four separate mini bursts before twenty block target");
         for(int i=1;i<mini.size();i++)check(Math.abs(mini.get(i).z()-mini.get(i-1).z()-4)<0.01,"cannon mini bursts are spaced four blocks apart");

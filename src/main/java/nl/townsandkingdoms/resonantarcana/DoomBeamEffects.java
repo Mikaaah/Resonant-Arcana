@@ -40,7 +40,7 @@ final class DoomBeamEffects {
     }
     private static Endpoints endpoints(Entity caster,Lease lease,float partial){
         Vec3 eye=caster.getEyePosition(partial),dir=caster.getViewVector(partial).normalize();
-        Vec3 start=lease.phase()==1?eye:eye.add(0,-.25,0);
+        Vec3 start=lease.phase()==1?eye:world.clip(new ClipContext(eye.add(0,-.25,0),eye.add(0,-.25,0).add(dir.scale(.9)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
         Vec3 end=world.clip(new ClipContext(start,start.add(dir.scale(lease.length())),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
         return new Endpoints(lease.phase()==1?end:start,lease.phase()==1?end.add(dir):end);
     }

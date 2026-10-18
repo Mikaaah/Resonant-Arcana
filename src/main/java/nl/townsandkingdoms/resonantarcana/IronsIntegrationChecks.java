@@ -146,8 +146,8 @@ final class IronsIntegrationChecks {
                 check.accept(registered.getMaxLevel()==1||registered.getSpellPower(registered.getMaxLevel(),player)>registered.getSpellPower(1,player),"spell tiers increase power: "+selected);
             }
             check.accept(Spell.SPARK.castTicks()==0&&Spell.LEAP.castTicks()==0,"basic bolts and movement stay responsive");
-            check.accept(Spell.SOUL_CANNON.damage==16&&Spell.SOUL_CANNON.range==48&&Spell.SOUL_CANNON.castTicks()==40,"Soul Cannon base behavior is preserved");
-            check.accept(Spell.SMITE.damage==18&&Spell.SINGULARITY.damage==18&&Spell.AMETHYST_NOVA.damage==14,"heavy spells receive meaningful base damage");
+            check.accept(Spell.SOUL_CANNON.damage==48&&Spell.SOUL_CANNON.range==48&&Spell.SOUL_CANNON.castTicks()==40,"Soul Cannon base behavior is preserved");
+            check.accept(Spell.SMITE.damage==32&&Spell.SINGULARITY.damage==32&&Spell.AMETHYST_NOVA.damage==24,"heavy spells receive meaningful base damage");
         }finally{
             data.resetCastingState();SpellEngine.clear();regen.setBaseValue(previousRegen);
             level.removePlayerImmediately(player,net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_WITH_PLAYER);
@@ -172,7 +172,7 @@ final class IronsIntegrationChecks {
         check.accept(IronsCompat.castWand(player,Spell.FROST_NEEDLE,stack),"upgraded wand starts native level V cast");
         for(int i=0;i<35;i++){manager.tick(level);SpellEngine.tick();}
         check.accept(ISpellContainer.get(stack).getSpellAtIndex(0).getLevel()==5,"native imbued container receives stored wand rank");
-        check.accept(data.getMana()==1000-nativeSpell.getManaCost(5)&&victim.getHealth()==12,"native level V consumes correct mana and deals eight damage (mana="+data.getMana()+", health="+victim.getHealth()+")");victim.discard();
+        check.accept(data.getMana()==1000-nativeSpell.getManaCost(5)&&victim.getHealth()==8,"native level V consumes correct mana and deals twelve damage (mana="+data.getMana()+", health="+victim.getHealth()+")");victim.discard();
         SpellEngine.clear();WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.PHOENIX.getId(),1));
         check.accept(wand.selected(stack)==Spell.FROST_NEEDLE,"selection packet for another held wand is rejected");
         WandNetwork.select(player,new WandNetwork.Select(ResonantArcana.DEBUG.getId(),999));check.accept(wand.selected(stack)==Spell.FROST_NEEDLE,"invalid selection slot is rejected");

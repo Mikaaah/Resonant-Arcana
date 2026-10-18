@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:blood_block",
+    "resonant_arcana:echo_ward",
+    "resonant_arcana:sanctuary",
+    "resonant_arcana:sanguine_pact",
+    "resonant_arcana:veil_of_night",
+    "resonant_arcana:resonant_guard",
+    "resonant_arcana:toxic_molt",
+    "resonant_arcana:mending_light",
+    "resonant_arcana:blessing_of_vigor",
+    "resonant_arcana:absolution",
+    "resonant_arcana:dawn_ward",
+    "resonant_arcana:renewal_hymn",
+    "resonant_arcana:frozen_aegis",
+    "resonant_arcana:warscream",
+    "resonant_arcana:arcane_edge",
+    "resonant_arcana:bulwark_chant",
+    "resonant_arcana:battle_tempo",
+    "resonant_arcana:glacial_counter",
+    "resonant_arcana:thunderbrand",
+    "resonant_arcana:seraph_ascendant",
+    "resonant_arcana:void_domain"
+  ]
+}

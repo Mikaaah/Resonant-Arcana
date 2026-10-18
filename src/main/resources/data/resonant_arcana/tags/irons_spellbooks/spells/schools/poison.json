@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:poison_spark",
+    "resonant_arcana:poison_wave",
+    "resonant_arcana:venom_bolt",
+    "resonant_arcana:miasma_field",
+    "resonant_arcana:withering_hex",
+    "resonant_arcana:thorn_lash",
+    "resonant_arcana:viper_fangs",
+    "resonant_arcana:bramble_ring",
+    "resonant_arcana:toxic_molt",
+    "resonant_arcana:spore_totem",
+    "resonant_arcana:corrosive_rain",
+    "resonant_arcana:gorgon_gaze",
+    {
+      "id": "resonant_arcana:krakens_grasp",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:krakens_wrath",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:krakens_undertow",
+      "required": false
+    },
+    "resonant_arcana:worldroot_catastrophe"
+  ]
+}

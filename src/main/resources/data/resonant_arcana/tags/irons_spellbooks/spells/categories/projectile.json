@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:spark",
+    "resonant_arcana:astral_comet",
+    "resonant_arcana:fire_comet",
+    "resonant_arcana:fireball",
+    "resonant_arcana:shadow_bolt",
+    "resonant_arcana:soul_seeker",
+    "resonant_arcana:thunder_bolt",
+    "resonant_arcana:gravity_bolt",
+    "resonant_arcana:echo_bolt",
+    "resonant_arcana:arcane_volley",
+    "resonant_arcana:venom_bolt",
+    "resonant_arcana:blood_needles",
+    "resonant_arcana:arc_ricochet",
+    "resonant_arcana:prismatic_ruin",
+    "resonant_arcana:viper_fangs",
+    "resonant_arcana:luminous_dart",
+    "resonant_arcana:frost_needle",
+    "resonant_arcana:ice_serpent",
+    "resonant_arcana:crystal_barrage"
+  ]
+}

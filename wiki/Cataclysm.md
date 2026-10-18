@@ -2,7 +2,7 @@
 
 ### DOOM
 
-Open an elevated black hole with a gold photon rim, flattened accretion disc and red infalling trails. It draws visible enemies inward before collapsing for one 256-damage hit per enemy. A heartbeat, portal hum and five atmospheric layers build throughout the ritual. Terrain remains intact.
+Open an elevated black hole that draws visible enemies inward, then collapses for one heavy area hit. Allies and terrain are protected.
 
 **Ender** · Cast **10s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
 
@@ -22,7 +22,7 @@ Call three groups of falling stars around the mark. Each star damages enemies wi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 96 | — | 440 |
+| I | 80 | — | 440 |
 
 Base release / active phase: **4.4s**.
 
@@ -38,7 +38,7 @@ Release three blood tides around the mark, followed by a double-damage final tid
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 96 | — | 460 |
+| I | 80 | — | 460 |
 
 Base release / active phase: **4.5s**.
 
@@ -54,7 +54,7 @@ Call five meteors around the mark. Each erupts in a five-block blast. A final fo
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 100 | — | 500 |
+| I | 72 | — | 500 |
 
 Base release / active phase: **5s**.
 
@@ -70,7 +70,7 @@ Flood the marked area with shadow and drifting void embers. Three expanding dama
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 104 | — | 480 |
+| I | 88 | — | 480 |
 
 Base release / active phase: **4.8s**.
 
@@ -86,7 +86,7 @@ Call six lightning columns around the mark, each striking a six-block area. A fi
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 100 | — | 480 |
+| I | 64 | — | 480 |
 
 Base release / active phase: **5.6s**.
 
@@ -102,7 +102,7 @@ Pull visible enemies inward, then cut the area along two perpendicular lines. A 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 112 | — | 500 |
+| I | 96 | — | 500 |
 
 Base release / active phase: **5.2s**.
 
@@ -118,7 +118,7 @@ Unleash three soul pulses at four, eight and twelve blocks from the mark. Enemie
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 104 | — | 460 |
+| I | 96 | — | 460 |
 
 Base release / active phase: **4.6s**.
 
@@ -128,13 +128,13 @@ Spell ID: `resonant_arcana:soul_requiem`. Inspect ranks with `/resonantarcana sp
 
 ### Worldroot Blessing
 
-Bless an area with moss, flowering leaves and drifting spores. Three pulses damage and poison enemies while slowing them. The final bloom deals double damage and heals nearby allies for eight base health.
+Overgrow the mark with moss, flowering leaves and spores. Three pulses damage, poison and slow enemies. A final bloom deals double damage and heals eligible allies.
 
 **Nature** · Cast **10s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 88 | — | 440 |
+| I | 72 | — | 440 |
 
 Base release / active phase: **4.8s**.
 
@@ -144,13 +144,13 @@ Spell ID: `resonant_arcana:worldroot_catastrophe`. Inspect ranks with `/resonant
 
 ### Final Judgement
 
-Summon a giant golden sword above the mark. Three holy pulses damage enemies and heal allies for four base health each. Its final verdict deals double damage, heals twelve, cleanses afflictions and grants five seconds of Resistance I.
+Summon a golden sword over the mark. Three holy pulses damage enemies and heal allies; the final verdict deals double damage, heals, cleanses afflictions and grants Resistance I for five seconds.
 
 **Holy** · Cast **12s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 96 | — | 500 |
+| I | 80 | — | 500 |
 
 Base release / active phase: **5.2s**.
 
@@ -160,13 +160,13 @@ Spell ID: `resonant_arcana:final_judgement`. Inspect ranks with `/resonantarcana
 
 ### Eternal Winter
 
-Bury a sixteen-block area in a ten-second blizzard. Eight cold pulses damage enemies, applying Slowness IV and freezing buildup. The final burst deals triple damage. Terrain is not changed.
+Unleash a ten-second blizzard over the marked area. Eight pulses damage and freeze enemies with Slowness IV. A final burst deals triple damage. Terrain remains intact.
 
 **Ice** · Cast **11s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 64 | — | 480 |
+| I | 40 | — | 480 |
 
 Base release / active phase: **10s**.
 
@@ -176,7 +176,7 @@ Spell ID: `resonant_arcana:eternal_winter`. Inspect ranks with `/resonantarcana 
 
 ### Explosion
 
-Lock a target and chant for 7.7 seconds. Five orange-gold seals feed a vertical ignition column while coloured sparks gather around you. Detonate for 256 damage over sixteen blocks, followed by a rising fireball and expanding ground shockwave. The spectacle does not repeat damage or break terrain. Brief exhaustion follows the blast.
+Lock your aim and channel five golden seals into a towering ignition beam. Release one immense explosion; the rising fireball and shockwave deal no extra hits. Brief Slowness and Weakness follow the blast.
 
 **Fire** · Cast **7.7s** · Cooldown **120s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 
@@ -192,7 +192,7 @@ Spell ID: `resonant_arcana:explosion`. Inspect ranks with `/resonantarcana spell
 
 ### I Am Atomic
 
-Anchor a sixteen-block violet containment sphere and compress mana at a spectral sword tip for 13.5 seconds. Captured enemies are held within the boundary; bosses and fully knockback-resistant foes resist containment. Allies gain brief Resistance I and hostile projectiles crossing the sphere are absorbed. Release one 512-damage violet detonation, sparing allies and terrain. Moving more than three blocks interrupts the ritual. The full recording plays at its original pitch; cast-speed bonuses do not shorten this ritual.
+Anchor a violet containment sphere and compress mana at a spectral sword. Hold enemies inside, shelter allies and absorb hostile projectiles crossing the boundary. Release one devastating detonation. Moving more than three blocks interrupts the ritual; bosses resist containment.
 
 **Ender** · Cast **13.5s** · Cooldown **180s** · Range **32 blocks** · Radius / half-width **16 blocks**.
 
@@ -208,7 +208,7 @@ Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spe
 
 ### Doom Beam
 
-Compress a centred black hole for 13 seconds; its rim turns emerald halfway through. Release a green beacon-core plasma beam for 9.5 seconds, connected to your hands and following your position and aim. Each visible enemy entering it takes one 320-damage hit. Solid cover blocks it. Fixed recorded windup.
+Compress a black singularity that turns emerald halfway through the charge. Release a green plasma beam that follows your movement and aim. Each enemy entering its path takes one hit; solid cover stops it.
 
 **Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
 

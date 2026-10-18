@@ -170,16 +170,7 @@ final class IronsCompat {
             }
         }
         @Override public List<MutableComponent> getUniqueInfo(int spellLevel,LivingEntity entity){
-            var info=new ArrayList<MutableComponent>();
-            info.add(Component.literal(spell.description()));
-            float power=getSpellPower(spellLevel,entity)/100f;
-            info.add(Component.literal(spell.category().title+" • "+SpellInfo.school(spell.theme)));
-            if(spell.damage>0)info.add(Component.literal(String.format(Locale.ROOT,"Damage: %.1f%s",spell.damage*power,spell.pulses()>1?" per hit / pulse":"")));
-            if(spell.healing()>0)info.add(Component.literal(String.format(Locale.ROOT,"Healing: %.1f health%s",spell.healing()*power,spell.pulses()>1?" per pulse":"")));
-            if(castTime>0)info.add(Component.literal(String.format(Locale.ROOT,"Windup: %.2fs",getEffectiveCastTime(spellLevel,entity)/20.0)));
-            if(spell.range>0)info.add(Component.literal("Base range: "+(int)spell.range+" blocks"));
-            if(spell.duration()>0)info.add(Component.literal(String.format(Locale.ROOT,"Base duration: %.1fs",spell.duration()/20.0)));
-            info.addAll(SpellInfo.martial(spell,power));return info;
+            return SpellInfo.overview(spell,getSpellPower(spellLevel,entity)/100f,getEffectiveCastTime(spellLevel,entity)/20.0);
         }
     }
 }

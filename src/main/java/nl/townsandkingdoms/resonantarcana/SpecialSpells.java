@@ -10,7 +10,7 @@ final class SpecialSpells {
     static boolean begin(Cast c){
         c.duration=c.spell.duration();
         if(c.spell.kind==Spell.Kind.ASCENSION){effect(c.caster,ArcanaEffects.SERAPH_FLIGHT,c.duration+1,0);return true;}
-        c.pos=c.caster.getEyePosition();
+        c.pos=BeamRitual.origin(c.caster);
         if(c.spell==Spell.DOOM_BEAM)c.pos=BeamRitual.origin(c.caster);
         c.anchor=clipLoaded(c.level,c.pos,c.dir,beamRange(c),c.caster);return true;
     }
@@ -29,8 +29,8 @@ final class SpecialSpells {
         if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,c.pos,c.anchor,c.spell==Spell.DOOM_BEAM?6:3.2);
         if(c.age==1)RecordedSpells.release(c);
         {
-            for(var victim:near(c.caster,c.pos.lerp(c.anchor,.5),c.spell.range*.5+c.spell.radius))
-                if((victim.getBoundingBox().inflate(c.spell.radius).contains(c.pos)||victim.getBoundingBox().inflate(c.spell.radius).clip(c.pos,c.anchor).isPresent())&&visible(c,c.pos,victim.getBoundingBox().getCenter()))hit(c,victim,c.pos,true);
+            for(var victim:lineTargets(c,c.pos,c.anchor,c.spell.radius))
+                if(visible(c,c.pos,victim.getBoundingBox().getCenter()))hit(c,victim,c.pos,true);
             if(c.age==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.anchor,c.anchor,5);
         }
         return c.age<c.duration;

@@ -1,12 +1,12 @@
 # Configuration
 
-Resonant Arcana 0.13 separates authoritative server rules from local client preferences. Files are generated on first launch.
+Resonant Arcana separates authoritative server rules from local client preferences. Files are generated on first launch.
 
 - **Server:** `<world>/serverconfig/resonantarcana-server.toml`. These values synchronize to joining clients. On a dedicated server, `<world>` is the configured level folder.
 - **New-world defaults:** copy the server file to `defaultconfigs/resonantarcana-server.toml` before creating a world. This does not overwrite existing worlds.
 - **Client:** `config/resonantarcana-client.toml`. Each player controls their own display, mouse input and native particle density.
 
-Stop the game or server before editing. Restart after changes. Existing `resonantarcana-server.toml` and `resonantarcana-client.toml` settings from 0.12 can still be used. The namespace change does not migrate saved items or spells.
+Stop the game or server before editing. Restart after changes. Existing configuration files retain their settings.
 
 ## Server settings
 
@@ -135,3 +135,11 @@ Targets actually enter `resonant_arcana:void_exile`; UUID, equipment, NBT and or
 Bosses, creative/spectator players, invulnerable or dimension-immune targets, passengers, mounts and leashed creatures resist. Add entity types to `resonant_arcana:exile_immune` with a datapack to extend immunity. Ally and PvP protections are checked again on return.
 
 If the origin becomes obstructed, the spell checks nearby clear positions and then world spawn. If no clear return is available it retries rather than suffocating or deleting the target. This spell temporarily loads its private void cell and return chunks; it does not edit battlefield blocks. Up to 128 active cells are supported.
+
+## Void Domain and search
+
+Void Domain has a 100-tick base cast, 240 base mana (+20 per rank), a 1,800-tick cooldown and a fixed 14-block radius. Its 300-tick duration scales with spell power up to 600 ticks. Each ten-tick pulse refreshes effects for thirty ticks, so benefits fade within 1.5 seconds of leaving. It grants Resistance II, Regeneration II, Speed II and +25% spell power to eligible allies; enemies receive Slowness III, Weakness II and Darkness. Benefits do not stack with another domain's copy of the same effect. Line of sight, PvP and ally rules apply. Teamless players count as allies when `healTeamlessPlayers` is enabled.
+
+Individual scrolls share Iron's scroll item ID. Search their normal tooltip keywords or use the debug archive's text box; combine terms such as `ender buff aoe`, `ice slow` or `cataclysm`. Real spell-registry datapack tags live under `resonant_arcana:categories/<category>` and `resonant_arcana:schools/<school>` in the `irons_spellbooks:spells` registry. Optional boss entries are marked non-required. These are spell tags, not per-scroll item tags. Equipment item tags are `resonant_arcana:spellbooks` and `resonant_arcana:debug_tools`.
+
+The 0.28 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same version (protocol 19). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.

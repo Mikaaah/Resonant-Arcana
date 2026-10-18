@@ -15,7 +15,11 @@ def main(only=None):
         if only and ident not in only:continue
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c='#ab3036' if kind in ('BOSS_TENTACLE','BOSS_WRATH') else '#c49b60' if kind=='BOSS_SAND' else PALETTES[theme];white='#ff7355' if kind=='DOOM' else '#edfff8';c='#ed1936' if kind=='DOOM' else c;rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if name=='VOID_EXILE':
+        if name=='VOID_DOMAIN':
+            d.ellipse((13,13,115,115),fill='#080210',outline='#ac70ef',width=7)
+            d.arc((21,40,107,88),0,360,fill='#d8b9ff',width=5)
+            line([(40,98),(64,77),(88,98)],6,white)
+        elif name=='VOID_EXILE':
             d.ellipse((27,10,101,118),fill='#090215',outline='#ba7aff',width=7)
             d.polygon([(66,22),(47,57),(60,64),(46,103),(80,66),(68,60),(83,28)],fill='#cda0ff')
             for x,y in [(17,40),(104,58),(21,87)]:

@@ -28,6 +28,8 @@ final class ArcanaEffects {
         .addAttributeModifier(net.neoforged.neoforge.common.NeoForgeMod.CREATIVE_FLIGHT,id("seraph_flight"),1,Operation.ADD_VALUE));
     static final net.minecraft.core.Holder<MobEffect> SERAPH_GRACE=REGISTER.register("seraph_grace",()->new Beneficial(0xffe9a5)
         .addAttributeModifier(AttributeRegistry.SPELL_POWER,id("seraph_power"),.15,Operation.ADD_MULTIPLIED_TOTAL));
+    static final net.minecraft.core.Holder<MobEffect> VOID_EMPOWERMENT=REGISTER.register("void_empowerment",()->new Beneficial(0x9c65de)
+        .addAttributeModifier(AttributeRegistry.SPELL_POWER,id("void_power"),.25,Operation.ADD_MULTIPLIED_TOTAL));
     private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,path);}
     private static final class Beneficial extends MobEffect {Beneficial(int color){super(MobEffectCategory.BENEFICIAL,color);}}
     private ArcanaEffects(){}

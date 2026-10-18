@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:blood_spark",
+    "resonant_arcana:blood_wave",
+    "resonant_arcana:blood_explode",
+    "resonant_arcana:blood_stun",
+    "resonant_arcana:blood_block",
+    "resonant_arcana:sanguine_drain",
+    "resonant_arcana:blood_lance",
+    "resonant_arcana:blood_needles",
+    "resonant_arcana:blood_reap",
+    "resonant_arcana:crimson_tether",
+    "resonant_arcana:sanguine_pact",
+    "resonant_arcana:crimson_harvest",
+    "resonant_arcana:blood_rend",
+    "resonant_arcana:crimson_reversal",
+    "resonant_arcana:crimson_eclipse"
+  ]
+}

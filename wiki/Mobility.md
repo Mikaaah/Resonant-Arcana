@@ -56,11 +56,11 @@ Launch forwards in a rising rush and hit nearby enemies in a four-block launch b
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 45 |
-| II | 15 | — | 54 |
-| III | 18 | — | 63 |
-| IV | 21 | — | 72 |
-| V | 24 | — | 81 |
+| I | 20 | — | 45 |
+| II | 25 | — | 54 |
+| III | 30 | — | 63 |
+| IV | 35 | — | 72 |
+| V | 40 | — | 81 |
 
 Spell ID: `resonant_arcana:phoenix_rush`. Inspect ranks with `/resonantarcana spell phoenix_rush <rank>`.
 
@@ -152,11 +152,11 @@ Blink forward with a blood slash along the clear path, adding half your melee at
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 35 |
-| II | 12.5 | — | 40 |
-| III | 15 | — | 45 |
-| IV | 17.5 | — | 50 |
-| V | 20 | — | 55 |
+| I | 16 | — | 35 |
+| II | 20 | — | 40 |
+| III | 24 | — | 45 |
+| IV | 28 | — | 50 |
+| V | 32 | — | 55 |
 
 Weapon contribution: add half the melee attack attribute at release before spell-power scaling.
 
@@ -170,11 +170,11 @@ Burst forward along a clear path as a phoenix, leaving a burning silhouette. Aft
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 18 | — | 45 |
-| II | 22.5 | — | 51 |
-| III | 27 | — | 57 |
-| IV | 31.5 | — | 63 |
-| V | 36 | — | 69 |
+| I | 32 | — | 45 |
+| II | 40 | — | 51 |
+| III | 48 | — | 57 |
+| IV | 56 | — | 63 |
+| V | 64 | — | 69 |
 
 Base release / active phase: **1.2s**.
 

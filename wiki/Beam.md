@@ -2,19 +2,19 @@
 
 ### Flamethrower
 
-Channel a narrow stream of flame following your current aim for 1.5 seconds. Six quarter-second pulses can hit enemies intersecting the stream; solid cover stops it. Hits ignite for three seconds.
+Channel a narrow flame stream along your aim for three seconds. Six pulses damage enemies and ignite them for three seconds. Solid cover stops the stream.
 
 **Fire** · Cast **0.4s** · Cooldown **5s** · Range **12 blocks** · Radius / half-width **1.4 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 2 | — | 22 |
-| II | 2.5 | — | 26 |
-| III | 3 | — | 30 |
-| IV | 3.5 | — | 34 |
-| V | 4 | — | 38 |
+| I | 4 | — | 40 |
+| II | 5 | — | 44 |
+| III | 6 | — | 48 |
+| IV | 7 | — | 52 |
+| V | 8 | — | 56 |
 
-Base release / active phase: **1.5s**.
+Base release / active phase: **3s**.
 
 Spell ID: `resonant_arcana:flame_thrower`. Inspect ranks with `/resonantarcana spell flame_thrower <rank>`.
 
@@ -26,11 +26,11 @@ Connect up to five distinct visible enemies with jagged lightning links. Each ju
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 6 | — | 32 |
-| II | 7.5 | — | 38 |
-| III | 9 | — | 44 |
-| IV | 10.5 | — | 50 |
-| V | 12 | — | 56 |
+| I | 9 | — | 32 |
+| II | 11.25 | — | 38 |
+| III | 13.5 | — | 44 |
+| IV | 15.75 | — | 50 |
+| V | 18 | — | 56 |
 
 Spell ID: `resonant_arcana:chain_lightning`. Inspect ranks with `/resonantarcana spell chain_lightning <rank>`.
 
@@ -42,27 +42,27 @@ Drive a straight crimson lance through visible enemies along your aim. Each enem
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 9 | — | 35 |
-| II | 11.25 | — | 42 |
-| III | 13.5 | — | 49 |
-| IV | 15.75 | — | 56 |
-| V | 18 | — | 63 |
+| I | 16 | — | 35 |
+| II | 20 | — | 42 |
+| III | 24 | — | 49 |
+| IV | 28 | — | 56 |
+| V | 32 | — | 63 |
 
 Spell ID: `resonant_arcana:blood_lance`. Inspect ranks with `/resonantarcana spell blood_lance <rank>`.
 
 ### Soul Cannon
 
-Charge for two seconds, then launch a massive echo blast. Switch away to cancel charging.
+Charge an echo cannon for two seconds, then launch a travelling soul blast. It bursts against the first enemy or solid surface.
 
 **Eldritch** · Cast **2s** · Cooldown **14s** · Range **48 blocks** · Radius / half-width **5 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 16 | — | 90 |
-| II | 20 | — | 100 |
-| III | 24 | — | 110 |
-| IV | 28 | — | 120 |
-| V | 32 | — | 130 |
+| I | 48 | — | 90 |
+| II | 60 | — | 100 |
+| III | 72 | — | 110 |
+| IV | 84 | — | 120 |
+| V | 96 | — | 130 |
 
 Spell ID: `resonant_arcana:soul_cannon`. Inspect ranks with `/resonantarcana spell soul_cannon <rank>`.
 
@@ -74,11 +74,11 @@ Charge for 2.5 seconds, then fire a piercing storm lance. Solid cover stops the 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 30 | — | 85 |
-| II | 37.5 | — | 95 |
-| III | 45 | — | 105 |
-| IV | 52.5 | — | 115 |
-| V | 60 | — | 125 |
+| I | 56 | — | 85 |
+| II | 70 | — | 95 |
+| III | 84 | — | 105 |
+| IV | 98 | — | 115 |
+| V | 112 | — | 125 |
 
 Spell ID: `resonant_arcana:tempest_spear`. Inspect ranks with `/resonantarcana spell tempest_spear <rank>`.
 
@@ -90,11 +90,11 @@ Exhale a broad cone of flame following your aim for 1.5 seconds. Three pulses ca
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 50 |
-| II | 3.75 | — | 60 |
-| III | 4.5 | — | 70 |
-| IV | 5.25 | — | 80 |
-| V | 6 | — | 90 |
+| I | 7 | — | 50 |
+| II | 8.75 | — | 60 |
+| III | 10.5 | — | 70 |
+| IV | 12.25 | — | 80 |
+| V | 14 | — | 90 |
 
 Base release / active phase: **1.5s**.
 
@@ -108,33 +108,33 @@ Charge a piercing ray of holy light, striking each visible enemy on its line onc
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 22 | — | 70 |
-| II | 27.5 | — | 80 |
-| III | 33 | — | 90 |
-| IV | 38.5 | — | 100 |
-| V | 44 | — | 110 |
+| I | 44 | — | 70 |
+| II | 55 | — | 80 |
+| III | 66 | — | 90 |
+| IV | 77 | — | 100 |
+| V | 88 | — | 110 |
 
 Spell ID: `resonant_arcana:judgement_ray`. Inspect ranks with `/resonantarcana spell judgement_ray <rank>`.
 
 ### Cryo Lance
 
-Fire a precise piercing ice lance through visible enemies. Solid cover blocks it. Ice hits chill for two seconds and add 40 freezing ticks, capped at 240.
+Fire a precise piercing ice lance through visible enemies. Solid cover blocks it.
 
 **Ice** · Cast **0.9s** · Cooldown **6s** · Range **28 blocks** · Radius / half-width **0.7 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 10 | — | 38 |
-| II | 12.5 | — | 45 |
-| III | 15 | — | 52 |
-| IV | 17.5 | — | 59 |
-| V | 20 | — | 66 |
+| I | 18 | — | 38 |
+| II | 22.5 | — | 45 |
+| III | 27 | — | 52 |
+| IV | 31.5 | — | 59 |
+| V | 36 | — | 66 |
 
 Spell ID: `resonant_arcana:cryo_lance`. Inspect ranks with `/resonantarcana spell cryo_lance <rank>`.
 
 ### Arcane Devastator
 
-Charge for 6.5 seconds to the recording’s second attack, then release a broad cosmic beam for 7.4 seconds along your final aim. Each visible enemy entering it takes one 120-base-damage hit. Solid cover stops the beam. Fixed windup, original recording pitch.
+Channel cosmic energy, then release a sustained beam along your final aim. Each enemy entering its path takes one hit. New cover stops the beam.
 
 **Evocation** · Cast **6.5s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 

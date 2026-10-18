@@ -29,12 +29,12 @@ final class AdvancedChecks {
             for(int rank=1;rank<=5;rank++){
                 reset(p);var target=enemy(level,0,6);float power=Spell.RIFT_DRAW.power(rank);
                 cast(p,Spell.RIFT_DRAW,rank,check);advance(11,target);check.accept(target.getHealth()==200,"rift draw waits for warning: "+rank);advance(4,target);
-                check.accept(close(200-target.getHealth(),(16+5)*power),"rift draw weapon and rank damage: "+rank);target.discard();
+                check.accept(close(200-target.getHealth(),(Spell.RIFT_DRAW.damage+5)*power),"rift draw weapon and rank damage: "+rank);target.discard();
                 reset(p);target=enemy(level,0,4);cast(p,Spell.CRIMSON_REVERSAL,rank,check);
-                check.accept(p.getZ()>6&&close(200-target.getHealth(),(10+5)*power),"reversal dash cuts its path once: "+rank+" z="+p.getZ()+" hp="+target.getHealth()+" atk="+p.getAttributeValue(Attributes.ATTACK_DAMAGE));target.discard();
+                check.accept(p.getZ()>6&&close(200-target.getHealth(),(Spell.CRIMSON_REVERSAL.damage+5)*power),"reversal dash cuts its path once: "+rank+" z="+p.getZ()+" hp="+target.getHealth()+" atk="+p.getAttributeValue(Attributes.ATTACK_DAMAGE));target.discard();
                 reset(p);target=enemy(level,0,2);cast(p,Spell.ASHEN_REBIRTH,rank,check);advance(15,target);
                 check.accept(p.getZ()>6&&target.getHealth()==200,"rebirth moves but leaves delayed damage: "+rank);advance(2,target);
-                check.accept(close(200-target.getHealth(),18*power),"rebirth detonation scales: "+rank);target.discard();
+                check.accept(close(200-target.getHealth(),Spell.ASHEN_REBIRTH.damage*power),"rebirth detonation scales: "+rank);target.discard();
                 reset(p);p.setXRot(60);p.setHealth(5);cast(p,Spell.LAST_STAND,rank,check);
                 check.accept(close(p.getAbsorptionAmount(),4*power)&&p.hasEffect(MobEffects.DAMAGE_RESISTANCE),"last stand grants scaled shield and resistance: "+rank);
                 BlockPos banner=findBanner(level,p.blockPosition());check.accept(banner!=null,"last stand plants a temporary yellow banner: "+rank);
@@ -42,20 +42,20 @@ final class AdvancedChecks {
                 check.accept(close(p.getHealth(),5+6*power),"last stand final heal scales: "+rank);
                 if(banner!=null)check.accept(level.getBlockState(banner).isAir(),"last stand removes its temporary banner on expiry: "+rank);
                 reset(p);target=enemy(level,0,3);cast(p,Spell.GLACIAL_COUNTER,rank,check);advance(3,target);p.hurt(level.damageSources().mobAttack(target),5);
-                check.accept(p.getHealth()==20&&close(200-target.getHealth(),12*power*1.75f),"perfect guard blocks and counters: "+rank+" player="+p.getHealth()+" target="+target.getHealth()+" guard="+p.hasEffect(ArcanaEffects.GLACIAL_GUARD));target.discard();
+                check.accept(p.getHealth()==20&&close(200-target.getHealth(),Spell.GLACIAL_COUNTER.damage*power*1.75f),"perfect guard blocks and counters: "+rank+" player="+p.getHealth()+" target="+target.getHealth()+" guard="+p.hasEffect(ArcanaEffects.GLACIAL_GUARD));target.discard();
                 reset(p);target=enemy(level,0,3);cast(p,Spell.GLACIAL_COUNTER,rank,check);advance(8,target);p.hurt(level.damageSources().mobAttack(target),5);
-                check.accept(close(p.getHealth(),18.5f)&&close(200-target.getHealth(),12*power),"late guard mitigates and counters: "+rank);target.discard();
+                check.accept(close(p.getHealth(),18.5f)&&close(200-target.getHealth(),Spell.GLACIAL_COUNTER.damage*power),"late guard mitigates and counters: "+rank);target.discard();
                 reset(p);target=enemy(level,0,3);var secondary=enemy(level,3,3);cast(p,Spell.THUNDERBRAND,rank,check);
                 for(int i=0;i<2;i++){target.invulnerableTime=0;target.hurt(level.damageSources().playerAttack(p),2);}
                 check.accept(close(target.getHealth(),196)&&secondary.getHealth()==200,"brand waits for third melee hit: "+rank);
                 target.invulnerableTime=0;target.hurt(level.damageSources().playerAttack(p),2);
-                check.accept(close(200-target.getHealth(),6+8*power)&&close(200-secondary.getHealth(),8*power),"brand empowers third hit and chains once: "+rank);
+                check.accept(close(200-target.getHealth(),6+Spell.THUNDERBRAND.damage*power)&&close(200-secondary.getHealth(),Spell.THUNDERBRAND.damage*power),"brand empowers third hit and chains once: "+rank);
                 target.discard();secondary.discard();
                 reset(p);target=enemy(level,0,3);cast(p,Spell.PHANTOM_FORMATION,rank,check);target.hurt(level.damageSources().playerAttack(p),2);advance(10,target);
                 check.accept(close(target.getHealth(),198),"formation has an arming flight: "+rank);advance(35,target);
-                check.accept(close(200-target.getHealth(),2+8*power),"one melee hit launches one nonrecursive blade: "+rank);target.discard();
+                check.accept(close(200-target.getHealth(),2+Spell.PHANTOM_FORMATION.damage*power),"one melee hit launches one nonrecursive blade: "+rank);target.discard();
                 reset(p);target=enemy(level,0,5);cast(p,Spell.FUNERAL_BELL,rank,check);advance(65,target);
-                check.accept(close(200-target.getHealth(),40*power),"funeral bell has two normal and one heavy hit: "+rank);target.discard();
+                check.accept(close(200-target.getHealth(),Spell.FUNERAL_BELL.damage*5*power),"funeral bell has two normal and one heavy hit: "+rank);target.discard();
                 reset(p);target=enemy(level,0,4);var behind=enemy(level,0,-4);
                 var arrow=new Arrow(EntityType.ARROW,level);arrow.setOwner(target);arrow.setPos(0,82,2);level.addFreshEntity(arrow);
                 var owned=new Arrow(EntityType.ARROW,level);owned.setOwner(p);owned.setPos(1,82,2);level.addFreshEntity(owned);
@@ -65,7 +65,7 @@ final class AdvancedChecks {
                 if(BossesRiseCompat.available()){
                     reset(p);target=enemy(level,0,6);var ring=enemy(level,3,6);cast(p,Spell.KRAKENS_WRATH,rank,check);advance(46,target,ring);
                     check.accept(target.getHealth()==200&&ring.getHealth()==200,"wrath has no premature damage: "+rank);advance(105,target,ring);
-                    check.accept(close(200-target.getHealth(),36*power)&&close(200-ring.getHealth(),48*power),"wrath outer hits bounded and centre triples: "+rank);target.discard();ring.discard();
+                    check.accept(close(200-target.getHealth(),3*Spell.KRAKENS_WRATH.damage*power)&&close(200-ring.getHealth(),4*Spell.KRAKENS_WRATH.damage*power),"wrath outer hits bounded and centre triples: "+rank);target.discard();ring.discard();
                 }
                 SpellEngine.clear();check.accept(SpellEngine.activeCount()==0,"advanced spell cleanup: "+rank);
             }
@@ -91,16 +91,16 @@ final class AdvancedChecks {
         reset(p);var target=enemy(level,0,3);var neighbor=enemy(level,3,3);cast(p,Spell.THUNDERBRAND,1,check);
         for(int i=0;i<2;i++){target.invulnerableTime=0;target.hurt(level.damageSources().playerAttack(p),2);}
         target.setHealth(1);target.invulnerableTime=0;target.hurt(level.damageSources().playerAttack(p),2);
-        check.accept(!target.isAlive()&&close(neighbor.getHealth(),192),"brand discharge counts a killing blow");target.discard();
+        check.accept(!target.isAlive()&&close(neighbor.getHealth(),188),"brand discharge counts a killing blow");target.discard();
         target=enemy(level,0,3);target.hurt(level.damageSources().playerAttack(p),2);
-        check.accept(close(target.getHealth(),198)&&close(neighbor.getHealth(),192),"killing discharge resets charges instead of granting permanent empowered hits");target.discard();neighbor.discard();
+        check.accept(close(target.getHealth(),198)&&close(neighbor.getHealth(),188),"killing discharge resets charges instead of granting permanent empowered hits");target.discard();neighbor.discard();
         reset(p);target=enemy(level,0,3);neighbor=enemy(level,3,3);cast(p,Spell.THUNDERBRAND,1,check);
         for(int i=0;i<2;i++){target.invulnerableTime=0;target.hurt(level.damageSources().indirectMagic(p,p),1);}
         target.invulnerableTime=0;target.hurt(level.damageSources().playerAttack(p),2);
         check.accept(close(target.getHealth(),196)&&neighbor.getHealth()==200,"spell damage cannot charge thunderbrand");target.discard();neighbor.discard();
         reset(p);target=enemy(level,0,3);cast(p,Spell.PHANTOM_FORMATION,1,check);
         for(int i=0;i<5;i++){target.invulnerableTime=0;target.hurt(level.damageSources().playerAttack(p),2);advance(35,target);}
-        check.accept(close(target.getHealth(),158),"formation has exactly four level-I follow-up swords");target.discard();
+        check.accept(close(target.getHealth(),142),"formation has exactly four level-I follow-up swords");target.discard();
         reset(p);target=enemy(level,0,-3);cast(p,Spell.GLACIAL_COUNTER,1,check);
         p.hurt(level.damageSources().generic(),2);p.invulnerableTime=0;p.hurt(level.damageSources().mobAttack(target),2);
         check.accept(close(p.getHealth(),16)&&target.getHealth()==200&&p.hasEffect(ArcanaEffects.GLACIAL_GUARD),"guard cannot block environmental or rear damage");advance(20);check.accept(!p.hasEffect(ArcanaEffects.GLACIAL_GUARD),"untriggered guard expires");target.discard();

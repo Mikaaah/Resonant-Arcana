@@ -2,9 +2,9 @@
 
 [Project status](https://github.com/Mikaaah/Mikaaah/blob/master/STATUS.md) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues) · [Creator’s CurseForge projects](https://www.curseforge.com/members/mikaaah/projects)
 
-An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **153 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
+An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **154 core spells**, twelve optional Bosses’Rise spells, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.27.0-alpha](downloads/resonant-arcana-0.27.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.28.0-alpha](downloads/resonant-arcana-0.28.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -18,15 +18,17 @@ The supplied textures are used unchanged. These are normal, inscribable Iron’s
 
 Each recipe uses a netherite Iron’s spellbook, a nether star and themed materials. Inscribe scrolls at Iron’s inscription table. The books accept both native Iron’s spells and addon spells; they have no fixed loadout.
 
-**Debug Wand:** one creative/testing item with every enabled spell. It uses the supplied copper-chisel texture and has no survival recipe. Press **X** to open the categorized spell archive. Selecting a spell never casts it. The wand uses Iron’s normal mana, cast-time and cooldown rules. Sneak-use a higher-rank matching scroll in the offhand to teach that spell’s rank.
-
-The ten old school wands, their recipes and their textures have been removed. Existing spell IDs and learned Iron’s spellbook entries remain unchanged; old wand items are not migrated into a new item.
+**Debug Wand:** one creative/testing item with every enabled spell. It uses the supplied copper-chisel texture and has no survival recipe. Press **X** to open the searchable spell archive. Search names, schools and keywords such as `ender buff aoe`, then narrow the results with category filters. Selecting a spell never casts it. The wand uses Iron’s normal mana, cast-time and cooldown rules. Sneak-use a higher-rank matching scroll in the offhand to teach that spell’s rank.
 
 ## Spell categories
 
-All scrolls share **one Spells creative tab**, alongside the Equipment tab. Functional categories remain in descriptions and as filters in the debug archive. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
+All scrolls share **one Spells creative tab**, alongside the Equipment tab. Scrolls are ordered by school, category and name; server-disabled spells are hidden. Functional categories remain in descriptions and as filters in the debug archive. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
 
 ## Rituals and new spells
+
+**Void Domain:** a five-second cast establishes a fixed, fourteen-block sphere for fifteen seconds at base power. It weakens enemies and strongly empowers eligible allies; walls and allegiance rules apply. The sphere is dark from outside and translucent inside.
+
+See the [catalogue audit](CATALOGUE_AUDIT.md) for every reviewed damage value. Tooltips distinguish damage per hit from multi-stage sequences.
 
 ### Void Exile
 
@@ -76,7 +78,7 @@ Supply compile-only API JARs, then run with Java 21:
 ./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar
 ```
 
-The packaged-asset check verifies the four item assets, exactly four selective AAA effects and eight recorded OGG streams and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.27.0-alpha:** 10,972 dedicated-server checks pass without Bosses’Rise and 11,751 with it, including moving/turning Doom Beam, caster-owned visual packet validation the vertical Explosion mark, and Void Exile transfer/persistence, native casting, damage order and PvP returns. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies equipment, spell icons and tags, exactly four selective AAA effects and eight recorded OGG streams, and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.28.0-alpha:** 11,469 dedicated-server checks pass without Bosses’Rise and 12,284 with it. Coverage includes native casting and cancellation, rank damage, ally/PvP protection, beam movement and cover, Void Exile persistence, Void Domain effects and boundaries, spell tags, scroll keywords and corrected multi-hit cadence. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 

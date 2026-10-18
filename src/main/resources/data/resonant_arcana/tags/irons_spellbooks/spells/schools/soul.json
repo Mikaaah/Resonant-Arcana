@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:echo_bolt",
+    "resonant_arcana:sculk_wave",
+    "resonant_arcana:sonic_scream",
+    "resonant_arcana:soul_siphon",
+    "resonant_arcana:soul_prison",
+    "resonant_arcana:shrieking_pulse",
+    "resonant_arcana:amethyst_nova",
+    "resonant_arcana:echo_ward",
+    "resonant_arcana:soul_cannon",
+    "resonant_arcana:wisp_lantern",
+    "resonant_arcana:resonant_guard",
+    "resonant_arcana:memory_fracture",
+    "resonant_arcana:soulblast",
+    "resonant_arcana:funeral_bell",
+    "resonant_arcana:soul_requiem"
+  ]
+}

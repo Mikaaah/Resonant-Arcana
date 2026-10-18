@@ -61,7 +61,7 @@ final class SpellParticles {
     };}
     static void emit(ServerLevel level,Spell spell,SpellVisuals.Stage stage,Vec3 pos,Vec3 end,double size){
         // Soul Cannon retains its existing sequence. All particle work has a global per-tick cap.
-        if(spell==Spell.VOID_EXILE||spell==Spell.DOOM_BEAM||spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM||spell==Spell.SOUL_CANNON||remaining<=0)return;
+        if(spell==Spell.VOID_DOMAIN||spell==Spell.VOID_EXILE||spell==Spell.DOOM_BEAM||spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM||spell==Spell.SOUL_CANNON||remaining<=0)return;
         boolean impact=stage==SpellVisuals.Stage.IMPACT;
         boolean link=stage==SpellVisuals.Stage.LINK||stage==SpellVisuals.Stage.STRIKE;
         int count=Math.min(remaining,impact?20:link?16:6);remaining-=count;

@@ -16,11 +16,15 @@ final class NativeSpellEffects {
     private static final ArrayList<Ripple> RIPPLES=new ArrayList<>();
     private static ClientLevel world;
     private static int detail,outline;
+    private static final ParticleOptions MOSS=new BlockParticleOption(ParticleTypes.BLOCK,net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState());
+    private static final ParticleOptions[][] DUST=new ParticleOptions[Spell.Theme.values().length][2];
+    static {for(var theme:Spell.Theme.values())for(int i=0;i<2;i++){int c=theme.color;DUST[theme.ordinal()][i]=new DustParticleOptions(new Vector3f(((c>>16)&255)/255f,((c>>8)&255)/255f,(c&255)/255f),i==0?.9f:1.1f);}}
     private NativeSpellEffects(){}
     static void tick(){
         var level=Minecraft.getInstance().level;
         if(level!=world){RIPPLES.clear();world=level;}
         detail=ArcanaConfig.CLIENT_NATIVE_BUDGET.get();outline=detail/3;
+        if(Minecraft.getInstance().isPaused())return;
         for(int i=RIPPLES.size()-1;i>=0;i--){
             var r=RIPPLES.get(i);if(r.level()!=level||r.age()>=12){RIPPLES.remove(i);continue;}
             ring(level,r.spell(),r.center(),r.radius()*(r.age()+1)/12.0,true,0,1);
@@ -28,7 +32,7 @@ final class NativeSpellEffects {
         }
     }
     static void visual(WandNetwork.Visual msg){
-        if(!msg.valid())return;
+        if(!msg.valid()||(detail<=0&&outline<=0))return;
         var mc=Minecraft.getInstance();var level=mc.level;
         if(level==null||mc.player==null)return;
         Vec3 p=new Vec3(msg.x(),msg.y(),msg.z()),end=new Vec3(msg.endX(),msg.endY(),msg.endZ());
@@ -38,12 +42,14 @@ final class NativeSpellEffects {
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
+        if(spell==Spell.VOID_DOMAIN){VoidDomainEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.VOID_EXILE){VoidExileEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.DOOM_BEAM){DoomBeamEffects.visual(level,stage,p,end,size);return;}
         if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
-            case RITUAL_TARGET,RITUAL_END -> {} // Explosion target choreography is owned by CataclysmEffects.
+            case RITUAL_TARGET -> ring(level,spell,p,size*.7,true,time*.1,1);
+            case RITUAL_END -> {}
             case AREA -> area(level,spell,p,end,size,time,count);
             case LINK,STRIKE -> beam(level,spell,p,end,size,time,count);
             case FLIGHT -> flight(level,spell,p,end,size,time,count);
@@ -155,7 +161,7 @@ final class NativeSpellEffects {
             }
             return;
         }
-        Vec3 dir=end.subtract(p).normalize(),side=side(dir),up=side.cross(dir).normalize();
+        Vec3 dir=end.subtract(p).normalize();if(dir.lengthSqr()<.001)return;Vec3 side=side(dir),up=side.cross(dir).normalize();
         int n=(int)Math.clamp(p.distanceTo(end)*7,20,160);
         boolean lightning=s.theme==Spell.Theme.THUNDER;
         for(int i=0;i<n;i++){
@@ -164,11 +170,19 @@ final class NativeSpellEffects {
             Vec3 q=p.lerp(end,t).add(side.scale(Math.cos(a)*r)).add(up.scale(Math.sin(a)*r));
             point(level,primary(s),q,dir.scale(.02),10,false);
             if(i%3==0)point(level,accent(s),p.lerp(end,t),dir.scale(.04),9,false);
+            if(i%6==0)NativeSpellEffects.tinted(level,io.redspace.ironsspellbooks.registries.ParticleRegistry.WISP_PARTICLE.get(),q,dir.scale(.045),10,s.theme.color,.55f);
         }
     }
     private static void flight(ClientLevel level,Spell s,Vec3 p,Vec3 end,double size,double time,int count){
         Vec3 dir=end.subtract(p).normalize();if(dir.lengthSqr()<.01)dir=new Vec3(0,0,1);
         Vec3 side=side(dir),up=side.cross(dir).normalize();double radius=Math.min(2,size*.55);
+        if(s==Spell.FROST_NEEDLE||s==Spell.LUMINOUS_DART||s.kind==Spell.Kind.FAN){
+            for(int i=0;i<16;i++){
+                Vec3 q=p.subtract(dir.scale(i*.075));
+                point(level,i%4==0?accent(s):primary(s),q,dir.scale(.025),8,false);
+                if(i%4==0)point(level,dust(s,1.1f),q.add(side.scale(Math.sin(time+i)*.08)),Vec3.ZERO,9,false);
+            }return;
+        }
         boolean wave=s.kind==Spell.Kind.WAVE||s.kind==Spell.Kind.FROSTFRONT;
         for(int i=0;i<count;i++){
             double t=(i+.5)/count,a=time+t*Math.PI*2;
@@ -182,9 +196,6 @@ final class NativeSpellEffects {
                 :p.add(side.scale(Math.cos(a)*radius)).add(up.scale(Math.sin(a)*radius));
             point(level,i%4==0?accent(s):primary(s),q,dir.scale(.035),10,false);
             if(i%2==0)point(level,dust(s,1.1f),p.subtract(dir.scale(t*1.9)),dir.scale(-.02),12,false);
-        }
-        if(s==Spell.FROST_NEEDLE||s==Spell.LUMINOUS_DART||s.kind==Spell.Kind.FAN)for(int i=0;i<12;i++){
-            point(level,accent(s),p.add(dir.scale((i-6)*.12)),dir.scale(.04),8,false);
         }
         if(s==Spell.PRISMATIC_RUIN)for(int arm=0;arm<2;arm++)for(int i=0;i<20;i++){
             double a=time+i*Math.PI/10+arm*Math.PI;
@@ -204,9 +215,14 @@ final class NativeSpellEffects {
             double t=(i+.5)/count,a=time+t*Math.PI*4;
             Vec3 off=side.scale(Math.cos(a)*r*(1-t*.6)).add(up.scale(Math.sin(a)*r*(1-t*.6))).subtract(dir.scale(t*.7));
             point(level,i%3==0?accent(s):primary(s),p.add(off),off.scale(-.04),12,false);
+            if(i%4==0){
+                Vec3 opposite=side.scale(-Math.cos(a)*r*.8).add(up.scale(-Math.sin(a)*r*.8)).add(dir.scale(.15));
+                tinted(level,io.redspace.ironsspellbooks.registries.ParticleRegistry.WISP_PARTICLE.get(),p.add(opposite),opposite.scale(-.05),10,s.theme.color,.45f);
+            }
         }
     }
     private static void impact(ClientLevel level,Spell s,Vec3 p,double size,boolean major,int count){
+        if(s.category()==SpellCategory.MOBILITY&&!major)size=Math.min(size,.8);
         int n=major?count*3:count/2;
         for(int i=0;i<n;i++){
             double y=1-2*(i+.5)/n,r=Math.sqrt(1-y*y),a=i*2.399963;
@@ -216,12 +232,13 @@ final class NativeSpellEffects {
         if(major&&RIPPLES.size()<32)RIPPLES.add(new Ripple(level,s,p,Math.min(12,size),0));
     }
     private static Vec3 side(Vec3 dir){Vec3 v=dir.cross(new Vec3(0,1,0));return v.lengthSqr()<.01?new Vec3(1,0,0):v.normalize();}
-    private static ParticleOptions dust(Spell s,float scale){int c=s.theme.color;return new DustParticleOptions(new Vector3f(((c>>16)&255)/255f,((c>>8)&255)/255f,(c&255)/255f),scale);}
+    private static ParticleOptions dust(Spell s,float scale){return DUST[s.theme.ordinal()][scale<=1?0:1];}
     private static ParticleOptions primary(Spell s){return switch(s){
         case WARSCREAM -> ParticleTypes.POOF;
         case WISP_LANTERN,SOUL_CANNON -> ParticleTypes.SOUL_FIRE_FLAME;
         case DREAD_EFFIGY,NIGHT_BLOOM -> ParticleTypes.WITCH;
-        case SPORE_TOTEM -> ParticleTypes.SPORE_BLOSSOM_AIR;
+        case SPORE_TOTEM,VIPER_FANGS -> ParticleTypes.SPORE_BLOSSOM_AIR;
+        case THORN_LASH,BRAMBLE_RING -> MOSS;
         case CORROSIVE_RAIN -> SpellParticles.particle(Spell.Theme.POISON);
         case HAILSTORM,ICE_SERPENT,CRYSTAL_BARRAGE -> ParticleTypes.SNOWFLAKE;
         default -> SpellParticles.particle(s.theme);

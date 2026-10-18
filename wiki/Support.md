@@ -1,6 +1,6 @@
 ## Support & Defense
 
-### Blood Ward
+### Crimson Ward
 
 Deflect incoming hostile projectiles for 4 seconds at level I. Higher spell power extends the duration, up to 8 seconds.
 
@@ -232,17 +232,17 @@ Spell ID: `resonant_arcana:frozen_aegis`. Inspect ranks with `/resonantarcana sp
 
 ### Warscream
 
-Unleash three ground-shaking roars over eight blocks. Each pulse damages visible enemies; the roar draws them closer and taunts hostile mobs. You and nearby eligible allies gain Resistance I. Taunt and defense last 3/4/5/6/7 seconds at levels I–V.
+Release three ground-shaking roars that damage, pull and taunt nearby enemies. You and eligible allies gain Resistance I for 3–7 seconds, depending on rank.
 
 **Holy** · Cast **0.6s** · Cooldown **20s** · Range **8 blocks** · Radius / half-width **8 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 3 | — | 45 |
-| II | 3.75 | — | 50 |
-| III | 4.5 | — | 55 |
-| IV | 5.25 | — | 60 |
-| V | 6 | — | 65 |
+| I | 5 | — | 45 |
+| II | 6.25 | — | 50 |
+| III | 7.5 | — | 55 |
+| IV | 8.75 | — | 60 |
+| V | 10 | — | 65 |
 
 Base release / active phase: **8s**.
 
@@ -312,11 +312,11 @@ Guard for 0.9 seconds against one frontal, blockable hostile hit. The first 0.3 
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 12 | — | 30 |
-| II | 15 | — | 34 |
-| III | 18 | — | 38 |
-| IV | 21 | — | 42 |
-| V | 24 | — | 46 |
+| I | 18 | — | 30 |
+| II | 22.5 | — | 34 |
+| III | 27 | — | 38 |
+| IV | 31.5 | — | 42 |
+| V | 36 | — | 46 |
 
 Base release / active phase: **0.9s**.
 
@@ -330,11 +330,11 @@ Enchant your weapon for ten seconds. Every third successful player melee hit rel
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
-| I | 8 | — | 55 |
-| II | 10 | — | 61 |
-| III | 12 | — | 67 |
-| IV | 14 | — | 73 |
-| V | 16 | — | 79 |
+| I | 12 | — | 55 |
+| II | 15 | — | 61 |
+| III | 18 | — | 67 |
+| IV | 21 | — | 73 |
+| V | 24 | — | 79 |
 
 Base release / active phase: **10s**.
 
@@ -342,7 +342,7 @@ Spell ID: `resonant_arcana:thunderbrand`. Inspect ranks with `/resonantarcana sp
 
 ### Seraph Ascendant
 
-Unfurl radiant wings and gain flight for twenty seconds. Double-jump to fly. Nearby allies receive 15% more spell power and one base health per second while in your eight-block aura. Ending the spell grants brief Slow Falling.
+Gain flight for twenty seconds; double-jump to fly. Nearby eligible allies gain 15% spell power and receive healing once per second. Slow Falling protects you when the blessing ends.
 
 **Holy** · Cast **4s** · Cooldown **60s** · Range **0 blocks** · Radius / half-width **8 blocks**.
 
@@ -359,5 +359,23 @@ Base release / active phase: **20s**.
 Flight lasts twenty seconds at every rank. Healing scales with spell power; the nearby spell-power blessing stays at +15%. Flight is removed on cleanup, with four seconds of Slow Falling. Other sources of native flight are preserved.
 
 Spell ID: `resonant_arcana:seraph_ascendant`. Inspect ranks with `/resonantarcana spell seraph_ascendant <rank>`.
+
+### Void Domain
+
+Raise a vast black sphere at your casting location for fifteen seconds. Enemies inside suffer Slowness III, Weakness II and Darkness. You and eligible allies gain Resistance II, Regeneration II, Speed II and 25% spell power. Effects fade shortly after leaving; walls block their influence.
+
+**Ender** · Cast **5s** · Cooldown **90s** · Range **0 blocks** · Radius / half-width **14 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 240 |
+| II | — | — | 260 |
+| III | — | — | 280 |
+| IV | — | — | 300 |
+| V | — | — | 320 |
+
+Base release / active phase: **15s**.
+
+Spell ID: `resonant_arcana:void_domain`. Inspect ranks with `/resonantarcana spell void_domain <rank>`.
 
 [← Home](Home.md)

@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:flame_wave",
+    "resonant_arcana:fire_comet",
+    "resonant_arcana:fireball",
+    "resonant_arcana:ignite",
+    "resonant_arcana:fire_twister",
+    "resonant_arcana:flame_thrower",
+    "resonant_arcana:flame_shock_wave",
+    "resonant_arcana:ember_veil",
+    "resonant_arcana:solar_cataclysm",
+    "resonant_arcana:cinder_step",
+    "resonant_arcana:phoenix_rush",
+    "resonant_arcana:dragon_breath",
+    "resonant_arcana:cinder_cleave",
+    {
+      "id": "resonant_arcana:dragons_guard",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:dragons_pyre",
+      "required": false
+    },
+    "resonant_arcana:ashen_rebirth",
+    "resonant_arcana:world_pyre",
+    "resonant_arcana:explosion"
+  ]
+}

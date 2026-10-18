@@ -19,17 +19,23 @@ final class WandSelectScreen extends Screen {
     private Spell hovered;
     private int page;
     private int category=-1;
+    private String query="";
+    private net.minecraft.client.gui.components.EditBox search;
+    private boolean searchFocused;
     private java.util.List<Spell> filtered;
     private int left,top,panelWidth,cardHeight,gridBottom;
-    WandSelectScreen(WandItem wand,ItemStack stack){super(Component.literal("Debug Spell Archive"));this.wand=wand;this.stack=stack;this.page=Math.max(0,wand.spells.indexOf(wand.selected(stack)))/12;}
+    WandSelectScreen(WandItem wand,ItemStack stack){super(Component.literal("Debug Spell Archive"));this.wand=wand;this.stack=stack;this.page=Math.max(0,SpellIndex.ordered().indexOf(wand.selected(stack)))/12;}
     @Override protected void init(){
-        filtered=wand.spells.stream().filter(s->category<0||s.category()==SpellCategory.values()[category]).toList();
+        filtered=SpellIndex.ordered().stream().filter(wand.spells::contains).filter(s->category<0||s.category()==SpellCategory.values()[category]).filter(s->SpellIndex.matches(s,query)).toList();
         page=Math.clamp(page,0,Math.max(0,(filtered.size()-1)/12));
         panelWidth=Math.min(660,width-24);left=(width-panelWidth)/2;top=12;
         cardHeight=Math.clamp((height-170)/3,25,48);int cardWidth=(panelWidth-30)/4;
         clearWidgets();
         for(int i=0;i<12&&page*12+i<filtered.size();i++)addRenderableWidget(new Card(wand.spells.indexOf(filtered.get(page*12+i)),left+9+(i%4)*(cardWidth+4),top+58+(i/4)*(cardHeight+5),cardWidth,cardHeight));
-        addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal(category<0?"All categories":SpellCategory.values()[category].title),b->{category++;if(category>=SpellCategory.values().length)category=-1;page=0;init();}).bounds(left+10,top+32,panelWidth-20,20).build());
+        search=new net.minecraft.client.gui.components.EditBox(font,left+10,top+32,panelWidth/2-16,20,Component.literal("Search spells"));
+        search.setMaxLength(80);search.setHint(Component.literal("Search names, schools, keywords…"));search.setValue(query);
+        search.setResponder(value->{query=value;page=0;searchFocused=true;init();});addRenderableWidget(search);if(searchFocused)setFocused(search);
+        addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal(category<0?"All categories":SpellCategory.values()[category].title),b->{category++;if(category>=SpellCategory.values().length)category=-1;page=0;searchFocused=false;init();}).bounds(left+panelWidth/2,top+32,panelWidth/2-10,20).build());
         if(filtered.size()>12){
             addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal("<"),b->turnPage(-1)).bounds(left+panelWidth-92,top+8,20,20).build());
             addRenderableWidget(net.minecraft.client.gui.components.Button.builder(Component.literal(">"),b->turnPage(1)).bounds(left+panelWidth-26,top+8,20,20).build());
@@ -45,6 +51,7 @@ final class WandSelectScreen extends Screen {
         onClose();
     }
     @Override public boolean keyPressed(int key,int scan,int modifiers){
+        if(search!=null&&search.isFocused()&&key!=GLFW.GLFW_KEY_ESCAPE)return super.keyPressed(key,scan,modifiers);
         if(key==GLFW.GLFW_KEY_LEFT||key==GLFW.GLFW_KEY_PAGE_UP){turnPage(-1);return true;}
         if(key==GLFW.GLFW_KEY_RIGHT||key==GLFW.GLFW_KEY_PAGE_DOWN){turnPage(1);return true;}
         int slot=key>=GLFW.GLFW_KEY_1&&key<=GLFW.GLFW_KEY_9?key-GLFW.GLFW_KEY_1:key==GLFW.GLFW_KEY_0?9:key==GLFW.GLFW_KEY_MINUS?10:key==GLFW.GLFW_KEY_EQUAL?11:-1;
@@ -60,6 +67,7 @@ final class WandSelectScreen extends Screen {
         g.drawString(font,"Choose a spell  •  Keys 1–9, 0, −, =",left+10,top+22,0xFF9EAFC7,false);
         if(filtered.size()>12)g.drawString(font,(page+1)+" / "+(Math.max(1,(filtered.size()+11)/12)),left+panelWidth-67,top+14,0xFFFFFFFF,false);
         hovered=null;super.render(g,mouseX,mouseY,partialTick);
+        if(filtered.isEmpty())g.drawCenteredString(font,"No spells match your search.",width/2,top+82,0xFFB4C3D9);
         Spell s=hovered==null?wand.selected(stack):hovered;int level=wand.level(stack,s);
         g.drawString(font,s.title+" "+WandItem.roman(level)+"  •  "+SpellInfo.school(s.theme)+" / "+s.category().title,left+10,gridBottom+5,0xFF000000|s.theme.color,false);
         String stats=String.format(java.util.Locale.ROOT,"Base: %d mana · %.2fs cast · %.1fs cooldown%s",s.manaAtLevel(level),s.castTicks()/20.0,s.cooldown/20.0,s.damage>0?String.format(java.util.Locale.ROOT," · %.1f damage",s.damageAtLevel(level)):s.healing()>0?String.format(java.util.Locale.ROOT," · %.1f healing",s.healingAtLevel(level)):"");

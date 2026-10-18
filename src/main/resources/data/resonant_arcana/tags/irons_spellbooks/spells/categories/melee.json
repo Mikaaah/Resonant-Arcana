@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:arcane_strike",
+    "resonant_arcana:blood_spark",
+    "resonant_arcana:poison_spark",
+    "resonant_arcana:ignite",
+    "resonant_arcana:soul_siphon",
+    "resonant_arcana:sanguine_drain",
+    "resonant_arcana:withering_hex",
+    "resonant_arcana:blood_reap",
+    "resonant_arcana:crimson_harvest",
+    "resonant_arcana:dusk_cleave",
+    "resonant_arcana:thunderclap",
+    "resonant_arcana:spatial_shear",
+    "resonant_arcana:memory_fracture",
+    "resonant_arcana:radiant_sweep",
+    "resonant_arcana:shatter",
+    "resonant_arcana:cinder_cleave",
+    "resonant_arcana:rime_thrust",
+    "resonant_arcana:blood_rend",
+    "resonant_arcana:rift_draw",
+    "resonant_arcana:spellbreaker"
+  ]
+}

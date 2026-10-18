@@ -26,7 +26,7 @@
   "spell.resonant_arcana.flame_shock_wave": "Cinder Surge",
   "spell.resonant_arcana.blood_explode": "Crimson Rupture",
   "spell.resonant_arcana.blood_stun": "Hemorrhagic Shock",
-  "spell.resonant_arcana.blood_block": "Blood Ward",
+  "spell.resonant_arcana.blood_block": "Crimson Ward",
   "spell.resonant_arcana.shadow_bolt": "Shadow Bolt",
   "spell.resonant_arcana.soul_seeker": "Umbral Seeker",
   "spell.resonant_arcana.dark_wave": "Umbral Wave",
@@ -155,7 +155,7 @@
   "spell.resonant_arcana.helvars_fracture": "Helvar\u2019s Fracture",
   "spell.resonant_arcana.sandworms_eruption": "Sandworm\u2019s Eruption",
   "spell.resonant_arcana.sandworms_quicksand": "Sandworm\u2019s Quicksand",
-  "spell.resonant_arcana.dragons_guard": "Infernal Barrage",
+  "spell.resonant_arcana.dragons_guard": "Dragon\u2019s Volley",
   "spell.resonant_arcana.dragons_pyre": "Dragon\u2019s Cataclysm",
   "spell.resonant_arcana.helvars_swordfall": "Helvar\u2019s Swordfall",
   "spell.resonant_arcana.astral_apocalypse": "Astral Apocalypse",
@@ -165,7 +165,7 @@
   "spell.resonant_arcana.heavens_thunder": "Heaven\u2019s Thunder",
   "spell.resonant_arcana.rift_collision": "Rift Collision",
   "spell.resonant_arcana.soul_requiem": "Soul Requiem",
-  "spell.resonant_arcana.worldroot_catastrophe": "Worldroot Catastrophe",
+  "spell.resonant_arcana.worldroot_catastrophe": "Worldroot Blessing",
   "spell.resonant_arcana.final_judgement": "Final Judgement",
   "spell.resonant_arcana.eternal_winter": "Eternal Winter",
   "item.resonant_arcana.debug_wand": "Debug Wand",
@@ -187,5 +187,7 @@
   "subtitles.resonant_arcana.explosion_chant": "Explosion ritual",
   "subtitles.resonant_arcana.explosion_blast": "Explosion detonates",
   "spell.resonant_arcana.doom_beam": "Doom Beam",
-  "spell.resonant_arcana.void_exile": "Void Exile"
+  "spell.resonant_arcana.void_exile": "Void Exile",
+  "spell.resonant_arcana.void_domain": "Void Domain",
+  "effect.resonant_arcana.void_empowerment": "Void Empowerment"
 }

@@ -55,10 +55,7 @@ public final class WandItem extends Item {
     @Override public void appendHoverText(ItemStack stack,TooltipContext context,List<Component> lines,TooltipFlag flags){
         Spell s=selected(stack);int rank=level(stack);
         lines.add(Component.literal(s.title+" "+roman(rank)+"  ["+(selection(stack)+1)+"/"+spells.size()+"]").withStyle(style->style.withColor(s.theme.color)));
-        lines.add(Component.literal(s.role()+" • "+SpellInfo.school(s.theme)).withStyle(ChatFormatting.DARK_AQUA));
-        lines.add(Component.literal(String.format(java.util.Locale.ROOT,"Mana %d  •  Cast %.2fs  •  Cooldown %.1fs",s.manaAtLevel(rank),s.castTicks()/20.0,s.cooldown/20.0)).withStyle(ChatFormatting.GRAY));
-        if(s.damage>0)lines.add(Component.literal(String.format(java.util.Locale.ROOT,"Base damage: %.1f%s",s.damageAtLevel(rank),s.pulses()>1?" per hit / pulse":"")).withStyle(ChatFormatting.GOLD));
-        if(s.healing()>0)lines.add(Component.literal(String.format(java.util.Locale.ROOT,"Base healing: %.1f health%s",s.healingAtLevel(rank),s.pulses()>1?" per pulse":"")).withStyle(ChatFormatting.GREEN));
+        lines.addAll(SpellInfo.details(s,rank));
         lines.add(Component.literal("Cast and selection keys: Controls → Resonant Arcana").withStyle(ChatFormatting.GRAY));
         lines.add(Component.literal("Sneak-use with a matching scroll in your offhand to learn its level.").withStyle(ChatFormatting.DARK_GRAY));
     }

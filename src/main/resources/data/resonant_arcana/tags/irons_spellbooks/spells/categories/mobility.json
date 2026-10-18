@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:leap",
+    "resonant_arcana:arcane_step",
+    "resonant_arcana:cinder_step",
+    "resonant_arcana:phoenix_rush",
+    "resonant_arcana:umbral_step",
+    "resonant_arcana:storm_step",
+    "resonant_arcana:rift_blink",
+    "resonant_arcana:pilgrim_step",
+    "resonant_arcana:glacier_step",
+    "resonant_arcana:crimson_reversal",
+    "resonant_arcana:ashen_rebirth"
+  ]
+}

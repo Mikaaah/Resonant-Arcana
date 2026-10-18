@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:krakens_grasp",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:ice_spike_eruption",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:helvars_rift",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:krakens_wrath",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:krakens_undertow",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:yetis_glacial_wall",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:helvars_fracture",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:helvars_swordfall",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:sandworms_eruption",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:sandworms_quicksand",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:dragons_guard",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:dragons_pyre",
+      "required": false
+    }
+  ]
+}
