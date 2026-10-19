@@ -1,6 +1,4 @@
-<p align="center"><img src="https://i.imgur.com/049lfA1.png" alt="Resonant Arcana" width="100%"></p>
-
-<p align="center"><a href="https://github.com/Mikaaah/Resonant-Arcana"><img src="https://github.com/Mikaaah/Resonant-Arcana/raw/refs/heads/main/docs/assets/logo.png" alt="Resonant Arcana logo" width="160"></a></p>
+<p align="center"><img src="https://github.com/Mikaaah/Resonant-Arcana/raw/refs/heads/main/docs/assets/banner.png" alt="Resonant Arcana" width="100%"></p>
 
 <h1 align="center">Resonant Arcana</h1>
 
