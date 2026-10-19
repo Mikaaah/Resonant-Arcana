@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:yeti_world_heart",
+      "required": false
+    }
+  ]
+}

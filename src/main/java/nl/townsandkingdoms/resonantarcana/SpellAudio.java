@@ -18,7 +18,7 @@ final class SpellAudio {
         case GRAVITY->"spell.gust.cast";case SOUL->"spell.eldritch_blast.cast";
     });}
     private static String irons(String path){return "irons_spellbooks:"+path;}
-    static String chargeId(Spell spell){if(CavesCompat.optional(spell))return CavesCompat.chargeSound(spell);return switch(spell){
+    static String chargeId(Spell spell){if(GodSpells.handles(spell))return GodSpells.chargeSound(spell);if(CavesCompat.optional(spell))return CavesCompat.chargeSound(spell);return switch(spell){
         case VOID_DOMAIN->"block.portal.trigger";case VOID_EXILE->"block.respawn_anchor.charge";
         case EXPLOSION->"entity.ghast.warn";case SERAPH_ASCENDANT->"block.beacon.activate";case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.charge");
         case ASTRAL_APOCALYPSE->"block.amethyst_block.resonate";
@@ -99,7 +99,7 @@ final class SpellAudio {
     };}
     static SoundEvent event(String id){return BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(id));}
     static float volume(float base){return (float)(base*ArcanaConfig.SOUND_VOLUME.get());}
-    static String spellCastId(Spell spell){if(CavesCompat.optional(spell))return CavesCompat.castSound(spell);return switch(spell){
+    static String spellCastId(Spell spell){if(GodSpells.handles(spell))return GodSpells.castSound(spell);if(CavesCompat.optional(spell))return CavesCompat.castSound(spell);return switch(spell){
         case VOID_DOMAIN->"block.respawn_anchor.deplete";case VOID_EXILE->"entity.enderman.teleport";
         case EXPLOSION->"entity.blaze.shoot";case SERAPH_ASCENDANT->irons("spell.cleanse.cast");case ARCANE_DEVASTATOR->irons("spell.soulfire_ray.cast");
         case ASTRAL_APOCALYPSE->irons("spell.summon_swords.cast");case CRIMSON_ECLIPSE->irons("cast.generic.blood");
@@ -160,7 +160,7 @@ final class SpellAudio {
         default->1.0f;
     };}
     static void charge(ServerPlayer player,Spell spell){
-        if(spell==Spell.DOOM){doom(player,player.position(),0,0);return;}
+        if(spell==Spell.DOOM||spell==Spell.TREMORZILLA_BREATH||GodSpells.handles(spell)){SpellLoops.sync(player,spell,true,false,0);return;}
         if(spell==Spell.SOUL_CANNON){cast(player,spell);return;}
         cue(player,player.position(),chargeId(spell),spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM?2.2f:1.5f,1.0f,true);
         cue(player,player.position(),castAccentId(spell.theme),.75f,0.85f,true);
@@ -211,14 +211,7 @@ final class SpellAudio {
     }
     /** Seven independent native layers, staggered so the heartbeat stays intelligible. */
     static void doom(ServerPlayer player,Vec3 pos,double progress,int elapsed){
-        int beat=progress<.5?20:12;
-        if(elapsed%beat==0)cue(player,pos,"entity.warden.heartbeat",1.65f,(float)(.65+progress*.35),true);
-        if(elapsed%60==0)cue(player,pos,"block.portal.ambient",1.25f,.65f,true);
-        if(elapsed%40==8)cue(player,pos,"block.respawn_anchor.ambient",.8f,.65f,true);
-        if(elapsed%48==16)cue(player,pos,"block.beacon.ambient",.65f,.5f,true);
-        if(elapsed%36==12)cue(player,pos,"block.sculk_sensor.clicking",.8f,.6f,true);
-        if(elapsed%56==24)cue(player,pos,"block.amethyst_block.resonate",.65f,.5f,true);
-        if(elapsed%64==32)cue(player,pos,"entity.enderman.stare",.55f,.6f,true);
+        if(elapsed%8==0)SpellLoops.sync(player,Spell.DOOM,true,SpellEngine.activeFor(player,Spell.DOOM),0);
     }
     static void charging(ServerPlayer player,Spell spell,double progress,int elapsed){
         if(!RecordedSpells.handles(spell)&&elapsed>0&&elapsed%24==0)cue(player,player.position(),chargeId(spell),1.35f,(float)(.8+progress*.35),true);

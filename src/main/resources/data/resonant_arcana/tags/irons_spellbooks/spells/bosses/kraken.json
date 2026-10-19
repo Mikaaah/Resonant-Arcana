@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:kraken_world_drown",
+      "required": false
+    }
+  ]
+}

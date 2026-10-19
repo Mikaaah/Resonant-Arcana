@@ -132,9 +132,9 @@ Spell ID: `resonant_arcana:helvars_fracture`. Inspect ranks with `/resonantarcan
 
 ### Helvar’s Swordfall
 
-Mark visible ground and summon Helvar’s sword above it. The blade drops point-first after a brief warning, damaging and weakening enemies. Requires clear space overhead.
+Summon Helvar’s colossal sword above the mark and drive it into the ground. The blade deals full damage within 3.5 blocks; an expanding nine-block shockwave hits other enemies for 40% damage. Each enemy takes one hit. Requires overhead space.
 
-**Ender** · Cast **1.3s** · Cooldown **12s** · Range **18 blocks** · Radius / half-width **3 blocks**.
+**Ender** · Cast **1.3s** · Cooldown **12s** · Range **18 blocks** · Radius / half-width **9 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -143,6 +143,8 @@ Mark visible ground and summon Helvar’s sword above it. The blade drops point-
 | III | 54 | — | 72 |
 | IV | 63 | — | 78 |
 | V | 72 | — | 84 |
+
+Base release / active phase: **2.8s**.
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 

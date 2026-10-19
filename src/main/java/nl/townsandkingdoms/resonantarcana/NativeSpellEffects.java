@@ -42,11 +42,13 @@ final class NativeSpellEffects {
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
+        if(GodSpells.handles(spell)){GodEffects.visual(level,spell,stage,p,end,size);return;}
+        if(HelvarEffects.handles(spell)){HelvarEffects.visual(level,spell,stage,p,end,size);return;}
         if(CavesCompat.optional(spell)){if(CavesCompat.available())CavesClientEffects.visual(level,spell,stage,p,end,size);return;}
         if(spell==Spell.VOID_DOMAIN){VoidDomainEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.VOID_EXILE){VoidExileEffects.visual(level,stage,p,end,size);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicEffects.visual(level,stage,p,end,size);return;}
-        if(spell==Spell.DOOM_BEAM){DoomBeamEffects.visual(level,stage,p,end,size);return;}
+        if(spell==Spell.DOOM_BEAM||spell==Spell.ARCANE_DEVASTATOR){DoomBeamEffects.visual(level,spell,stage,p,end,size);return;}
         if(CataclysmEffects.visual(level,spell,stage,p,end,size))return;
         switch(stage){
             case RITUAL_TARGET -> ring(level,spell,p,size*.7,true,time*.1,1);

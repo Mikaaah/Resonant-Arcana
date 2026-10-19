@@ -53,11 +53,11 @@ final class SpellCatalogue {
                       int castTicks,int mana,int manaStep,int maxLevel,float healing,int duration,int interval,
                       int pulses,String role,String description,String bookId,String category,String integration,String area,String tier){
         void validate(String id){
-            if(integration!=null&&(!integration.equals("alexscaves")||area==null||!Set.of("NOVICE","MASTER","CATACLYSM").contains(tier)))throw new IllegalStateException("Invalid optional integration: "+id);
+            if(integration!=null&&(!Set.of("alexscaves","bossesrise").contains(integration)||area==null||!Set.of("NOVICE","MASTER","CATACLYSM","GOD").contains(tier)))throw new IllegalStateException("Invalid optional integration: "+id);
             if(title==null||title.isBlank()||kind==null||theme==null||role==null||description==null||description.isBlank()
-                ||category==null||!java.util.Arrays.stream(SpellCategory.values()).anyMatch(c->c.name().equals(category))||bookId==null||!bookId.matches("[a-z0-9_]+")||!Float.isFinite(damage)||damage<0||damage>512
-                ||!Double.isFinite(radius)||radius<0||radius>16||!Double.isFinite(range)||range<0||range>64
-                ||cooldown<1||castTicks<0||castTicks>840||mana<1||mana>500||manaStep<0||maxLevel<1||maxLevel>5
+                ||category==null||!java.util.Arrays.stream(SpellCategory.values()).anyMatch(c->c.name().equals(category))||bookId==null||!bookId.matches("[a-z0-9_]+")||!Float.isFinite(damage)||damage<0||damage>("GOD".equals(tier)?2048:512)
+                ||!Double.isFinite(radius)||radius<0||radius>("GOD".equals(tier)?32:16)||!Double.isFinite(range)||range<0||range>64
+                ||cooldown<1||castTicks<0||castTicks>840||mana<1||mana>("GOD".equals(tier)?1200:500)||manaStep<0||maxLevel<1||maxLevel>5
                 ||!Float.isFinite(healing)||healing<0||duration<0||duration>600||interval<0||pulses<1||pulses>16)
                 throw new IllegalStateException("Invalid spell definition: "+id);
         }

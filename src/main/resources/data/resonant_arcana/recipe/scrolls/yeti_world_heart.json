@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "irons_spellbooks:legendary_ink"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "block_factorys_bosses:ice_gauntlet"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "minecraft:dragon_breath"
+    }
+  ],
+  "result": {
+    "id": "irons_spellbooks:scroll",
+    "count": 1,
+    "components": {
+      "irons_spellbooks:spell_container": {
+        "maxSpells": 1,
+        "spellWheel": false,
+        "mustEquip": false,
+        "data": [
+          {
+            "id": "resonant_arcana:yeti_world_heart",
+            "index": 0,
+            "level": 1
+          }
+        ]
+      },
+      "minecraft:enchantment_glint_override": true
+    }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "resonant_arcana:supported_integration",
+      "integration": "bossesrise"
+    }
+  ]
+}

@@ -45,6 +45,19 @@
     {
       "id": "resonant_arcana:nuclear_strike",
       "required": false
+    },
+    "resonant_arcana:verdant_awakening",
+    {
+      "id": "resonant_arcana:primordial_sovereign",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_cataclysm",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:sandworm_world_devourer",
+      "required": false
     }
   ]
 }

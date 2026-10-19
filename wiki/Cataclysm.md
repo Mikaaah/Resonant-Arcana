@@ -236,9 +236,9 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:magnetar_annihilation`. Inspect ranks with `/resonantarcana spell magnetar_annihilation <rank>`.
 
-### Luxtructosaurus Extinction
+### Lux’s Caldera
 
-Manifest a Luxtructosaurus at the mark. Four tephra eruptions scorch the area before a double-damage extinction blast. Allies and terrain are protected.
+Condense a molten tephra sun over the mark. Four rounds of volcanic vents telegraph beneath up to six enemies; each erupts after 0.4 seconds and can be dodged. The core then falls in a double-damage extinction blast. Allies and terrain are protected.
 
 **Fire** · Cast **12s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 

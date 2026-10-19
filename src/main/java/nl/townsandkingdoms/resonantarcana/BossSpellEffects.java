@@ -11,7 +11,7 @@ import org.joml.Vector3f;
 final class BossSpellEffects {
     private static final ParticleOptions WATER=dust(.05f,.5f,.85f,.5f,.95f,1);
     private static final ParticleOptions FROST=dust(.2f,.55f,1,.9f,1,1);
-    private static final ParticleOptions RIFT=dust(.35f,.05f,.7f,.8f,.6f,1);
+    private static final ParticleOptions RIFT=dust(.7f,.025f,.01f,1,.55f,.08f);
     private static final ParticleOptions SAND=dust(.6f,.32f,.08f,1,.8f,.3f);
     private static final ParticleOptions FIRE=dust(1,.12f,.01f,1,.85f,.18f);
     private BossSpellEffects(){}
@@ -57,7 +57,7 @@ final class BossSpellEffects {
             double a=c.age*.45+i*Math.PI/4;
             Vec3 radial=side.scale(Math.cos(a)*.45).add(up.scale(Math.sin(a)*.45));
             Vec3 p=pos.add(radial).subtract(dir.scale(i*.13));point(c.level,RIFT,p);
-            if(i%4==0)SpellParticles.point(c.level,ParticleTypes.END_ROD,p,radial.scale(.035));
+            if(i%4==0)SpellParticles.point(c.level,ParticleRegistry.EMBER_PARTICLE.get(),p,radial.scale(.035));
         }
     }
     static void sand(SpellEngine.Cast c,boolean impact){

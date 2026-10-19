@@ -12,6 +12,10 @@
     {
       "id": "resonant_arcana:lux_extinction",
       "required": false
+    },
+    {
+      "id": "resonant_arcana:primordial_sovereign",
+      "required": false
     }
   ]
 }

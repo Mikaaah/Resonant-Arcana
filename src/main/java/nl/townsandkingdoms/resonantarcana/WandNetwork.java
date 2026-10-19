@@ -21,11 +21,18 @@ public final class WandNetwork {
         boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&RecordedSpells.handles(Spell.values()[spell])&&Float.isFinite(pitch)&&pitch>=.5f&&pitch<=2&&Float.isFinite(gain)&&gain>=0&&gain<=8;}
     }
     /** Caster-owned visual lease; geometry follows the interpolated entity, never old world coordinates. */
-    public record BeamFocus(int caster,int phase,float progress,float length) implements CustomPacketPayload {
+    public record BeamFocus(int caster,int spell,int phase,float progress,float length) implements CustomPacketPayload {
+        public BeamFocus(int caster,int phase,float progress,float length){this(caster,Spell.DOOM_BEAM.ordinal(),phase,progress,length);}
         public static final Type<BeamFocus> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"beam_focus"));
-        public static final StreamCodec<RegistryFriendlyByteBuf,BeamFocus> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeByte(m.phase);b.writeFloat(m.progress);b.writeFloat(m.length);},b->new BeamFocus(b.readVarInt(),b.readUnsignedByte(),b.readFloat(),b.readFloat()));
+        public static final StreamCodec<RegistryFriendlyByteBuf,BeamFocus> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeVarInt(m.spell);b.writeByte(m.phase);b.writeFloat(m.progress);b.writeFloat(m.length);},b->new BeamFocus(b.readVarInt(),b.readVarInt(),b.readUnsignedByte(),b.readFloat(),b.readFloat()));
         @Override public Type<BeamFocus> type(){return TYPE;}
-        boolean valid(){return caster>=0&&phase>=0&&phase<=2&&Float.isFinite(progress)&&progress>=0&&progress<=1&&Float.isFinite(length)&&length>=0&&length<=64;}
+        boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&Spell.values()[spell].kind==Spell.Kind.DEVASTATOR&&phase>=0&&phase<=2&&Float.isFinite(progress)&&progress>=0&&progress<=1&&Float.isFinite(length)&&length>=0&&length<=64;}
+    }
+    public record Loop(int caster,int spell,boolean play,boolean release,int variant) implements CustomPacketPayload {
+        public static final Type<Loop> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"spell_loop"));
+        public static final StreamCodec<RegistryFriendlyByteBuf,Loop> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeVarInt(m.spell);b.writeBoolean(m.play);b.writeBoolean(m.release);b.writeByte(m.variant);},b->new Loop(b.readVarInt(),b.readVarInt(),b.readBoolean(),b.readBoolean(),b.readUnsignedByte()));
+        @Override public Type<Loop> type(){return TYPE;}
+        boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&SpellLoops.supports(Spell.values()[spell])&&variant>=0&&variant<=2;}
     }
     public record Select(ResourceLocation wand,int slot) implements CustomPacketPayload {
         public static final Type<Select> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"select"));
@@ -50,7 +57,7 @@ public final class WandNetwork {
         public boolean valid(){
             return spell>=0&&spell<Spell.values().length&&stage>=0&&stage<SpellVisuals.Stage.values().length
                 &&Double.isFinite(x)&&Double.isFinite(y)&&Double.isFinite(z)&&Double.isFinite(endX)&&Double.isFinite(endY)&&Double.isFinite(endZ)
-                &&Float.isFinite(size)&&size>=0.1f&&size<=16&&Math.abs(x)<=30_000_000&&Math.abs(y)<=30_000_000&&Math.abs(z)<=30_000_000
+                &&Float.isFinite(size)&&size>=0.1f&&size<=(GodSpells.handles(Spell.values()[spell])?32:16)&&Math.abs(x)<=30_000_000&&Math.abs(y)<=30_000_000&&Math.abs(z)<=30_000_000
                 &&Math.abs(endX)<=30_000_000&&Math.abs(endY)<=30_000_000&&Math.abs(endZ)<=30_000_000
                 &&new net.minecraft.world.phys.Vec3(x,y,z).distanceToSqr(new net.minecraft.world.phys.Vec3(endX,endY,endZ))<=128*128;
         }
@@ -60,7 +67,8 @@ public final class WandNetwork {
             &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("20");
+        var r=e.registrar("21");
+        r.playToClient(Loop.TYPE,Loop.CODEC,(msg,ctx)->ctx.enqueueWork(()->SpellLoopAudio.handle(msg)));
         r.playToClient(BeamFocus.TYPE,BeamFocus.CODEC,(msg,ctx)->ctx.enqueueWork(()->DoomBeamEffects.track(msg)));
         r.playToClient(Chant.TYPE,Chant.CODEC,(msg,ctx)->ctx.enqueueWork(()->RecordedAudio.handle(msg)));
         r.playToServer(Action.TYPE,Action.CODEC,(msg,ctx)->ctx.enqueueWork(()->{

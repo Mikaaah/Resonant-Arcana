@@ -113,7 +113,7 @@ public final class IntegrationChecks {
             for(String id:List.of("ward_magic","ward_fire","doom_well_dark","explosion_seal"))
                 check(IntegrationChecks.class.getResource("/assets/resonant_arcana/effeks/"+id+".efkefc")!=null,"selective AAA asset packaged: "+id);
             for(Spell spell:Spell.enabledValues()){
-                if(CavesCompat.optional(spell)||spell.kind==Spell.Kind.VOID_DOMAIN||spell.kind==Spell.Kind.EXILE||AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
+                if(GodSpells.handles(spell)||CavesCompat.optional(spell)||spell.kind==Spell.Kind.VOID_DOMAIN||spell.kind==Spell.Kind.EXILE||AdvancedSpells.handles(spell.kind)||spell==Spell.KRAKENS_WRATH)continue; // Reactive kits have dedicated combat fixtures below.
                 SpellEngine.clear();resetPlayer(player);visuals.clear();
                 player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,ResonantArcana.DEBUG.toStack());
                 if(spell.healing()>0)player.setHealth(5);
@@ -288,7 +288,7 @@ public final class IntegrationChecks {
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
             CataclysmChecks.run(level,IntegrationChecks::check);
-            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);PolishChecks.run(level,IntegrationChecks::check);CavesChecks.run(level,IntegrationChecks::check);
+            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);PolishChecks.run(level,IntegrationChecks::check);CavesChecks.run(level,IntegrationChecks::check);GodChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{
@@ -362,7 +362,7 @@ public final class IntegrationChecks {
                 SpellEngine.clear();friend.removeAllEffects();friend.setTicksFrozen(0);enemy.setHealth(20);enemy.invulnerableTime=0;
                 check(SpellEngine.cast(player,spell),spell+" party fixture begins");
                 // Exercise visual ticks directly: they must not call original boss damage/status routines.
-                var visualEntities=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,80,-8,12,90,24),e->e instanceof BossSpellVisual);
+                var visualEntities=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,76,-8,12,112,24),e->e instanceof BossSpellVisual);
                 check(!visualEntities.isEmpty(),spell+" spawns installed-mod visual adapters");
                 for(var v:visualEntities){
                     check(!v.save(new CompoundTag()),"optional visuals do not persist in world saves");
@@ -384,7 +384,7 @@ public final class IntegrationChecks {
             for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,3),Blocks.AIR.defaultBlockState());
         }
         SpellEngine.clear();resetPlayer(player);SpellEngine.cast(player,Spell.KRAKENS_GRASP);
-        var visuals=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,80,-8,12,90,24),e->e instanceof BossSpellVisual&&!e.isRemoved());
+        var visuals=level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class,new net.minecraft.world.phys.AABB(-12,76,-8,12,112,24),e->e instanceof BossSpellVisual&&!e.isRemoved());
         SpellEngine.clear();check(visuals.stream().allMatch(net.minecraft.world.entity.Entity::isRemoved),"reset removes optional visuals immediately");
     }
     private static void martialChecks(ServerLevel level,FakePlayer player){

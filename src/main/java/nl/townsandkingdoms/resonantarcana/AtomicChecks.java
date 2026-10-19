@@ -95,7 +95,7 @@ final class AtomicChecks {
             try{
                 p.setPos(10,81,0);p.setYRot(-90);SpellEngine.tick();
                 check.accept(followed.getHealth()==704&&abandoned.getHealth()==1024,"Doom Beam moves with its caster and turns its damage path away from the old ray");
-                check.accept(BeamRitual.origin(p).distanceToSqr(p.getEyePosition().add(0,-.25,0).add(p.getLookAngle().scale(.9)))<.0001,"Doom Beam remains connected to the caster's hands");
+                check.accept(BeamRitual.origin(p).distanceToSqr(BeamRitual.body(p,1).add(p.getLookAngle().scale(.9)))<.0001,"Doom Beam remains connected to the caster's hands");
             }finally{followed.discard();abandoned.discard();p.setPos(0,81,0);p.setYRot(0);}
             for(int x=-3;x<=3;x++)for(int y=81;y<=86;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());
             var hidden=enemy(level,0,14);

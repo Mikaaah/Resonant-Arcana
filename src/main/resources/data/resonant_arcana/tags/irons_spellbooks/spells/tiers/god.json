@@ -1,0 +1,82 @@
+{
+  "replace": false,
+  "values": [
+    "resonant_arcana:thunder_of_the_heavens",
+    "resonant_arcana:arcane_creation",
+    "resonant_arcana:crimson_apotheosis",
+    "resonant_arcana:solar_supernova",
+    "resonant_arcana:eventide_horizon",
+    "resonant_arcana:absolute_glaciation",
+    "resonant_arcana:verdant_awakening",
+    "resonant_arcana:heavens_covenant",
+    "resonant_arcana:soul_ascendancy",
+    {
+      "id": "resonant_arcana:planetary_polarity",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:planetary_polarity",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:primordial_sovereign",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:primordial_sovereign",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_cataclysm",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_cataclysm",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_world_tide",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_world_tide",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_eclipse",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_eclipse",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:confection_apocalypse",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:confection_apocalypse",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:kraken_world_drown",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:yeti_world_heart",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:helvar_final_edict",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:sandworm_world_devourer",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:dragon_primordial_inferno",
+      "required": false
+    }
+  ]
+}

@@ -25,6 +25,11 @@
     {
       "id": "resonant_arcana:candy_catastrophe",
       "required": false
+    },
+    "resonant_arcana:arcane_creation",
+    {
+      "id": "resonant_arcana:confection_apocalypse",
+      "required": false
     }
   ]
 }

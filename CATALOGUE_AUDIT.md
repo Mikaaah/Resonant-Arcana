@@ -1,4 +1,4 @@
-# Catalogue audit — 0.29.0-alpha
+# Catalogue audit — 0.30.0-alpha
 
 All damage values are rank-one health points per direct hit, before equipment, defenses and server multipliers. Two health points equal one heart. Burning, poison, wither and melee contributions are additional. Multi-stage totals depend on coverage, damage immunity and the individual sequence; a beam hits each enemy once per cast.
 
@@ -178,13 +178,13 @@ Flamethrower now delivers six pulses over three seconds. Arcane Volley launches 
 | EMP Surge | Control | Lightning | 56 | 1 | 120 | 3 | 30 |
 | Magnetar Annihilation | Cataclysm | Lightning | 320 | 1 | 480 | 11 | 130 |
 | Amber Talon | Summon | Nature | 12 | 1 | 28 | 0.6 | 5 |
-| Tectonic Stampede | Summon | Nature | 22 | 3 | 130 | 3 | 35 |
-| Luxtructosaurus Extinction | Cataclysm | Fire | 80 | 5 | 500 | 12 | 140 |
+| Primordial Instinct | Support | Nature | 0 | 1 | 130 | 3 | 35 |
+| Lux’s Caldera | Cataclysm | Fire | 80 | 5 | 500 | 12 | 140 |
 | Acid Glob | Projectile | Nature | 8 | 1 | 25 | 0.5 | 4.5 |
 | Tremorzilla Breath | Beam | Nature | 72 | 1 | 180 | 4 | 50 |
 | Nuclear Strike | Cataclysm | Nature | 384 | 1 | 500 | 13 | 150 |
 | Brine Bubble | Projectile | Ice | 10 | 1 | 26 | 0.6 | 5 |
-| Hullbreaker Surge | Area | Ice | 60 | 1 | 135 | 3.2 | 36 |
+| Hullbreaker’s Breach | Area | Ice | 60 | 1 | 135 | 3.2 | 36 |
 | Abyssal Deluge | Cataclysm | Ice | 72 | 5 | 480 | 11 | 140 |
 | Desolate Dagger | Projectile | Ender | 12 | 1 | 28 | 0.5 | 5.5 |
 | Forsaken Sonar | Beam | Ender | 22 | 3 | 140 | 3 | 37.5 |
@@ -192,6 +192,26 @@ Flamethrower now delivers six pulses over three seconds. Arcane Volley launches 
 | Gumball Volley | Projectile | Evocation | 5 | 3 | 30 | 0.6 | 6 |
 | Frostmint Hex | Control | Ice | 12 | 5 | 140 | 3.2 | 37.5 |
 | Candyland Catastrophe | Cataclysm | Evocation | 72 | 5 | 480 | 11 | 140 |
+| Thunder of the Heavens | God | Lightning | 96 | 1 | 600 | 20 | 240 |
+| Arcane Creation | God | Evocation | 140 | 1 | 600 | 20 | 240 |
+| Crimson Apotheosis | God | Blood | 120 | 1 | 600 | 20 | 240 |
+| Solar Supernova | God | Fire | 960 | 1 | 600 | 20 | 240 |
+| Eventide Horizon | God | Ender | 150 | 1 | 600 | 20 | 240 |
+| Absolute Glaciation | God | Ice | 120 | 1 | 600 | 20 | 240 |
+| Verdant Awakening | God | Nature | 90 | 1 | 600 | 20 | 240 |
+| Heaven’s Covenant | God | Holy | 80 | 1 | 600 | 20 | 240 |
+| Soul Ascendancy | God | Eldritch | 130 | 1 | 600 | 20 | 240 |
+| Planetary Polarity | God | Lightning | 140 | 1 | 600 | 20 | 240 |
+| Primordial Sovereign | God | Nature | 120 | 1 | 600 | 20 | 240 |
+| Tremorzilla Cataclysm | God | Nature | 880 | 1 | 600 | 20 | 240 |
+| Abyssal World Tide | God | Ice | 150 | 1 | 600 | 20 | 240 |
+| Forsaken Eclipse | God | Ender | 170 | 1 | 600 | 20 | 240 |
+| Confection Apocalypse | God | Evocation | 140 | 1 | 600 | 20 | 240 |
+| Kraken’s World Drown | God | Ice | 160 | 1 | 600 | 20 | 240 |
+| Yeti’s World Heart | God | Ice | 150 | 1 | 600 | 20 | 240 |
+| Helvar’s Final Edict | God | Ender | 240 | 1 | 600 | 20 | 240 |
+| Sandworm’s World Devourer | God | Nature | 150 | 1 | 600 | 20 | 240 |
+| Dragon’s Primordial Inferno | God | Fire | 160 | 1 | 600 | 20 | 240 |
 
 ¹ Catalogue pulse count is not a guaranteed hit count. Cataclysm sequences, reactive weapon enchantments and projectile fans are described in [the spell reference](SPELLS.md).
 

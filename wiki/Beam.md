@@ -152,7 +152,7 @@ Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarca
 
 ### Tremorzilla Breath
 
-Manifest Tremorzilla’s charged breath as a green atomic beam following your hands and aim for five seconds. Each enemy entering its path takes one hit. Solid cover stops the breath.
+Channel Tremorzilla’s native atomic breath from your body for five seconds. Each enemy takes one hit. Hold Amber Curiosity offhand for purple retro breath, or a Tectonic Shard for orange; otherwise it is green. Cover stops the beam.
 
 **Nature** · Cast **4s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 

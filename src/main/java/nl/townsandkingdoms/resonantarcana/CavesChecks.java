@@ -19,7 +19,7 @@ final class CavesChecks {
     static final String[] PARTICLES={"scarlet_magnetic_flow","azure_magnetic_flow","magnet_lightning","amber_explosion","luxtructosaurus_ash","tephra_small","acid_bubble","acid_drop","proton","tremorzilla_explosion","nuclear_siren_sonar","mushroom_cloud","deep_one_magic","water_foam","big_splash","underzealot_magic","underzealot_explosion","forsaken_sonar","forsaken_sonar_large","sugar_flake","purple_soda_fizz","frostmint_explosion","purple_witch_explosion"};
     private static ResourceLocation id(String name){return ResourceLocation.fromNamespaceAndPath(CavesCompat.MOD,name);}
     static void run(ServerLevel level,BiConsumer<Boolean,String> check){
-        var spells=Arrays.stream(Spell.values()).filter(CavesCompat::optional).toList();check.accept(spells.size()==18,"eighteen optional cave arts exist");
+        var spells=Arrays.stream(Spell.values()).filter(s->s.kind==Spell.Kind.CAVE_ART).toList();check.accept(spells.size()==18,"eighteen optional cave arts exist");
         var areas=new HashMap<String,Set<String>>();for(var s:spells){areas.computeIfAbsent(s.definition.area(),k->new HashSet<>()).add(s.definition.tier());check.accept(s.available()==CavesCompat.available(),"optional cave availability: "+s);}
         check.accept(areas.size()==6&&areas.values().stream().allMatch(t->t.equals(Set.of("NOVICE","MASTER","CATACLYSM"))),"six cave areas each have novice master and cataclysm arts");
         if(!CavesCompat.available()){
@@ -38,8 +38,9 @@ final class CavesChecks {
                 try{
                     check.accept(SpellEngine.cast(caster,s),"cave release starts: "+s);
                     for(int t=0;t<s.duration()+8;t++){if(victim.invulnerableTime>0)victim.invulnerableTime--;SpellEngine.tick();}
-                    float expected=switch(s){case TECTONIC_STAMPEDE,GUMBALL_VOLLEY,FORSAKEN_SONAR->s.damage*3;case FROSTMINT_HEX->s.damage*5;case LUX_EXTINCTION,ABYSSAL_DELUGE,CANDY_CATASTROPHE->s.damage*6;case FORLORN_RECKONING->s.damage*5;default->s.damage;};
+                    float expected=switch(s){case GUMBALL_VOLLEY,FORSAKEN_SONAR->s.damage*3;case FROSTMINT_HEX->s.damage*5;case LUX_EXTINCTION,ABYSSAL_DELUGE,CANDY_CATASTROPHE->s.damage*6;case FORLORN_RECKONING->s.damage*5;default->s.damage;};
                     check.accept(Math.abs(1024-victim.getHealth()-expected)<.1,"cave authored damage with normal immunity: "+s+" expected "+expected+" got "+(1024-victim.getHealth()));
+                    if(s==Spell.TECTONIC_STAMPEDE)check.accept(caster.hasEffect(ArcanaEffects.PRIMAL_INSTINCT)&&ally.hasEffect(ArcanaEffects.PRIMAL_INSTINCT)&&!victim.hasEffect(ArcanaEffects.PRIMAL_INSTINCT),"dinosaur mastery buffs allies instead of dealing damage");
                     check.accept(ally.getHealth()==1024&&!ally.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS),"cave attacks protect teammate: "+s);
                     check.accept(SpellEngine.activeCount()==0&&level.getEntitiesOfClass(CaveVisual.class,caster.getBoundingBox().inflate(96)).isEmpty(),"cave art and markers expire: "+s);
                     check.accept(level.getBlockState(new BlockPos(0,80,6)).is(Blocks.STONE),"cave art preserves terrain: "+s);

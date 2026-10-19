@@ -34,7 +34,7 @@ final class SpellIndex {
             if(spell.pulses()>1)tags.add("multi hit");if(BossesRiseCompat.optional(spell))tags.add("bossesrise");
             if(CavesCompat.optional(spell)){
                 switch(spell){
-                    case POLARITY_BOLT -> tags.add("magnet pull");case EMP_SURGE -> tags.add("stun interrupt emp");case ACID_GLOB -> tags.add("poison acid");
+                    case TECTONIC_STAMPEDE -> tags.add("buff melee dinosaur resistance");case POLARITY_BOLT -> tags.add("magnet pull");case EMP_SURGE -> tags.add("stun interrupt emp");case ACID_GLOB -> tags.add("poison acid");
                     case FROSTMINT_HEX -> tags.add("slow freeze buff sugar");case DESOLATE_DAGGER -> tags.add("piercing weakness");case BRINE_BUBBLE -> tags.add("bubble debuff");
                     case ABYSSAL_DELUGE -> tags.add("vortex pull");case HULLBREAKER_SURGE -> tags.add("wave slow");case FORSAKEN_SONAR -> tags.add("sonar slow reveal");
                     case FORLORN_RECKONING -> tags.add("darkness reveal");case LUX_EXTINCTION -> tags.add("burning tephra lux");case NUCLEAR_STRIKE -> tags.add("nuke weakness");default -> {}
@@ -43,7 +43,7 @@ final class SpellIndex {
             TAGS.put(spell,List.copyOf(tags));
         }
     }
-    static String tier(Spell s){if(CavesCompat.optional(s))return s.definition.tier().substring(0,1)+s.definition.tier().substring(1).toLowerCase(Locale.ROOT);return s.category()==SpellCategory.CATACLYSM||s==Spell.DOOM||s==Spell.DOOM_BEAM?"Cataclysm":s.manaCost()>=100||s.castTicks()>=60?"Master":s.manaCost()>=55||s.castTicks()>=30?"Expert":s.manaCost()>=30||s.castTicks()>=15?"Adept":"Novice";}
+    static String tier(Spell s){if(GodSpells.handles(s))return "God";if(CavesCompat.optional(s))return s.definition.tier().substring(0,1)+s.definition.tier().substring(1).toLowerCase(Locale.ROOT);return s.category()==SpellCategory.CATACLYSM||s==Spell.DOOM||s==Spell.DOOM_BEAM?"Cataclysm":s.manaCost()>=100||s.castTicks()>=60?"Master":s.manaCost()>=55||s.castTicks()>=30?"Expert":s.manaCost()>=30||s.castTicks()>=15?"Adept":"Novice";}
     static List<String> tags(Spell s){return TAGS.get(s);}
     static boolean matches(Spell s,String query){
         String haystack=(s.title+" "+s.bookId()+" "+String.join(" ",tags(s))).toLowerCase(Locale.ROOT);

@@ -22,22 +22,21 @@ final class SpecialSpells {
             if(c.age%20==1)SpellActions.healArea(c,c.pos,c.spell.radius,c.spell.healing(),false);
             return true;
         }
-        Vec3 direction=c.dir;
-        if(c.spell==Spell.DOOM_BEAM){c.pos=BeamRitual.origin(c.caster);direction=c.caster.getLookAngle().normalize();}
+        Vec3 direction=c.caster.getLookAngle().normalize();c.pos=BeamRitual.origin(c.caster);
         c.anchor=clipLoaded(c.level,c.pos,direction,beamRange(c),c.caster);
-        if(c.spell==Spell.DOOM_BEAM&&c.age%2==1)BeamRitual.sync(c.caster,2,c.age/(double)c.duration,c.pos.distanceTo(c.anchor));
+        if(c.age%2==1)BeamRitual.sync(c.caster,c.spell,2,c.age/(double)c.duration,c.pos.distanceTo(c.anchor));
         if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,c.pos,c.anchor,c.spell==Spell.DOOM_BEAM?6:3.2);
         if(c.age==1)RecordedSpells.release(c);
         {
             for(var victim:lineTargets(c,c.pos,c.anchor,c.spell.radius))
                 if(visible(c,c.pos,victim.getBoundingBox().getCenter()))hit(c,victim,c.pos,true);
-            if(c.age==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.anchor,c.anchor,5);
+            if(c.age==1||c.spell==Spell.DOOM_BEAM&&c.age%6==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.anchor,c.anchor,c.age==1?5:2.5);
         }
         return c.age<c.duration;
     }
     private static double beamRange(Cast c){return c.spell.range;}
     static void cleanup(Cast c){
-        if(c.spell==Spell.DOOM_BEAM)BeamRitual.stop(c.caster);
+        if(c.spell.kind==Spell.Kind.DEVASTATOR)BeamRitual.sync(c.caster,c.spell,0,0,0);
         if(c.spell.kind==Spell.Kind.ASCENSION){c.caster.removeEffect(ArcanaEffects.SERAPH_FLIGHT);effect(c.caster,MobEffects.SLOW_FALLING,80,0);}
     }
 }

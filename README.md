@@ -2,9 +2,9 @@
 
 [Project status](https://github.com/Mikaaah/Mikaaah/blob/master/STATUS.md) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues) · [Creator’s CurseForge projects](https://www.curseforge.com/members/mikaaah/projects)
 
-An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **154 core spells**, twelve optional Bosses’Rise spells, **eighteen optional Alex’s Caves spells**, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
+An **Iron’s Spells ’n Spellbooks addon** for **Minecraft 1.21.1 / NeoForge**. **163 core spells**, seventeen optional Bosses’Rise spells, **twenty-four optional Alex’s Caves spells**, three legendary spellbooks and one debug wand. Every spell has a functional category and a native magic school.
 
-[Download 0.29.0-alpha](downloads/resonant-arcana-0.29.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
+[Download 0.30.0-alpha](downloads/resonant-arcana-0.30.0-alpha-neoforge-1.21.1.jar?raw=true) · [Every spell and rank](SPELLS.md) · [Configuration](CONFIGURATION.md) · [Changelog](CHANGELOG.md)
 
 ## Equipment
 
@@ -24,20 +24,46 @@ Each recipe uses a netherite Iron’s spellbook, a nether star and themed materi
 
 All scrolls share **one Spells creative tab**, alongside the Equipment tab. Scrolls are ordered by school, category and name; server-disabled spells are hidden. Functional categories remain in descriptions and as filters in the debug archive. Schools remain Evocation, Blood, Fire, Ender, Lightning, Eldritch, Nature, Holy and Ice.
 
+## God-tier magic
+
+A new tier above Cataclysm: **20-second base cast**, **600 mana**, **one Legendary rank** and a **four-minute base cooldown**. Equipment and normal server settings still apply. The giant marked field locks when casting begins. Mana is consumed only when the native cast completes; interruption removes the ritual and its owned sound layers.
+
+| School | God-tier spell |
+| --- | --- |
+| Lightning | Thunder of the Heavens — 200 violet lightning strikes over a 28-block field |
+| Evocation | Arcane Creation — six collapsing star sectors and a final constellation blast |
+| Blood | Crimson Apotheosis — blood tethers, five tithes, capped healing and a final nova |
+| Fire | Solar Supernova — warned compression followed by an expanding single-hit solar front |
+| Ender | Eventide Horizon — four crossing dimensional cuts and a final field fold |
+| Ice | Absolute Glaciation — advancing frost front, cold pulses and a shattering finish |
+| Nature | Verdant Awakening — a flowering grove with hostile roots and allied healing |
+| Holy | Heaven’s Covenant — holy verdicts, cleansing, healing, defense and +35% allied spell power |
+| Eldritch | Soul Ascendancy — five soul harvests, an absorption ward and a final soul burst |
+
+Alex’s Caves adds **Planetary Polarity, Primordial Sovereign, Tremorzilla Cataclysm, Abyssal World Tide, Forsaken Eclipse and Confection Apocalypse**. Bosses’Rise adds **Kraken’s World Drown, Yeti’s World Heart, Helvar’s Final Edict, Sandworm’s World Devourer and Dragon’s Primordial Inferno**. These eleven arts appear only with their supported optional mod installed.
+
+All God spells protect allies and terrain and respect solid cover. Purple lightning uses visual geometry rather than destructive vanilla lightning entities. New spell icons are temporary school-coloured placeholders awaiting the supplied artwork.
+
+## Scroll attunement
+
+Core non-God spells remain available in Iron’s Scroll Forge. Addon and God spells have **50 deterministic crafting recipes** using paper, the appropriate ink, a unique catalyst and themed cave/boss materials. Cataclysms add a nether star; God recipes add both a nether star and dragon breath. Optional recipes obey the same version gates as spell registration. See [every ingredient](SCROLL_RECIPES.md).
+
+Iron’s already provides nine school-specific scroll textures, which are retained without copying those assets. God scrolls add the native enchantment glint. The existing single Spells tab, searchable tags and wrapped information remain.
+
 ## Alex’s Caves spells
 
-Install **Alex’s Caves 2.0.10** and its Citadel dependency on **both client and server** to unlock these eighteen arts. The adapter uses the installed mod’s particles, sounds, models and attack themes. Other versions leave the adapter disabled; the core addon works without Alex’s Caves.
+Install **Alex’s Caves 2.0.10** and its Citadel dependency on **both client and server** to unlock the eighteen base cave arts below and six God-tier cave arts above. The adapter uses the installed mod’s particles, sounds, models and attack themes. Other versions leave the adapter disabled; the core addon works without Alex’s Caves.
 
 | Cave area | Novice | Master | Cataclysm |
 | --- | --- | --- | --- |
 | Magnetic Caves | Polarity Bolt | EMP Surge | Magnetar Annihilation |
-| Primordial Caves | Amber Talon | Tectonic Stampede | Luxtructosaurus Extinction |
+| Primordial Caves | Amber Talon | Primordial Instinct | Lux’s Caldera |
 | Toxic Caves | Acid Glob | Tremorzilla Breath | Nuclear Strike |
-| Abyssal Chasm | Brine Bubble | Hullbreaker Surge | Abyssal Deluge |
+| Abyssal Chasm | Brine Bubble | Hullbreaker’s Breach | Abyssal Deluge |
 | Forlorn Hollows | Desolate Dagger | Forsaken Sonar | Forlorn Reckoning |
 | Candy Cavity | Gumball Volley | Frostmint Hex | Candyland Catastrophe |
 
-Cataclysms have **11–13-second base casts**, **480–500 mana costs** and a single Legendary rank. The two large beams follow the caster’s current aim and hit each enemy once. Nuclear Strike marks a location and drops a visual bomb, giving two seconds of warning before a protected blast and native mushroom cloud. No native boss AI or destructive nuclear explosion runs. All offensive spells retain ally protection and solid-cover checks.
+Cataclysms have **11–13-second base casts**, **480–500 mana costs** and a single Legendary rank. Tremorzilla’s beam uses its native scrolling material and animated impact model, without a miniature boss. Green is the default; hold Amber Curiosity offhand for purple retro breath or a Tectonic Shard for orange. All beam muzzles are at torso level. The large beams follow current aim and hit each enemy once. Nuclear Strike marks a location and drops a visual bomb, giving two seconds of warning before a protected blast and native mushroom cloud. No native boss AI or destructive nuclear explosion runs. All offensive spells retain ally protection and solid-cover checks.
 
 Search the spell archive with `alexscaves`, a biome name or a tier; native spell tags include `integrations/alexscaves`, `caves/<biome>` and `tiers/<tier>`. These scrolls use the existing single Spells tab.
 
@@ -57,7 +83,7 @@ Cataclysms charge through a **large seal beneath the caster**. Dense native part
 - **Explosion:** redesigned Megumin audio, a fixed 7.7-second charge and immediate 256-damage detonation over sixteen blocks. The target locks at the start; five orange-gold seals feed a vertical ignition column; multicoloured charge sparks lead into an expanding, rising fireball and ground shockwave. Brief slowness and weakness follow the blast.
 - **Seraph Ascendant:** twenty seconds of flight with radiant particle wings. Nearby allies gain +15% spell power and periodic healing. Cleanup removes its own flight modifier and grants brief Slow Falling.
 - **Doom Beam:** a thirteen-second black-hole charge turns emerald halfway through, then releases a giant green plasma beam that follows the caster’s position and aim, with an Iron’s beacon core, original scrolling plasma texture, green-tinted wisps and electricity. Doom keeps its own gold/red black-hole visuals and seven-layer native ambience.
-- **Arcane Devastator:** a fixed 6.5-second charge followed by a 7.4-second cosmic beam. Each enemy entering the beam can take one hit. New cover clips the beam as it fires.
+- **Arcane Devastator:** a fixed 6.5-second charge followed by a 7.4-second continuous violet beam that follows your position and aim. Each enemy entering the beam can take one hit. New cover clips the beam as it fires.
 - **Final Judgement:** an actual descending golden sword accompanies holy damage, healing and the final cleansing verdict. Its visual scale adapts to available overhead room.
 - **Eternal Winter:** a sixteen-block, ten-second blizzard with eight freezing pulses and a triple-damage final burst.
 - **Worldroot Blessing:** moss and flowering-azalea fragments, spores and drifting leaves accompany its control, damage and ally-healing bloom.
@@ -83,7 +109,7 @@ Use `/resonantarcana spell <id> [rank]` for details, `/resonantarcana scroll <id
 
 Requires **Java 21**, **NeoForge 21.1.219–21.1.x**, and **Iron’s Spells ’n Spellbooks 1.21.1-3.16.3** with its dependencies, including Curios. Install the same addon version on both sides.
 
-**Bosses’Rise 2.1.2** optionally adds twelve boss arts using its installed entities, geometry, textures and sounds. Other versions leave that adapter disabled. No third-party boss assets are bundled. Visual adapters cannot run original boss attacks, persist in saves or drop loot.
+**Bosses’Rise 2.1.2** optionally adds seventeen boss arts using its installed entities, geometry, textures and sounds. Other versions leave that adapter disabled. No third-party boss assets are bundled. Visual adapters cannot run original boss attacks, persist in saves or drop loot.
 
 Offensive spells respect server PvP, scoreboard friendly-fire settings and owned pets. Healing uses visible eligible allies. Terrain is protected and spell tasks are bounded. Claim protection, FTB Teams and custom combat damage types need their own integration; no general compatibility with every combat mod is implied.
 
@@ -95,7 +121,7 @@ Supply compile-only API JARs, then run with Java 21:
 ./gradlew build -PironsSpellbooksJar=/path/irons_spellbooks.jar -PbossesRiseJar=/path/bossesrise.jar -PgeckolibJar=/path/geckolib.jar -PcuriosJar=/path/curios.jar -PalexsCavesJar=/path/alexscaves-2.0.10.jar -PcitadelJar=/path/citadel.jar
 ```
 
-The packaged-asset check verifies equipment, spell icons and tags, exactly four selective AAA effects and eight recorded OGG streams, and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.29.0-alpha:** dedicated-server checks pass in all four configurations: **11,491** core only, **12,306** with Bosses’Rise only, **13,964** with Alex’s Caves only, and **14,779** with both. Coverage includes native charging and cancellation, mana, exact cave-art hit schedules, ally and cover rules, following beams, projectile protection, cave ceiling clearance, finite visual cleanup, tags and tooltips. In-game client visuals and sound require playtesting.
+The packaged-asset check verifies equipment, spell icons and tags, exactly four selective AAA effects and eight recorded OGG streams, and rejects retired wand textures. Dedicated-server fixtures cover registration, native casting, mana, cancellation, targeting, equipment perks and cleanup. **0.30.0-alpha:** dedicated-server validation passed with neither optional addon, each addon separately, and both together. The final combined run passed **24,057 checks** across 204 spells. Coverage includes native charging and cancellation, locked God-tier targets, mana, exact cave-art hit schedules, ally and cover rules, following beams, projectile protection, cave ceiling clearance, finite sound and visual cleanup, tags, tooltips, and actual recipe-manager selection for all 50 themed scroll recipes. In-game client visuals and sound require playtesting.
 
 ## Credits and license
 

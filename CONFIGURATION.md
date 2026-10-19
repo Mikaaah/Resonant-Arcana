@@ -153,3 +153,15 @@ The normal Iron’s per-spell configuration applies to cave arts, including enab
 Visual proxies are harmless, expire with their cast, have no loot or AI, and are not saved. Nuclear Strike does not place a functional bomb or change blocks. Native client particles share the addon’s detail and outline budgets; at most two native mushroom clouds are started concurrently per client. The native cloud supplies its own explosion ambience and screen effects.
 
 Both sides must update to **0.29.0-alpha / protocol 20**. No Alex’s Caves or Citadel assets/classes are distributed in the addon.
+
+## God tier and reworked integration spells in 0.30
+
+God-tier arts have twenty-second base casts, 600 mana, one Legendary rank and 240-second base cooldowns. Iron’s normal school power, cast-speed and server spell settings still apply. Targeted God rituals lock their field at the start. Cancellation spends no mana and removes the ritual mark. Offensive effects protect teammates, pets and terrain and use loaded terrain and cover checks.
+
+Core non-God spells stay in the native Scroll Forge. Addon and God scrolls use the recipes in [SCROLL_RECIPES.md](SCROLL_RECIPES.md), consuming the listed proof instead of allowing a generic focus to bypass it. These recipes load only for a supported integration version. Nine native Iron’s school scroll textures are reused; no parent assets are bundled.
+
+Tremorzilla breath has no boss proxy. Hold `alexscaves:amber_curiosity` in the offhand at release for the retro purple variant, or `alexscaves:tectonic_shard` for orange; otherwise it is green. Its God art uses retro purple. All native beam variants share the same combat rules. Beams originate at 55% of the caster’s current body height, with their existing forward, wall-clipped offset.
+
+Doom, Tremorzilla and God charge ambience now uses caster-owned client instances with fourteen-tick leases. Completion, cancellation, death, disconnect and dimension changes stop those instances. Native long clips cannot linger for twenty seconds after cleanup. Other casters retain their own sound layers. Existing owner-supplied recordings keep their timing. Client sound and visual playtesting is still required.
+
+The protocol is now **21**; install matching **0.30.0-alpha** addon builds on client and server.

@@ -39,7 +39,7 @@ final class CavesClient {
         @Override public float getDespawnTime(float partial){return 40;}
     }
     private static Entity proxy(CaveVisual marker){
-        int model=marker.model();if(model<0||model>17||model==15||model==16)return null;
+        int model=marker.model();if(model<0||model>17||model==15||model==16||model==18)return null;
         String name=model==17?"dinosaur_spirit":CaveVisual.MODELS[model];
         var id=asset(name);if(!BuiltInRegistries.ENTITY_TYPE.containsKey(id))return null;
         var type=BuiltInRegistries.ENTITY_TYPE.get(id);
@@ -54,21 +54,21 @@ final class CavesClient {
             if(entity instanceof ForsakenEntity)animated.setAnimation(model==5?ForsakenEntity.ANIMATION_SONIC_BLAST:ForsakenEntity.ANIMATION_SONIC_ATTACK);
             else if(entity instanceof LuxtructosaurusEntity)animated.setAnimation(LuxtructosaurusEntity.ANIMATION_SPEW_FLAMES);
             else if(entity instanceof TremorzillaEntity)animated.setAnimation(TremorzillaEntity.ANIMATION_PREPARE_BREATH);
-            else if(entity instanceof HullbreakerEntity)animated.setAnimation(HullbreakerEntity.ANIMATION_BASH);
+            else if(entity instanceof HullbreakerEntity)animated.setAnimation(HullbreakerEntity.ANIMATION_BITE);
         }
         return entity;
     }
     private static final class Renderer extends EntityRenderer<CaveVisual> {
         Renderer(EntityRendererProvider.Context context){super(context);shadowRadius=0;}
         @Override public boolean shouldRender(CaveVisual marker,net.minecraft.client.renderer.culling.Frustum frustum,double x,double y,double z){
-            if(marker.model()==15||marker.model()==16){Entity owner=marker.level().getEntity(marker.owner());if(owner==null)return false;
+            if(marker.model()==15||marker.model()==16||marker.model()==18){Entity owner=marker.level().getEntity(marker.owner());if(owner==null)return false;
                 Vec3 start=owner.getEyePosition(),end=start.add(owner.getLookAngle().scale(marker.model()==16?48:64));return frustum.isVisible(new net.minecraft.world.phys.AABB(start,end).inflate(4));}
             return frustum.isVisible(marker.getBoundingBox().inflate(marker.model()==3||marker.model()==2?12:4));
         }
         @Override public ResourceLocation getTextureLocation(CaveVisual marker){return asset("textures/entity/tremorzilla/tremorzilla_beam_inner.png");}
         @SuppressWarnings({"rawtypes","unchecked"})
         @Override public void render(CaveVisual marker,float yaw,float partial,PoseStack pose,MultiBufferSource buffers,int light){
-            if(marker.model()==15||marker.model()==16){beam(marker,partial,pose,buffers);return;}
+            if(marker.model()==15||marker.model()==16||marker.model()==18){beam(marker,partial,pose,buffers);return;}
             if(marker.renderProxy==null)marker.renderProxy=proxy(marker);
             Entity entity=marker.renderProxy;if(entity==null)return;
             entity.setPos(marker.position());entity.xo=marker.xo;entity.yo=marker.yo;entity.zo=marker.zo;
@@ -81,14 +81,17 @@ final class CavesClient {
         }
         private void beam(CaveVisual marker,float partial,PoseStack pose,MultiBufferSource buffers){
             Entity caster=marker.level().getEntity(marker.owner());if(caster==null||!caster.isAlive())return;
-            Vec3 eye=caster.getEyePosition(partial).add(0,-.25,0),dir=caster.getViewVector(partial).normalize();
+            Vec3 eye=BeamRitual.body(caster,partial),dir=caster.getViewVector(partial).normalize();
             Vec3 start=marker.level().clip(new ClipContext(eye,eye.add(dir.scale(.9)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
-            double range=marker.model()==16?Spell.TREMORZILLA_BREATH.range:Spell.MAGNETAR_ANNIHILATION.range;
+            double range=marker.model()==16?Spell.TREMORZILLA_BREATH.range:64;
             Vec3 end=marker.level().clip(new ClipContext(start,start.add(dir.scale(range)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
             float length=(float)start.distanceTo(end);if(length<.05)return;
             Vec3 offset=start.subtract(marker.getPosition(partial));pose.pushPose();pose.translate(offset.x,offset.y,offset.z);
             pose.mulPose(new Quaternionf().rotationTo(new Vector3f(0,0,1),end.subtract(start).normalize().toVector3f()));
-            float scroll=-(marker.tickCount+partial)*.06f;boolean green=marker.model()==16;
+            if(marker.model()==16||marker.model()==18){TremorBeamRenderer.render(marker,partial,length,pose,buffers);
+                if(marker.lastBeamFrame!=marker.level().getGameTime()){marker.lastBeamFrame=marker.level().getGameTime();CavesClientEffects.tremor((net.minecraft.client.multiplayer.ClientLevel)marker.level(),start,end,marker.variant(),marker.model()==18);}
+                pose.popPose();return;}
+            float scroll=-(marker.tickCount+partial)*.06f;boolean green=false;
             ResourceLocation texture=asset(green?"textures/entity/tremorzilla/tremorzilla_beam_inner.png":"textures/entity/raygun/raygun_blue_ray.png");
             var core=buffers.getBuffer(RenderType.entityTranslucent(texture));
             SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),green?1.0f:.65f,green?1.0f:.65f,pose.last(),core,255,255,255,255,scroll,scroll+length/5);

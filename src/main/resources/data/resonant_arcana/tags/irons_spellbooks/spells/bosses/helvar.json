@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:helvar_final_edict",
+      "required": false
+    }
+  ]
+}

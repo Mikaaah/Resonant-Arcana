@@ -8,7 +8,9 @@ groups={}
 for name,spell in data['spells'].items():
     school=next(s['id'] for s in data['schools'] if name in s['spells'])
     extra=[]
-    if spell.get('integration')=='alexscaves':extra=['integrations/alexscaves','caves/'+spell['area'],'tiers/'+spell['tier'].lower()]
+    if spell.get('tier')=='GOD':extra.append('tiers/god')
+    if spell.get('integration')=='bossesrise':extra+=['integrations/bossesrise','bosses/'+spell['area']]
+    if spell.get('integration')=='alexscaves':extra+=['integrations/alexscaves','caves/'+spell['area'],'tiers/'+spell['tier'].lower()]
     for group in ['all','categories/'+spell['category'].lower(),'schools/'+school]+extra:
         entry='resonant_arcana:'+spell['bookId']
         if spell['kind'].startswith('BOSS_') or spell.get('integration'):entry={'id':entry,'required':False}

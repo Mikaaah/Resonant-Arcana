@@ -378,4 +378,24 @@ Base release / active phase: **15s**.
 
 Spell ID: `resonant_arcana:void_domain`. Inspect ranks with `/resonantarcana spell void_domain <rank>`.
 
+### Primordial Instinct
+
+Awaken your allies’ dinosaur instincts for twenty seconds. Primal Instinct grants +25% melee damage, +20% attack speed and +15% movement speed, with Resistance I. The blessing does not stack with itself.
+
+**Nature** · Cast **3s** · Cooldown **35s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 130 |
+| II | — | — | 138 |
+| III | — | — | 146 |
+| IV | — | — | 154 |
+| V | — | — | 162 |
+
+Base release / active phase: **3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
+
 [← Home](Home.md)

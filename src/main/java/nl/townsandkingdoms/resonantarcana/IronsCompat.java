@@ -30,6 +30,7 @@ final class IronsCompat {
     static net.minecraft.world.item.ItemStack scroll(Spell spell,int level){
         var stack=io.redspace.ironsspellbooks.registries.ItemRegistry.SCROLL.get().getDefaultInstance();
         ISpellContainer.createScrollContainer(SpellRegistry.REGISTRY.get(id(spell)),Math.clamp(level,1,spell.levelCap()),stack);
+        if(GodSpells.handles(spell))stack.set(net.minecraft.core.component.DataComponents.ENCHANTMENT_GLINT_OVERRIDE,true);
         return stack;
     }
     static boolean castWand(ServerPlayer player,Spell spell,net.minecraft.world.item.ItemStack stack){
@@ -84,8 +85,8 @@ final class IronsCompat {
             baseManaCost=spell.manaCost();
             manaCostPerLevel=spell.manaStep();baseSpellPower=100;spellPowerPerLevel=SpellCatalogue.POWER_PER_LEVEL;
             castTime=spell.castTicks();
-            defaults=new DefaultConfig().setMinRarity((CavesCompat.cataclysm(spell)||spell==Spell.DOOM||spell==Spell.DOOM_BEAM||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
-                .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(true).build();
+            defaults=new DefaultConfig().setMinRarity((GodSpells.handles(spell)||CavesCompat.cataclysm(spell)||spell==Spell.DOOM||spell==Spell.DOOM_BEAM||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
+                .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(!GodSpells.handles(spell)&&!CavesCompat.optional(spell)&&!BossesRiseCompat.optional(spell)).build();
         }
         @Override public boolean attemptInitiateCast(net.minecraft.world.item.ItemStack stack,int rank,Level level,Player player,CastSource source,boolean triggerCooldown,String slot){
             if(spell==Spell.CRIMSON_REVERSAL&&!level.isClientSide()&&player instanceof ServerPlayer p){
@@ -110,7 +111,7 @@ final class IronsCompat {
         @Override public CastType getCastType(){return castTime>0?CastType.LONG:CastType.INSTANT;}
         @Override public MutableComponent getDisplayName(Player player){return Component.literal(spell.title);}
         @Override public boolean requiresLearning(){return false;}
-        @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0&&!CavesCompat.optional(spell)&&spell!=Spell.DOOM&&!RecordedSpells.handles(spell)?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
+        @Override public Optional<net.minecraft.sounds.SoundEvent> getCastStartSound(){return castTime>0&&!SpellLoops.supports(spell)&&!CavesCompat.optional(spell)&&spell!=Spell.DOOM&&!RecordedSpells.handles(spell)?Optional.of(SpellAudio.event(SpellAudio.chargeId(spell))):Optional.empty();}
         @Override public Optional<net.minecraft.sounds.SoundEvent> getCastFinishSound(){return Optional.empty();}
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL,PIERCING_ORB,CONE_CHANNEL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
@@ -138,6 +139,7 @@ final class IronsCompat {
         }
         @Override public void onServerPreCast(Level level,int spellLevel,LivingEntity entity,MagicData data){
             if(entity instanceof ServerPlayer player){
+                if(GodSpells.handles(spell))GodSpells.lock(player,spell);
                 if(spell==Spell.EXPLOSION)ExplosionRitual.lock(player,data);
                 else {if(spell==Spell.I_AM_ATOMIC)AtomicRitual.lock(player,data);if(RecordedSpells.handles(spell))RecordedSpells.start(player,spell);}
             }
@@ -149,6 +151,7 @@ final class IronsCompat {
                 if(spell==Spell.I_AM_ATOMIC&&cancelled)AtomicRitual.end(player,data);
                 if(spell==Spell.DOOM_BEAM&&cancelled)BeamRitual.stop(player);
             }
+            if(entity instanceof ServerPlayer player){SpellLoops.stop(player,spell,false);GodSpells.unlock(player);if(cancelled)SpellLoops.stop(player,spell,true);}
             super.onServerCastComplete(level,spellLevel,entity,data,cancelled);
         }
         @Override public void onServerCastTick(Level level,int spellLevel,LivingEntity entity,MagicData data){

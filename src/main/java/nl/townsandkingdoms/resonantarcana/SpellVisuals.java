@@ -109,7 +109,7 @@ final class SpellVisuals {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
         if(detail ? details++>=ArcanaConfig.DETAIL_BUDGET.get() : accents++>=ArcanaConfig.ACCENT_BUDGET.get())return;
         if(!BossesRiseCompat.optional(spell))SpellParticles.emit(level,spell,stage,pos,end,size);
-        var message=new WandNetwork.Visual(spell.ordinal(),stage.ordinal(),pos.x,pos.y,pos.z,end.x,end.y,end.z,(float)Math.clamp(size,0.1,16));
+        var message=new WandNetwork.Visual(spell.ordinal(),stage.ordinal(),pos.x,pos.y,pos.z,end.x,end.y,end.z,(float)Math.clamp(size,0.1,GodSpells.handles(spell)?32:16));
         if(IntegrationChecks.enabled())IntegrationChecks.visual(message);
         // Long beams are sent around their midpoint so both ends can be seen by observers.
         Vec3 center=pos.lerp(end,0.5);

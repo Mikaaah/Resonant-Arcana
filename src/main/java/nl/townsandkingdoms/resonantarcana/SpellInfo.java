@@ -36,13 +36,33 @@ final class SpellInfo {
         if(s==Spell.TREMORZILLA_BREATH||s==Spell.MAGNETAR_ANNIHILATION)extent="Beam half-width: ";
         if(CavesCompat.optional(s))out.add(Component.literal("Alex’s Caves • "+s.definition.area().replace('_',' ')).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
         if(s.radius>0&&!extent.isEmpty())out.add(Component.literal(extent+format(s.radius)+" blocks").withStyle(net.minecraft.ChatFormatting.GRAY));
-        if(s.duration()>0&&s!=Spell.WARSCREAM&&s!=Spell.EXPLOSION&&s!=Spell.I_AM_ATOMIC)out.add(Component.literal("Base duration: "+format(s.duration()/20.0)+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
+        if(s==Spell.TECTONIC_STAMPEDE)out.add(Component.literal("Buff duration: "+format(20*Math.clamp(power,1,2))+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
+        if(s.duration()>0&&s!=Spell.TECTONIC_STAMPEDE&&s!=Spell.WARSCREAM&&s!=Spell.EXPLOSION&&s!=Spell.I_AM_ATOMIC)out.add(Component.literal("Base duration: "+format(s.duration()/20.0)+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
         if(castSeconds>0)out.add(Component.literal("Cast time: "+format(castSeconds)+"s"+(RecordedSpells.handles(s)?" (fixed)":"")).withStyle(net.minecraft.ChatFormatting.GRAY));
         for(var line:martial(s,power))for(String wrapped:wrap(line.getString(),52))out.add(Component.literal(wrapped).withStyle(net.minecraft.ChatFormatting.GRAY));
         return out;
     }
-    static String sequence(Spell s){return switch(s){
-        case LUX_EXTINCTION,ABYSSAL_DELUGE,CANDY_CATASTROPHE -> "Four pulses; final area hit ×2.";
+    static String sequence(Spell s){if(GodSpells.handles(s))return switch(s){
+        case THUNDER_OF_THE_HEAVENS -> "200 local lightning strikes; each has a 3-block radius.";
+        case SOLAR_SUPERNOVA,TREMORZILLA_CATACLYSM -> "One damage hit per enemy per cast.";
+        case ARCANE_CREATION -> "Six sector impacts; final area hit ×2.";
+        case CONFECTION_APOCALYPSE,DRAGON_PRIMORDIAL_INFERNO -> "Six sector impacts; final area hit ×3.";
+        case EVENTIDE_HORIZON -> "Four crossing cuts; final area hit ×2.";
+        case ABSOLUTE_GLACIATION -> "Advancing front, four pulses; final shatter ×2.";
+        case VERDANT_AWAKENING -> "Six pulses; final seedburst ×3.";
+        case FORSAKEN_ECLIPSE,YETI_WORLD_HEART -> "Three fronts; final area hit ×3.";
+        case HELVAR_FINAL_EDICT -> "Three fracture waves; final sword hit ×3.";
+        case KRAKEN_WORLD_DROWN -> "Four paired slams; final area hit ×3.";
+        case SANDWORM_WORLD_DEVOURER -> "Five travelling fronts; final area hit ×3.";
+        case ABYSSAL_WORLD_TIDE -> "Six tidal collapses.";
+        case PLANETARY_POLARITY -> "Six polarity pulses; final collision ×2.";
+        default -> "Five normal pulses; final area hit ×2.";
+    };return switch(s){
+        case HELVARS_SWORDFALL -> "Blade ×1 within 3.5 blocks; outer wave ×0.4. One hit each.";
+        case TECTONIC_STAMPEDE -> "Twenty-second ally blessing; no damage.";
+        case HULLBREAKER_SURGE -> "1.2-second warning; one breach hit per enemy.";
+        case LUX_EXTINCTION -> "Four dodgeable vent rounds; final core impact ×2.";
+        case ABYSSAL_DELUGE,CANDY_CATASTROPHE -> "Four pulses; final area hit ×2.";
         case FORLORN_RECKONING -> "Three pulses; final area hit ×2.";
         case NUCLEAR_STRIKE -> "Two-second warning; one blast per enemy.";
         case TREMORZILLA_BREATH,MAGNETAR_ANNIHILATION -> "Follows your aim; one damage hit per enemy.";

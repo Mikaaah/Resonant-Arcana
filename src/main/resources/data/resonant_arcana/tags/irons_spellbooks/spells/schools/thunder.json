@@ -27,6 +27,11 @@
     {
       "id": "resonant_arcana:magnetar_annihilation",
       "required": false
+    },
+    "resonant_arcana:thunder_of_the_heavens",
+    {
+      "id": "resonant_arcana:planetary_polarity",
+      "required": false
     }
   ]
 }

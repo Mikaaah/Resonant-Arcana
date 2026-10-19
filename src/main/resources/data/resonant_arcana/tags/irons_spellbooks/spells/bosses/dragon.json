@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:dragon_primordial_inferno",
+      "required": false
+    }
+  ]
+}

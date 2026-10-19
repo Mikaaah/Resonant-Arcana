@@ -13,33 +13,35 @@ import net.minecraft.world.phys.*;
 
 /** Eighteen authored release patterns. Native presentation never runs uncontrolled mob combat. */
 final class CavesSpells {
-    static final class State {final List<Bolt> bolts=new ArrayList<>();final List<CaveVisual> runners=new ArrayList<>();CaveVisual focus;Vec3 origin;double dropHeight;}
+    static final class State {final List<Bolt> bolts=new ArrayList<>();final List<CaveVisual> runners=new ArrayList<>();final List<Vent> vents=new ArrayList<>();CaveVisual focus;Vec3 origin;double dropHeight;int variant;}
+    private record Vent(Vec3 point,int due){}
     static final class Bolt {Vec3 pos,dir;CaveVisual visual;double distance;int bounces,hits;Bolt(Vec3 p,Vec3 d){pos=p;dir=d;}}
     private static boolean projectile(Spell s){return switch(s){case POLARITY_BOLT,AMBER_TALON,ACID_GLOB,BRINE_BUBBLE,DESOLATE_DAGGER,GUMBALL_VOLLEY->true;default->false;};}
     private static boolean beam(Spell s){return s==Spell.TREMORZILLA_BREATH||s==Spell.MAGNETAR_ANNIHILATION;}
     private static boolean self(Spell s){return s==Spell.EMP_SURGE||s==Spell.FORSAKEN_SONAR||beam(s);}
     static boolean canStart(ServerPlayer player,Spell spell){
-        if(!CavesCompat.available())return false;if(projectile(spell)||self(spell))return true;
+        if(!CavesCompat.available())return false;if(spell==Spell.TECTONIC_STAMPEDE||projectile(spell)||self(spell))return true;
         Vec3 eye=player.getEyePosition(),end=clipLoaded(player.serverLevel(),eye,player.getLookAngle(),spell.range,player);var victim=target(player,eye,end,.5);
         Vec3 ground=BossesRiseCompat.ground(player.serverLevel(),victim==null?end:victim.position());
         if(ground==null||player.serverLevel().clip(new net.minecraft.world.level.ClipContext(eye,ground.add(0,.4,0),net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,player)).getType()!=HitResult.Type.MISS)return false;
         return spell!=Spell.NUCLEAR_STRIKE||clipLoaded(player.serverLevel(),ground.add(0,.1,0),new Vec3(0,1,0),14,player).y>ground.y+5;
     }
     static boolean begin(Cast c){
-        c.cave=new State();c.cave.origin=c.caster.position();c.duration=c.spell.duration();
+        c.cave=new State();c.cave.variant=CavesCompat.beamVariant(c.caster);c.cave.origin=c.caster.position();c.duration=c.spell.duration();
         if(projectile(c.spell)){
             c.pos=BeamRitual.origin(c.caster);if(c.spell!=Spell.GUMBALL_VOLLEY)launch(c);return true;
         }
         if(beam(c.spell))CaveVisual.spawn(c,c.spell==Spell.TREMORZILLA_BREATH?16:15,c.caster.position(),1,c.duration);
+        if(c.spell==Spell.TECTONIC_STAMPEDE){c.pos=c.caster.position();for(var ally:SpellActions.allies(c,c.pos,c.spell.radius)){int blessing=SpellActions.supportDuration(c,400);effect(ally,ArcanaEffects.PRIMAL_INSTINCT,blessing,0);effect(ally,net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE,blessing,0);}CaveVisual.spawn(c,1,c.pos.add(0,2,0),.8f,60);return true;}
         if(self(c.spell))c.pos=c.caster.position().add(0,1,0);
         else {
             Vec3 ground=BossesRiseCompat.ground(c.level,c.target==null?c.anchor:c.target.position());if(ground==null)return false;c.pos=ground.add(0,.15,0);
         }
         switch(c.spell){
-            case TREMORZILLA_BREATH -> c.cave.focus=CaveVisual.spawn(c,3,c.caster.position().subtract(c.dir.scale(2)),.13f,c.duration);
+            case TREMORZILLA_BREATH -> {}
             case NUCLEAR_STRIKE -> {c.cave.dropHeight=Math.max(1,clipLoaded(c.level,c.pos.add(0,.1,0),new Vec3(0,1,0),14,c.caster).y-c.pos.y-.5);c.cave.focus=CaveVisual.spawn(c,6,c.pos.add(0,c.cave.dropHeight,0),1,c.duration);}
-            case LUX_EXTINCTION -> c.cave.focus=CaveVisual.spawn(c,2,c.pos,.35f,c.duration);
-            case HULLBREAKER_SURGE -> c.cave.focus=CaveVisual.spawn(c,4,c.cave.origin.add(0,-.5,0),.65f,c.duration);
+            case LUX_EXTINCTION -> {c.cave.dropHeight=Math.max(1,clipLoaded(c.level,c.pos.add(0,.1,0),new Vec3(0,1,0),10,c.caster).y-c.pos.y-.6);c.cave.focus=CaveVisual.spawn(c,12,c.pos.add(0,c.cave.dropHeight,0),3,c.duration);}
+            case HULLBREAKER_SURGE -> c.cave.focus=CaveVisual.spawn(c,4,c.pos.add(0,-6,0),.8f,c.duration);
             case FORSAKEN_SONAR,FORLORN_RECKONING -> c.cave.focus=CaveVisual.spawn(c,5,c.spell==Spell.FORSAKEN_SONAR?c.caster.position():c.pos,c.spell==Spell.FORLORN_RECKONING?1.3f:.65f,c.duration);
             case FROSTMINT_HEX -> {c.cave.focus=CaveVisual.spawn(c,10,c.pos,1.8f,c.duration);for(int i=0;i<3;i++)CaveVisual.spawn(c,9,c.pos.add(Math.cos(i*Math.PI*2/3)*4,.5,Math.sin(i*Math.PI*2/3)*4),1,c.duration);}
             case CANDY_CATASTROPHE -> {c.cave.focus=CaveVisual.spawn(c,11,c.pos.add(0,-2,0),.65f,c.duration);for(int i=0;i<5;i++)CaveVisual.spawn(c,9,c.pos.add(Math.cos(i*Math.PI*2/5)*6,1,Math.sin(i*Math.PI*2/5)*6),1.8f,c.duration);}
@@ -68,23 +70,20 @@ final class CavesSpells {
                         if(removed<32&&shot.position().distanceToSqr(c.pos)<=c.spell.radius*c.spell.radius&&visible(c,c.pos,shot.position())){shot.discard();removed++;}
                 }
             }
-            case TECTONIC_STAMPEDE -> {
-                Vec3 side=new Vec3(-c.dir.z,0,c.dir.x).normalize();
-                if(c.age==1||c.age==26||c.age==51){int index=(c.age-1)/25;Vec3 point=c.pos.add(side.scale((index-1)*2));
-                    var spirit=CaveVisual.spawn(c,17,point.subtract(c.dir.scale(7.2)),1,24);spirit.setDeltaMovement(c.dir.scale(.8));c.cave.runners.add(spirit);}
-                if(c.age==10||c.age==35||c.age==60){
-                    Vec3 point=c.pos.add(side.scale((c.age-35)/25.0*2));
-                    if(!c.cave.runners.isEmpty())c.cave.runners.getLast().setDeltaMovement(Vec3.ZERO);
-                    pulse(c,point,c.spell.radius,1);push(c,point,1.2);
-                }
-            }
+            case TECTONIC_STAMPEDE -> {if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,1,0),c.spell.radius);return true;}
             case HULLBREAKER_SURGE -> {
-                Vec3 start=c.cave.origin.add(0,.5,0);double travelled=Math.min(c.spell.range,c.age*.65);
-                Vec3 point=clipLoaded(c.level,start,c.dir,travelled,c.caster);
-                if(c.cave.focus!=null)c.cave.focus.setPos(point.add(0,-1,0));
-                for(var victim:near(c.caster,point,c.spell.radius))if(inside(c,victim,point,c.spell.radius)&&!c.hit.contains(victim.getUUID())){strike(c,victim,point);victim.push(c.dir.x*.8,.25,c.dir.z*.8);}
-                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,point,point.add(c.dir),c.spell.radius);
-                if(point.distanceTo(start)+.1<travelled||travelled>=c.spell.range)return false;
+                double rise=c.age<=24?Math.sin(c.age/24.0*Math.PI/2):Math.max(0,1-(c.age-24)/30.0);
+                if(c.cave.focus!=null)c.cave.focus.setPos(c.pos.add(0,-6+rise*6.4,0));
+                if(c.age==24){pulse(c,c.pos.add(0,1,0),c.spell.radius,1);for(var victim:near(c.caster,c.pos,c.spell.radius))if(inside(c,victim,c.pos.add(0,1,0),c.spell.radius))victim.push(0,.55,0);}
+                if(c.age%4==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos.add(0,rise,0),c.spell.radius);
+            }
+            case LUX_EXTINCTION -> {
+                if(c.age>=15&&(c.age-15)%24==0&&c.age<=87){int selected=0;
+                    for(var victim:near(c.caster,c.pos,c.spell.radius))if(inside(c,victim,c.pos,c.spell.radius)&&selected++<6){Vec3 point=BossesRiseCompat.ground(c.level,victim.position());if(point!=null){c.cave.vents.add(new Vent(point,c.age+8));SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.STRIKE,point,point.add(0,5,0),2.5);}}
+                }
+                boolean batch=false;for(var it=c.cave.vents.iterator();it.hasNext();){var vent=it.next();if(vent.due()<=c.age){if(!batch){c.hit.clear();batch=true;}for(var victim:near(c.caster,vent.point(),3))if(inside(c,victim,vent.point().add(0,1,0),3))strike(c,victim,vent.point());SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,vent.point(),vent.point().add(0,5,0),3);it.remove();}}
+                if(c.age>=88&&c.age<=112&&c.cave.focus!=null)c.cave.focus.setPos(c.pos.add(0,c.cave.dropHeight*(1-(c.age-88)/24.0),0));
+                if(c.age==112){if(c.cave.focus!=null)c.cave.focus.discard();pulse(c,c.pos,c.spell.radius,2);}
             }
             case FORSAKEN_SONAR -> {
                 if(c.cave.focus!=null)c.cave.focus.setYRot(c.caster.getYRot());
@@ -101,7 +100,7 @@ final class CavesSpells {
                 if(c.age<40&&c.cave.focus!=null)c.cave.focus.setPos(c.pos.add(0,c.cave.dropHeight*(1-c.age/40.0),0));
                 if(c.age==40){if(c.cave.focus!=null)c.cave.focus.discard();pulse(c,c.pos,c.spell.radius,1);for(var victim:near(c.caster,c.pos,c.spell.radius))if(inside(c,victim,c.pos,c.spell.radius))effect(victim,MobEffects.WEAKNESS,100,1);}
             }
-            case LUX_EXTINCTION,ABYSSAL_DELUGE,FORLORN_RECKONING,CANDY_CATASTROPHE -> {
+            case ABYSSAL_DELUGE,FORLORN_RECKONING,CANDY_CATASTROPHE -> {
                 int pulses=c.spell==Spell.FORLORN_RECKONING?3:4;
                 if(c.age>=15&&(c.age-15)%24==0&&(c.age-15)/24<pulses){
                     if(c.spell==Spell.ABYSSAL_DELUGE)pull(c,c.pos,.3);
@@ -127,7 +126,8 @@ final class CavesSpells {
         if(c.cave.focus!=null){c.cave.focus.setPos(c.caster.position().subtract(dir.scale(2)));c.cave.focus.setYRot((float)Math.toDegrees(Math.atan2(-dir.x,dir.z)));}
         for(var target:lineTargets(c,c.pos,c.anchor,c.spell.radius))if(visible(c,c.pos,target.getBoundingBox().getCenter()))strike(c,target,c.pos);
         if(c.age%3==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,c.pos,c.anchor,c.spell.radius);
-        if(c.age%24==1)SpellAudio.world(c.level,c.pos,c.spell==Spell.TREMORZILLA_BREATH?"alexscaves:tremorzilla_beam_loop":"alexscaves:raygun_loop",.8f,1);
+        if(c.spell==Spell.TREMORZILLA_BREATH&&c.age%8==1)SpellLoops.sync(c.caster,c.spell,true,true,c.cave.variant);
+        else if(c.spell!=Spell.TREMORZILLA_BREATH&&c.age%24==1)SpellAudio.world(c.level,c.pos,"alexscaves:raygun_loop",.8f,1);
         return true;
     }
     private static boolean projectiles(Cast c){
@@ -139,7 +139,7 @@ final class CavesSpells {
             boolean done=false;
             for(var victim:lineTargets(c,bolt.pos,next,.25))if(!c.hit.contains(victim.getUUID())&&visible(c,bolt.pos,victim.getBoundingBox().getCenter())){
                 if(c.spell==Spell.ACID_GLOB)pulse(c,victim.getBoundingBox().getCenter(),c.spell.radius,1);else strike(c,victim,bolt.pos);
-                if(c.spell==Spell.POLARITY_BOLT){Vec3 pull=c.caster.position().subtract(victim.position()).normalize().scale(.55);victim.push(pull.x,.1,pull.z);}
+                if(c.spell==Spell.POLARITY_BOLT){double mass=Math.clamp(1-victim.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE),0,1);Vec3 pull=c.caster.position().subtract(victim.position()).normalize().scale(.55*mass);victim.push(pull.x,.1*mass,pull.z);}
                 if(c.spell==Spell.AMBER_TALON)victim.push(0,.3,0);
                 if(c.spell==Spell.BRINE_BUBBLE&&!victim.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES))nativeEffect(victim,"bubbled",40);
                 bolt.hits++;if(c.spell!=Spell.DESOLATE_DAGGER||bolt.hits>=3){done=true;break;}
@@ -148,7 +148,7 @@ final class CavesSpells {
                 var hit=c.level.clip(new net.minecraft.world.level.ClipContext(bolt.pos,bolt.pos.add(bolt.dir.scale(1.1)),net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,c.caster));
                 Vec3 normal=Vec3.atLowerCornerOf(hit.getDirection().getNormal());bolt.dir=bolt.dir.subtract(normal.scale(2*bolt.dir.dot(normal)));next=hit.getLocation().add(normal.scale(.08));blocked=false;
             }
-            if(blocked&&c.spell==Spell.ACID_GLOB)pulse(c,next.add(bolt.dir.scale(-.05)),c.spell.radius,1);
+            if(blocked&&!done&&c.spell==Spell.ACID_GLOB)pulse(c,next.add(bolt.dir.scale(-.05)),c.spell.radius,1);
             bolt.distance+=bolt.pos.distanceTo(next);bolt.pos=next;
             if(bolt.visual!=null){bolt.visual.setPos(next);bolt.visual.setYRot((float)Math.toDegrees(Math.atan2(-bolt.dir.x,bolt.dir.z)));}
             if(c.age%2==1)SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.FLIGHT,next,next.add(bolt.dir),.8);

@@ -25,3 +25,5 @@
 [Boss Arts](Boss-Art.md)
 
 [Cataclysms](Cataclysm.md)
+
+[God-tier Magic](God.md)

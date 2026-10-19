@@ -30,6 +30,8 @@ final class ArcanaEffects {
         .addAttributeModifier(AttributeRegistry.SPELL_POWER,id("seraph_power"),.15,Operation.ADD_MULTIPLIED_TOTAL));
     static final net.minecraft.core.Holder<MobEffect> VOID_EMPOWERMENT=REGISTER.register("void_empowerment",()->new Beneficial(0x9c65de)
         .addAttributeModifier(AttributeRegistry.SPELL_POWER,id("void_power"),.25,Operation.ADD_MULTIPLIED_TOTAL));
+    static final net.minecraft.core.Holder<MobEffect> PRIMAL_INSTINCT=REGISTER.register("primal_instinct",()->new Beneficial(0xffbc55).addAttributeModifier(Attributes.ATTACK_DAMAGE,id("primal_damage"),.25,Operation.ADD_MULTIPLIED_TOTAL).addAttributeModifier(Attributes.ATTACK_SPEED,id("primal_attack"),.20,Operation.ADD_MULTIPLIED_TOTAL).addAttributeModifier(Attributes.MOVEMENT_SPEED,id("primal_move"),.15,Operation.ADD_MULTIPLIED_TOTAL));
+    static final net.minecraft.core.Holder<MobEffect> COVENANT_GRACE=REGISTER.register("covenant_grace",()->new Beneficial(0xffe5a1).addAttributeModifier(AttributeRegistry.SPELL_POWER,id("covenant_power"),.35,Operation.ADD_MULTIPLIED_TOTAL));
     private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,path);}
     private static final class Beneficial extends MobEffect {Beneficial(int color){super(MobEffectCategory.BENEFICIAL,color);}}
     private ArcanaEffects(){}

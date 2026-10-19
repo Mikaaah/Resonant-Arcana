@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.30.0-alpha
+
+- Added twenty God-tier arts: one per native school, one per cave biome and one per Bosses’Rise boss. Twenty-second base casts, 600 mana, one Legendary rank and four-minute cooldowns.
+- Added Thunder of the Heavens: lock a 28-block field and release 200 purple lightning strikes. Other God arts use distinct sectors, crossing cuts, fronts, tethers, allied blessings and native addon constructs.
+- Replaced Tremorzilla’s rectangular beam with native beam materials and its animated impact model, including green, retro purple and tectonic orange variants. Removed the miniature boss. Offhand Amber Curiosity and Tectonic Shard select variants.
+- Lowered all beam sources to torso level; Arcane Devastator now uses a following continuous violet beam. Added sustained impact eruptions to Doom Beam.
+- Rebuilt Hullbreaker’s Breach as a warned rising bite and dive. Replaced Lux’s static boss with dodgeable volcanic vents and a falling molten core.
+- Replaced Tectonic Stampede with Primordial Instinct: a twenty-second non-stacking melee, speed and resistance blessing for allies. Preserved its saved scroll ID.
+- Refined Polarity Bolt’s red/azure electric trail and EMP’s radial discharge; removed the unrelated block-seeking magnetic lightning effect.
+- Replaced Helvar’s blue/purple rift visuals with black-iron red embers and warm fracture sparks. Doubled the native sword’s scale, corrected headroom probes and added an expanding damaging shockwave.
+- Made Doom’s seven-layer ambience and Tremorzilla/God sound beds caster-owned and cancellable. Leases expire on disconnect, death and dimension changes; one caster’s cancellation cannot silence another.
+- Added fifty deterministic addon/God scroll recipes with real materials and version-gated loading; disabled generic Scroll Forge shortcuts for those spells. Retained Iron’s nine native school scroll textures and added God scroll glint.
+- Retained the current GUI, single Spells tab and saved spell IDs; added the God category, searchable tiers and accurate sequence information. Network protocol 21 requires both sides to update.
+
 ## 0.29.0-alpha
 
 - Added eighteen optional Alex’s Caves arts: one Novice, Master and Cataclysm for each of its six cave areas. Requires the supplied 2.0.10 build and its Citadel dependency on both sides.

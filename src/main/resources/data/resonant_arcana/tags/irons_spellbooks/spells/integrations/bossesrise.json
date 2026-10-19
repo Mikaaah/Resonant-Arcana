@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:kraken_world_drown",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:yeti_world_heart",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:helvar_final_edict",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:sandworm_world_devourer",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:dragon_primordial_inferno",
+      "required": false
+    }
+  ]
+}

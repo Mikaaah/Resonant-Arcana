@@ -63,6 +63,15 @@
     {
       "id": "resonant_arcana:forlorn_reckoning",
       "required": false
+    },
+    "resonant_arcana:eventide_horizon",
+    {
+      "id": "resonant_arcana:forsaken_eclipse",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:helvar_final_edict",
+      "required": false
     }
   ]
 }

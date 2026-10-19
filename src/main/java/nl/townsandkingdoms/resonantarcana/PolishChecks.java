@@ -25,9 +25,9 @@ final class PolishChecks {
         var caster=FakePlayerFactory.get(level,new GameProfile(UUID.fromString("ca925e5f-16dd-45c4-b080-b1d02bb544db"),"PolishTest"));caster.setPos(0,81,0);caster.setYRot(0);caster.setXRot(0);caster.removeAllEffects();
         var scroll=IronsCompat.scroll(Spell.VOID_DOMAIN);var lines=scroll.getTooltipLines(net.minecraft.world.item.Item.TooltipContext.of(level),caster,net.minecraft.world.item.TooltipFlag.NORMAL);
         check.accept(lines.stream().anyMatch(line->line.getString().contains("Keywords:")),"normal scroll tooltip includes searchable spell keywords without Shift");
-        check.accept(BeamRitual.origin(caster).distanceToSqr(caster.getEyePosition().add(0,-.25,0).add(caster.getLookAngle().scale(.9)))<.001,"beam muzzle moves nine tenths of a block forward");
-        level.setBlock(new BlockPos(0,82,0),Blocks.STONE.defaultBlockState(),3);
-        try{check.accept(BeamRitual.origin(caster).distanceToSqr(caster.getEyePosition().add(0,-.25,0))<.81,"nearby solid cover clips muzzle offset");}finally{level.setBlock(new BlockPos(0,82,0),Blocks.AIR.defaultBlockState(),3);}
+        check.accept(BeamRitual.origin(caster).distanceToSqr(BeamRitual.body(caster,1).add(caster.getLookAngle().scale(.9)))<.001,"beam muzzle moves nine tenths of a block forward");
+        level.setBlock(new BlockPos(0,81,0),Blocks.STONE.defaultBlockState(),3);
+        try{check.accept(BeamRitual.origin(caster).distanceToSqr(BeamRitual.body(caster,1))<.81,"nearby solid cover clips muzzle offset");}finally{level.setBlock(new BlockPos(0,81,0),Blocks.AIR.defaultBlockState(),3);}
         SpellEngine.clear();var team=level.getScoreboard().addPlayerTeam("domain_test");team.setAllowFriendlyFire(false);level.getScoreboard().addPlayerToTeam(caster.getScoreboardName(),team);
         Zombie enemy=enemy(level,0,6),outside=enemy(level,18,6),covered=enemy(level,0,10);
         var friend=new net.minecraft.world.entity.animal.Cow(EntityType.COW,level);friend.setNoAi(true);friend.setPos(2,81,6);level.addFreshEntity(friend);

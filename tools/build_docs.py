@@ -3,10 +3,10 @@ from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
 SCHOOL={'MAGIC':'Evocation','BLOOD':'Blood','FIRE':'Fire','DARK':'Ender','GRAVITY':'Ender','THUNDER':'Lightning','SOUL':'Eldritch','POISON':'Nature','HOLY':'Holy','ICE':'Ice'}
-CATEGORIES={'PROJECTILE':'Projectiles','BEAM':'Beams & Channels','AREA':'Area Magic','CONTROL':'Control','MOBILITY':'Movement','SUPPORT':'Support & Defense','SUMMON':'Summons & Constructs','MELEE':'Strikes & Drains','BOSS_ART':'Boss Arts','CATACLYSM':'Cataclysms'}
+CATEGORIES={'PROJECTILE':'Projectiles','BEAM':'Beams & Channels','AREA':'Area Magic','CONTROL':'Control','MOBILITY':'Movement','SUPPORT':'Support & Defense','SUMMON':'Summons & Constructs','MELEE':'Strikes & Drains','BOSS_ART':'Boss Arts','CATACLYSM':'Cataclysms','GOD':'God-tier Magic'}
 def num(n):return f'{n:g}'
 def main():
- data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells'];bosses=sum(s['kind'].startswith('BOSS_') for s in spells.values());caves=sum(s.get('integration')=='alexscaves' for s in spells.values())
+ data=json.loads((ROOT/'src/main/resources/assets/resonant_arcana/catalogue.json').read_text());spells=data['spells'];bosses=sum(s['kind'].startswith('BOSS_') or s.get('integration')=='bossesrise' for s in spells.values());caves=sum(s.get('integration')=='alexscaves' for s in spells.values())
  lines=['# Spell reference','',f"**{len(spells)-bosses-caves} core spells + {bosses} optional Bosses’Rise spells + {caves} optional Alex’s Caves spells.** Every spell has one functional category and one native Iron’s school.",'',
  'Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.', '',
  'Values are defaults before school power, equipment, resistances and server settings. Damage and healing use health points: two health points equal one heart. Damage is per normal hit or pulse; descriptions explain final multipliers. Travel time and release sequences occur after the cast bar. Ordinary spells have up to five ranks; Doom and cataclysms have one Legendary rank.', '',
@@ -30,7 +30,7 @@ def main():
    if s['kind'] in ('BLADE_ARC','BLADE_THRUST','DRAW','REVERSAL','BREAKER'):lines+=['Weapon contribution: add half the melee attack attribute at release before spell-power scaling.','']
    if s['kind']=='CATACLYSM':lines+=['Single-rank Legendary. The listed damage is one normal impact or pulse; the description states the final multiplier. Casting can be interrupted.','']
    if s.get('integration')=='alexscaves':lines +=[f"Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **{s['area'].replace('_',' ').title()} · {s['tier'].title()}**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.",'']
-   if s['kind'].startswith('BOSS_'):lines+=['Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.','']
+   if s['kind'].startswith('BOSS_') or s.get('integration')=='bossesrise':lines+=['Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.','']
    lines +=[f"Spell ID: `resonant_arcana:{s['bookId']}`. Inspect ranks with `/resonantarcana spell {s['bookId']} <rank>`.",'']
  (ROOT/'SPELLS.md').write_text('\n'.join(lines))
  print('Documented',len(spells),'categorized spells.')

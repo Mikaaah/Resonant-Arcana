@@ -12,6 +12,10 @@
     {
       "id": "resonant_arcana:nuclear_strike",
       "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_cataclysm",
+      "required": false
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Spell reference
 
-**154 core spells + 12 optional Bosses’Rise spells + 18 optional Alex’s Caves spells.** Every spell has one functional category and one native Iron’s school.
+**163 core spells + 17 optional Bosses’Rise spells + 24 optional Alex’s Caves spells.** Every spell has one functional category and one native Iron’s school.
 
 Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
@@ -19,25 +19,26 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | [Area Magic](#area) | 36 |
 | [Control](#control) | 18 |
 | [Movement](#mobility) | 11 |
-| [Support & Defense](#support) | 21 |
-| [Summons & Constructs](#summon) | 11 |
+| [Support & Defense](#support) | 22 |
+| [Summons & Constructs](#summon) | 10 |
 | [Strikes & Drains](#melee) | 20 |
 | [Boss Arts](#boss_art) | 12 |
 | [Cataclysms](#cataclysm) | 20 |
+| [God-tier Magic](#god) | 20 |
 
 ## Schools
 
 | School | Spells |
 | --- | ---: |
-| Evocation | 19 |
-| Blood | 15 |
-| Fire | 19 |
-| Ender | 39 |
-| Lightning | 18 |
-| Eldritch | 15 |
-| Nature | 21 |
-| Holy | 17 |
-| Ice | 21 |
+| Evocation | 21 |
+| Blood | 16 |
+| Fire | 21 |
+| Ender | 42 |
+| Lightning | 20 |
+| Eldritch | 16 |
+| Nature | 25 |
+| Holy | 18 |
+| Ice | 25 |
 
 <a id="projectile"></a>
 ## Projectiles
@@ -604,7 +605,7 @@ Spell ID: `resonant_arcana:arcane_devastator`. Inspect ranks with `/resonantarca
 
 ### Tremorzilla Breath
 
-Manifest Tremorzilla’s charged breath as a green atomic beam following your hands and aim for five seconds. Each enemy entering its path takes one hit. Solid cover stops the breath.
+Channel Tremorzilla’s native atomic breath from your body for five seconds. Each enemy takes one hit. Hold Amber Curiosity offhand for purple retro breath, or a Tectonic Shard for orange; otherwise it is green. Cover stops the beam.
 
 **Nature** · Cast **4s** · Cooldown **50s** · Range **48 blocks** · Radius / half-width **2.5 blocks**.
 
@@ -1232,9 +1233,9 @@ Base release / active phase: **3.1s**.
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect ranks with `/resonantarcana spell funeral_bell <rank>`.
 
-### Hullbreaker Surge
+### Hullbreaker’s Breach
 
-Call a Hullbreaker apparition through a rushing tidal wave. The advancing surge damages each enemy once, knocks it away and briefly slows it.
+Mark a breach in the ground. After a 1.2-second warning, a Hullbreaker rises from below, bites enemies in the marked circle and launches them upward before diving away. Solid cover and ally protection apply.
 
 **Ice** · Cast **3.2s** · Cooldown **36s** · Range **28 blocks** · Radius / half-width **6 blocks**.
 
@@ -1246,7 +1247,7 @@ Call a Hullbreaker apparition through a rushing tidal wave. The advancing surge 
 | IV | 105 | — | 159 |
 | V | 120 | — | 167 |
 
-Base release / active phase: **3.5s**.
+Base release / active phase: **3s**.
 
 Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
 
@@ -2134,6 +2135,26 @@ Base release / active phase: **15s**.
 
 Spell ID: `resonant_arcana:void_domain`. Inspect ranks with `/resonantarcana spell void_domain <rank>`.
 
+### Primordial Instinct
+
+Awaken your allies’ dinosaur instincts for twenty seconds. Primal Instinct grants +25% melee damage, +20% attack speed and +15% movement speed, with Resistance I. The blessing does not stack with itself.
+
+**Nature** · Cast **3s** · Cooldown **35s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 130 |
+| II | — | — | 138 |
+| III | — | — | 146 |
+| IV | — | — | 154 |
+| V | — | — | 162 |
+
+Base release / active phase: **3s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
+
 
 <a id="summon"></a>
 ## Summons & Constructs
@@ -2317,26 +2338,6 @@ Base release / active phase: **2.25s**.
 Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
 
 Spell ID: `resonant_arcana:amber_talon`. Inspect ranks with `/resonantarcana spell amber_talon <rank>`.
-
-### Tectonic Stampede
-
-Summon three Tremorsaurus spirits that charge the marked ground in sequence. Each charge releases a ground shockwave that damages and staggers visible enemies.
-
-**Nature** · Cast **3s** · Cooldown **35s** · Range **24 blocks** · Radius / half-width **5 blocks**.
-
-| Rank | Base damage | Base healing | Mana |
-| --- | ---: | ---: | ---: |
-| I | 22 | — | 130 |
-| II | 27.5 | — | 138 |
-| III | 33 | — | 146 |
-| IV | 38.5 | — | 154 |
-| V | 44 | — | 162 |
-
-Base release / active phase: **4.3s**.
-
-Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
-
-Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
 
 
 <a id="melee"></a>
@@ -2810,9 +2811,9 @@ Spell ID: `resonant_arcana:helvars_fracture`. Inspect ranks with `/resonantarcan
 
 ### Helvar’s Swordfall
 
-Mark visible ground and summon Helvar’s sword above it. The blade drops point-first after a brief warning, damaging and weakening enemies. Requires clear space overhead.
+Summon Helvar’s colossal sword above the mark and drive it into the ground. The blade deals full damage within 3.5 blocks; an expanding nine-block shockwave hits other enemies for 40% damage. Each enemy takes one hit. Requires overhead space.
 
-**Ender** · Cast **1.3s** · Cooldown **12s** · Range **18 blocks** · Radius / half-width **3 blocks**.
+**Ender** · Cast **1.3s** · Cooldown **12s** · Range **18 blocks** · Radius / half-width **9 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -2821,6 +2822,8 @@ Mark visible ground and summon Helvar’s sword above it. The blade drops point-
 | III | 54 | — | 72 |
 | IV | 63 | — | 78 |
 | V | 72 | — | 84 |
+
+Base release / active phase: **2.8s**.
 
 Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
 
@@ -3144,9 +3147,9 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:magnetar_annihilation`. Inspect ranks with `/resonantarcana spell magnetar_annihilation <rank>`.
 
-### Luxtructosaurus Extinction
+### Lux’s Caldera
 
-Manifest a Luxtructosaurus at the mark. Four tephra eruptions scorch the area before a double-damage extinction blast. Allies and terrain are protected.
+Condense a molten tephra sun over the mark. Four rounds of volcanic vents telegraph beneath up to six enemies; each erupts after 0.4 seconds and can be dodged. The core then falls in a double-damage extinction blast. Allies and terrain are protected.
 
 **Fire** · Cast **12s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
@@ -3223,3 +3226,309 @@ Base release / active phase: **6.5s**.
 Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
 
 Spell ID: `resonant_arcana:candy_catastrophe`. Inspect ranks with `/resonantarcana spell candy_catastrophe <rank>`.
+
+
+<a id="god"></a>
+## God-tier Magic
+
+### Thunder of the Heavens
+
+Mark a vast storm field, then unleash 200 violet lightning strikes over ten seconds. One strike per volley tracks a visible enemy; the others scour the marked ground. Each strike damages only nearby enemies. Allies and terrain are protected.
+
+**Lightning** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **28 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 96 | — | 600 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:thunder_of_the_heavens`. Inspect ranks with `/resonantarcana spell thunder_of_the_heavens <rank>`.
+
+### Arcane Creation
+
+Weave six rotating astral stars around the mark. Each star collapses in sequence, blasting a different sector, before the entire constellation converges into a double-damage central verdict.
+
+**Evocation** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 140 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Spell ID: `resonant_arcana:arcane_creation`. Inspect ranks with `/resonantarcana spell arcane_creation <rank>`.
+
+### Crimson Apotheosis
+
+Claim the marked battlefield with five blood tithes. Scarlet tethers drain visible enemies every second and restore up to twenty health to you across the cast. A final blood nova deals double damage. Allies are protected.
+
+**Blood** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 120 | — | 600 |
+
+Base release / active phase: **8s**.
+
+Spell ID: `resonant_arcana:crimson_apotheosis`. Inspect ranks with `/resonantarcana spell crimson_apotheosis <rank>`.
+
+### Solar Supernova
+
+Condense a blazing sun above the mark. After two seconds of violent compression, a single expanding supernova burns every visible enemy caught by its advancing front. The warning gives enemies time to escape; terrain is protected.
+
+**Fire** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **28 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 960 | — | 600 |
+
+Base release / active phase: **6s**.
+
+Spell ID: `resonant_arcana:solar_supernova`. Inspect ranks with `/resonantarcana spell solar_supernova <rank>`.
+
+### Eventide Horizon
+
+Open four crossing void seams through the mark. Successive rift cuts suppress enemies on those lines, then a final dimensional fold strikes the entire field for double damage. Each cut respects solid cover.
+
+**Ender** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 150 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Spell ID: `resonant_arcana:eventide_horizon`. Inspect ranks with `/resonantarcana spell eventide_horizon <rank>`.
+
+### Absolute Glaciation
+
+Send an expanding glacier front across the field, freezing enemies as it reaches them. Four cold pulses follow, then a double-damage ice shatter. The advancing front and final shatter each hit an enemy once.
+
+**Ice** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **28 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 120 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Spell ID: `resonant_arcana:absolute_glaciation`. Inspect ranks with `/resonantarcana spell absolute_glaciation <rank>`.
+
+### Verdant Awakening
+
+Awaken a vast flowering grove. Six root pulses drag and poison enemies while healing nearby allies and refreshing their Resistance I. A final seedburst deals triple damage. Moss, azalea and luminous spores fill the grove.
+
+**Nature** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 90 | 10 | 600 |
+
+Base release / active phase: **11s**.
+
+Spell ID: `resonant_arcana:verdant_awakening`. Inspect ranks with `/resonantarcana spell verdant_awakening <rank>`.
+
+### Heaven’s Covenant
+
+Establish a radiant covenant. Five holy verdicts damage enemies and cleanse and heal eligible allies. Allies inside gain Resistance II and +35% spell power; leaving the field stops the refresh. A final double-damage verdict closes the covenant.
+
+**Holy** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 80 | 10 | 600 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:heavens_covenant`. Inspect ranks with `/resonantarcana spell heavens_covenant <rank>`.
+
+### Soul Ascendancy
+
+Raise five spiralling soul harvests over the mark. Each harvest reaps visible enemies and grants you a non-stacking absorption ward. The last procession closes in a double-damage soul burst. Walls and allies are protected.
+
+**Eldritch** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 130 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Spell ID: `resonant_arcana:soul_ascendancy`. Inspect ranks with `/resonantarcana spell soul_ascendancy <rank>`.
+
+### Planetary Polarity
+
+Establish two opposing magnetic poles that orbit the field. Six alternating polarity pulses pull and repel enemies, clearing hostile projectiles at ignition, before the poles collide in a double-damage annihilation.
+
+**Lightning** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 140 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · God**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:planetary_polarity`. Inspect ranks with `/resonantarcana spell planetary_polarity <rank>`.
+
+### Primordial Sovereign
+
+Lead a primeval hunt. Dinosaur spirits guard the marked field; five ground charges damage enemies while eligible allies receive Primal Instinct, Resistance II and regeneration. The final charge deals double damage.
+
+**Nature** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 120 | — | 600 |
+
+Base release / active phase: **10s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · God**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:primordial_sovereign`. Inspect ranks with `/resonantarcana spell primordial_sovereign <rank>`.
+
+### Tremorzilla Cataclysm
+
+Channel a colossal purple retro Tremorzilla beam from your body for ten seconds. It follows your current aim, strikes each enemy once and erupts continuously at the impact point. Solid cover stops the beam; allies and terrain are protected.
+
+**Nature** · Cast **20s** · Cooldown **240s** · Range **64 blocks** · Radius / half-width **4 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 880 | — | 600 |
+
+Base release / active phase: **10s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · God**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:tremorzilla_cataclysm`. Inspect ranks with `/resonantarcana spell tremorzilla_cataclysm <rank>`.
+
+### Abyssal World Tide
+
+Call four deep-sea pressure walls inward from the field’s edge. Six tidal collapses damage and drag enemies toward the mark; the last traps non-bosses in bubbles. Allies receive water breathing and Resistance II inside the tide.
+
+**Ice** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **28 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 150 | — | 600 |
+
+Base release / active phase: **10s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · God**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:abyssal_world_tide`. Inspect ranks with `/resonantarcana spell abyssal_world_tide <rank>`.
+
+### Forsaken Eclipse
+
+Surround the mark with four Forsaken apparitions. Their aimed sonar crosses the battlefield in three tightening waves, revealing and darkening enemies. The final converging roar deals triple damage.
+
+**Ender** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 170 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · God**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:forsaken_eclipse`. Inspect ranks with `/resonantarcana spell forsaken_eclipse <rank>`.
+
+### Confection Apocalypse
+
+Raise a colossal sugar hex. Giant gumballs rain into six marked sectors as peppermint discs sweep the field; each sector bursts once, followed by a triple-damage candy finale. Eligible allies inside receive Sugar Rush.
+
+**Evocation** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 140 | — | 600 |
+
+Base release / active phase: **10s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · God**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:confection_apocalypse`. Inspect ranks with `/resonantarcana spell confection_apocalypse <rank>`.
+
+### Kraken’s World Drown
+
+Call a ring of eight native Kraken tentacles around the mark. Paired slams collapse the ring inward and drag visible enemies into a final triple-damage tidal crush. Terrain and allies are protected.
+
+**Ice** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **26 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 160 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:kraken_world_drown`. Inspect ranks with `/resonantarcana spell kraken_world_drown <rank>`.
+
+### Yeti’s World Heart
+
+Raise three expanding rings of native Yeti ice spikes. Each front hits visible enemies once and freezes their advance; a final triple-damage glacial rupture shatters the marked field.
+
+**Ice** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **26 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 150 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:yeti_world_heart`. Inspect ranks with `/resonantarcana spell yeti_world_heart <rank>`.
+
+### Helvar’s Final Edict
+
+Manifest Helvar’s colossal sword over the mark. Three ember-red fracture waves cut outward before the blade strikes in a triple-damage judgement and expanding ground shockwave. Allies and terrain are protected.
+
+**Ender** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **24 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 240 | — | 600 |
+
+Base release / active phase: **8s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:helvar_final_edict`. Inspect ranks with `/resonantarcana spell helvar_final_edict <rank>`.
+
+### Sandworm’s World Devourer
+
+Open four sandworm eruption lanes around the mark. Five travelling sand fronts drag and batter enemies, then a triple-damage upheaval ends the devouring field. Bosses resist forced movement.
+
+**Nature** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **26 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 150 | — | 600 |
+
+Base release / active phase: **9s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:sandworm_world_devourer`. Inspect ranks with `/resonantarcana spell sandworm_world_devourer <rank>`.
+
+### Dragon’s Primordial Inferno
+
+Command six descending native dragon flame comets. Each falls into a different sector and leaves a lingering fire pool while enemies reposition. A final triple-damage inferno consumes the marked field. Allies and terrain are protected.
+
+**Fire** · Cast **20s** · Cooldown **240s** · Range **48 blocks** · Radius / half-width **26 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 160 | — | 600 |
+
+Base release / active phase: **10s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:dragon_primordial_inferno`. Inspect ranks with `/resonantarcana spell dragon_primordial_inferno <rank>`.

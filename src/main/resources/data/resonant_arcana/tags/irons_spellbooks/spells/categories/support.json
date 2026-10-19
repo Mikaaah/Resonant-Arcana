@@ -21,6 +21,10 @@
     "resonant_arcana:glacial_counter",
     "resonant_arcana:thunderbrand",
     "resonant_arcana:seraph_ascendant",
-    "resonant_arcana:void_domain"
+    "resonant_arcana:void_domain",
+    {
+      "id": "resonant_arcana:tectonic_stampede",
+      "required": false
+    }
   ]
 }

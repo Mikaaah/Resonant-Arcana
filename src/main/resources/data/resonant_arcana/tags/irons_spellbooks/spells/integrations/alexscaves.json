@@ -72,6 +72,30 @@
     {
       "id": "resonant_arcana:candy_catastrophe",
       "required": false
+    },
+    {
+      "id": "resonant_arcana:planetary_polarity",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:primordial_sovereign",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:tremorzilla_cataclysm",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:abyssal_world_tide",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_eclipse",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:confection_apocalypse",
+      "required": false
     }
   ]
 }

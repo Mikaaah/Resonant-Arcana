@@ -20,7 +20,7 @@ final class BossesRiseCompat {
     private BossesRiseCompat(){}
     static boolean available(){return AVAILABLE;}
     static boolean handles(Spell.Kind kind){return switch(kind){case BOSS_WRATH,BOSS_TENTACLE,BOSS_ICE,BOSS_RIFT,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD->true;default->false;};}
-    static boolean optional(Spell s){return handles(s.kind);}
+    static boolean optional(Spell s){return handles(s.kind)||"bossesrise".equals(s.definition.integration());}
     static void register(IEventBus bus){
         if(AVAILABLE)BossesRiseBridge.register(bus);
         else if(ModList.get().isLoaded(MOD))ResonantArcana.LOG.warn("Bosses'Rise spell integration supports 2.1.2; optional spells are disabled for this version.");
@@ -33,7 +33,7 @@ final class BossesRiseCompat {
         Vec3 ground=ground(player.serverLevel(),victim==null?aim:victim.position());
         if(ground==null||!pathVisible(player.serverLevel(),player,start,ground.add(0,.7,0)))return false;
         if(spell.kind==Spell.Kind.BOSS_SWORD)
-            return clipLoaded(player.serverLevel(),ground.add(0,1,0),new Vec3(0,1,0),10,player).y-ground.y
+            return clipLoaded(player.serverLevel(),ground.add(0,1,0),new Vec3(0,1,0),24,player).y-ground.y
                 >BossesRiseBridge.SWORD_TIP_OFFSET+BossesRiseBridge.SWORD_TOP_OFFSET+1;
         if(spell==Spell.DRAGONS_PYRE)
             return clipLoaded(player.serverLevel(),ground.add(0,1,0),new Vec3(0,1,0),8,player).y>ground.y+3.5;
@@ -63,11 +63,11 @@ final class BossesRiseCompat {
         if(c.pos==null)return false;
         if(c.spell.kind==Spell.Kind.BOSS_SWORD){
             c.bossState=new State();
-            double ceiling=clipLoaded(c.level,c.pos.add(0,1,0),new Vec3(0,1,0),10,c.caster).y;
-            double height=Math.min(6.75,ceiling-c.pos.y-BossesRiseBridge.SWORD_TOP_OFFSET-.25);
+            double ceiling=clipLoaded(c.level,c.pos.add(0,1,0),new Vec3(0,1,0),24,c.caster).y;
+            double height=Math.min(14,ceiling-c.pos.y-BossesRiseBridge.SWORD_TOP_OFFSET-.25);
             if(height<BossesRiseBridge.SWORD_TIP_OFFSET+.5)return false;
             c.bossState.top=c.pos.add(0,height,0);
-            c.duration=38;c.bossVisuals.add(BossesRiseBridge.sword(c,c.bossState.top));
+            c.duration=56;c.bossVisuals.add(BossesRiseBridge.sword(c,c.bossState.top));
             SpellAudio.world(c.level,c.pos,BossesRiseCompat.MOD+":entity.knight.vertical_slash",.85f,.85f);return true;
         }
         if(c.spell.kind==Spell.Kind.BOSS_SAND){
@@ -122,8 +122,10 @@ final class BossesRiseCompat {
                     for(var visual:c.bossVisuals)if(!visual.isRemoved())visual.setPos(p);
                     if(c.age%2==0)BossSpellEffects.rift(c,p,new Vec3(0,-1,0),false);
                 }
+                if(c.age>24){double radius=Math.min(c.spell.radius,(c.age-24)*.32);float old=c.weaponBonus;c.weaponBonus=old-c.spell.damage*.6f;
+                    try{for(var victim:near(c.caster,c.pos,radius))if(victim.getBoundingBox().getCenter().distanceToSqr(c.pos.add(0,.7,0))<=radius*radius&&visible(c,c.pos.add(0,.7,0),victim.getBoundingBox().getCenter()))hit(c,victim,c.pos,true);}finally{c.weaponBonus=old;}}
                 if(c.age==24){
-                    area(c,c.pos.add(0,.7,0),c.spell.radius,true);
+                    area(c,c.pos.add(0,.7,0),3.5,true);
                     SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.AREA,c.pos,c.pos,c.spell.radius);
                     BossesRiseBridge.swordImpact(c.level,c.pos);
                     BossSpellEffects.rift(c,c.pos,new Vec3(0,1,0),true);

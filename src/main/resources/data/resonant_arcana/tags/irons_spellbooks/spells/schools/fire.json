@@ -28,6 +28,11 @@
     {
       "id": "resonant_arcana:lux_extinction",
       "required": false
+    },
+    "resonant_arcana:solar_supernova",
+    {
+      "id": "resonant_arcana:dragon_primordial_inferno",
+      "required": false
     }
   ]
 }

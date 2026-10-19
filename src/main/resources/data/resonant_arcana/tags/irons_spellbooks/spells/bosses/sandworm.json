@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resonant_arcana:sandworm_world_devourer",
+      "required": false
+    }
+  ]
+}

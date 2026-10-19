@@ -586,9 +586,9 @@ Base release / active phase: **3.1s**.
 
 Spell ID: `resonant_arcana:funeral_bell`. Inspect ranks with `/resonantarcana spell funeral_bell <rank>`.
 
-### Hullbreaker Surge
+### Hullbreaker’s Breach
 
-Call a Hullbreaker apparition through a rushing tidal wave. The advancing surge damages each enemy once, knocks it away and briefly slows it.
+Mark a breach in the ground. After a 1.2-second warning, a Hullbreaker rises from below, bites enemies in the marked circle and launches them upward before diving away. Solid cover and ally protection apply.
 
 **Ice** · Cast **3.2s** · Cooldown **36s** · Range **28 blocks** · Radius / half-width **6 blocks**.
 
@@ -600,7 +600,7 @@ Call a Hullbreaker apparition through a rushing tidal wave. The advancing surge 
 | IV | 105 | — | 159 |
 | V | 120 | — | 167 |
 
-Base release / active phase: **3.5s**.
+Base release / active phase: **3s**.
 
 Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
 

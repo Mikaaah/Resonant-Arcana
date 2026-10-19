@@ -23,7 +23,16 @@ final class BossesRiseClient {
     static void register(IEventBus bus){bus.addListener(BossesRiseClient::renderers);}
     private static void renderers(EntityRenderersEvent.RegisterRenderers event){
         event.registerEntityRenderer(BossesRiseBridge.ICE.get(),IceSpikeRenderer::new);
-        event.registerEntityRenderer(BossesRiseBridge.RIFT.get(),RiftProjectileRenderer::new);
+        event.registerEntityRenderer(BossesRiseBridge.RIFT.get(),context->new net.minecraft.client.renderer.entity.EntityRenderer<BossesRiseBridge.Rift>(context){
+            @Override public ResourceLocation getTextureLocation(BossesRiseBridge.Rift entity){return PlasmaAssets.PLASMA;}
+            @Override public void render(BossesRiseBridge.Rift entity,float yaw,float partial,PoseStack pose,MultiBufferSource source,int light){
+                pose.pushPose();pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-yaw));float phase=(entity.tickCount+partial)*-.12f;
+                var vertex=source.getBuffer(RenderType.entityTranslucent(PlasmaAssets.PLASMA));
+                io.redspace.ironsspellbooks.render.SpellRenderingHelper.drawHull(new net.minecraft.world.phys.Vec3(0,-.8,0),new net.minecraft.world.phys.Vec3(0,.8,0),.08f,.18f,pose.last(),vertex,255,65,12,230,phase,phase+2);
+                io.redspace.ironsspellbooks.render.SpellRenderingHelper.drawHull(new net.minecraft.world.phys.Vec3(-.55,-.55,0),new net.minecraft.world.phys.Vec3(.55,.55,0),.025f,.08f,pose.last(),vertex,255,155,35,210,phase,phase+2);
+                pose.popPose();
+            }
+        });
         event.registerEntityRenderer(BossesRiseBridge.SAND.get(),SandColumnRenderer::new);
         event.registerEntityRenderer(BossesRiseBridge.FLAME.get(),context->new ThrownItemRenderer<>(context,1.8f,true));
         event.registerEntityRenderer(BossesRiseBridge.SWORD.get(),context->new DisplayRenderer.ItemDisplayRenderer(context){

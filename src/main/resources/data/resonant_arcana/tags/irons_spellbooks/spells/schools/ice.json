@@ -39,6 +39,19 @@
     {
       "id": "resonant_arcana:frostmint_hex",
       "required": false
+    },
+    "resonant_arcana:absolute_glaciation",
+    {
+      "id": "resonant_arcana:abyssal_world_tide",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:kraken_world_drown",
+      "required": false
+    },
+    {
+      "id": "resonant_arcana:yeti_world_heart",
+      "required": false
     }
   ]
 }

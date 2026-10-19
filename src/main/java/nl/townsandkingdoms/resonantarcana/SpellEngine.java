@@ -34,8 +34,9 @@ public final class SpellEngine {
     private static long ticks;
     private static int visualPoints;
     private SpellEngine() {}
+    static boolean activeFor(ServerPlayer player,Spell s){return ACTIVE.stream().anyMatch(c->c.owner.equals(player.getUUID())&&c.spell==s);}
     public static int activeCount(){return ACTIVE.size();}
-    public static void clear(){ACTIVE.forEach(SpellEngine::cleanup);AdvancedSpells.clear();ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
+    public static void clear(){ACTIVE.forEach(SpellEngine::cleanup);AdvancedSpells.clear();GodSpells.clear();ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
         if(action<0||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
@@ -64,6 +65,7 @@ public final class SpellEngine {
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
+        if(GodSpells.handles(spell)){GodSpells.charge(player,spell,progress,elapsed);return;}
         if(CavesCompat.optional(spell)){CavesCompat.charge(player,spell,progress,elapsed);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicRitual.charge(player,progress,elapsed);return;}
         if(spell==Spell.DOOM_BEAM){
@@ -188,7 +190,7 @@ public final class SpellEngine {
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE,EXILE->true;default->false;};}
-    private static void cleanup(Cast c){VoidDomain.cleanup(c);BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);SpecialSpells.cleanup(c);}
+    private static void cleanup(Cast c){SpellLoops.stop(c.caster,c.spell,true);if(c.spell==Spell.TREMORZILLA_BREATH||c.spell==Spell.TREMORZILLA_CATACLYSM)SpellAudio.world(c.level,c.pos,"alexscaves:tremorzilla_beam_end",.8f,1);GodSpells.cleanup(c);VoidDomain.cleanup(c);BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);SpecialSpells.cleanup(c);}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
         VoidExile.tick(net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer());
@@ -208,7 +210,7 @@ public final class SpellEngine {
     }
     private static boolean advance(Cast c){
         // Sustained cues are bounded to one per cast per second.
-        if(!RecordedSpells.handles(c.spell)&&!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.spell.kind!=Spell.Kind.CATACLYSM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
+        if(!GodSpells.handles(c.spell)&&!CavesCompat.optional(c.spell)&&!RecordedSpells.handles(c.spell)&&!BossesRiseCompat.optional(c.spell)&&c.spell.kind!=Spell.Kind.WARCRY&&c.spell.kind!=Spell.Kind.CANNON&&c.spell.kind!=Spell.Kind.DOOM&&c.spell.kind!=Spell.Kind.CATACLYSM&&c.age%20==1)SpellAudio.world(c.level,c.pos,SpellAudio.sustainId(c.spell),0.55f,1.0f);
         if(SpellActions.handles(c.spell.kind))return SpellActions.tick(c);
         switch(c.spell.kind){
             case DOOM -> {
@@ -453,8 +455,8 @@ public final class SpellEngine {
         if(c.age<=40){
             if(c.book==null&&!(c.caster.getMainHandItem().getItem() instanceof WandItem))return false;
             c.travel=c.caster.getLookAngle().normalize();
-            // Preserve the cannon's original one-block muzzle offset.
-            c.pos=clipLoaded(c.level,c.caster.getEyePosition(),c.travel,1,c.caster);
+            // Keep the forward offset while moving the source below the first-person camera.
+            c.pos=clipLoaded(c.level,BeamRitual.body(c.caster,1),c.travel,1,c.caster);
             double progress=c.age/40.0;
             if(c.age<40){
                 if(c.age%2==0)SpellParticles.cannonCharge(c.level,c.pos,c.travel,progress,c.age);
@@ -591,12 +593,12 @@ public final class SpellEngine {
         if(c.spell.damage==0)impactFeedback(c,victim.getBoundingBox().getCenter());
         if(c.spell==Spell.WITHERING_HEX)effect(victim,MobEffects.WITHER,60,0);
         if(c.spell==Spell.SOUL_PRISON)effect(victim,MobEffects.DARKNESS,60,0);
-        if(c.spell.theme==Spell.Theme.ICE&&!CavesCompat.optional(c.spell)){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,0);victim.setTicksFrozen(Math.min(240,victim.getTicksFrozen()+40));}
+        if(c.spell.theme==Spell.Theme.ICE&&!GodSpells.handles(c.spell)&&!CavesCompat.optional(c.spell)){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,0);victim.setTicksFrozen(Math.min(240,victim.getTicksFrozen()+40));}
         if(c.spell==Spell.BRAMBLE_RING)effect(victim,MobEffects.MOVEMENT_SLOWDOWN,40,1);
         if(c.spell.kind==Spell.Kind.DOMAIN){effect(victim,MobEffects.MOVEMENT_SLOWDOWN,50,3);victim.setTicksFrozen(Math.max(160,victim.getTicksFrozen()));}
-        if(c.spell.theme==Spell.Theme.FIRE&&!CavesCompat.optional(c.spell))victim.igniteForSeconds(3);
-        if(c.spell.theme==Spell.Theme.DARK&&!CavesCompat.optional(c.spell)){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
-        if(c.spell.theme==Spell.Theme.POISON&&!BossesRiseCompat.optional(c.spell)&&!CavesCompat.optional(c.spell))effect(victim,MobEffects.POISON,80,0);
+        if(c.spell.theme==Spell.Theme.FIRE&&!GodSpells.handles(c.spell)&&!CavesCompat.optional(c.spell))victim.igniteForSeconds(3);
+        if(c.spell.theme==Spell.Theme.DARK&&!GodSpells.handles(c.spell)&&!CavesCompat.optional(c.spell)){effect(victim,MobEffects.WEAKNESS,60,0);if(c.spell==Spell.NIGHTFALL)effect(victim,MobEffects.DARKNESS,60,0);}
+        if(c.spell.theme==Spell.Theme.POISON&&!GodSpells.handles(c.spell)&&!BossesRiseCompat.optional(c.spell)&&!CavesCompat.optional(c.spell))effect(victim,MobEffects.POISON,80,0);
         switch(c.spell.kind){
             case CONFUSE->{effect(victim,MobEffects.CONFUSION,100,0);effect(victim,MobEffects.BLINDNESS,40,0);}
             case STUN->{effect(victim,MobEffects.MOVEMENT_SLOWDOWN,60,5);effect(victim,MobEffects.WEAKNESS,60,1);}
@@ -666,7 +668,7 @@ public final class SpellEngine {
         burst(c,pos);
     }
     private static void chain(Cast c,LivingEntity first){
-        LivingEntity victim=first;Vec3 from=c.caster.getEyePosition();
+        LivingEntity victim=first;Vec3 from=BeamRitual.origin(c.caster);
         for(int jump=0;jump<5&&victim!=null;jump++){
             Vec3 end=victim.getBoundingBox().getCenter();
             SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,from,end,1);
@@ -692,7 +694,7 @@ public final class SpellEngine {
         final List<Entity> centrepieces=new ArrayList<>();
         final List<Entity> bossVisuals=new ArrayList<>();final List<Vec3> eruptionPoints=new ArrayList<>();
         final List<java.util.UUID> taunted=new ArrayList<>();float weaponBonus,drained;
-        AdvancedSpells.State advanced;
+        AdvancedSpells.State advanced;GodSpells.State god;
         BossesRiseCompat.State bossState;CavesSpells.State cave;
         BookCast book;final ServerPlayer testOwner;ServerPlayer caster;Vec3 pos,anchor,travel;int age,duration,impactAge;double distance,nextBurst=4;long lastImpactTick=-1000;
         Cast(ServerPlayer player,Spell spell,Vec3 start,Vec3 dir,Vec3 aim,LivingEntity target){

@@ -12,6 +12,10 @@
     {
       "id": "resonant_arcana:forlorn_reckoning",
       "required": false
+    },
+    {
+      "id": "resonant_arcana:forsaken_eclipse",
+      "required": false
     }
   ]
 }

@@ -36,7 +36,7 @@ final class BossesRiseBridge {
     static final DeferredHolder<EntityType<?>,EntityType<FlameOrb>> FLAME=ENTITIES.register("dragon_flame_spell_visual",()->EntityType.Builder.<FlameOrb>of(FlameOrb::new,MobCategory.MISC).sized(.8f,.8f).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:dragon_flame_spell_visual"));
     static final DeferredHolder<EntityType<?>,EntityType<FullKraken>> FULL_KRAKEN=ENTITIES.register("kraken_grasp_visual",()->EntityType.Builder.<FullKraken>of(FullKraken::new,MobCategory.MISC).sized(18,10).noSave().clientTrackingRange(8).updateInterval(1).build("resonant_arcana:kraken_grasp_visual"));
     static final double TENTACLE_BURY_DEPTH=2.25;
-    static final float SWORD_SCALE=2.5f;
+    static final float SWORD_SCALE=5f;
     // The original held model's blade tip is at -9 model pixels before scaling.
     static final double SWORD_TIP_OFFSET=9.0/16*SWORD_SCALE;
     static final double SWORD_TOP_OFFSET=24.0/16*SWORD_SCALE;
@@ -72,7 +72,7 @@ final class BossesRiseBridge {
     }
     static Entity rift(SpellEngine.Cast c){
         var visual=RIFT.get().create(c.level);visual.setOwner(c.caster);visual.setPos(c.pos);visual.setDeltaMovement(c.dir.scale(1.2));
-        c.level.addFreshEntity(visual);c.level.sendParticles(BossesRiseParticleTypes.RIFT_OPEN.get(),c.pos.x,c.pos.y,c.pos.z,1,0,0,0,0);return visual;
+        c.level.addFreshEntity(visual);c.level.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME,c.pos.x,c.pos.y,c.pos.z,1,0,0,0,0);return visual;
     }
     static Entity sand(SpellEngine.Cast c,Vec3 pos){
         return sand(c,pos,0);
@@ -108,16 +108,16 @@ final class BossesRiseBridge {
         level.sendParticles(BossesRiseParticleTypes.SNOW_FLAKE.get(),pos.x,pos.y+.5,pos.z,18,.6,.7,.6,.08);
     }
     static void riftTrail(ServerLevel level,Vec3 pos){
-        level.sendParticles(BossesRiseParticleTypes.RIFT.get(),pos.x,pos.y,pos.z,2,.12,.12,.12,.01);
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.SMALL_FLAME,pos.x,pos.y,pos.z,2,.12,.12,.12,.01);
     }
     static void riftClose(ServerLevel level,Vec3 pos){
-        level.sendParticles(BossesRiseParticleTypes.RIFT_CLOSE.get(),pos.x,pos.y,pos.z,1,0,0,0,0);
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.ASH,pos.x,pos.y,pos.z,1,0,0,0,0);
     }
     static void castCue(ServerLevel level,Spell spell,Vec3 pos){
         switch(spell.kind){
             case BOSS_TENTACLE,BOSS_WRATH -> level.sendParticles(ParticleTypes.SPLASH,pos.x,pos.y,pos.z,4,.25,.2,.25,.02);
             case BOSS_ICE -> level.sendParticles(BossesRiseParticleTypes.SNOW_FLAKE.get(),pos.x,pos.y,pos.z,5,.25,.3,.25,.02);
-            case BOSS_RIFT,BOSS_SWORD -> level.sendParticles(BossesRiseParticleTypes.RIFT.get(),pos.x,pos.y,pos.z,2,.15,.15,.15,.01);
+            case BOSS_RIFT,BOSS_SWORD -> level.sendParticles(net.minecraft.core.particles.ParticleTypes.SMALL_FLAME,pos.x,pos.y,pos.z,2,.15,.15,.15,.01);
             case BOSS_SAND -> level.sendParticles(BossesRiseParticleTypes.FALLING_DUST.get(),pos.x,pos.y,pos.z,6,.25,.15,.25,.03);
             case BOSS_DRAGON -> level.sendParticles(BossesRiseParticleTypes.BLAZING_FLAME.get(),pos.x,pos.y,pos.z,5,.2,.2,.2,.025);
             default -> {}
@@ -132,14 +132,14 @@ final class BossesRiseBridge {
         level.sendParticles(BossesRiseParticleTypes.BLAZING_CLOUD.get(),pos.x,pos.y+.5,pos.z,Math.max(3,count/3),.8,.5,.8,.035);
     }
     static void swordImpact(ServerLevel level,Vec3 pos){
-        level.sendParticles(BossesRiseParticleTypes.RIFT_CLOSE.get(),pos.x,pos.y+.2,pos.z,1,0,0,0,0);
-        level.sendParticles(ParticleTypes.SOUL,pos.x,pos.y+.5,pos.z,10,.8,.25,.8,.04);
+        level.sendParticles(net.minecraft.core.particles.ParticleTypes.ASH,pos.x,pos.y+.2,pos.z,1,0,0,0,0);
+        level.sendParticles(ParticleTypes.FLAME,pos.x,pos.y+.5,pos.z,10,.8,.25,.8,.04);
         level.sendParticles(ParticleTypes.CRIT,pos.x,pos.y+.5,pos.z,8,.65,.3,.65,.08);
     }
     static final class Sword extends Display.ItemDisplay implements BossSpellVisual {
         private int visualAge;
         Sword(EntityType<Sword> type,Level level){super(type,level);setNoGravity(true);}
-        @Override public void tick(){super.tick();if(!level().isClientSide()&&++visualAge>=55)discard();}
+        @Override public void tick(){super.tick();if(!level().isClientSide()&&++visualAge>=240)discard();}
         @Override public boolean isPickable(){return false;}
         @Override public boolean canBeCollidedWith(){return false;}
     }
