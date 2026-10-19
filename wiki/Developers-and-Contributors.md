@@ -1,3 +1,3 @@
-# Developers and Contributors
+# Contributors
 
-See the current [README](../README.md), [equipment guide](Equipment.md), [spell reference](../SPELLS.md) and [configuration](Configuration.md).
+Contributor notes are maintained with the [source code](https://github.com/Mikaaah/Resonant-Arcana/blob/main/CONTRIBUTING.md).

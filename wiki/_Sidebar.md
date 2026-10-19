@@ -1,29 +1,13 @@
-[Home](Home.md)
+**Resonant Arcana**
 
-[Equipment](Equipment.md)
-
-[All Spells](../SPELLS.md)
-
-[Configuration](Configuration.md)
-
-[Projectiles](Projectile.md)
-
-[Beams & Channels](Beam.md)
-
-[Area Magic](Area.md)
-
-[Control](Control.md)
-
-[Movement](Mobility.md)
-
-[Support & Defense](Support.md)
-
-[Summons & Constructs](Summon.md)
-
-[Strikes & Drains](Melee.md)
-
-[Boss Arts](Boss-Art.md)
-
-[Cataclysms](Cataclysm.md)
-
-[God-tier Magic](God.md)
+- [Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+- [Getting started](https://github.com/Mikaaah/Resonant-Arcana/wiki/Getting-Started)
+- [Equipment](https://github.com/Mikaaah/Resonant-Arcana/wiki/Equipment)
+- [Spell catalogue](https://github.com/Mikaaah/Resonant-Arcana/wiki/Spell-Catalogue)
+- [God-tier magic](https://github.com/Mikaaah/Resonant-Arcana/wiki/God)
+- [Optional addons](https://github.com/Mikaaah/Resonant-Arcana/wiki/Optional-Addons)
+- [Scroll recipes](https://github.com/Mikaaah/Resonant-Arcana/wiki/Scroll-Recipes)
+- [Controls and commands](https://github.com/Mikaaah/Resonant-Arcana/wiki/Controls-and-Commands)
+- [Configuration](https://github.com/Mikaaah/Resonant-Arcana/wiki/Configuration)
+- [Troubleshooting](https://github.com/Mikaaah/Resonant-Arcana/wiki/Troubleshooting)
+- [Changelog](https://github.com/Mikaaah/Resonant-Arcana/wiki/Changelog)

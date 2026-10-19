@@ -180,4 +180,4 @@ Base release / active phase: **1.2s**.
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect ranks with `/resonantarcana spell ashen_rebirth <rank>`.
 
-[← Home](Home.md)
+[← Home](Home)

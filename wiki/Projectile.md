@@ -406,4 +406,4 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:gumball_volley`. Inspect ranks with `/resonantarcana spell gumball_volley <rank>`.
 
-[← Home](Home.md)
+[← Home](Home)

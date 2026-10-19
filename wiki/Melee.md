@@ -332,4 +332,4 @@ Weapon contribution: add half the melee attack attribute at release before spell
 
 Spell ID: `resonant_arcana:spellbreaker`. Inspect ranks with `/resonantarcana spell spellbreaker <rank>`.
 
-[← Home](Home.md)
+[← Home](Home)

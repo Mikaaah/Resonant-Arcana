@@ -1,7 +1,6 @@
 # Equipment
 
-
-The supplied textures are used unchanged. These are normal, inscribable Iron’s spellbooks. Equip one in the **Curios spellbook slot** to activate its perks; holding it alone does not grant equipment attributes.
+These are normal, inscribable Iron’s spellbooks. Equip one in the **Curios spellbook slot** to activate its perks; holding it alone does not grant equipment attributes.
 
 | Book | Slots | Equipped perks |
 | --- | ---: | --- |
@@ -13,3 +12,4 @@ Each recipe uses a netherite Iron’s spellbook, a nether star and themed materi
 
 **Debug Wand:** one creative/testing item with every enabled spell. It uses the supplied copper-chisel texture and has no survival recipe. Press **X** to open the searchable spell archive. Search names, schools and keywords such as `ender buff aoe`, then narrow the results with category filters. Selecting a spell never casts it. The wand uses Iron’s normal mana, cast-time and cooldown rules. Sneak-use a higher-rank matching scroll in the offhand to teach that spell’s rank.
 
+[← Wiki home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
