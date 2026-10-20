@@ -318,7 +318,7 @@ Spell ID: `resonant_arcana:candy_catastrophe`. Inspect ranks with `/resonantarca
 
 ### Orbital Ray
 
-Gather swirling violet and golden magic into a growing orb for 15 seconds. Launch it skyward over a locked target, then fire a vertical arcane beam and a nuclear-style explosion. Each enemy takes one hit; allies and terrain are protected. Requires visible ground and at least 12 blocks of clear sky above the mark.
+Gather violet magic into a compact orb for 15 seconds. Send it skyward over four seconds, then lower a purple beam through sculk-blue and amethyst sparks for three seconds before a nuclear-style explosion. Each enemy takes one hit; allies and terrain are protected. Requires visible ground and at least 12 blocks of clear sky above the mark.
 
 **Evocation** · Cast **15s** · Cooldown **180s** · Range **64 blocks** · Radius / half-width **16 blocks**.
 
@@ -326,7 +326,7 @@ Gather swirling violet and golden magic into a growing orb for 15 seconds. Launc
 | --- | ---: | ---: | ---: |
 | I | 384 | — | 500 |
 
-Base release / active phase: **7.5s**.
+Base release / active phase: **12s**.
 
 Spell ID: `resonant_arcana:orbital_ray`. Inspect ranks with `/resonantarcana spell orbital_ray <rank>`.
 

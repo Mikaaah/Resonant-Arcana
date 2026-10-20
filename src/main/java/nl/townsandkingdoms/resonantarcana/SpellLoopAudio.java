@@ -28,7 +28,7 @@ final class SpellLoopAudio {
             if(spell==Spell.DOOM){
                 add(playing,owner,ResonantArcana.ID+(cue.release()?":doom_gravity_bed":":doom_charge_bed"),1.4f,1);
             }else if((spell==Spell.TREMORZILLA_BREATH||spell==Spell.TREMORZILLA_CATACLYSM)&&cue.release())add(playing,owner,"alexscaves:tremorzilla_beam_loop",1.1f,1);
-            else if((GodSpells.handles(spell)||spell==Spell.ORBITAL_RAY)&&!cue.release())add(playing,owner,RitualAudio.charge(spell),1.7f,1);
+            else if((GodSpells.handles(spell)||spell==Spell.ORBITAL_RAY)&&!cue.release())add(playing,owner,RitualAudio.charge(spell),spell==Spell.ORBITAL_RAY?.85f:1.7f,1);
             else if(spell==Spell.TREMORZILLA_BREATH&&!cue.release())add(playing,owner,"alexscaves:tremorzilla_charge_normal",1,1);
             if(playing.sounds.isEmpty())return;ACTIVE.put(key,playing);
         }

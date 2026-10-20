@@ -4395,13 +4395,13 @@
       "manaStep": 0,
       "maxLevel": 1,
       "healing": 0,
-      "duration": 150,
+      "duration": 240,
       "interval": 0,
       "pulses": 1,
       "role": "Orbital bombardment",
       "category": "CATACLYSM",
       "bookId": "orbital_ray",
-      "description": "Gather swirling violet and golden magic into a growing orb for 15 seconds. Launch it skyward over a locked target, then fire a vertical arcane beam and a nuclear-style explosion. Each enemy takes one hit; allies and terrain are protected. Requires visible ground and at least 12 blocks of clear sky above the mark."
+      "description": "Gather violet magic into a compact orb for 15 seconds. Send it skyward over four seconds, then lower a purple beam through sculk-blue and amethyst sparks for three seconds before a nuclear-style explosion. Each enemy takes one hit; allies and terrain are protected. Requires visible ground and at least 12 blocks of clear sky above the mark."
     }
   },
   "schools": [

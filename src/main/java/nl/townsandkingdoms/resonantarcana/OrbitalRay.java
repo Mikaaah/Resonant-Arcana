@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 
 /** A locked orbital strike: no TNT, nuclear entity, destructive explosion or terrain edits. */
 final class OrbitalRay {
-    static final int ASCENT=40,BEAM_END=80,DETONATE=60;
+    static final int ASCENT=80,BEAM_END=170,DETONATE=140;
     private record Lock(Vec3 point,Vec3 top,ResourceKey<Level> dimension,long expires){}
     private static final Map<UUID,Lock> LOCKS=new HashMap<>();
     static Vec3 focus(ServerPlayer p){Vec3 start=BeamRitual.body(p,1);return clipLoaded(p.serverLevel(),start,p.getLookAngle(),1.3,p).add(0,.6,0);}
@@ -32,7 +32,7 @@ final class OrbitalRay {
     static void lock(ServerPlayer p){LOCKS.entrySet().removeIf(e->e.getValue().expires()<p.serverLevel().getGameTime());if(LOCKS.size()>=128)LOCKS.remove(LOCKS.keySet().iterator().next());Lock mark=find(p);if(mark!=null)LOCKS.put(p.getUUID(),mark);}
     static void charge(ServerPlayer p,double progress,int elapsed){
         Lock mark=LOCKS.get(p.getUUID());if(mark==null)return;if(!valid(p,mark)||!routeClear(p,mark)){IronsCompat.cancel(p);return;}
-        if(elapsed%3==0)SpellVisuals.orbital(p,SpellVisuals.Stage.CHARGE,focus(p),mark.point(),.35+progress*2.15);
+        if(elapsed%3==0)SpellVisuals.orbital(p,SpellVisuals.Stage.CHARGE,focus(p),mark.point(),.18+progress*.82);
         if(elapsed%8==0){SpellVisuals.orbital(p,SpellVisuals.Stage.RITUAL_TARGET,mark.point(),mark.top(),16);SpellLoops.sync(p,Spell.ORBITAL_RAY,true,false,0,progress);}
     }
     static void cancel(ServerPlayer p){Lock mark=LOCKS.remove(p.getUUID());if(mark!=null)SpellVisuals.orbital(p,SpellVisuals.Stage.RITUAL_END,focus(p),mark.point(),1);}
@@ -43,17 +43,20 @@ final class OrbitalRay {
         c.pos=mark.point();c.travel=mark.top();c.anchor=focus(c.caster);c.duration=c.spell.duration();
         Vec3 previous=c.anchor;
         for(int i=1;i<=ASCENT;i++){Vec3 next=flight(c.anchor,c.travel,i/(double)ASCENT);if(!clear(c.caster,previous,next))return false;previous=next;}
-        SpellAudio.world(c.level,c.anchor,"irons_spellbooks:spell.soulfire_ray.cast",2.4f,.7f);return true;
+        SpellAudio.world(c.level,c.anchor,"irons_spellbooks:spell.sonic_boom.cast",1.2f,.8f);return true;
     }
     static boolean tick(Cast c){
         if(c.age<=ASCENT){
             Vec3 previous=flight(c.anchor,c.travel,(c.age-1)/(double)ASCENT),next=flight(c.anchor,c.travel,c.age/(double)ASCENT);
             if(!clear(c.caster,previous,next))return false;
-            if(c.age%2==1)SpellVisuals.orbital(c.caster,SpellVisuals.Stage.FLIGHT,next,c.pos,2.5);
+            if(c.age%2==1)SpellVisuals.orbital(c.caster,SpellVisuals.Stage.FLIGHT,next,c.pos,1.0);
         }else if(c.age<=BEAM_END){
             if(!clear(c.caster,c.pos.add(0,.3,0),c.travel))return false;
-            if(c.age%3==0)SpellVisuals.orbital(c.caster,SpellVisuals.Stage.STRIKE,c.travel,c.pos,3);
-            if(c.age==ASCENT+1)SpellAudio.world(c.level,c.pos,"irons_spellbooks:spell.soulfire_ray.cast",2.6f,.75f);
+            if(c.age%3==0||c.age==DETONATE){
+                double progress=Math.clamp((c.age-ASCENT)/(double)(DETONATE-ASCENT),0,1);
+                SpellVisuals.orbital(c.caster,SpellVisuals.Stage.STRIKE,c.travel,c.travel.lerp(c.pos,progress),3);
+            }
+            if(c.age==ASCENT+1)SpellAudio.world(c.level,c.pos,"irons_spellbooks:spell.sonic_boom.cast",2.0f,.85f);
             if(c.age==DETONATE){
                 for(var victim:near(c.caster,c.pos,c.spell.radius))if(victim.getBoundingBox().getCenter().distanceToSqr(c.pos)<=c.spell.radius*c.spell.radius&&visible(c,c.pos,victim.getBoundingBox().getCenter()))hit(c,victim,c.pos,true);
                 SpellVisuals.orbital(c.caster,SpellVisuals.Stage.IMPACT,c.pos,c.travel,16);

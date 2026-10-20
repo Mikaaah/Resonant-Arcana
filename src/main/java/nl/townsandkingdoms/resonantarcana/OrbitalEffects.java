@@ -21,7 +21,7 @@ import org.joml.Vector3f;
 @EventBusSubscriber(modid=ResonantArcana.ID,value=Dist.CLIENT)
 final class OrbitalEffects {
     private static final class State {
-        Vec3 point=Vec3.ZERO,previous=Vec3.ZERO,target=Vec3.ZERO,top=Vec3.ZERO,blast;
+        Vec3 point=Vec3.ZERO,previous=Vec3.ZERO,target=Vec3.ZERO,mark=Vec3.ZERO,top=Vec3.ZERO,blast;
         float size;SpellVisuals.Stage stage;long expires,updated,blastTime;boolean nativeCloud;
     }
     private static final Map<Integer,State> CASTS=new HashMap<>();private static ClientLevel world;
@@ -31,8 +31,9 @@ final class OrbitalEffects {
         var msg=cue.visual();var stage=SpellVisuals.Stage.values()[msg.stage()];var state=CASTS.computeIfAbsent(cue.caster(),id->new State());
         Vec3 p=new Vec3(msg.x(),msg.y(),msg.z()),end=new Vec3(msg.endX(),msg.endY(),msg.endZ());
         if(stage==SpellVisuals.Stage.RITUAL_END){CASTS.remove(cue.caster());return;}
-        if(stage==SpellVisuals.Stage.RITUAL_TARGET){state.target=p;state.top=end;return;}
+        if(stage==SpellVisuals.Stage.RITUAL_TARGET){state.target=p;state.mark=p;state.top=end;return;}
         if(stage==SpellVisuals.Stage.IMPACT){state.blast=p;state.blastTime=l.getGameTime();state.nativeCloud=CavesCompat.available();if(state.nativeCloud)CavesClientEffects.mushroom(l,p);return;}
+        if(stage==SpellVisuals.Stage.CHARGE||stage==SpellVisuals.Stage.FLIGHT)state.mark=end;
         state.previous=state.stage==stage?position(state,l.getGameTime()):p;state.point=p;state.target=end;state.size=msg.size();state.stage=stage;state.updated=l.getGameTime();state.expires=l.getGameTime()+9;
     }
     // Used for archive previews as well as the owned live-cast payload.
@@ -45,22 +46,23 @@ final class OrbitalEffects {
             if(owner==null||!owner.isAlive()||(s.expires<now&&(s.blast==null||now-s.blastTime>100))){it.remove();continue;}
             if(s.blast!=null)cloud(l,s.blast,(int)(now-s.blastTime),s.nativeCloud);
             if(now>s.expires)continue;
-            if(now%4==0)for(int i=0;i<64;i++){double a=i*Math.PI/32;Vec3 off=new Vec3(Math.cos(a)*16,.05,Math.sin(a)*16);mote(l,s.target.add(off),Vec3.ZERO,i,12);}
+            if(now%4==0)for(int i=0;i<64;i++){double a=i*Math.PI/32;Vec3 off=new Vec3(Math.cos(a)*16,.05,Math.sin(a)*16);if(s.stage==SpellVisuals.Stage.CHARGE)chargeMote(l,s.mark.add(off),Vec3.ZERO,i,12);else mote(l,s.mark.add(off),Vec3.ZERO,i,12);}
             if(s.stage==SpellVisuals.Stage.CHARGE||s.stage==SpellVisuals.Stage.FLIGHT){
                 Vec3 center=position(s,now);double time=now*.13;
                 if(s.stage==SpellVisuals.Stage.CHARGE)for(int arm=0;arm<8;arm++)for(int i=0;i<16;i++){
                     double t=i/15.0,y=1-2*(arm+.5)/8,a=time+t*7+arm*2.39996,r=Math.sqrt(1-y*y)*(s.size+(1-t)*4.5);
                     Vec3 off=new Vec3(Math.cos(a)*r,y*(s.size+(1-t)*4.5),Math.sin(a)*r);
-                    mote(l,center.add(off),off.scale(-.09),i+arm,13);
+                    chargeMote(l,center.add(off),off.scale(-.09),i+arm,13);
                 }
-                for(int ring=0;ring<3;ring++)for(int i=0;i<32;i++){double a=i*Math.PI/16+time*(ring%2==0?1:-1),r=s.size*1.1;Vec3 q=switch(ring){case 0->new Vec3(Math.cos(a)*r,Math.sin(a)*r,0);case 1->new Vec3(0,Math.cos(a)*r,Math.sin(a)*r);default->new Vec3(Math.cos(a)*r,0,Math.sin(a)*r);};mote(l,center.add(q),Vec3.ZERO,i+ring,10);}
+                for(int ring=0;ring<3;ring++)for(int i=0;i<32;i++){double a=i*Math.PI/16+time*(ring%2==0?1:-1),r=s.size*1.1;Vec3 q=switch(ring){case 0->new Vec3(Math.cos(a)*r,Math.sin(a)*r,0);case 1->new Vec3(0,Math.cos(a)*r,Math.sin(a)*r);default->new Vec3(Math.cos(a)*r,0,Math.sin(a)*r);};if(s.stage==SpellVisuals.Stage.CHARGE)chargeMote(l,center.add(q),Vec3.ZERO,i+ring,10);else mote(l,center.add(q),Vec3.ZERO,i+ring,10);}
             }
             if(s.stage==SpellVisuals.Stage.STRIKE&&now%2==0){
-                Vec3 axis=s.target.subtract(s.point).normalize();for(int i=0;i<90;i++){double t=i/89.0,a=now*.3+t*34;Vec3 q=s.point.lerp(s.target,t).add(Math.cos(a)*1.3,0,Math.sin(a)*1.3);mote(l,q,axis.scale(.3),i,9);}
+                Vec3 axis=s.target.subtract(s.point).normalize();for(int i=0;i<90;i++){double t=i/89.0,a=now*.3+t*34;Vec3 q=s.point.lerp(s.target,t).add(Math.cos(a)*1.3,0,Math.sin(a)*1.3);mote(l,q,axis.scale(.3),i,9);if(i%15==0)NativeSpellEffects.point(l,ParticleTypes.SCULK_SOUL,q,axis.scale(.08),18,false);}
             }
         }
     }
-    private static void mote(ClientLevel l,Vec3 p,Vec3 v,int i,int life){NativeSpellEffects.tinted(l,i%3==0?ParticleRegistry.ELECTRICITY_PARTICLE.get():ParticleRegistry.WISP_PARTICLE.get(),p,v,life,i%2==0?0xffdc42:0xb34dff,.8f);}
+    private static void mote(ClientLevel l,Vec3 p,Vec3 v,int i,int life){NativeSpellEffects.tinted(l,i%3==0?ParticleRegistry.ELECTRICITY_PARTICLE.get():ParticleRegistry.WISP_PARTICLE.get(),p,v,life,i%2==0?0x2aabc9:0xb34dff,.8f);}
+    private static void chargeMote(ClientLevel l,Vec3 p,Vec3 v,int i,int life){NativeSpellEffects.tinted(l,i%3==0?ParticleRegistry.ELECTRICITY_PARTICLE.get():ParticleRegistry.WISP_PARTICLE.get(),p,v,life,i%2==0?0x9239ed:0xc281ff,.8f);}
     private static void cloud(ClientLevel l,Vec3 p,int age,boolean nativeCloud){
         if(age<0||age>100)return;double progress=age/100.0;
         if(age<24)for(int i=0;i<36;i++){double a=i*Math.PI/18,r=(age+1)*.8;Vec3 v=new Vec3(Math.cos(a),.035,Math.sin(a));mote(l,p.add(v.scale(r)),v.scale(.16),i,16);}
@@ -81,12 +83,12 @@ final class OrbitalEffects {
             if(now>s.expires)continue;
             if(s.stage==SpellVisuals.Stage.CHARGE||s.stage==SpellVisuals.Stage.FLIGHT){
                 var pose=new PoseStack();Vec3 p=position(s,now).subtract(camera);pose.translate(p.x,p.y,p.z);var type=RenderType.lightning();var v=buffers.getBuffer(type);
-                sphere(v,pose.last().pose(),s.size*.75,185,60,255,145);sphere(v,pose.last().pose(),s.size*.5,255,225,125,235);sphere(v,pose.last().pose(),s.size*.28,255,250,230,255);buffers.endBatch(type);
+                sphere(v,pose.last().pose(),s.size*.75,185,60,255,145);sphere(v,pose.last().pose(),s.size*.5,195,105,255,235);sphere(v,pose.last().pose(),s.size*.28,228,180,255,255);buffers.endBatch(type);
             }else if(s.stage==SpellVisuals.Stage.STRIKE){
                 Vec3 delta=s.target.subtract(s.point);float length=(float)delta.length();if(length<.01)continue;var pose=new PoseStack();Vec3 p=s.point.subtract(camera);pose.translate(p.x,p.y,p.z);pose.mulPose(new Quaternionf().rotationTo(new Vector3f(0,0,1),delta.normalize().toVector3f()));
                 var type=RenderType.entityTranslucent(SpellRenderingHelper.BEACON);var v=buffers.getBuffer(type);float scroll=-(float)now*.1f;
-                SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),.4f,.65f,pose.last(),v,255,245,210,255,scroll,scroll+length/5);
-                SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),.75f,1.2f,pose.last(),v,255,205,50,190,-scroll,-scroll+length/6);
+                SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),.4f,.65f,pose.last(),v,215,150,255,255,scroll,scroll+length/5);
+                SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),.75f,1.2f,pose.last(),v,155,65,240,190,-scroll,-scroll+length/6);
                 SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),1.2f,2,pose.last(),v,170,60,255,125,scroll*.7f,scroll*.7f+length/7);buffers.endBatch(type);
             }
         }

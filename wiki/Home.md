@@ -6,7 +6,7 @@
 
 <p align="center"><img alt="Minecraft 1.21.1" src="https://img.shields.io/badge/Minecraft-1.21.1-568736?style=flat-square"> <img alt="NeoForge" src="https://img.shields.io/badge/Loader-NeoForge-d77828?style=flat-square"></p>
 
-**Version 0.3.0** · 164 core spells · 205 spells with both optional addons.
+**Version 0.3.1** · 164 core spells · 205 spells with both optional addons.
 
 An Iron’s Spells ’n Spellbooks addon built around nine schools, battlefield roles, legendary spellbooks and powerful rituals.
 

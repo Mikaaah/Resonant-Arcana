@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1
+
+- Refined Orbital Ray with a smaller, violet-only charge orb and half-volume charging.
+- Slowed the released orb ascent to four seconds and added a three-second descending purple beam before detonation.
+- Added sculk-blue and amethyst-purple Iron’s wisps/electricity, native sculk souls and Echo Cannon firing audio.
+- Preserved the fifteen-second cast, locked mark, single damage hit, terrain protection and obstruction checks.
+
 ## 0.3.0
 
 - Reduced non-recorded Cataclysm base casts, including Doom and cave Cataclysms, to six seconds; reduced all God-tier base casts to ten seconds. Preserved all four supplied recording timings.
