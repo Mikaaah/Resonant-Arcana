@@ -15,7 +15,15 @@ def main(only=None):
         if only and ident not in only:continue
         im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im);c='#ab3036' if kind in ('BOSS_TENTACLE','BOSS_WRATH') else '#c49b60' if kind=='BOSS_SAND' else PALETTES[theme];white='#ff7355' if kind=='DOOM' else '#edfff8';c='#ed1936' if kind=='DOOM' else c;rng=random.Random(index+911)
         def line(points,width=7,col=c):d.line(points,fill=col,width=width,joint='curve')
-        if kind=='CAVE_ART':
+        if name=='ORBITAL_RAY':
+            d.ellipse((40,8,88,54),fill='#b34dff',outline='#ffe060',width=4)
+            d.ellipse((51,18,77,44),fill='#fff4d1')
+            d.arc((20,3,108,62),10,168,fill='#ffe060',width=4)
+            d.polygon([(55,55),(73,55),(81,96),(47,96)],fill='#bc70ff')
+            line([(64,54),(64,98)],7,'#fff4d1')
+            d.arc((13,79,115,120),182,357,fill='#ffd84d',width=7)
+            d.ellipse((36,89,92,112),fill='#e1a1ff',outline='#ffe060',width=3)
+        elif kind=='CAVE_ART':
             entry=catalogue['spells'][name];area=entry['area'];tier=entry['tier']
             c={'magnetic_caves':'#80caff','primordial_caves':'#ffbe54','toxic_caves':'#90ff42','abyssal_chasm':'#4bdfdd','forlorn_hollows':'#bd89ed','candy_cavity':'#ff9edb'}[area]
             if tier=='CATACLYSM':

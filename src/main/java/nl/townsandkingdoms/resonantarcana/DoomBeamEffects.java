@@ -42,7 +42,7 @@ final class DoomBeamEffects {
     }
     private static Endpoints endpoints(Entity caster,Lease lease,float partial){
         Vec3 eye=caster.getEyePosition(partial),dir=caster.getViewVector(partial).normalize();
-        Vec3 start=lease.phase()==1?eye:world.clip(new ClipContext(BeamRitual.body(caster,partial),BeamRitual.body(caster,partial).add(dir.scale(.9)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
+        Vec3 start=lease.phase()==1?eye:world.clip(new ClipContext(BeamRitual.body(caster,partial),BeamRitual.body(caster,partial).add(dir.scale(BeamRitual.FORWARD)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
         Vec3 end=world.clip(new ClipContext(start,start.add(dir.scale(lease.length())),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
         return new Endpoints(lease.phase()==1?end:start,lease.phase()==1?end.add(dir):end);
     }
@@ -77,6 +77,7 @@ final class DoomBeamEffects {
             Vec3 direction=points.end().subtract(start);float length=(float)direction.length();if(length<.05f)continue;
             pose.mulPose(new Quaternionf().rotationTo(new Vector3f(0,0,1),direction.normalize().toVector3f()));
             boolean arcane=lease.spell()==Spell.ARCANE_DEVASTATOR;
+            cap(pose,buffers,arcane?.5:.65,arcane);
             float scroll=-(world.getGameTime()+partial)*.06f;
             var core=RenderType.entityTranslucent(SpellRenderingHelper.BEACON);var v=buffers.getBuffer(core);
             SpellRenderingHelper.drawHull(Vec3.ZERO,new Vec3(0,0,length),.15f,.42f,pose.last(),v,arcane?240:210,arcane?200:255,arcane?255:175,255,scroll,scroll+length/6);
@@ -87,15 +88,22 @@ final class DoomBeamEffects {
             buffers.endBatch(corona);
         }
     }
+    static void cap(PoseStack pose,net.minecraft.client.renderer.MultiBufferSource buffers,double radius,boolean arcane){
+        var type=RenderType.lightning();var v=buffers.getBuffer(type);var m=pose.last().pose();
+        for(int i=0;i<32;i++){double a=i*Math.PI/16,b=(i+1)*Math.PI/16;
+            for(Vec3 p:new Vec3[]{Vec3.ZERO,new Vec3(Math.cos(a)*radius,Math.sin(a)*radius,0),new Vec3(Math.cos(b)*radius,Math.sin(b)*radius,0),Vec3.ZERO})v.addVertex(m,(float)p.x,(float)p.y,(float)p.z).setColor(arcane?255:210,arcane?225:255,arcane?155:170,255);
+        }if(buffers instanceof net.minecraft.client.renderer.MultiBufferSource.BufferSource source)source.endBatch(type);
+    }
     private static void core(com.mojang.blaze3d.vertex.VertexConsumer v,org.joml.Matrix4f m,double lat,double lon,double size){
         double r=Math.cos(lat)*size;v.addVertex(m,(float)(Math.cos(lon)*r),(float)(Math.sin(lat)*size),(float)(Math.sin(lon)*r)).setColor(2,1,1,255);
     }
     private static DustParticleOptions dust(float r,float g,float b,float size){return new DustParticleOptions(new Vector3f(r,g,b),size);}
+    private static final ParticleOptions PURPLE=dust(.65f,.18f,1,1.25f),YELLOW=dust(1,.82f,.15f,1.2f),ARCANE_WHITE=dust(1,.9f,.72f,1.1f);
     private static final ParticleOptions GREEN=dust(.12f,1,.015f,1.5f),WHITE=dust(.8f,1,.65f,1.4f),GOLD=dust(1,.65f,.18f,1);
     static boolean green(double progress){return progress>=.5;}
     private static void particles(ClientLevel l,Spell spell,SpellVisuals.Stage stage,Vec3 p,Vec3 end,double size){
         boolean arcane=spell==Spell.ARCANE_DEVASTATOR;
-        ParticleOptions green=arcane?dust(.6f,.2f,1,1.25f):GREEN,white=arcane?dust(.85f,.7f,1,1.1f):WHITE;
+        ParticleOptions green=arcane?PURPLE:GREEN,white=arcane?ARCANE_WHITE:WHITE;
         double time=l.getGameTime()*.12;
         Vec3 axis=end.subtract(p).normalize();if(axis.lengthSqr()<.01)axis=new Vec3(0,0,1);
         Vec3 side=axis.cross(new Vec3(0,1,0)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);
@@ -119,8 +127,8 @@ final class DoomBeamEffects {
             for(int arm=0;arm<5;arm++)for(int i=0;i<36;i++){
                 double t=i/36.0,a=arm*Math.PI*2/5+time+t*9,r=radius+(1-t)*4;
                 Vec3 off=side.scale(Math.cos(a)*r).add(up.scale(Math.sin(a)*r)).add(axis.scale((1-t)*2));
-                if(charged&&i%3==0)NativeSpellEffects.tinted(l,i%2==0?ParticleRegistry.WISP_PARTICLE.get():ParticleRegistry.ELECTRICITY_PARTICLE.get(),p.add(off),off.scale(-.08),14,0x49ff0a,.65f);
-                else point(l,charged&&i%5==0?white:rim,p.add(off),off.scale(-.08));
+                if(!arcane&&charged&&i%3==0)NativeSpellEffects.tinted(l,i%2==0?ParticleRegistry.WISP_PARTICLE.get():ParticleRegistry.ELECTRICITY_PARTICLE.get(),p.add(off),off.scale(-.08),14,0x49ff0a,.65f);
+                else point(l,arcane&&i%3==0?YELLOW:charged&&i%5==0?white:rim,p.add(off),off.scale(-.08));
             }
             return;
         }
@@ -130,11 +138,11 @@ final class DoomBeamEffects {
             for(int i=0;i<=n;i++){
                 double t=i/(double)n,a=t*48-time*2;
                 Vec3 q=p.lerp(end,t);
-                if(i%4==0)NativeSpellEffects.tinted(l,ParticleRegistry.WISP_PARTICLE.get(),q,axis.scale(.12),8,arcane?0xbf8aff:0x9aff52,.7f);
+                if(i%4==0)NativeSpellEffects.tinted(l,ParticleRegistry.WISP_PARTICLE.get(),q,axis.scale(.12),8,arcane?(i%8==0?0xffdb36:0xbf8aff):0x9aff52,.7f);
                 for(int arm=0;arm<2;arm++){
                     double angle=a+arm*Math.PI,r=.65+.25*Math.sin(t*16+time);
                     Vec3 off=side.scale(Math.cos(angle)*r).add(up.scale(Math.sin(angle)*r));
-                    NativeSpellEffects.tinted(l,i%3==0?ParticleRegistry.ELECTRICITY_PARTICLE.get():ParticleRegistry.WISP_PARTICLE.get(),q.add(off),off.scale(.015),6,arcane?0x9c4dff:0x35ff05,.65f);
+                    NativeSpellEffects.tinted(l,i%3==0?ParticleRegistry.ELECTRICITY_PARTICLE.get():ParticleRegistry.WISP_PARTICLE.get(),q.add(off),off.scale(.015),6,arcane?(arm==0?0xffd12e:0x9c4dff):0x35ff05,.65f);
                 }
             }
             // Jagged branching lightning hugs the outer plasma envelope.
@@ -144,7 +152,7 @@ final class DoomBeamEffects {
                     double t=i/36.0,a=branch*Math.PI/2+t*17+time;
                     double r=1.3+.65*Math.sin(i*2.7+time*3+branch);
                     Vec3 q=p.lerp(end,t).add(side.scale(Math.cos(a)*r)).add(up.scale(Math.sin(a)*r));
-                    for(int j=0;j<2;j++)point(l,j==0?white:green,previous.lerp(q,j/2.0),Vec3.ZERO);
+                    for(int j=0;j<2;j++)point(l,arcane&&branch%2==0?YELLOW:j==0?white:green,previous.lerp(q,j/2.0),Vec3.ZERO);
                     previous=q;
                 }
             }
@@ -152,13 +160,13 @@ final class DoomBeamEffects {
             for(int ring=0;ring<3;ring++)for(int i=0;i<72;i++){
                 double a=i*Math.PI/36+time,r=1.4+ring*.65;
                 Vec3 off=side.scale(Math.cos(a)*r).add(up.scale(Math.sin(a)*r));
-                point(l,green,p.add(axis.scale(.6+ring*.5)).add(off),off.scale(.025));
+                point(l,arcane&&ring%2==0?YELLOW:green,p.add(axis.scale(.15+ring*.25)).add(off),off.scale(.025));
             }
         }else if(stage==SpellVisuals.Stage.IMPACT||stage==SpellVisuals.Stage.HIT){
             for(int i=0;i<160;i++){
                 double a=i*2.39996,y=1-2*(i+.5)/160,r=Math.sqrt(1-y*y);
                 Vec3 off=new Vec3(Math.cos(a)*r,y,Math.sin(a)*r);
-                point(l,i%4==0?white:green,p.add(off.scale(1.5)),off.scale(.25));
+                point(l,arcane&&i%3==0?YELLOW:i%4==0?white:green,p.add(off.scale(1.5)),off.scale(.25));
             }
             point(l,ParticleTypes.FLASH,p,Vec3.ZERO);
         }

@@ -78,5 +78,95 @@
       }
     ],
     "subtitle": "subtitles.resonant_arcana.explosion_blast"
+  },
+  "ritual_arcane": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:ritual_arcane",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.ritual_arcane"
+  },
+  "ritual_fire": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:ritual_fire",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.ritual_fire"
+  },
+  "ritual_ice": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:ritual_ice",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.ritual_ice"
+  },
+  "ritual_nature": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:ritual_nature",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.ritual_nature"
+  },
+  "ritual_abyss": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:ritual_abyss",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.ritual_abyss"
+  },
+  "ritual_shadow": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:ritual_shadow",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.ritual_shadow"
+  },
+  "doom_charge_bed": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:doom_charge_bed",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.doom_charge_bed"
+  },
+  "doom_gravity_bed": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:doom_gravity_bed",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.doom_gravity_bed"
+  },
+  "doom_collapse": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:doom_collapse",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.doom_collapse"
+  },
+  "orbital_detonation": {
+    "sounds": [
+      {
+        "name": "resonant_arcana:orbital_detonation",
+        "preload": true
+      }
+    ],
+    "subtitle": "subtitles.resonant_arcana.orbital_detonation"
   }
 }

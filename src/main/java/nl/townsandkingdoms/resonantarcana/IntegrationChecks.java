@@ -154,7 +154,7 @@ public final class IntegrationChecks {
                 SpellVisuals.Stage expectedStage=spell==Spell.EXPLOSION?SpellVisuals.Stage.RITUAL_TARGET:switch(spell.kind){
                     case BOSS_RIFT,SOULBLAST,BOLT,COMET,WAVE,SEEKER,VOLLEY,CANNON,METEOR,SONIC,FROSTFRONT,FAN,RICOCHET,PIERCING_ORB,SERPENT -> SpellVisuals.Stage.FLIGHT;
                     case ASCENSION,CATACLYSM,BOSS_ICE,BOSS_TENTACLE,BOSS_SAND,BOSS_DRAGON,BOSS_SWORD,WARCRY,MARTIAL_BUFF,BLADE_ARC,PULSE,CAPTURE,CHOKE,SUSPEND,MARK,WELL,STORM,AURA,FIELD,TWISTER,WARD,COLLAPSE,DOOM,FANGS,HEAL,SWEEP,GAZE,ORBIT,BUFF,CLEANSE,HYMN,TOTEM,RAIN,DOMAIN,TRAP -> SpellVisuals.Stage.AREA;
-                    case LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
+                    case ORBITAL_RAY,LIGHTNING,SMITE,PILLAR -> SpellVisuals.Stage.STRIKE;
                     case BURST,REMEDY,EXECUTE -> SpellVisuals.Stage.IMPACT;
                     default -> SpellVisuals.Stage.LINK;
                 };
@@ -288,7 +288,7 @@ public final class IntegrationChecks {
             IronsIntegrationChecks.run(level,IntegrationChecks::check);
             AdvancedChecks.run(level,IntegrationChecks::check);
             CataclysmChecks.run(level,IntegrationChecks::check);
-            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);PolishChecks.run(level,IntegrationChecks::check);CavesChecks.run(level,IntegrationChecks::check);GodChecks.run(level,IntegrationChecks::check);
+            EquipmentChecks.run(level,IntegrationChecks::check);AtomicChecks.run(level,IntegrationChecks::check);VoidExileChecks.run(level,IntegrationChecks::check);PolishChecks.run(level,IntegrationChecks::check);CavesChecks.run(level,IntegrationChecks::check);GodChecks.run(level,IntegrationChecks::check);OrbitalChecks.run(level,IntegrationChecks::check);
             report.put("success",true);report.put("checksPassed",checks.size());
         } catch(Throwable error){report.put("success",false);report.put("error",error.toString());ResonantArcana.LOG.error("Wand integration failed",error);}
         finally{
@@ -599,7 +599,7 @@ public final class IntegrationChecks {
         check(SpellEngine.cast(player,Spell.SOUL_CANNON),"cannon can fire into empty sky");
         for(int t=0;t<80;t++)SpellEngine.tick();
         var impact=visuals.stream().filter(v->v.stage()==SpellVisuals.Stage.IMPACT.ordinal()).toList();
-        check(impact.size()==1&&Math.abs(impact.getFirst().z()-48.95)<0.01,"cannon detonates once at maximum range");
+        check(impact.size()==1&&Math.abs(impact.getFirst().z()-(Spell.SOUL_CANNON.range+BeamRitual.FORWARD-.05))<0.01,"cannon detonates once at maximum range");
         check(SpellEngine.activeCount()==0,"empty cannon flight cannot leave a task behind");
         SpellEngine.clear();resetPlayer(player);visuals.clear();Zombie hidden=spawn(level,0,81,6);
         for(int x=-2;x<=2;x++)for(int y=81;y<=85;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());

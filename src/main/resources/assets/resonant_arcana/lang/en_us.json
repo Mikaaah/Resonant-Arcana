@@ -229,5 +229,16 @@
   "spell.resonant_arcana.sandworm_world_devourer": "Sandworm\u2019s World Devourer",
   "spell.resonant_arcana.dragon_primordial_inferno": "Dragon\u2019s Primordial Inferno",
   "effect.resonant_arcana.primal_instinct": "Primal Instinct",
-  "effect.resonant_arcana.covenant_grace": "Covenant Grace"
+  "effect.resonant_arcana.covenant_grace": "Covenant Grace",
+  "subtitles.resonant_arcana.ritual_arcane": "God-tier magic gathers: Arcane",
+  "subtitles.resonant_arcana.ritual_fire": "God-tier magic gathers: Fire",
+  "subtitles.resonant_arcana.ritual_ice": "God-tier magic gathers: Ice",
+  "subtitles.resonant_arcana.ritual_nature": "God-tier magic gathers: Nature",
+  "subtitles.resonant_arcana.ritual_abyss": "God-tier magic gathers: Abyss",
+  "subtitles.resonant_arcana.ritual_shadow": "God-tier magic gathers: Shadow",
+  "subtitles.resonant_arcana.doom_charge_bed": "Doom gathers dark pressure",
+  "subtitles.resonant_arcana.doom_gravity_bed": "Singularity tears at the air",
+  "subtitles.resonant_arcana.doom_collapse": "Singularity collapses",
+  "subtitles.resonant_arcana.orbital_detonation": "Orbital Ray detonates",
+  "spell.resonant_arcana.orbital_ray": "Orbital Ray"
 }

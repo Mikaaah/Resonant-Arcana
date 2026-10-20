@@ -8,14 +8,16 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft 1.21.1. Build a spellbook around spectacular rituals, precise beams, battlefield control and support magic.
 
-**0.2.0 · 163 core spells · 17 optional Bosses’Rise spells · 24 optional Alex’s Caves spells**
+**0.3.0 · 164 core spells · 17 optional Bosses’Rise spells · 24 optional Alex’s Caves spells**
 
-[Download 0.2.0](downloads/resonant-arcana-0.2.0-neoforge-1.21.1.jar?raw=true) · [Complete spell reference](SPELLS.md) · [Scroll recipes](SCROLL_RECIPES.md)
+[Download 0.3.0](downloads/resonant-arcana-0.3.0-neoforge-1.21.1.jar?raw=true) · [Complete spell reference](SPELLS.md) · [Scroll recipes](SCROLL_RECIPES.md)
 
 ## Magic worth building around
 
 - **Nine magic schools**, with searchable categories, readable spell information and one Spells creative tab.
-- **Twenty God-tier rituals**: nine school spells, six cave arts and five boss arts. Base cast time: 20 seconds; mana: 600.
+- **Orbital Ray**: gather a growing orb for 15 seconds, launch it skyward, then unleash a vertical arcane beam and nuclear-style explosion. No TNT model or terrain destruction.
+- **Faster Cataclysms**: 6-second base casts for spells without supplied recordings.
+- **Twenty God-tier rituals**: nine school spells, six cave arts and five boss arts. Base cast time: 10 seconds; mana: 600.
 - **Thunder of the Heavens** marks a vast battlefield and rains down 200 violet lightning strikes.
 - **Three legendary spellbooks** with distinct equipment perks, plus a searchable debug wand for creative testing.
 - **Native Tremorzilla breath** with green, purple and orange variants; following torso-level beams and themed boss effects.

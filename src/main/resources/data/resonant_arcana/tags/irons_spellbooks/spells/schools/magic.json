@@ -30,6 +30,7 @@
     {
       "id": "resonant_arcana:confection_apocalypse",
       "required": false
-    }
+    },
+    "resonant_arcana:orbital_ray"
   ]
 }

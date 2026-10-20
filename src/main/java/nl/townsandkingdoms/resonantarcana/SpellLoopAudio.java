@@ -14,9 +14,9 @@ final class SpellLoopAudio {
     private static final Map<Key,Playing> ACTIVE=new HashMap<>();
     private static ClientLevel world;private static int ticks;
     private static final class Layer extends AbstractTickableSoundInstance {
-        final Entity owner;
-        Layer(Entity entity,String id,float gain,float pitch){super(SpellAudio.event(id),SoundSource.PLAYERS,entity.getRandom());owner=entity;looping=true;delay=0;volume=(float)(gain*ArcanaConfig.SOUND_VOLUME.get());this.pitch=pitch;tick();}
-        @Override public void tick(){if(!owner.isAlive()){stop();return;}x=owner.getX();y=owner.getY()+owner.getBbHeight()*.55;z=owner.getZ();}
+        final Entity owner;final float gain,basePitch;float progress;final boolean rising;
+        Layer(Entity entity,String id,float gain,float pitch){super(SpellAudio.event(id),SoundSource.PLAYERS,entity.getRandom());owner=entity;this.gain=gain;basePitch=pitch;rising=id.startsWith("resonant_arcana:");looping=true;delay=0;relative=entity==Minecraft.getInstance().player;if(relative)attenuation=net.minecraft.client.resources.sounds.SoundInstance.Attenuation.NONE;tick();}
+        @Override public void tick(){if(!owner.isAlive()){stop();return;}x=relative?0:owner.getX();y=relative?0:owner.getY()+owner.getBbHeight()*.55;z=relative?0:owner.getZ();volume=(float)(gain*ArcanaConfig.SOUND_VOLUME.get()*(rising?.75+progress*.55:1));pitch=basePitch*(rising?.9f+progress*.16f:1);}
     }
     static void handle(WandNetwork.Loop cue){
         if(!cue.valid())return;var mc=Minecraft.getInstance();if(mc.level==null)return;
@@ -26,14 +26,13 @@ final class SpellLoopAudio {
         Playing playing=ACTIVE.get(key);if(playing!=null&&playing.variant!=cue.variant()){stop(key);playing=null;}
         if(playing==null){if(ACTIVE.size()>=16)return;playing=new Playing();playing.variant=cue.variant();Spell spell=Spell.values()[cue.spell()];
             if(spell==Spell.DOOM){
-                add(playing,owner,"entity.warden.heartbeat",.95f,.85f);add(playing,owner,"block.portal.ambient",.45f,.9f);
-                add(playing,owner,"block.respawn_anchor.ambient",.25f,.9f);add(playing,owner,"block.beacon.ambient",.2f,.8f);
-                add(playing,owner,"block.sculk_sensor.clicking",.15f,.85f);add(playing,owner,"block.amethyst_block.resonate",.15f,.9f);add(playing,owner,"entity.enderman.stare",.12f,1);
+                add(playing,owner,ResonantArcana.ID+(cue.release()?":doom_gravity_bed":":doom_charge_bed"),1.4f,1);
             }else if((spell==Spell.TREMORZILLA_BREATH||spell==Spell.TREMORZILLA_CATACLYSM)&&cue.release())add(playing,owner,"alexscaves:tremorzilla_beam_loop",1.1f,1);
-            else if(GodSpells.handles(spell)&&!cue.release())add(playing,owner,GodSpells.chargeSound(spell),1.25f,1);
+            else if((GodSpells.handles(spell)||spell==Spell.ORBITAL_RAY)&&!cue.release())add(playing,owner,RitualAudio.charge(spell),1.7f,1);
             else if(spell==Spell.TREMORZILLA_BREATH&&!cue.release())add(playing,owner,"alexscaves:tremorzilla_charge_normal",1,1);
             if(playing.sounds.isEmpty())return;ACTIVE.put(key,playing);
         }
+        for(Layer layer:playing.sounds){layer.progress=cue.progress();layer.tick();}
         playing.expires=ticks+14;
     }
     private static void add(Playing playing,Entity owner,String id,float gain,float pitch){var sound=new Layer(owner,id,gain,pitch);playing.sounds.add(sound);Minecraft.getInstance().getSoundManager().play(sound);}

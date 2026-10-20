@@ -36,7 +36,7 @@ final class GodChecks {
         var caster=FakePlayerFactory.get(level,new GameProfile(UUID.fromString("43ca91da-34fd-4218-9cad-aa2e435f8a8c"),"GodTest"));var team=level.getScoreboard().addPlayerTeam("god_test");team.setAllowFriendlyFire(false);level.getScoreboard().addPlayerToTeam(caster.getScoreboardName(),team);
         try{
             for(Spell s:gods){
-                check.accept(s.castTicks()==400&&s.manaCost()==600&&s.levelCap()==1,"God tier has twenty-second 600-mana single-rank gate: "+s);if(!s.available())continue;
+                check.accept(s.castTicks()==200&&s.manaCost()==600&&s.levelCap()==1,"God tier has ten-second 600-mana single-rank gate: "+s);if(!s.available())continue;
                 SpellEngine.clear();caster.setPos(0,81,0);caster.setYRot(0);caster.setXRot(0);caster.removeAllEffects();caster.setHealth(10);
                 var enemy=enemy(level,0,6);var ally=enemy(level,2,6);var outside=enemy(level,s.radius+.5,6);level.getScoreboard().addPlayerToTeam(ally.getScoreboardName(),team);
                 try{check.accept(SpellEngine.cast(caster,s),"God release starts: "+s);for(int t=0;t<s.duration()+10;t++){if(enemy.invulnerableTime>0)enemy.invulnerableTime--;SpellEngine.tick();}

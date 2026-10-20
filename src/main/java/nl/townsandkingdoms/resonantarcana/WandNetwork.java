@@ -28,11 +28,18 @@ public final class WandNetwork {
         @Override public Type<BeamFocus> type(){return TYPE;}
         boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&Spell.values()[spell].kind==Spell.Kind.DEVASTATOR&&phase>=0&&phase<=2&&Float.isFinite(progress)&&progress>=0&&progress<=1&&Float.isFinite(length)&&length>=0&&length<=64;}
     }
-    public record Loop(int caster,int spell,boolean play,boolean release,int variant) implements CustomPacketPayload {
+    public record Loop(int caster,int spell,boolean play,boolean release,int variant,float progress) implements CustomPacketPayload {
+        public Loop(int caster,int spell,boolean play,boolean release,int variant){this(caster,spell,play,release,variant,0);}
         public static final Type<Loop> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"spell_loop"));
-        public static final StreamCodec<RegistryFriendlyByteBuf,Loop> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeVarInt(m.spell);b.writeBoolean(m.play);b.writeBoolean(m.release);b.writeByte(m.variant);},b->new Loop(b.readVarInt(),b.readVarInt(),b.readBoolean(),b.readBoolean(),b.readUnsignedByte()));
+        public static final StreamCodec<RegistryFriendlyByteBuf,Loop> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);b.writeVarInt(m.spell);b.writeBoolean(m.play);b.writeBoolean(m.release);b.writeByte(m.variant);b.writeFloat(m.progress);},b->new Loop(b.readVarInt(),b.readVarInt(),b.readBoolean(),b.readBoolean(),b.readUnsignedByte(),b.readFloat()));
         @Override public Type<Loop> type(){return TYPE;}
-        boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&SpellLoops.supports(Spell.values()[spell])&&variant>=0&&variant<=2;}
+        boolean valid(){return caster>=0&&spell>=0&&spell<Spell.values().length&&SpellLoops.supports(Spell.values()[spell])&&variant>=0&&variant<=2&&Float.isFinite(progress)&&progress>=0&&progress<=1;}
+    }
+    public record OrbitalFocus(int caster,Visual visual) implements CustomPacketPayload {
+        public static final Type<OrbitalFocus> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"orbital_focus"));
+        public static final StreamCodec<RegistryFriendlyByteBuf,OrbitalFocus> CODEC=StreamCodec.of((b,m)->{b.writeVarInt(m.caster);Visual.CODEC.encode(b,m.visual);},b->new OrbitalFocus(b.readVarInt(),Visual.CODEC.decode(b)));
+        @Override public Type<OrbitalFocus> type(){return TYPE;}
+        boolean valid(){return caster>=0&&visual!=null&&visual.valid()&&visual.spell()==Spell.ORBITAL_RAY.ordinal();}
     }
     public record Select(ResourceLocation wand,int slot) implements CustomPacketPayload {
         public static final Type<Select> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(ResonantArcana.ID,"select"));
@@ -67,7 +74,8 @@ public final class WandNetwork {
             &&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).equals(message.wand))SpellEngine.action(player,message.slot+3);
     }
     public static void register(RegisterPayloadHandlersEvent e) {
-        var r=e.registrar("21");
+        var r=e.registrar("22");
+        r.playToClient(OrbitalFocus.TYPE,OrbitalFocus.CODEC,(msg,ctx)->ctx.enqueueWork(()->OrbitalEffects.handle(msg)));
         r.playToClient(Loop.TYPE,Loop.CODEC,(msg,ctx)->ctx.enqueueWork(()->SpellLoopAudio.handle(msg)));
         r.playToClient(BeamFocus.TYPE,BeamFocus.CODEC,(msg,ctx)->ctx.enqueueWork(()->DoomBeamEffects.track(msg)));
         r.playToClient(Chant.TYPE,Chant.CODEC,(msg,ctx)->ctx.enqueueWork(()->RecordedAudio.handle(msg)));

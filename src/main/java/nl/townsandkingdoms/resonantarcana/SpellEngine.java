@@ -36,7 +36,7 @@ public final class SpellEngine {
     private SpellEngine() {}
     static boolean activeFor(ServerPlayer player,Spell s){return ACTIVE.stream().anyMatch(c->c.owner.equals(player.getUUID())&&c.spell==s);}
     public static int activeCount(){return ACTIVE.size();}
-    public static void clear(){ACTIVE.forEach(SpellEngine::cleanup);AdvancedSpells.clear();GodSpells.clear();ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
+    public static void clear(){ACTIVE.forEach(SpellEngine::cleanup);AdvancedSpells.clear();GodSpells.clear();OrbitalRay.clear();ACTIVE.clear();COOLDOWNS.clear();LAST_ACTION.clear();ticks=0;visualPoints=0;SpellVisuals.tick();}
     public static void action(ServerPlayer player,int action) {
         if(action<0||!player.isAlive()||player.isSpectator())return;
         ItemStack stack=player.getMainHandItem();
@@ -65,6 +65,7 @@ public final class SpellEngine {
     }
     static void bookCharge(ServerPlayer player,Spell spell,double progress,int elapsed){
         Vec3 dir=player.getLookAngle().normalize(),eye=player.getEyePosition();
+        if(spell==Spell.ORBITAL_RAY){OrbitalRay.charge(player,progress,elapsed);return;}
         if(GodSpells.handles(spell)){GodSpells.charge(player,spell,progress,elapsed);return;}
         if(CavesCompat.optional(spell)){CavesCompat.charge(player,spell,progress,elapsed);return;}
         if(spell==Spell.I_AM_ATOMIC){AtomicRitual.charge(player,progress,elapsed);return;}
@@ -190,7 +191,7 @@ public final class SpellEngine {
         message(player,spell.title);return true;
     }
     private static boolean requiresTarget(Spell spell){return switch(spell.kind){case TARGET,CONFUSE,STUN,CAPTURE,LAUNCH,PUSH,PULL,CHOKE,CHAIN,SEEKER,SIPHON,MARK,SUSPEND,TETHER,EXECUTE,EXILE->true;default->false;};}
-    private static void cleanup(Cast c){SpellLoops.stop(c.caster,c.spell,true);if(c.spell==Spell.TREMORZILLA_BREATH||c.spell==Spell.TREMORZILLA_CATACLYSM)SpellAudio.world(c.level,c.pos,"alexscaves:tremorzilla_beam_end",.8f,1);GodSpells.cleanup(c);VoidDomain.cleanup(c);BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);SpecialSpells.cleanup(c);}
+    private static void cleanup(Cast c){SpellLoops.stop(c.caster,c.spell,true);if(c.spell==Spell.TREMORZILLA_BREATH||c.spell==Spell.TREMORZILLA_CATACLYSM)SpellAudio.world(c.level,c.pos,"alexscaves:tremorzilla_beam_end",.8f,1);GodSpells.cleanup(c);OrbitalRay.cleanup(c);VoidDomain.cleanup(c);BossesRiseCompat.cleanup(c);AdvancedSpells.cleanup(c);SpellCentrepieces.cleanup(c);SpecialSpells.cleanup(c);}
     public static void tick(){
         ticks++;visualPoints=0;SpellVisuals.tick();
         VoidExile.tick(net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer());
@@ -223,6 +224,7 @@ public final class SpellEngine {
                     if(c.age>=40&&pull.length()<1.8)hit(c,victim,c.pos,true);
                 }
                 if(c.age==90){
+                    RitualAudio.blast(c);
                     area(c,c.pos,c.spell.radius,true);
                     SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,c.pos.add(0,5,0),c.pos.add(0,5,0),12);
                     impactFeedback(c,c.pos);return false;
@@ -425,7 +427,7 @@ public final class SpellEngine {
                 if((c.age-1)%c.spell.interval()!=0)return true;
                 c.hit.clear();Vec3 eye=BeamRitual.origin(c.caster),dir=c.caster.getLookAngle();
                 Vec3 end=clipLoaded(c.level,eye,dir,c.spell.range,c.caster);
-                SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,eye.add(dir.scale(0.6)),end,1);
+                SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.LINK,eye,end,1);
                 double length=eye.distanceTo(end);
                 for(double d=0;d<=length;d+=0.6){Vec3 p=eye.add(dir.scale(d));trail(c.level,p,c.spell.theme,0.08+d*0.015);}
                 for(var victim:lineTargets(c,eye,end,c.spell.radius))
@@ -456,7 +458,7 @@ public final class SpellEngine {
             if(c.book==null&&!(c.caster.getMainHandItem().getItem() instanceof WandItem))return false;
             c.travel=c.caster.getLookAngle().normalize();
             // Keep the forward offset while moving the source below the first-person camera.
-            c.pos=clipLoaded(c.level,BeamRitual.body(c.caster,1),c.travel,1,c.caster);
+            c.pos=clipLoaded(c.level,BeamRitual.body(c.caster,1),c.travel,BeamRitual.FORWARD,c.caster);
             double progress=c.age/40.0;
             if(c.age<40){
                 if(c.age%2==0)SpellParticles.cannonCharge(c.level,c.pos,c.travel,progress,c.age);

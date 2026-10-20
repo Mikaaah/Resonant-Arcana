@@ -82,7 +82,7 @@ final class CavesClient {
         private void beam(CaveVisual marker,float partial,PoseStack pose,MultiBufferSource buffers){
             Entity caster=marker.level().getEntity(marker.owner());if(caster==null||!caster.isAlive())return;
             Vec3 eye=BeamRitual.body(caster,partial),dir=caster.getViewVector(partial).normalize();
-            Vec3 start=marker.level().clip(new ClipContext(eye,eye.add(dir.scale(.9)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
+            Vec3 start=marker.level().clip(new ClipContext(eye,eye.add(dir.scale(BeamRitual.FORWARD)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
             double range=marker.model()==16?Spell.TREMORZILLA_BREATH.range:64;
             Vec3 end=marker.level().clip(new ClipContext(start,start.add(dir.scale(range)),ClipContext.Block.COLLIDER,ClipContext.Fluid.NONE,caster)).getLocation();
             float length=(float)start.distanceTo(end);if(length<.05)return;

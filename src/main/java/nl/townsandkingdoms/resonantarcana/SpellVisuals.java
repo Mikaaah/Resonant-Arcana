@@ -105,6 +105,14 @@ final class SpellVisuals {
         };
     }
 
+    static void orbital(net.minecraft.server.level.ServerPlayer caster,Stage stage,Vec3 pos,Vec3 end,double size){
+        boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
+        if(detail?details++>=ArcanaConfig.DETAIL_BUDGET.get():accents++>=ArcanaConfig.ACCENT_BUDGET.get())return;
+        var visual=new WandNetwork.Visual(Spell.ORBITAL_RAY.ordinal(),stage.ordinal(),pos.x,pos.y,pos.z,end.x,end.y,end.z,(float)Math.clamp(size,.1,16));
+        if(IntegrationChecks.enabled())IntegrationChecks.visual(visual);
+        Vec3 center=pos.lerp(end,.5);PacketDistributor.sendToPlayersNear(caster.serverLevel(),null,center.x,center.y,center.z,96,new WandNetwork.OrbitalFocus(caster.getId(),visual));
+    }
+
     static void send(ServerLevel level, Spell spell, Stage stage, Vec3 pos, Vec3 end, double size) {
         boolean detail=stage==Stage.FLIGHT||stage==Stage.AREA||stage==Stage.CHARGE;
         if(detail ? details++>=ArcanaConfig.DETAIL_BUDGET.get() : accents++>=ArcanaConfig.ACCENT_BUDGET.get())return;

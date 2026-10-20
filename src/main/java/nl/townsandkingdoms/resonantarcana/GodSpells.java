@@ -22,22 +22,7 @@ final class GodSpells {
     private static boolean visiblePoint(ServerPlayer p,Vec3 point){Vec3 eye=p.getEyePosition();return clipLoaded(p.serverLevel(),eye,point.subtract(eye).normalize(),eye.distanceTo(point),p).distanceToSqr(point)<.02;}
     static void lock(ServerPlayer p,Spell s){Vec3 point=mark(p,s);if(LOCKED.size()>=128)LOCKED.clear();if(point!=null)LOCKED.put(p.getUUID(),new Lock(p.serverLevel(),s,point));}
     static void unlock(ServerPlayer p){LOCKED.remove(p.getUUID());}
-    static String chargeSound(Spell s){return switch(s){
-        case THUNDER_OF_THE_HEAVENS,PLANETARY_POLARITY->"block.conduit.ambient";
-        case SOLAR_SUPERNOVA,DRAGON_PRIMORDIAL_INFERNO->"block.fire.ambient";
-        case EVENTIDE_HORIZON,HELVAR_FINAL_EDICT->"block.respawn_anchor.ambient";
-        case CRIMSON_APOTHEOSIS->"entity.warden.heartbeat";
-        case ABSOLUTE_GLACIATION,YETI_WORLD_HEART->"block.amethyst_cluster.hit";
-        case VERDANT_AWAKENING,PRIMORDIAL_SOVEREIGN->"irons_spellbooks:spell.firefly_swarm.prepare";
-        case HEAVENS_COVENANT->"block.beacon.ambient";
-        case TREMORZILLA_CATACLYSM->"alexscaves:tremorzilla_charge_normal";
-        case ABYSSAL_WORLD_TIDE,KRAKEN_WORLD_DROWN->"block.bubble_column.whirlpool_inside";
-        case FORSAKEN_ECLIPSE->"alexscaves:forsaken_spawn";
-        case CONFECTION_APOCALYPSE->"alexscaves:sugar_staff_cast_hex";
-        case SANDWORM_WORLD_DEVOURER->"item.elytra.flying";
-        case SOUL_ASCENDANCY->"block.sculk_catalyst.bloom";
-        default->"block.amethyst_block.resonate";
-    };}
+    static String chargeSound(Spell s){return RitualAudio.charge(s);}
     static String castSound(Spell s){return switch(s){
         case TREMORZILLA_CATACLYSM->"alexscaves:tremorzilla_beam_start";case PLANETARY_POLARITY->"alexscaves:magnetron_attack";
         case PRIMORDIAL_SOVEREIGN->"alexscaves:tremorsaurus_roar";case ABYSSAL_WORLD_TIDE->"alexscaves:hullbreaker_attack";
@@ -51,9 +36,9 @@ final class GodSpells {
         case CRIMSON_APOTHEOSIS->"irons_spellbooks:cast.generic.blood";default->"block.amethyst_block.resonate";
     };}
     static void charge(ServerPlayer p,Spell s,double progress,int elapsed){
-        if(elapsed%8!=0)return;var lock=LOCKED.get(p.getUUID());if(lock==null||lock.level()!=p.serverLevel())return;
-        SpellLoops.sync(p,s,true,false,0);
-        SpellVisuals.send(p.serverLevel(),s,SpellVisuals.Stage.CHARGE,p.position().add(0,.05,0),lock.point(),10+progress*6);
+        if(elapsed%4!=0)return;var lock=LOCKED.get(p.getUUID());if(lock==null||lock.level()!=p.serverLevel())return;
+        SpellLoops.sync(p,s,true,false,0,progress);
+        SpellVisuals.send(p.serverLevel(),s,SpellVisuals.Stage.CHARGE,p.position().add(0,.05,0),lock.point(),5+progress*3);
         SpellVisuals.send(p.serverLevel(),s,SpellVisuals.Stage.RITUAL_TARGET,lock.point().add(0,.05,0),lock.point().add(0,1,0),s.radius);
     }
     static boolean begin(Cast c){

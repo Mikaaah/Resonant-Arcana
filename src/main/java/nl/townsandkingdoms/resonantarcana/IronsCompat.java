@@ -85,7 +85,7 @@ final class IronsCompat {
             baseManaCost=spell.manaCost();
             manaCostPerLevel=spell.manaStep();baseSpellPower=100;spellPowerPerLevel=SpellCatalogue.POWER_PER_LEVEL;
             castTime=spell.castTicks();
-            defaults=new DefaultConfig().setMinRarity((GodSpells.handles(spell)||CavesCompat.cataclysm(spell)||spell==Spell.DOOM||spell==Spell.DOOM_BEAM||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
+            defaults=new DefaultConfig().setMinRarity((GodSpells.handles(spell)||CavesCompat.cataclysm(spell)||spell==Spell.DOOM||spell==Spell.DOOM_BEAM||spell==Spell.ORBITAL_RAY||spell.kind==Spell.Kind.CATACLYSM)?SpellRarity.LEGENDARY:(spell.kind==Spell.Kind.CANNON||castTime>=40)?SpellRarity.EPIC:castTime>=20||spell.cooldown>=140?SpellRarity.RARE:SpellRarity.COMMON)
                 .setSchoolResource(school(spell.theme)).setMaxLevel(spell.levelCap()).setCooldownSeconds(spell.cooldown/20.0).setAllowCrafting(!GodSpells.handles(spell)&&!CavesCompat.optional(spell)&&!BossesRiseCompat.optional(spell)).build();
         }
         @Override public boolean attemptInitiateCast(net.minecraft.world.item.ItemStack stack,int rank,Level level,Player player,CastSource source,boolean triggerCooldown,String slot){
@@ -105,7 +105,7 @@ final class IronsCompat {
         @Override public int getSpellCooldown(){return Math.max(1,(int)Math.ceil(super.getSpellCooldown()*ArcanaConfig.COOLDOWNS.get()));}
         @Override public int getRecastCount(int level,LivingEntity entity){return spell==Spell.CRIMSON_REVERSAL?2:0;}
         @Override public int getEffectiveCastTime(int level,LivingEntity entity){
-            if(RecordedSpells.handles(spell))return spell.castTicks(); // Preserve the original voices and release cues without pitch shifting.
+            if(RecordedSpells.handles(spell)||spell==Spell.ORBITAL_RAY)return spell.castTicks(); // Preserve the original voices and release cues without pitch shifting.
             return spell==Spell.CRIMSON_REVERSAL&&entity!=null&&MagicData.getPlayerMagicData(entity).getPlayerRecasts().hasRecastForSpell(getSpellId())?0:super.getEffectiveCastTime(level,entity);
         }
         @Override public CastType getCastType(){return castTime>0?CastType.LONG:CastType.INSTANT;}
@@ -116,7 +116,7 @@ final class IronsCompat {
         @Override public AnimationHolder getCastStartAnimation(){return switch(spell.kind){
             case CANNON,SONIC,CHANNEL,LANCE,RAIL,PIERCING_ORB,CONE_CHANNEL->SpellAnimations.ONE_HANDED_RAY_CHARGE;
             case STORM,SMITE,TWISTER,METEOR,FROSTFRONT,PILLAR,RAIN->SpellAnimations.CHARGE_RAISED_HAND;
-            case ASCENSION,DEVASTATOR,CATACLYSM,BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
+            case ORBITAL_RAY,ASCENSION,DEVASTATOR,CATACLYSM,BURST,WELL,FIELD,MARK,COLLAPSE,DOOM,FANGS->SpellAnimations.CHARGE_WAVY_ANIMATION;
             case WARD,AURA,HEAL,BUFF,CLEANSE,HYMN,REMEDY->SpellAnimations.PREPARE_CROSS_ARMS;
             default->castTime>0?SpellAnimations.ANIMATION_LONG_CAST:SpellAnimations.ANIMATION_INSTANT_CAST;
         };}
@@ -139,6 +139,7 @@ final class IronsCompat {
         }
         @Override public void onServerPreCast(Level level,int spellLevel,LivingEntity entity,MagicData data){
             if(entity instanceof ServerPlayer player){
+                if(spell==Spell.ORBITAL_RAY)OrbitalRay.lock(player);
                 if(GodSpells.handles(spell))GodSpells.lock(player,spell);
                 if(spell==Spell.EXPLOSION)ExplosionRitual.lock(player,data);
                 else {if(spell==Spell.I_AM_ATOMIC)AtomicRitual.lock(player,data);if(RecordedSpells.handles(spell))RecordedSpells.start(player,spell);}
@@ -150,6 +151,7 @@ final class IronsCompat {
                 if(RecordedSpells.handles(spell))RecordedSpells.stop(player,spell);
                 if(spell==Spell.I_AM_ATOMIC&&cancelled)AtomicRitual.end(player,data);
                 if(spell==Spell.DOOM_BEAM&&cancelled)BeamRitual.stop(player);
+                if(spell==Spell.ORBITAL_RAY)OrbitalRay.cancel(player);
             }
             if(entity instanceof ServerPlayer player){SpellLoops.stop(player,spell,false);GodSpells.unlock(player);if(cancelled)SpellLoops.stop(player,spell,true);}
             super.onServerCastComplete(level,spellLevel,entity,data,cancelled);

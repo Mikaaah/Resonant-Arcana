@@ -15,6 +15,7 @@ final class TremorBeamRenderer {
     private static ResourceLocation texture(int variant,String part){String name=variant==1?"tremorzilla_retro":variant==2?"tremorzilla_tectonic":"tremorzilla";return ResourceLocation.fromNamespaceAndPath("alexscaves","textures/entity/tremorzilla/"+name+"_beam_"+part+".png");}
     static void render(CaveVisual marker,float partial,float length,PoseStack pose,MultiBufferSource buffers){
         float time=marker.tickCount+partial,fade=Math.clamp(time/5,0,1),width=(marker.model()==18?2.1f:.8f)*fade*(1+.035f*(float)Math.sin(time*.7));
+        DoomBeamEffects.cap(pose,buffers,.19,marker.variant()==1);
         tube(pose,buffers.getBuffer(ACRenderTypes.getTremorzillaBeam(texture(marker.variant(),"inner"),false)),length,.18f,width,4,-time*.125f,1);
         tube(pose,buffers.getBuffer(ACRenderTypes.getTremorzillaBeam(texture(marker.variant(),"outer"),false)),length,.24f,width*1.5f,8,-time*.25f,.5f);
         pose.pushPose();pose.translate(0,0,length-.3);pose.mulPose(Axis.XP.rotationDegrees(90));pose.scale(width,width,width);

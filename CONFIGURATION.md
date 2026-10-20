@@ -116,7 +116,7 @@ The focus is a temporary, invulnerable netherite sword display. Interruption and
 
 Arcane Devastator now sustains its beam for 7.4 seconds after a fixed 6.5-second windup. Each enemy can be damaged once, including enemies entering after release. The path is clipped against current loaded terrain each tick, so newly placed cover also stops it.
 
-Doom uses native Warden heartbeat, portal ambience, respawn-anchor hum, beacon hum, sculk clicks, amethyst resonance and Enderman tension. These are staggered throughout charging and the active black hole. Doom Beam uses the Laser of Doom recording instead.
+Doom uses original dark-pressure charge and gravity-well sound beds followed by one authored collapse. The old seven overlapping ambient clips are removed. Doom Beam retains the supplied Laser of Doom recording.
 
 ### Attached Doom Beam and reference Explosion in 0.26
 
@@ -142,9 +142,9 @@ Void Domain has a 100-tick base cast, 240 base mana (+20 per rank), a 1,800-tick
 
 Individual scrolls share Iron's scroll item ID. Search their normal tooltip keywords or use the debug archive's text box; combine terms such as `ender buff aoe`, `ice slow` or `cataclysm`. Real spell-registry datapack tags live under `resonant_arcana:categories/<category>` and `resonant_arcana:schools/<school>` in the `irons_spellbooks:spells` registry. Optional boss entries are marked non-required. These are spell tags, not per-scroll item tags. Equipment item tags are `resonant_arcana:spellbooks` and `resonant_arcana:debug_tools`.
 
-The 0.1.0 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same release (0.2.0 uses protocol 21). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.
+The 0.1.0 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same release (0.3.0 uses protocol 22). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.
 
-## Alex’s Caves integration in 0.2.0
+## Alex’s Caves integration in 0.3.0
 
 Install **Alex’s Caves 2.0.10** and its required Citadel dependency on client and server. All twenty-four cave arts, including six God-tier rituals, and the visual marker entity register only when that supported version is present. Other versions leave the adapter disabled. Removing the mod hides its spells from the debug archive and creative scrolls; optional spell tags do not prevent startup. Core spells and the separate Bosses’Rise adapter remain available.
 
@@ -152,11 +152,11 @@ The normal Iron’s per-spell configuration applies to cave arts, including enab
 
 Visual proxies are harmless, expire with their cast, have no loot or AI, and are not saved. Nuclear Strike does not place a functional bomb or change blocks. Native client particles share the addon’s detail and outline budgets; at most two native mushroom clouds are started concurrently per client. The native cloud supplies its own explosion ambience and screen effects.
 
-Both sides must install **0.2.0 / protocol 21**. No Alex’s Caves or Citadel assets/classes are distributed in the addon.
+Both sides must install **0.3.0 / protocol 22**. No Alex’s Caves or Citadel assets/classes are distributed in the addon.
 
-## God tier and reworked integration spells in 0.2.0
+## God tier and reworked integration spells in 0.3.0
 
-God-tier arts have twenty-second base casts, 600 mana, one Legendary rank and 240-second base cooldowns. Iron’s normal school power, cast-speed and server spell settings still apply. Targeted God rituals lock their field at the start. Cancellation spends no mana and removes the ritual mark. Offensive effects protect teammates, pets and terrain and use loaded terrain and cover checks.
+God-tier arts have ten-second base casts, 600 mana, one Legendary rank and 240-second base cooldowns. Iron’s normal school power, cast-speed and server spell settings still apply. Targeted God rituals lock their field at the start. Cancellation spends no mana and removes the ritual mark. Offensive effects protect teammates, pets and terrain and use loaded terrain and cover checks.
 
 Core non-God spells stay in the native Scroll Forge. Addon and God scrolls use the recipes in [SCROLL_RECIPES.md](SCROLL_RECIPES.md), consuming the listed proof instead of allowing a generic focus to bypass it. These recipes load only for a supported integration version. Nine native Iron’s school scroll textures are reused; no parent assets are bundled.
 
@@ -164,4 +164,17 @@ Tremorzilla breath has no boss proxy. Hold `alexscaves:amber_curiosity` in the o
 
 Doom, Tremorzilla and God charge ambience now uses caster-owned client instances with fourteen-tick leases. Completion, cancellation, death, disconnect and dimension changes stop those instances. Native long clips cannot linger for twenty seconds after cleanup. Other casters retain their own sound layers. Existing owner-supplied recordings keep their timing. Client sound and visual playtesting is still required.
 
-The protocol is now **21**; install matching **0.2.0** addon builds on client and server.
+The protocol is now **22**; install matching **0.3.0** addon builds on client and server.
+
+
+## Orbital Ray and faster rituals in 0.3.0
+
+Non-recorded Cataclysms, including Doom and cave Cataclysms, now have a six-second base cast. All God-tier arts have ten-second base casts. Native cast-speed equipment still applies to those spells. Explosion (7.7 s), I Am Atomic (13.5 s), Arcane Devastator (6.5 s) and Doom Beam (13 s) retain their supplied recording timings.
+
+Orbital Ray has one Legendary rank, a fixed 15-second cast, 500 mana and a three-minute base cooldown. Obtain its scroll through the native Scroll Forge. It locks visible ground within 64 blocks and requires at least 12 clear blocks above the mark. After release, the orb flies upward for two seconds, a vertical beam forms, and the explosion lands at release tick 60. Each visible enemy within 16 blocks takes one 384-base-damage hit. The beam and cloud add no repeated damage. Interruption during charging releases no attack; new obstruction during ascent or before detonation aborts it. Allies and terrain remain protected. No TNT or nuclear-bomb entity is spawned; Alex’s Caves can supply its native mushroom cloud, with a core-only cloud fallback.
+
+God-tier charge beds are original themed sounds that rise with synchronized cast progress. The caster hears them without positional attenuation; observers hear them from the caster. Existing volume controls apply, and each caster’s sound leases stop independently on cancellation, death, disconnect or dimension change.
+
+Player beams now begin just 0.18 blocks forward at torso/hand height, with the same origin on the client and server and a closed luminous source. Arcane Devastator adds yellow and purple wisps and electrical trails.
+
+Install matching **0.3.0** builds on client and server; network protocol is **22**.

@@ -38,6 +38,7 @@
     {
       "id": "resonant_arcana:candy_catastrophe",
       "required": false
-    }
+    },
+    "resonant_arcana:orbital_ray"
   ]
 }

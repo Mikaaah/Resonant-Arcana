@@ -13,6 +13,10 @@ final class CavesClientEffects {
     private static final ArrayList<Long> CLOUDS=new ArrayList<>();
     private static ClientLevel world;
     private static ParticleOptions particle(String id){return OPTIONS.computeIfAbsent(id,key->{var type=BuiltInRegistries.PARTICLE_TYPE.get(ResourceLocation.fromNamespaceAndPath(CavesCompat.MOD,key));return type instanceof SimpleParticleType simple?simple:ParticleTypes.END_ROD;});}
+    static void mushroom(ClientLevel level,Vec3 p){
+        if(world!=level){world=level;CLOUDS.clear();OPTIONS.clear();}CLOUDS.removeIf(t->t<level.getGameTime());
+        if(CavesCompat.available()&&CLOUDS.size()<2){nativePoint("mushroom_cloud",p,new Vec3(1.1,0,0),false);CLOUDS.add(level.getGameTime()+180);}
+    }
     private static void nativePoint(String id,Vec3 p,Vec3 parameters,boolean boundary){NativeSpellEffects.nativeParticle(particle(id),p,id.equals("proton")?p:parameters,boundary);}
     private static String main(Spell s){return switch(s.definition.area()){
         case "magnetic_caves"->"scarlet_magnetic_flow";case "primordial_caves"->s==Spell.LUX_EXTINCTION?"luxtructosaurus_ash":"amber_explosion";

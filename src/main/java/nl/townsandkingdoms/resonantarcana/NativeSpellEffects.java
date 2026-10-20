@@ -42,6 +42,7 @@ final class NativeSpellEffects {
         // Distant casts and crowded fights retain their outlines and simplify interior detail.
         int count=(int)Math.clamp(48-Math.sqrt(mc.player.distanceToSqr(p))*.4,16,48);
         if(spell==Spell.SERAPH_ASCENDANT&&stage==SpellVisuals.Stage.AREA){seraph(level,p,end,time);return;}
+        if(spell==Spell.ORBITAL_RAY){OrbitalEffects.visual(level,stage,p,end,size);return;}
         if(GodSpells.handles(spell)){GodEffects.visual(level,spell,stage,p,end,size);return;}
         if(HelvarEffects.handles(spell)){HelvarEffects.visual(level,spell,stage,p,end,size);return;}
         if(CavesCompat.optional(spell)){if(CavesCompat.available())CavesClientEffects.visual(level,spell,stage,p,end,size);return;}

@@ -62,7 +62,7 @@ final class AtomicChecks {
         cosmicBeam(level,p,check);
         check.accept(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.ARCANE_DEVASTATOR)).getEffectiveCastTime(1,p)==130,"cosmic beam waits for the later 6.5-second audio attack");
         check.accept(!RecordedSpells.handles(Spell.DOOM)&&RecordedSpells.handles(Spell.DOOM_BEAM),"laser recording belongs to Doom Beam, not black-hole Doom");
-        check.accept(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.DOOM)).getCastStartSound().isEmpty(),"Doom uses only its staggered native ambience, without an automatic start loop");
+        check.accept(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(Spell.DOOM)).getCastStartSound().isEmpty(),"Doom uses its owned authored audio, without an automatic native start loop");
         doomBeam(level,p,check);
     }
     private static void cosmicBeam(ServerLevel level,net.minecraft.server.level.ServerPlayer p,BiConsumer<Boolean,String> check){
@@ -95,7 +95,7 @@ final class AtomicChecks {
             try{
                 p.setPos(10,81,0);p.setYRot(-90);SpellEngine.tick();
                 check.accept(followed.getHealth()==704&&abandoned.getHealth()==1024,"Doom Beam moves with its caster and turns its damage path away from the old ray");
-                check.accept(BeamRitual.origin(p).distanceToSqr(BeamRitual.body(p,1).add(p.getLookAngle().scale(.9)))<.0001,"Doom Beam remains connected to the caster's hands");
+                check.accept(BeamRitual.origin(p).distanceToSqr(BeamRitual.body(p,1).add(p.getLookAngle().scale(BeamRitual.FORWARD)))<.0001,"Doom Beam remains connected to the caster's hands");
             }finally{followed.discard();abandoned.discard();p.setPos(0,81,0);p.setYRot(0);}
             for(int x=-3;x<=3;x++)for(int y=81;y<=86;y++)level.setBlockAndUpdate(new BlockPos(x,y,4),Blocks.STONE.defaultBlockState());
             var hidden=enemy(level,0,14);

@@ -35,7 +35,7 @@ public final class ResonantArcana {
             .displayItems((params,out)->{for(Spell spell:SpellIndex.ordered())if(io.redspace.ironsspellbooks.api.registry.SpellRegistry.REGISTRY.get(IronsCompat.id(spell)).isEnabled())out.accept(IronsCompat.scroll(spell));}).build());
     }
     public ResonantArcana(IEventBus bus,ModContainer container) {
-        IntegrationCondition.register(bus);ExplosionRitual.SOUNDS.register(bus);
+        IntegrationCondition.register(bus);RitualAudio.SOUNDS.register(bus);ExplosionRitual.SOUNDS.register(bus);
         AdvancedSpells.register();
         VoidExile.register();CavesCompat.register(bus);
         NeoForge.EVENT_BUS.addListener(SpellIndex::tooltip);
@@ -52,7 +52,7 @@ public final class ResonantArcana {
     }
     private static void commands(RegisterCommandsEvent event) {
         var root=Commands.literal("resonantarcana");
-        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.2.0: 3 legendary spellbooks, 1 debug wand, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
+        root.then(Commands.literal("status").executes(c->{c.getSource().sendSuccess(()->Component.literal("Resonant Arcana 0.3.0: 3 legendary spellbooks, 1 debug wand, "+Spell.enabledValues().length+" spells; active="+SpellEngine.activeCount()),false);return 1;}));
         var give=Commands.literal("give").requires(c->c.hasPermission(2));
         for(var entry:ITEMS.getEntries())give.then(Commands.literal(entry.getId().getPath()).executes(c->{var p=c.getSource().getPlayerOrException();var stack=entry.get().getDefaultInstance();if(!p.addItem(stack))p.drop(stack,false);return 1;}));
         root.then(give);

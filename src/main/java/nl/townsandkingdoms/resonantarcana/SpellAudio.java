@@ -160,20 +160,19 @@ final class SpellAudio {
         default->1.0f;
     };}
     static void charge(ServerPlayer player,Spell spell){
-        if(spell==Spell.DOOM||spell==Spell.TREMORZILLA_BREATH||GodSpells.handles(spell)){SpellLoops.sync(player,spell,true,false,0);return;}
+        if(SpellLoops.supports(spell)){SpellLoops.sync(player,spell,true,false,0);return;}
         if(spell==Spell.SOUL_CANNON){cast(player,spell);return;}
         cue(player,player.position(),chargeId(spell),spell==Spell.DOOM||spell.kind==Spell.Kind.CATACLYSM?2.2f:1.5f,1.0f,true);
         cue(player,player.position(),castAccentId(spell.theme),.75f,0.85f,true);
     }
     static void cast(ServerPlayer player,Spell spell){
-        if(spell==Spell.DOOM){doom(player,player.position(),1,0);return;}
+        if(spell==Spell.DOOM){SpellLoops.sync(player,spell,true,true,0,0);return;}
         cue(player,player.position(),spellCastId(spell),1.3f,castPitch(spell),true);
         cue(player,player.position(),castAccentId(spell.theme),0.85f,castPitch(spell)+0.12f,true);
     }
     static void impact(ServerPlayer player,Vec3 pos,Spell spell){
         if(spell==Spell.DOOM){
-            cue(player,pos,"block.respawn_anchor.deplete",2,.6f,true);
-            cue(player,pos,"entity.warden.sonic_boom",1.8f,.55f,true);return;
+            return; // One authored collapse is played by the release sequence.
         }
         float weight=switch(spell.kind){case COMET,BURST,PULSE,SMITE,SONIC,MARK,METEOR,RAIL,COLLAPSE->1.15f;default->1.0f;};
         float gain=(float)(weight*ArcanaConfig.IMPACT_VOLUME.get());
@@ -209,9 +208,9 @@ final class SpellAudio {
         cue(player,pos,id,1.5f+(float)progress*.8f,(float)(.55+progress*.65),true);
         if(elapsed%32==0)cue(player,pos,chargeId(spell),1.25f+(float)progress*.6f,(float)(.7+progress*.45),true);
     }
-    /** Seven independent native layers, staggered so the heartbeat stays intelligible. */
+    /** Owned dark-pressure bed; a separate gravity layer marks the released singularity. */
     static void doom(ServerPlayer player,Vec3 pos,double progress,int elapsed){
-        if(elapsed%8==0)SpellLoops.sync(player,Spell.DOOM,true,SpellEngine.activeFor(player,Spell.DOOM),0);
+        if(elapsed%8==0)SpellLoops.sync(player,Spell.DOOM,true,SpellEngine.activeFor(player,Spell.DOOM),0,progress);
     }
     static void charging(ServerPlayer player,Spell spell,double progress,int elapsed){
         if(!RecordedSpells.handles(spell)&&elapsed>0&&elapsed%24==0)cue(player,player.position(),chargeId(spell),1.35f,(float)(.8+progress*.35),true);

@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.2.0'
+version = '0.3.0'
 group = 'nl.townsandkingdoms.resonantarcana'
 base.archivesName = 'resonant-arcana'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -41,6 +41,10 @@ tasks.register('verifyPackagedAssets') {
             ['explosion_charge','explosion_release','atomic_charge','atomic_release','cosmic_charge','cosmic_release','doom_laser_charge','doom_laser_release'].each { id ->
                 def entry = jar.getEntry('assets/resonant_arcana/sounds/'+id+'.ogg')
                 if (entry == null || new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'OggS') throw new GradleException('Missing or invalid recorded spell audio '+id)
+            }
+            ['ritual_arcane','ritual_fire','ritual_ice','ritual_nature','ritual_abyss','ritual_shadow','doom_charge_bed','doom_gravity_bed','doom_collapse','orbital_detonation'].each { id ->
+                def entry = jar.getEntry('assets/resonant_arcana/sounds/'+id+'.ogg')
+                if (entry == null || new String(jar.getInputStream(entry).readNBytes(4), 'US-ASCII') != 'OggS') throw new GradleException('Missing original ritual audio '+id)
             }
             if (paths.any { it.endsWith('/sounds/explosion_chant.ogg') || it.endsWith('/sounds/explosion_blast.ogg') }) throw new GradleException('Retired bass-boosted recording in JAR')
             def soundDefinitions = new groovy.json.JsonSlurper().parse(jar.getInputStream(jar.getEntry('assets/resonant_arcana/sounds.json')))

@@ -1,0 +1,56 @@
+{
+  "source": "Original procedural sound design; tools/build_ritual_audio.py",
+  "sampleRate": 44100,
+  "clips": {
+    "ritual_arcane": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.1
+    },
+    "ritual_fire": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.05
+    },
+    "ritual_ice": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.29
+    },
+    "ritual_nature": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -9.22
+    },
+    "ritual_abyss": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.45
+    },
+    "ritual_shadow": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.24
+    },
+    "doom_charge_bed": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.09
+    },
+    "doom_gravity_bed": {
+      "durationSeconds": 4.0,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -10.39
+    },
+    "doom_collapse": {
+      "durationSeconds": 3.8,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -11.23
+    },
+    "orbital_detonation": {
+      "durationSeconds": 5.4,
+      "peakDbfs": -1.41,
+      "rmsDbfs": -12.74
+    }
+  }
+}

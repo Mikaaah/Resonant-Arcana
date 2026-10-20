@@ -38,7 +38,7 @@ final class SpellInfo {
         if(s.radius>0&&!extent.isEmpty())out.add(Component.literal(extent+format(s.radius)+" blocks").withStyle(net.minecraft.ChatFormatting.GRAY));
         if(s==Spell.TECTONIC_STAMPEDE)out.add(Component.literal("Buff duration: "+format(20*Math.clamp(power,1,2))+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
         if(s.duration()>0&&s!=Spell.TECTONIC_STAMPEDE&&s!=Spell.WARSCREAM&&s!=Spell.EXPLOSION&&s!=Spell.I_AM_ATOMIC)out.add(Component.literal("Base duration: "+format(s.duration()/20.0)+"s").withStyle(net.minecraft.ChatFormatting.GRAY));
-        if(castSeconds>0)out.add(Component.literal("Cast time: "+format(castSeconds)+"s"+(RecordedSpells.handles(s)?" (fixed)":"")).withStyle(net.minecraft.ChatFormatting.GRAY));
+        if(castSeconds>0)out.add(Component.literal("Cast time: "+format(castSeconds)+"s"+((RecordedSpells.handles(s)||s==Spell.ORBITAL_RAY)?" (fixed)":"")).withStyle(net.minecraft.ChatFormatting.GRAY));
         for(var line:martial(s,power))for(String wrapped:wrap(line.getString(),52))out.add(Component.literal(wrapped).withStyle(net.minecraft.ChatFormatting.GRAY));
         return out;
     }
@@ -77,7 +77,7 @@ final class SpellInfo {
         case SOUL_REQUIEM -> "Three expanding rings; final area hit ×2.";
         case KRAKENS_WRATH -> "One outer hit and one central hit ×3 per enemy.";
         case FUNERAL_BELL -> "Two normal tolls; final toll ×3.";
-        case I_AM_ATOMIC,EXPLOSION,DOOM,DOOM_BEAM,ARCANE_DEVASTATOR -> "One damage hit per enemy per cast.";
+        case ORBITAL_RAY,I_AM_ATOMIC,EXPLOSION,DOOM,DOOM_BEAM,ARCANE_DEVASTATOR -> "One damage hit per enemy per cast.";
         default -> s.pulses()>1?(s.kind==Spell.Kind.FAN?"Projectiles: ":"Damage pulses: ")+s.pulses():"";
     };}
     static List<MutableComponent> details(Spell s,int level){

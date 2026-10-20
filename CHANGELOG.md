@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0
+
+- Reduced non-recorded Cataclysm base casts, including Doom and cave Cataclysms, to six seconds; reduced all God-tier base casts to ten seconds. Preserved all four supplied recording timings.
+- Added original, clearly audible themed God charge beds with synchronized rising envelopes and direct caster playback. Replaced Doom’s overlapping ambient layers with dark-pressure charging, gravity-well ambience and an authored collapse.
+- Reworked God effects into brighter, distinct silhouettes: ice spires, roots and canopies, golden arches, soul pillars, tidal crests, crimson/shadow formations, confection orbits, fracture lines and flame wings. Preserved Thunder of the Heavens’ lightning strikes.
+- Moved player beam origins close to the hands with matching client/server clipping and luminous source caps. Added yellow and purple Arcane Devastator trails.
+- Added **Orbital Ray**: a fixed 15-second charge grows an orb fed by swirling magic; it launches skyward and fires a vertical arcane beam into a nuclear-style explosion. One Legendary rank, 500 mana, 384 base damage, 16-block blast radius, 64-block targeting range and three-minute base cooldown.
+- Orbital Ray locks its mark, checks overhead clearance and new obstructions, protects allies and terrain, and never spawns TNT or a nuclear-bomb entity. Native Alex’s Caves cloud is optional; a core-only cloud remains available.
+- Expanded the catalogue to **164 core spells / 205 with both optional integrations**. Matching client/server updates are required: protocol **22**.
+
 ## 0.2.0
 
 This release combines development after the CurseForge **0.1.0** baseline (internally 0.28.0-alpha), including the work previously labelled 0.29 and 0.30. Public releases use plain version numbers.

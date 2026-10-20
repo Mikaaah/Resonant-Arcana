@@ -4,7 +4,7 @@
 
 Open an elevated black hole that draws visible enemies inward, then collapses for one heavy area hit. Allies and terrain are protected.
 
-**Ender** · Cast **10s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
+**Ender** · Cast **6s** · Cooldown **120s** · Range **32 blocks** · Radius / half-width **12 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -18,7 +18,7 @@ Spell ID: `resonant_arcana:doom`. Inspect ranks with `/resonantarcana spell doom
 
 Call three groups of falling stars around the mark. Each star damages enemies within four blocks of its impact. A final arcane collapse deals double damage across fourteen blocks.
 
-**Evocation** · Cast **10s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Evocation** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -34,7 +34,7 @@ Spell ID: `resonant_arcana:astral_apocalypse`. Inspect ranks with `/resonantarca
 
 Release three blood tides around the mark, followed by a double-damage final tide. Heal for 8% of health actually removed, up to twenty health across the whole cast.
 
-**Blood** · Cast **10s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Blood** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -50,7 +50,7 @@ Spell ID: `resonant_arcana:crimson_eclipse`. Inspect ranks with `/resonantarcana
 
 Call five meteors around the mark. Each erupts in a five-block blast. A final fourteen-block firestorm deals 250% damage and ignites enemies.
 
-**Fire** · Cast **12s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Fire** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -66,7 +66,7 @@ Spell ID: `resonant_arcana:world_pyre`. Inspect ranks with `/resonantarcana spel
 
 Flood the marked area with shadow and drifting void embers. Three expanding damage pulses suppress enemies with Darkness and Weakness II, followed by a double-damage collapse.
 
-**Ender** · Cast **11s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Ender** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -82,7 +82,7 @@ Spell ID: `resonant_arcana:void_coronation`. Inspect ranks with `/resonantarcana
 
 Call six lightning columns around the mark, each striking a six-block area. A final fourteen-block thunderclap deals double damage. Columns can overlap.
 
-**Lightning** · Cast **10s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Lightning** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -98,7 +98,7 @@ Spell ID: `resonant_arcana:heavens_thunder`. Inspect ranks with `/resonantarcana
 
 Pull visible enemies inward, then cut the area along two perpendicular lines. A final fourteen-block spatial implosion deals triple damage.
 
-**Ender** · Cast **12s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Ender** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -114,7 +114,7 @@ Spell ID: `resonant_arcana:rift_collision`. Inspect ranks with `/resonantarcana 
 
 Unleash three soul pulses at four, eight and twelve blocks from the mark. Enemies touched by a pulse are revealed and afflicted with Darkness. A final blast deals double damage across the area.
 
-**Eldritch** · Cast **11s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Eldritch** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -130,7 +130,7 @@ Spell ID: `resonant_arcana:soul_requiem`. Inspect ranks with `/resonantarcana sp
 
 Overgrow the mark with moss, flowering leaves and spores. Three pulses damage, poison and slow enemies. A final bloom deals double damage and heals eligible allies.
 
-**Nature** · Cast **10s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Nature** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -146,7 +146,7 @@ Spell ID: `resonant_arcana:worldroot_catastrophe`. Inspect ranks with `/resonant
 
 Summon a golden sword over the mark. Three holy pulses damage enemies and heal allies; the final verdict deals double damage, heals, cleanses afflictions and grants Resistance I for five seconds.
 
-**Holy** · Cast **12s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Holy** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -162,7 +162,7 @@ Spell ID: `resonant_arcana:final_judgement`. Inspect ranks with `/resonantarcana
 
 Unleash a ten-second blizzard over the marked area. Eight pulses damage and freeze enemies with Slowness IV. A final burst deals triple damage. Terrain remains intact.
 
-**Ice** · Cast **11s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **16 blocks**.
+**Ice** · Cast **6s** · Cooldown **120s** · Range **40 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -224,7 +224,7 @@ Spell ID: `resonant_arcana:doom_beam`. Inspect ranks with `/resonantarcana spell
 
 Compress opposing magnetic poles, then unleash a blue-white annihilation beam following your aim for seven seconds. Each enemy entering it takes one heavy hit. Solid cover stops the beam.
 
-**Lightning** · Cast **11s** · Cooldown **130s** · Range **64 blocks** · Radius / half-width **3 blocks**.
+**Lightning** · Cast **6s** · Cooldown **130s** · Range **64 blocks** · Radius / half-width **3 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -240,7 +240,7 @@ Spell ID: `resonant_arcana:magnetar_annihilation`. Inspect ranks with `/resonant
 
 Condense a molten tephra sun over the mark. Four rounds of volcanic vents telegraph beneath up to six enemies; each erupts after 0.4 seconds and can be dodged. The core then falls in a double-damage extinction blast. Allies and terrain are protected.
 
-**Fire** · Cast **12s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **14 blocks**.
+**Fire** · Cast **6s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -256,7 +256,7 @@ Spell ID: `resonant_arcana:lux_extinction`. Inspect ranks with `/resonantarcana 
 
 Mark a nuclear strike. A descending warhead detonates after a visible warning, releasing one immense blast and Alex’s Caves mushroom cloud. Enemies are weakened by the fallout; allies and terrain remain protected.
 
-**Nature** · Cast **13s** · Cooldown **150s** · Range **48 blocks** · Radius / half-width **16 blocks**.
+**Nature** · Cast **6s** · Cooldown **150s** · Range **48 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -272,7 +272,7 @@ Spell ID: `resonant_arcana:nuclear_strike`. Inspect ranks with `/resonantarcana 
 
 Open a deep-sea vortex at the mark. Four tidal pulses drag enemies inward before a double-damage pressure collapse. Deep One magic and towering splashes trace the battlefield.
 
-**Ice** · Cast **11s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **16 blocks**.
+**Ice** · Cast **6s** · Cooldown **140s** · Range **40 blocks** · Radius / half-width **16 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -288,7 +288,7 @@ Spell ID: `resonant_arcana:abyssal_deluge`. Inspect ranks with `/resonantarcana 
 
 Call forth a colossal Forsaken apparition. Three growing sonar shockwaves damage, reveal and darken enemies before a double-damage final roar.
 
-**Ender** · Cast **12s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
+**Ender** · Cast **6s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -304,7 +304,7 @@ Spell ID: `resonant_arcana:forlorn_reckoning`. Inspect ranks with `/resonantarca
 
 Raise a candy-witch vortex over the mark. Four peppermint storms batter enemies while a Gum Worm emerges below, then a double-damage candy burst ends the spell. Allies and terrain are protected.
 
-**Evocation** · Cast **11s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
+**Evocation** · Cast **6s** · Cooldown **140s** · Range **36 blocks** · Radius / half-width **14 blocks**.
 
 | Rank | Base damage | Base healing | Mana |
 | --- | ---: | ---: | ---: |
@@ -315,5 +315,19 @@ Base release / active phase: **6.5s**.
 Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Cataclysm**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
 
 Spell ID: `resonant_arcana:candy_catastrophe`. Inspect ranks with `/resonantarcana spell candy_catastrophe <rank>`.
+
+### Orbital Ray
+
+Gather swirling violet and golden magic into a growing orb for 15 seconds. Launch it skyward over a locked target, then fire a vertical arcane beam and a nuclear-style explosion. Each enemy takes one hit; allies and terrain are protected. Requires visible ground and at least 12 blocks of clear sky above the mark.
+
+**Evocation** · Cast **15s** · Cooldown **180s** · Range **64 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 384 | — | 500 |
+
+Base release / active phase: **7.5s**.
+
+Spell ID: `resonant_arcana:orbital_ray`. Inspect ranks with `/resonantarcana spell orbital_ray <rank>`.
 
 [← Home](Home)

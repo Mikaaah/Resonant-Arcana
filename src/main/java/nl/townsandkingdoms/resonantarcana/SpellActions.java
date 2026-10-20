@@ -16,7 +16,7 @@ final class SpellActions {
         Spell.Kind.PIERCING_ORB,Spell.Kind.ORBIT,Spell.Kind.TOTEM,Spell.Kind.RAIN,Spell.Kind.GAZE,
         Spell.Kind.REMEDY,Spell.Kind.CLEANSE,Spell.Kind.PILLAR,Spell.Kind.HYMN,Spell.Kind.SERPENT,Spell.Kind.DOMAIN,Spell.Kind.CONE_CHANNEL);
     private SpellActions(){}
-    static boolean handles(Spell.Kind kind){return kind==Spell.Kind.GOD_ART||kind==Spell.Kind.CAVE_ART||kind==Spell.Kind.VOID_DOMAIN||kind==Spell.Kind.EXILE||kind==Spell.Kind.ASCENSION||kind==Spell.Kind.DEVASTATOR||kind==Spell.Kind.CATACLYSM||AdvancedSpells.handles(kind)||BossesRiseCompat.handles(kind)||KINDS.contains(kind)||MartialSpells.handles(kind);}
+    static boolean handles(Spell.Kind kind){return kind==Spell.Kind.ORBITAL_RAY||kind==Spell.Kind.GOD_ART||kind==Spell.Kind.CAVE_ART||kind==Spell.Kind.VOID_DOMAIN||kind==Spell.Kind.EXILE||kind==Spell.Kind.ASCENSION||kind==Spell.Kind.DEVASTATOR||kind==Spell.Kind.CATACLYSM||AdvancedSpells.handles(kind)||BossesRiseCompat.handles(kind)||KINDS.contains(kind)||MartialSpells.handles(kind);}
     static float power(Cast c){return c.book==null?1:c.book.power();}
     static int supportDuration(Cast c,int base){return Math.max(1,(int)(base*Math.clamp(power(c),1,2)));}
     static Vec3 blinkDestination(ServerPlayer player,Spell spell,double range){
@@ -30,6 +30,7 @@ final class SpellActions {
         return null;
     }
     static boolean canStart(ServerPlayer p,Spell s){
+        if(s==Spell.ORBITAL_RAY)return OrbitalRay.canStart(p);
         if(GodSpells.handles(s))return GodSpells.canStart(p,s);
         if(CavesCompat.optional(s))return CavesSpells.canStart(p,s);
         if(s==Spell.VOID_EXILE)return VoidExile.canStart(p);
@@ -46,6 +47,7 @@ final class SpellActions {
         return s.kind!=Spell.Kind.BLINK||blinkDestination(p,s,s.range)!=null;
     }
     static boolean begin(Cast c){
+        if(c.spell==Spell.ORBITAL_RAY)return OrbitalRay.begin(c);
         if(GodSpells.handles(c.spell))return GodSpells.begin(c);
         if(CavesCompat.optional(c.spell))return CavesSpells.begin(c);
         if(c.spell==Spell.VOID_DOMAIN)return VoidDomain.begin(c);
@@ -93,6 +95,7 @@ final class SpellActions {
         return true;
     }
     static boolean tick(Cast c){
+        if(c.spell==Spell.ORBITAL_RAY)return OrbitalRay.tick(c);
         if(GodSpells.handles(c.spell))return GodSpells.tick(c);
         if(CavesCompat.optional(c.spell))return CavesSpells.tick(c);
         if(c.spell==Spell.VOID_DOMAIN)return VoidDomain.tick(c);
