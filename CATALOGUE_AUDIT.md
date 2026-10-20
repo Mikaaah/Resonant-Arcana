@@ -1,4 +1,4 @@
-# Catalogue audit — 0.30.0-alpha
+# Catalogue audit — 0.2.0
 
 All damage values are rank-one health points per direct hit, before equipment, defenses and server multipliers. Two health points equal one heart. Burning, poison, wither and melee contributions are additional. Multi-stage totals depend on coverage, damage immunity and the individual sequence; a beam hits each enemy once per cast.
 

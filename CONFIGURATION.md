@@ -142,19 +142,19 @@ Void Domain has a 100-tick base cast, 240 base mana (+20 per rank), a 1,800-tick
 
 Individual scrolls share Iron's scroll item ID. Search their normal tooltip keywords or use the debug archive's text box; combine terms such as `ender buff aoe`, `ice slow` or `cataclysm`. Real spell-registry datapack tags live under `resonant_arcana:categories/<category>` and `resonant_arcana:schools/<school>` in the `irons_spellbooks:spells` registry. Optional boss entries are marked non-required. These are spell tags, not per-scroll item tags. Equipment item tags are `resonant_arcana:spellbooks` and `resonant_arcana:debug_tools`.
 
-The 0.28 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same version (protocol 19). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.
+The 0.1.0 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same release (0.2.0 uses protocol 21). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.
 
-## Alex’s Caves integration in 0.29
+## Alex’s Caves integration in 0.2.0
 
-Install **Alex’s Caves 2.0.10** and its required Citadel dependency on client and server. All eighteen cave arts and the visual marker entity register only when that supported version is present. Other versions leave the adapter disabled. Removing the mod hides its spells from the debug archive and creative scrolls; optional spell tags do not prevent startup. Core spells and the separate Bosses’Rise adapter remain available.
+Install **Alex’s Caves 2.0.10** and its required Citadel dependency on client and server. All twenty-four cave arts, including six God-tier rituals, and the visual marker entity register only when that supported version is present. Other versions leave the adapter disabled. Removing the mod hides its spells from the debug archive and creative scrolls; optional spell tags do not prevent startup. Core spells and the separate Bosses’Rise adapter remain available.
 
 The normal Iron’s per-spell configuration applies to cave arts, including enablement, mana and cooldown. The six cave cataclysms have one Legendary rank; novice and master arts have five ranks. Spellbook and school power scale damage normally. Native `stunned`, `bubbled` and `sugar_rush` effects are supplied by Alex’s Caves. Bosses resist the stun, bubble and vortex pull.
 
 Visual proxies are harmless, expire with their cast, have no loot or AI, and are not saved. Nuclear Strike does not place a functional bomb or change blocks. Native client particles share the addon’s detail and outline budgets; at most two native mushroom clouds are started concurrently per client. The native cloud supplies its own explosion ambience and screen effects.
 
-Both sides must update to **0.29.0-alpha / protocol 20**. No Alex’s Caves or Citadel assets/classes are distributed in the addon.
+Both sides must install **0.2.0 / protocol 21**. No Alex’s Caves or Citadel assets/classes are distributed in the addon.
 
-## God tier and reworked integration spells in 0.30
+## God tier and reworked integration spells in 0.2.0
 
 God-tier arts have twenty-second base casts, 600 mana, one Legendary rank and 240-second base cooldowns. Iron’s normal school power, cast-speed and server spell settings still apply. Targeted God rituals lock their field at the start. Cancellation spends no mana and removes the ritual mark. Offensive effects protect teammates, pets and terrain and use loaded terrain and cover checks.
 
@@ -164,4 +164,4 @@ Tremorzilla breath has no boss proxy. Hold `alexscaves:amber_curiosity` in the o
 
 Doom, Tremorzilla and God charge ambience now uses caster-owned client instances with fourteen-tick leases. Completion, cancellation, death, disconnect and dimension changes stop those instances. Native long clips cannot linger for twenty seconds after cleanup. Other casters retain their own sound layers. Existing owner-supplied recordings keep their timing. Client sound and visual playtesting is still required.
 
-The protocol is now **21**; install matching **0.30.0-alpha** addon builds on client and server.
+The protocol is now **21**; install matching **0.2.0** addon builds on client and server.

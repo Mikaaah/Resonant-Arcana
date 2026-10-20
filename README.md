@@ -8,9 +8,9 @@
 
 An **Iron’s Spells ’n Spellbooks addon** for Minecraft 1.21.1. Build a spellbook around spectacular rituals, precise beams, battlefield control and support magic.
 
-**0.30.0-alpha · 163 core spells · 17 optional Bosses’Rise spells · 24 optional Alex’s Caves spells**
+**0.2.0 · 163 core spells · 17 optional Bosses’Rise spells · 24 optional Alex’s Caves spells**
 
-[Download 0.30.0-alpha](downloads/resonant-arcana-0.30.0-alpha-neoforge-1.21.1.jar?raw=true) · [Complete spell reference](SPELLS.md) · [Scroll recipes](SCROLL_RECIPES.md)
+[Download 0.2.0](downloads/resonant-arcana-0.2.0-neoforge-1.21.1.jar?raw=true) · [Complete spell reference](SPELLS.md) · [Scroll recipes](SCROLL_RECIPES.md)
 
 ## Magic worth building around
 
