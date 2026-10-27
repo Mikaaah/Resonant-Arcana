@@ -1,3 +1,5 @@
+<img src="https://i.imgur.com/YlOt5L8.png" alt="Project logo" width="96">
+
 **Resonant Arcana**
 
 - [Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
