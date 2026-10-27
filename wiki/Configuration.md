@@ -142,7 +142,7 @@ Void Domain has a 100-tick base cast, 240 base mana (+20 per rank), a 1,800-tick
 
 Individual scrolls share Iron's scroll item ID. Search their normal tooltip keywords or use the debug archive's text box; combine terms such as `ender buff aoe`, `ice slow` or `cataclysm`. Real spell-registry datapack tags live under `resonant_arcana:categories/<category>` and `resonant_arcana:schools/<school>` in the `irons_spellbooks:spells` registry. Optional boss entries are marked non-required. These are spell tags, not per-scroll item tags. Equipment item tags are `resonant_arcana:spellbooks` and `resonant_arcana:debug_tools`.
 
-The 0.1.0 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same release (0.3.0 uses protocol 22). See [the catalogue audit](CATALOGUE_AUDIT.md) for the reviewed rank-one values.
+The 0.1.0 balance and presentation pass preserves saved spell IDs and audio timing. Both client and server must install the same release (0.3.0 uses protocol 22). See [the catalogue audit](https://github.com/Mikaaah/Resonant-Arcana/blob/main/CATALOGUE_AUDIT.md) for the reviewed rank-one values.
 
 ## Alex’s Caves integration in 0.3.0
 
@@ -158,7 +158,7 @@ Both sides must install **0.3.0 / protocol 22**. No Alex’s Caves or Citadel as
 
 God-tier arts have ten-second base casts, 600 mana, one Legendary rank and 240-second base cooldowns. Iron’s normal school power, cast-speed and server spell settings still apply. Targeted God rituals lock their field at the start. Cancellation spends no mana and removes the ritual mark. Offensive effects protect teammates, pets and terrain and use loaded terrain and cover checks.
 
-Core non-God spells stay in the native Scroll Forge. Addon and God scrolls use the recipes in [SCROLL_RECIPES.md](SCROLL_RECIPES.md), consuming the listed proof instead of allowing a generic focus to bypass it. These recipes load only for a supported integration version. Nine native Iron’s school scroll textures are reused; no parent assets are bundled.
+Core non-God spells stay in the native Scroll Forge. Addon and God scrolls use the recipes in [SCROLL_RECIPES.md](https://github.com/Mikaaah/Resonant-Arcana/blob/main/SCROLL_RECIPES.md), consuming the listed proof instead of allowing a generic focus to bypass it. These recipes load only for a supported integration version. Nine native Iron’s school scroll textures are reused; no parent assets are bundled.
 
 Tremorzilla breath has no boss proxy. Hold `alexscaves:amber_curiosity` in the offhand at release for the retro purple variant, or `alexscaves:tectonic_shard` for orange; otherwise it is green. Its God art uses retro purple. All native beam variants share the same combat rules. Beams originate at 55% of the caster’s current body height, with their existing forward, wall-clipped offset.
 
