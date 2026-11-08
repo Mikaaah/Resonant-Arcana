@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 # Equipment
 
 These are normal, inscribable Iron’s spellbooks. Equip one in the **Curios spellbook slot** to activate its perks; holding it alone does not grant equipment attributes.

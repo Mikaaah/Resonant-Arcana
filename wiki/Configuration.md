@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 # Configuration
 
 Resonant Arcana separates authoritative server rules from local client preferences. Files are generated on first launch.

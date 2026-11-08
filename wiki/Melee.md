@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 ## Strikes & Drains
 
 ### Arcane Strike
@@ -332,4 +334,4 @@ Weapon contribution: add half the melee attack attribute at release before spell
 
 Spell ID: `resonant_arcana:spellbreaker`. Inspect ranks with `/resonantarcana spell spellbreaker <rank>`.
 
-[← Home](Home)
+[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)

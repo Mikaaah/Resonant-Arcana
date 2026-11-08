@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 ## Area Magic
 
 ### Blood Wave
@@ -606,4 +608,4 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:hullbreaker_surge`. Inspect ranks with `/resonantarcana spell hullbreaker_surge <rank>`.
 
-[← Home](Home)
+[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)

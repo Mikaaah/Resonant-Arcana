@@ -2,15 +2,13 @@
 
 <h1 align="center">Resonant Arcana</h1>
 
-<p align="center"><a href="https://www.curseforge.com/minecraft/mc-mods/resonant-arcana">CurseForge</a> · <a href="https://github.com/Mikaaah/Resonant-Arcana/wiki">Wiki</a> · <a href="https://github.com/Mikaaah/Resonant-Arcana/issues">Report an issue</a> · <a href="https://github.com/Mikaaah/Resonant-Arcana/blob/main/CHANGELOG.md">Changelog</a></p>
+<p align="center"><strong>Nine schools of magic, legendary spellbooks and rituals big enough to build a character around.</strong></p>
 
-<p align="center"><img alt="Minecraft 1.21.1" src="https://img.shields.io/badge/Minecraft-1.21.1-568736?style=flat-square"> <img alt="NeoForge" src="https://img.shields.io/badge/Loader-NeoForge-d77828?style=flat-square"></p>
+<p align="center"><a href="https://www.curseforge.com/minecraft/mc-mods/resonant-arcana">Downloads</a> · <a href="https://github.com/Mikaaah/Resonant-Arcana/wiki">Player guide</a> · <a href="https://github.com/Mikaaah/Resonant-Arcana/issues">Report an issue</a> · <a href="https://github.com/Mikaaah/Resonant-Arcana/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://discord.gg/CRYk3uDPVt">Discord</a></p>
 
-An **Iron’s Spells ’n Spellbooks addon** for Minecraft 1.21.1. Build a spellbook around spectacular rituals, precise beams, battlefield control and support magic.
+<p align="center"><img src="https://img.shields.io/badge/Minecraft-1.21.1-5b8731?style=flat-square" alt="Minecraft 1.21.1"> <img src="https://img.shields.io/badge/NeoForge-d77828?style=flat-square" alt="NeoForge"> <a href="https://mikaaah.github.io/TownsAndKingdoms/projects/"><img src="https://img.shields.io/badge/Towns_%26_Kingdoms-Modding_Hub-7f384a?style=flat-square" alt="Towns & Kingdoms Modding Hub"></a></p>
 
-**0.3.1 · 164 core spells · 17 optional Bosses’Rise spells · 24 optional Alex’s Caves spells**
-
-[Download 0.3.1](downloads/resonant-arcana-0.3.1-neoforge-1.21.1.jar?raw=true) · [Complete spell reference](SPELLS.md) · [Scroll recipes](SCROLL_RECIPES.md)
+**Source guide: 0.3.1.** Use the guide matching the edition you install.
 
 ## Magic worth building around
 
@@ -54,3 +52,11 @@ Install the same Resonant Arcana version on **client and server**. Equip an insc
 ## Credits and license
 
 By **Towns & Kingdoms**. [MIT license](LICENSE). Iron’s, Bosses’Rise and Alex’s Caves assets remain owned by their respective authors and are used from the installed mods. See [audio credits](AUDIO_CREDITS.md) for supplied recordings. New God-tier spell icons are temporary while final artwork is prepared.
+
+## Pull up a chair
+
+Questions, builds, feedback, server news and the occasional wildly overambitious factory: join the **Towns & Kingdoms Modding Hub**.
+
+[![Join the Towns & Kingdoms Discord](https://i.imgur.com/Ojgcccm.png)](https://discord.gg/CRYk3uDPVt)
+
+**[Join Discord](https://discord.gg/CRYk3uDPVt)** · [Explore all projects](https://mikaaah.github.io/TownsAndKingdoms/projects/) · [CurseForge projects](https://www.curseforge.com/members/mikaaah/projects)

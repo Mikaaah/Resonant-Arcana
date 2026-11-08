@@ -19,11 +19,7 @@ Please remove private credentials, tokens and addresses from logs.
 - Update [SPELLS.md](SPELLS.md), [CONFIGURATION.md](CONFIGURATION.md) and [CHANGELOG.md](CHANGELOG.md) when relevant.
 - Test on the supported NeoForge/Java 21 environment when possible and list anything untested.
 - Do not bundle Iron's Spells or other mods' source, textures or audio.
-- **Preserve the current `resonant_arcana` registry namespace and existing IDs.** Version 0.13 introduced a clean namespace break from the previous addon, without legacy aliases or automatic migration. See the [installation notes](README.md#installation-and-compatibility); any future identifier change needs an explicit compatibility plan.
+- **Preserve the current `resonant_arcana` registry namespace and existing IDs.** Version 0.13 introduced a clean namespace break from the previous addon, without legacy aliases or automatic migration. See the [installation notes](README.md#install); any future identifier change needs an explicit compatibility plan.
 
-To build, use Java 21 and follow the [contributor build instructions](docs/DEVELOPMENT.md).
 
 Version 0.21 explicitly retires the ten school-wand item IDs at the project owner’s request. Existing spell IDs remain stable. Use native particles for most spell detail. Version 0.22 restores optional AAA only for floor seals, Explosion seals and Doom; keep that scope small.
-
-
-Build instructions and technical checks are in [the contributor reference](docs/DEVELOPMENT.md).

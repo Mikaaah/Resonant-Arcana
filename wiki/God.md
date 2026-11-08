@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 ## God-tier Magic
 
 ### Thunder of the Heavens
@@ -302,4 +304,4 @@ Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its i
 
 Spell ID: `resonant_arcana:dragon_primordial_inferno`. Inspect ranks with `/resonantarcana spell dragon_primordial_inferno <rank>`.
 
-[← Home](Home)
+[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)

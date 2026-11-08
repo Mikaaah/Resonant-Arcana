@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 ## Beams & Channels
 
 ### Flamethrower
@@ -190,4 +192,4 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:forsaken_sonar`. Inspect ranks with `/resonantarcana spell forsaken_sonar <rank>`.
 
-[← Home](Home)
+[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)

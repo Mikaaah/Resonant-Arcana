@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 # Multiplayer and compatibility
 
 Requires **Java 21**, **NeoForge 21.1.219–21.1.x**, and **Iron’s Spells ’n Spellbooks 1.21.1-3.16.3** with its dependencies, including Curios. Install the same addon version on both sides.

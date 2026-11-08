@@ -1,41 +1,24 @@
-name: "Documentation issue"
-description: "Report missing information, outdated instructions or a broken link."
-title: "[Docs]: "
-labels:
-  - "documentation"
-  - "needs-triage"
+name: Documentation correction
+description: Report an outdated guide, broken link or unclear explanation.
+title: "[Docs] "
+labels: []
 body:
-  -
-    type: "checkboxes"
-    id: "checks"
+  - type: input
+    id: page
     attributes:
-      label: "Before submitting"
-      options:
-        -
-          label: "I searched existing issues and checked the project README."
-          required: true
-        -
-          label: "I removed tokens, passwords, personal data and private server details from my report and attachments."
-          required: true
-  -
-    type: "input"
-    id: "page"
-    attributes:
-      label: "Page or file"
-      description: "Paste the documentation URL or repository file path."
+      label: Page or link
+      placeholder: Paste the affected page URL
     validations:
       required: true
-  -
-    type: "textarea"
-    id: "problem"
+  - type: input
+    id: version
     attributes:
-      label: "What needs correcting?"
-      description: "Quote the relevant section and explain what is missing, incorrect or broken."
+      label: Installed version
+      description: Include Minecraft, loader and mod versions if relevant.
+  - type: textarea
+    id: correction
+    attributes:
+      label: What needs changing?
+      description: Quote the unclear information and describe the expected correction.
     validations:
       required: true
-  -
-    type: "textarea"
-    id: "correction"
-    attributes:
-      label: "Suggested correction"
-      description: "Add a proposed fix or supporting reference if available."

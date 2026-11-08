@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 ## Cataclysms
 
 ### DOOM
@@ -330,4 +332,4 @@ Base release / active phase: **12s**.
 
 Spell ID: `resonant_arcana:orbital_ray`. Inspect ranks with `/resonantarcana spell orbital_ray <rank>`.
 
-[← Home](Home)
+[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)

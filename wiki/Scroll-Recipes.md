@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 # Scroll attunement recipes
 
 Craft these deterministic rank-one scrolls in a normal crafting grid. Core non-God spells remain craftable in Iron’s Scroll Forge. Addon and God scrolls use these recipes so their thematic materials cannot be bypassed with a generic school focus. Normal inscription and native school scroll textures remain unchanged.

@@ -1,3 +1,5 @@
+[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
 ## Movement
 
 ### Leap
@@ -180,4 +182,4 @@ Base release / active phase: **1.2s**.
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect ranks with `/resonantarcana spell ashen_rebirth <rank>`.
 
-[← Home](Home)
+[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
