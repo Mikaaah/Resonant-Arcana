@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Support & Defense
 
-## Support & Defense
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Crimson Ward
 
@@ -400,4 +400,155 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+### Arcane Hand
+
+Draw up to 32 nearby loose drops toward you for four seconds. Pickup delays, pickup ownership and walls are respected; inventories are never accessed.
+
+**Evocation** · Cast **0s** · Cooldown **10s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 20 |
+| II | — | — | 26 |
+| III | — | — | 32 |
+| IV | — | — | 38 |
+| V | — | — | 44 |
+
+Base release / active phase: **4s**.
+
+Spell ID: `resonant_arcana:arcane_hand`. Inspect ranks with `/resonantarcana spell arcane_hand <rank>`.
+
+### Blood Price
+
+Donate up to four health to shield one visible aimed ally for six seconds. The shield is 150% of donated health at level I and scales with spell power. The donation cannot kill you; shields refresh rather than stack.
+
+**Blood** · Cast **0.75s** · Cooldown **12s** · Range **16 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 35 |
+| II | — | — | 41 |
+| III | — | — | 47 |
+| IV | — | — | 53 |
+| V | — | — | 59 |
+
+Base release / active phase: **6s**.
+
+Spell ID: `resonant_arcana:blood_price`. Inspect ranks with `/resonantarcana spell blood_price <rank>`.
+
+### Mycelial Relay
+
+Grow two linked mushroom nodes for ten seconds. Half of effective healing received by an ally near either node can heal allies at the other. At most twelve health is relayed per cast at level I; relayed healing cannot repeat itself.
+
+**Nature** · Cast **1.5s** · Cooldown **25s** · Range **16 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 65 |
+| II | — | — | 71 |
+| III | — | — | 77 |
+| IV | — | — | 83 |
+| V | — | — | 89 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:mycelial_relay`. Inspect ranks with `/resonantarcana spell mycelial_relay <rank>`.
+
+### Martyr’s Aegis
+
+Guard one visible aimed ally for five seconds. Intercept 35% of eligible incoming damage, up to twenty health across the cast at level I. Transferred damage cannot kill you, and intercepted damage cannot trigger another aegis.
+
+**Holy** · Cast **1.5s** · Cooldown **30s** · Range **16 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 90 |
+| II | — | — | 96 |
+| III | — | — | 102 |
+| IV | — | — | 108 |
+| V | — | — | 114 |
+
+Base release / active phase: **5s**.
+
+Spell ID: `resonant_arcana:martyrs_aegis`. Inspect ranks with `/resonantarcana spell martyrs_aegis <rank>`.
+
+### Amber Stasis
+
+Encapsulate yourself in amber for two seconds. Eligible incoming damage is blocked while movement and Iron’s casting are suppressed. On release, push visible nearby enemies away. Void and other invulnerability-bypassing damage are not blocked.
+
+**Nature** · Cast **1s** · Cooldown **30s** · Range **0 blocks** · Radius / half-width **4 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 90 |
+| II | — | — | 96 |
+| III | — | — | 102 |
+| IV | — | — | 108 |
+| V | — | — | 114 |
+
+Base release / active phase: **2s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:amber_stasis`. Inspect ranks with `/resonantarcana spell amber_stasis <rank>`.
+
+### Fallout Bloom
+
+Cleanse up to eight Poison or Wither afflictions from nearby eligible allies. After a one-second warning release a radioactive bloom, adding four base damage per affliction removed. The burst damages only visible enemies and preserves terrain.
+
+**Nature** · Cast **2s** · Cooldown **30s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 95 |
+| II | 15 | — | 101 |
+| III | 18 | — | 107 |
+| IV | 21 | — | 113 |
+| V | 24 | — | 119 |
+
+Base release / active phase: **1.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:fallout_bloom`. Inspect ranks with `/resonantarcana spell fallout_bloom <rank>`.
+
+### Pressure Bell
+
+Raise a pressure dome for ten seconds. Allies receive Resistance II, Water Breathing and replenished air. The shell absorbs up to twelve hostile projectiles, storing 2 base collapse damage per shot. It repels ordinary enemies and slows intruders. Recast or wait for expiry to collapse it for 36–60 base damage and an outward pressure wave.
+
+**Ice** · Cast **2s** · Cooldown **30s** · Range **20 blocks** · Radius / half-width **5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 36 | — | 95 |
+| II | 45 | — | 101 |
+| III | 54 | — | 107 |
+| IV | 63 | — | 113 |
+| V | 72 | — | 119 |
+
+Base release / active phase: **10s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:pressure_bell`. Inspect ranks with `/resonantarcana spell pressure_bell <rank>`.
+
+### Rho Aias
+
+Instantly unfold a giant purple flower, then three separate violet shield discs in front of it. Fully negates hostile attacks and projectiles crossing the barrier, regardless of damage strength. Drains 20 mana per second with no fixed duration or cooldown. Stay still: walking, jumping, knockback or teleporting cancels it; looking around turns the shield. Eligible allies within twelve blocks behind it share its protection. Friendly projectiles pass through. Attacks from behind or outside the barrier and environmental damage remain unprotected. Needs open space ahead.
+
+**Evocation** · Cast **0s** · Cooldown **0s** · Range **12 blocks** · Radius / half-width **6 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 0 |
+| II | — | — | 0 |
+| III | — | — | 0 |
+| IV | — | — | 0 |
+| V | — | — | 0 |
+
+Spell ID: `resonant_arcana:rho_aias`. Inspect ranks with `/resonantarcana spell rho_aias <rank>`.
+
+
+<a id="summon"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

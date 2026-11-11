@@ -12,9 +12,9 @@ Install the same Resonant Arcana version on **client and server**. Equip an insc
 
 | Optional addon | Unlocks |
 | --- | --- |
-| Bosses’Rise 2.1.2 | 17 boss arts for Kraken, Yeti, Helvar, Sandworm and Dragon |
-| Alex’s Caves 2.0.10 + Citadel | 24 cave arts across all six cave areas |
-| AAAParticles | Selected ritual seals and Doom effects |
+| Bosses’Rise 2.1.2 | 19 boss arts for Kraken, Yeti, Helvar, Sandworm and Dragon |
+| Alex’s Caves 2.0.10 + Citadel | 30 cave arts across all six cave areas |
+| AAAParticles | Selected optional effects; God-tier spells and Doom Beam use native particles |
 
 **Both gameplay addons are optional.** The core mod works without them; unsupported addon versions leave the corresponding adapter disabled.
 

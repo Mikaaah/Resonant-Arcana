@@ -1,0 +1,228 @@
+spell,title,school_theme,design,palette,secondary,reason
+SPARK,Spark,MAGIC,starburst,MAGIC,,Spell.Theme.MAGIC
+ARCANE_STRIKE,Arcane Strike,MAGIC,starburst,MAGIC,,Spell.Theme.MAGIC
+BLOOD_SPARK,Crimson Strike,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+POISON_SPARK,Venom Sting,POISON,snake,POISON,,Spell.Theme.POISON
+BLOOD_WAVE,Blood Wave,BLOOD,wave,BLOOD,,Spell.Theme.BLOOD
+POISON_WAVE,Poison Wave,POISON,wave,POISON,,Spell.Theme.POISON
+FLAME_WAVE,Flame Wave,FIRE,wave,FIRE,,Spell.Theme.FIRE
+CONFUSE,Mind Haze,MAGIC,brain,MAGIC,,Spell.Theme.MAGIC
+STUN,Stun,MAGIC,lock,MAGIC,,Spell.Theme.MAGIC
+CAPTURE,Arcane Bind,MAGIC,web,MAGIC,,Spell.Theme.MAGIC
+ASTRAL_COMET,Astral Comet,MAGIC,shooting_star,MAGIC,,Spell.Theme.MAGIC
+FIRE_COMET,Fire Comet,FIRE,shooting_star,FIRE,,Spell.Theme.FIRE
+ARCANE_REPULSE,Arcane Repulse,MAGIC,starburst,MAGIC,,Spell.Theme.MAGIC
+FIREBALL,Fireball,FIRE,flaming_orb,FIRE,,Spell.Theme.FIRE
+IGNITE,Ignite,FIRE,fire,FIRE,,Spell.Theme.FIRE
+LAUNCH,Launch,MAGIC,jumping,MAGIC,,Spell.Theme.MAGIC
+LEAP,Leap,MAGIC,jumping,MAGIC,,Spell.Theme.MAGIC
+LIGHTNING,Lightning,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+SMITE,Smite,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+FIRE_TWISTER,Cinder Vortex,FIRE,flaming_orb,FIRE,,Spell.Theme.FIRE
+FLAME_THROWER,Flamethrower,FIRE,fire,FIRE,,Spell.Theme.FIRE
+FLAME_SHOCK_WAVE,Cinder Surge,FIRE,wave,FIRE,,Spell.Theme.FIRE
+BLOOD_EXPLODE,Crimson Rupture,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+BLOOD_STUN,Hemorrhagic Shock,BLOOD,lock,BLOOD,,Spell.Theme.BLOOD
+BLOOD_BLOCK,Crimson Ward,BLOOD,glowing_shield,BLOOD,,Spell.Theme.BLOOD
+SHADOW_BOLT,Shadow Bolt,DARK,crescent_moon,DARK,,Spell.Theme.DARK
+SOUL_SEEKER,Umbral Seeker,DARK,skull,DARK,,Spell.Theme.DARK
+DARK_WAVE,Umbral Wave,DARK,wave,DARK,,Spell.Theme.DARK
+NIGHTFALL,Nightfall,DARK,crescent_moon,DARK,,Spell.Theme.DARK
+SHADOW_CAGE,Dread Mark,DARK,web,DARK,,Spell.Theme.DARK
+SOUL_AURA,Umbral Veil,DARK,skull,DARK,,Spell.Theme.DARK
+THUNDER_BOLT,Thunder Bolt,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+CHAIN_LIGHTNING,Chain Lightning,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+THUNDER_WAVE,Thunder Wave,THUNDER,wave,THUNDER,,Spell.Theme.THUNDER
+STORM_CALL,Storm Call,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+THUNDER_PULSE,Thunder Pulse,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+STATIC_SHOCK,Static Shock,THUNDER,lock,THUNDER,,Spell.Theme.THUNDER
+GRAVITY_BOLT,Rift Bolt,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+GRAVITY_WELL,Rift Well,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+FORCE_PUSH,Force Push,GRAVITY,mage_hand,GRAVITY,,Spell.Theme.GRAVITY
+FORCE_PULL,Force Pull,GRAVITY,mage_hand,GRAVITY,,Spell.Theme.GRAVITY
+GRAVITY_CHOKE,Suspension,GRAVITY,lock,GRAVITY,,Spell.Theme.GRAVITY
+SINGULARITY,Singularity,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+ECHO_BOLT,Echo Bolt,SOUL,music,SOUL,,Spell.Theme.SOUL
+SCULK_WAVE,Sculk Wave,SOUL,wave,SOUL,,Spell.Theme.SOUL
+SONIC_SCREAM,Sonic Scream,SOUL,music,SOUL,,Spell.Theme.SOUL
+SOUL_SIPHON,Soul Siphon,SOUL,skull,SOUL,,Spell.Theme.SOUL
+SOUL_PRISON,Soul Prison,SOUL,lock,SOUL,,Spell.Theme.SOUL
+SHRIEKING_PULSE,Shrieking Pulse,SOUL,music,SOUL,,Spell.Theme.SOUL
+AMETHYST_NOVA,Amethyst Nova,SOUL,starburst,MAGIC,,Amethyst crystal burst within the Eldritch school.
+ECHO_WARD,Echo Ward,SOUL,glowing_shield,SOUL,,Spell.Theme.SOUL
+ARCANE_VOLLEY,Arcane Volley,MAGIC,bow_and_arrow,MAGIC,,Spell.Theme.MAGIC
+SANGUINE_DRAIN,Sanguine Drain,BLOOD,skull,BLOOD,,Spell.Theme.BLOOD
+BLOOD_LANCE,Blood Lance,BLOOD,fiery_arrow,BLOOD,,Spell.Theme.BLOOD
+EMBER_VEIL,Ember Veil,FIRE,fire,FIRE,,Spell.Theme.FIRE
+VENOM_BOLT,Venom Bolt,POISON,snake,POISON,,Spell.Theme.POISON
+MIASMA_FIELD,Miasma Field,POISON,cloud,POISON,,Spell.Theme.POISON
+WITHERING_HEX,Withering Hex,POISON,snake,POISON,,Spell.Theme.POISON
+SOUL_CANNON,Soul Cannon,SOUL,music,SOUL,,Spell.Theme.SOUL
+SOLAR_CATACLYSM,Solar Cataclysm,FIRE,shooting_star,FIRE,,Spell.Theme.FIRE
+TEMPEST_SPEAR,Tempest Spear,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+EVENT_HORIZON,Event Horizon,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+DOOM,DOOM,DARK,skull,DARK,,Spell.Theme.DARK
+SANCTUARY,Sanctuary,HOLY,cross,HOLY,,Spell.Theme.HOLY
+GLACIAL_RUPTURE,Glacial Rupture,ICE,wave,ICE,,Spell.Theme.ICE
+EVOKERS_EDICT,Evoker's Edict,MAGIC,paw,MAGIC,,Spell.Theme.MAGIC
+ARCANE_STEP,Arcane Step,MAGIC,door,MAGIC,,Spell.Theme.MAGIC
+BLOOD_NEEDLES,Blood Needles,BLOOD,bow_and_arrow,BLOOD,,Spell.Theme.BLOOD
+BLOOD_REAP,Blood Reap,BLOOD,sword,BLOOD,,Spell.Theme.BLOOD
+CRIMSON_TETHER,Crimson Tether,BLOOD,rope,BLOOD,,Spell.Theme.BLOOD
+SANGUINE_PACT,Sanguine Pact,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+CRIMSON_HARVEST,Crimson Harvest,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+CINDER_STEP,Cinder Step,FIRE,door,FIRE,,Spell.Theme.FIRE
+PHOENIX_RUSH,Phoenix Rush,FIRE,running,FIRE,,Spell.Theme.FIRE
+DRAGON_BREATH,Dragon Breath,FIRE,fire,FIRE,,Spell.Theme.FIRE
+UMBRAL_STEP,Umbral Step,DARK,door,DARK,,Spell.Theme.DARK
+DUSK_CLEAVE,Dusk Cleave,DARK,sword,DARK,,Spell.Theme.DARK
+DREAD_EFFIGY,Dread Effigy,DARK,candle,DARK,,Spell.Theme.DARK
+VEIL_OF_NIGHT,Veil of Night,DARK,crescent_moon,DARK,,Spell.Theme.DARK
+NIGHT_BLOOM,Night Bloom,DARK,crescent_moon,DARK,,Spell.Theme.DARK
+STORM_STEP,Storm Step,THUNDER,running,THUNDER,,Spell.Theme.THUNDER
+THUNDERCLAP,Thunderclap,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+ARC_RICOCHET,Arc Ricochet,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+RIFT_BLINK,Rift Blink,GRAVITY,door,GRAVITY,,Spell.Theme.GRAVITY
+ORBITAL_BLADES,Orbital Blades,GRAVITY,sword,GRAVITY,,Spell.Theme.GRAVITY
+PRISMATIC_RUIN,Prismatic Ruin,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+GRAVITY_STAMP,Gravity Stamp,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+SPATIAL_SHEAR,Spatial Shear,GRAVITY,sword,GRAVITY,,Spell.Theme.GRAVITY
+WISP_LANTERN,Wisp Lantern,SOUL,candle,SOUL,,Spell.Theme.SOUL
+RESONANT_GUARD,Resonant Guard,SOUL,glowing_shield,SOUL,,Spell.Theme.SOUL
+MEMORY_FRACTURE,Memory Fracture,SOUL,skull,SOUL,,Spell.Theme.SOUL
+THORN_LASH,Thorn Lash,POISON,rope,POISON,,Spell.Theme.POISON
+VIPER_FANGS,Viper Fangs,POISON,snake,POISON,,Spell.Theme.POISON
+BRAMBLE_RING,Bramble Ring,POISON,web,POISON,,Spell.Theme.POISON
+TOXIC_MOLT,Toxic Molt,POISON,green_leaf,POISON,,Spell.Theme.POISON
+SPORE_TOTEM,Spore Totem,POISON,candle,POISON,,Spell.Theme.POISON
+CORROSIVE_RAIN,Corrosive Rain,POISON,shooting_star,POISON,,Spell.Theme.POISON
+GORGON_GAZE,Gorgon Gaze,POISON,eye,POISON,,Spell.Theme.POISON
+LUMINOUS_DART,Luminous Dart,HOLY,fiery_arrow,HOLY,,Spell.Theme.HOLY
+MENDING_LIGHT,Mending Light,HOLY,cross,HOLY,,Spell.Theme.HOLY
+BLESSING_OF_VIGOR,Blessing of Vigor,HOLY,running,HOLY,,Spell.Theme.HOLY
+CONSECRATION,Consecration,HOLY,candle,HOLY,,Spell.Theme.HOLY
+RADIANT_SWEEP,Radiant Sweep,HOLY,wave,HOLY,,Spell.Theme.HOLY
+PILGRIM_STEP,Pilgrim Step,HOLY,door,HOLY,,Spell.Theme.HOLY
+ABSOLUTION,Absolution,HOLY,cross,HOLY,,Spell.Theme.HOLY
+DAWN_WARD,Dawn Ward,HOLY,glowing_shield,HOLY,,Spell.Theme.HOLY
+JUDGEMENT_RAY,Judgement Ray,HOLY,fiery_arrow,HOLY,,Spell.Theme.HOLY
+SERAPHIC_DESCENT,Seraphic Descent,HOLY,angel_wings,HOLY,,Spell.Theme.HOLY
+RENEWAL_HYMN,Renewal Hymn,HOLY,harp,HOLY,,Spell.Theme.HOLY
+FROST_NEEDLE,Frost Needle,ICE,fiery_arrow,ICE,,Spell.Theme.ICE
+ICE_SERPENT,Ice Serpent,ICE,snake,ICE,,Spell.Theme.ICE
+RIME_NOVA,Rime Nova,ICE,snowflake,ICE,,Spell.Theme.ICE
+CRYO_LANCE,Cryo Lance,ICE,fiery_arrow,ICE,,Spell.Theme.ICE
+FROZEN_AEGIS,Frozen Aegis,ICE,glowing_shield,ICE,,Spell.Theme.ICE
+GLACIER_STEP,Glacier Step,ICE,door,ICE,,Spell.Theme.ICE
+SHATTER,Shatter,ICE,snowflake,ICE,,Spell.Theme.ICE
+HAILSTORM,Hailstorm,ICE,shooting_star,ICE,,Spell.Theme.ICE
+GLACIAL_PRISON,Glacial Prison,ICE,lock,ICE,,Spell.Theme.ICE
+CRYSTAL_BARRAGE,Crystal Barrage,ICE,icy_crystal,ICE,,Spell.Theme.ICE
+ABSOLUTE_ZERO,Absolute Zero,ICE,snowflake,ICE,,Spell.Theme.ICE
+WARSCREAM,Warscream,HOLY,angel_wings,HOLY,,Spell.Theme.HOLY
+SOULBLAST,Soulblast,SOUL,music,SOUL,,Spell.Theme.SOUL
+ARCANE_EDGE,Arcane Edge,MAGIC,sword,MAGIC,,Spell.Theme.MAGIC
+BULWARK_CHANT,Bulwark Chant,HOLY,shield,HOLY,,Spell.Theme.HOLY
+BATTLE_TEMPO,Battle Tempo,THUNDER,running,THUNDER,,Spell.Theme.THUNDER
+CINDER_CLEAVE,Cinder Cleave,FIRE,sword,FIRE,,Spell.Theme.FIRE
+RIME_THRUST,Rime Thrust,ICE,fiery_arrow,ICE,,Spell.Theme.ICE
+BLOOD_REND,Blood Rend,BLOOD,sword,BLOOD,,Spell.Theme.BLOOD
+KRAKENS_GRASP,Kraken’s Grasp,POISON,fish,ABYSS,,Native water and tentacle effects.
+ICE_SPIKE_ERUPTION,Ice Spike Eruption,ICE,icy_crystal,ICE,,Spell.Theme.ICE
+HELVARS_RIFT,Helvar’s Rift,DARK,door,EMBER,,Existing ember-red Helvar rift.
+KRAKENS_WRATH,Kraken’s Wrath,POISON,fish,ABYSS,,Native water and tentacle effects.
+KRAKENS_UNDERTOW,Kraken’s Undertow,POISON,fish,ABYSS,,Native water and tentacle effects.
+YETIS_GLACIAL_WALL,Yeti’s Glacial Wall,ICE,icy_crystal,ICE,,Spell.Theme.ICE
+HELVARS_FRACTURE,Helvar’s Fracture,DARK,door,EMBER,,Existing ember-red Helvar fracture.
+HELVARS_SWORDFALL,Helvar’s Swordfall,DARK,sword,EMBER,,Existing ember-red Helvar sword effects.
+SANDWORMS_ERUPTION,Sandworm’s Eruption,GRAVITY,mountain,SAND,,"Native sand columns, rather than the Ender school's magenta."
+SANDWORMS_QUICKSAND,Sandworm’s Quicksand,GRAVITY,mountain,SAND,,"Native sand vortex, rather than the Ender school's magenta."
+DRAGONS_GUARD,Dragon’s Volley,FIRE,fire,FIRE,,Spell.Theme.FIRE
+DRAGONS_PYRE,Dragon’s Cataclysm,FIRE,flaming_orb,FIRE,,Spell.Theme.FIRE
+GLACIAL_COUNTER,Glacial Counter,ICE,glowing_shield,ICE,,Spell.Theme.ICE
+RIFT_DRAW,Rift Draw,GRAVITY,sword,GRAVITY,,Spell.Theme.GRAVITY
+CRIMSON_REVERSAL,Crimson Reversal,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+THUNDERBRAND,Thunderbrand,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+LAST_STAND,Last Stand,HOLY,candle,HOLY,,Spell.Theme.HOLY
+ASHEN_REBIRTH,Ashen Rebirth,FIRE,feather,FIRE,,Spell.Theme.FIRE
+PHANTOM_FORMATION,Phantom Formation,MAGIC,theater,MAGIC,,Spell.Theme.MAGIC
+FUNERAL_BELL,Funeral Bell,SOUL,bell,SOUL,,Spell.Theme.SOUL
+SPELLBREAKER,Spellbreaker,MAGIC,broken_sword,MAGIC,,Spell.Theme.MAGIC
+ASTRAL_APOCALYPSE,Astral Apocalypse,MAGIC,starburst,MAGIC,,Spell.Theme.MAGIC
+CRIMSON_ECLIPSE,Crimson Eclipse,BLOOD,crescent_moon,BLOOD,,Spell.Theme.BLOOD
+WORLD_PYRE,World Pyre,FIRE,flaming_orb,FIRE,,Spell.Theme.FIRE
+VOID_CORONATION,Void Coronation,DARK,eye,DARK,,Spell.Theme.DARK
+HEAVENS_THUNDER,Heaven’s Thunder,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+RIFT_COLLISION,Rift Collision,GRAVITY,spiral,GRAVITY,,Spell.Theme.GRAVITY
+SOUL_REQUIEM,Soul Requiem,SOUL,skull,SOUL,,Spell.Theme.SOUL
+WORLDROOT_CATASTROPHE,Worldroot Blessing,POISON,tree,POISON,,Spell.Theme.POISON
+FINAL_JUDGEMENT,Final Judgement,HOLY,sword,HOLY,,Spell.Theme.HOLY
+ETERNAL_WINTER,Eternal Winter,ICE,snowflake,ICE,,Spell.Theme.ICE
+EXPLOSION,Explosion,FIRE,flaming_orb,FIRE,,Spell.Theme.FIRE
+SERAPH_ASCENDANT,Seraph Ascendant,HOLY,angel_wings,HOLY,,Spell.Theme.HOLY
+ARCANE_DEVASTATOR,Arcane Devastator,MAGIC,starburst,MAGIC,,Spell.Theme.MAGIC
+I_AM_ATOMIC,I Am Atomic,DARK,flaming_orb,DARK,,Spell.Theme.DARK
+DOOM_BEAM,Doom Beam,DARK,skull,EMERALD,,"Existing emerald plasma beam, rather than the Ender school's violet."
+VOID_EXILE,Void Exile,DARK,spiral,DARK,,Spell.Theme.DARK
+VOID_DOMAIN,Void Domain,DARK,spiral,DARK,,Spell.Theme.DARK
+POLARITY_BOLT,Polarity Bolt,THUNDER,lightning_bolt,EMBER,THUNDER,Existing scarlet-and-azure magnetic poles.
+EMP_SURGE,EMP Surge,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+MAGNETAR_ANNIHILATION,Magnetar Annihilation,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+AMBER_TALON,Amber Talon,POISON,paw,AMBER,,Existing primordial_caves visual theme
+TECTONIC_STAMPEDE,Primordial Instinct,POISON,paw,AMBER,,Existing primordial_caves visual theme
+LUX_EXTINCTION,Lux’s Caldera,FIRE,shooting_star,FIRE,,Spell.Theme.FIRE
+ACID_GLOB,Acid Glob,POISON,water_drop,POISON,,Spell.Theme.POISON
+TREMORZILLA_BREATH,Tremorzilla Breath,POISON,music,POISON,,Spell.Theme.POISON
+NUCLEAR_STRIKE,Nuclear Strike,POISON,shooting_star,POISON,,Spell.Theme.POISON
+BRINE_BUBBLE,Brine Bubble,ICE,water_drop,ABYSS,,Existing abyssal_chasm visual theme
+HULLBREAKER_SURGE,Hullbreaker’s Breach,ICE,fish,ABYSS,,Existing abyssal_chasm visual theme
+ABYSSAL_DELUGE,Abyssal Deluge,ICE,wave,ABYSS,,Existing abyssal_chasm visual theme
+DESOLATE_DAGGER,Desolate Dagger,DARK,dagger,DARK,,Spell.Theme.DARK
+FORSAKEN_SONAR,Forsaken Sonar,DARK,spiral,DARK,,Spell.Theme.DARK
+FORLORN_RECKONING,Forlorn Reckoning,DARK,skull,DARK,,Spell.Theme.DARK
+GUMBALL_VOLLEY,Gumball Volley,MAGIC,bow_and_arrow,CANDY,,Existing candy_cavity visual theme
+FROSTMINT_HEX,Frostmint Hex,ICE,snowflake,MINT,,Existing candy_cavity visual theme
+CANDY_CATASTROPHE,Candyland Catastrophe,MAGIC,star,CANDY,,Existing candy_cavity visual theme
+THUNDER_OF_THE_HEAVENS,Thunder of the Heavens,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+ARCANE_CREATION,Arcane Creation,MAGIC,gem,MAGIC,,Spell.Theme.MAGIC
+CRIMSON_APOTHEOSIS,Crimson Apotheosis,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+SOLAR_SUPERNOVA,Solar Supernova,FIRE,fire,FIRE,,Spell.Theme.FIRE
+EVENTIDE_HORIZON,Eventide Horizon,DARK,crescent_moon,DARK,,Spell.Theme.DARK
+ABSOLUTE_GLACIATION,Absolute Glaciation,ICE,snowflake,ICE,,Spell.Theme.ICE
+VERDANT_AWAKENING,Verdant Awakening,POISON,tree,POISON,,Spell.Theme.POISON
+HEAVENS_COVENANT,Heaven’s Covenant,HOLY,cross,HOLY,,Spell.Theme.HOLY
+SOUL_ASCENDANCY,Soul Ascendancy,SOUL,skull,SOUL,,Spell.Theme.SOUL
+PLANETARY_POLARITY,Planetary Polarity,THUNDER,lightning_bolt,EMBER,THUNDER,Existing opposing scarlet-and-azure magnetic poles.
+PRIMORDIAL_SOVEREIGN,Primordial Sovereign,POISON,paw,AMBER,,Existing primordial_caves visual theme
+TREMORZILLA_CATACLYSM,Tremorzilla Cataclysm,POISON,music,MAGIC,,"Existing purple retro Tremorzilla beam, distinct from the green base breath."
+ABYSSAL_WORLD_TIDE,Abyssal World Tide,ICE,wave,ABYSS,,Existing abyssal_chasm visual theme
+FORSAKEN_ECLIPSE,Forsaken Eclipse,DARK,crescent_moon,DARK,,Spell.Theme.DARK
+CONFECTION_APOCALYPSE,Confection Apocalypse,MAGIC,star,CANDY,,Existing candy_cavity visual theme
+KRAKEN_WORLD_DROWN,Kraken’s World Drown,ICE,wave,ABYSS,,Existing kraken visual theme
+YETI_WORLD_HEART,Yeti’s World Heart,ICE,icy_crystal,ICE,,Spell.Theme.ICE
+HELVAR_FINAL_EDICT,Helvar’s Final Edict,DARK,sword,EMBER,,Existing helvar visual theme
+SANDWORM_WORLD_DEVOURER,Sandworm’s World Devourer,POISON,mountain,SAND,,Existing sandworm visual theme
+DRAGON_PRIMORDIAL_INFERNO,Dragon’s Primordial Inferno,FIRE,fire,FIRE,,Spell.Theme.FIRE
+ORBITAL_RAY,Orbital Ray,MAGIC,shooting_star,MAGIC,,Spell.Theme.MAGIC
+ANGEL_SCREAM,Angel Scream,HOLY,angel_wings,HOLY,,Spell.Theme.HOLY
+ARCANE_HAND,Arcane Hand,MAGIC,mage_hand,MAGIC,,Spell.Theme.MAGIC
+SPELL_PRISM,Spell Prism,MAGIC,gem,MAGIC,,Spell.Theme.MAGIC
+BLOOD_PRICE,Blood Price,BLOOD,broken_heart,BLOOD,,Spell.Theme.BLOOD
+CINDER_FUSE,Cinder Fuse,FIRE,string,FIRE,,Spell.Theme.FIRE
+FOLDED_PASSAGE,Folded Passage,GRAVITY,door,GRAVITY,,Spell.Theme.GRAVITY
+ORBIT_EXCHANGE,Orbit Exchange,GRAVITY,mage_hand,GRAVITY,,Spell.Theme.GRAVITY
+STORM_RAIL,Storm Rail,THUNDER,lightning_bolt,THUNDER,,Spell.Theme.THUNDER
+ECHO_DECOY,Echo Decoy,SOUL,theater,SOUL,,Spell.Theme.SOUL
+CHOIR_OF_THE_LOST,Choir of the Lost,SOUL,skull,SOUL,,Spell.Theme.SOUL
+MYCELIAL_RELAY,Mycelial Relay,POISON,green_leaf,POISON,,Spell.Theme.POISON
+MARTYRS_AEGIS,Martyr’s Aegis,HOLY,glowing_shield,HOLY,,Spell.Theme.HOLY
+MIRROR_ICE,Mirror Ice,ICE,icy_crystal,ICE,,Spell.Theme.ICE
+LODESTONE_SNARE,Lodestone Snare,THUNDER,web,EMBER,THUNDER,Existing red and blue magnetic pylons.
+AMBER_STASIS,Amber Stasis,POISON,glowing_shield,AMBER,,Existing primordial_caves visual theme
+FALLOUT_BLOOM,Fallout Bloom,POISON,green_leaf,POISON,,Spell.Theme.POISON
+PRESSURE_BELL,Pressure Bell,ICE,bell,ABYSS,,Existing abyssal_chasm visual theme
+STOLEN_SHADOW,Stolen Shadow,DARK,theater,DARK,,Spell.Theme.DARK
+CARAMEL_CATAPULT,Caramel Catapult,POISON,jumping,AMBER,,"Amber caramel launch pad, rather than the Nature school's green."
+OATHBREAKER_CHAINS,Oathbreaker Chains,DARK,rope,EMBER,,Existing helvar visual theme
+WHITEOUT_HUNT,Whiteout Hunt,ICE,snowflake,ICE,,Spell.Theme.ICE
+RHO_AIAS,Rho Aias,MAGIC,rose,RHO,,Existing rose-violet flower shield.

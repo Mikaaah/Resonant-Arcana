@@ -1,8 +1,8 @@
 # Spell reference
 
-**164 core spells + 17 optional Bosses’Rise spells + 24 optional Alex’s Caves spells.** Every spell has one functional category and one native Iron’s school.
+**178 core spells + 19 optional Bosses’Rise spells + 30 optional Alex’s Caves spells.** Every spell has one functional category and one native Iron’s school.
 
-Cast through an Iron’s spellbook. The three legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
+Cast through an Iron’s spellbook. The nine legendary books are inscribable equipment; their perks apply in the Curios spellbook slot. The debug wand exposes every enabled spell and offers category filters. It has no survival recipe.
 
 Values are defaults before school power, equipment, resistances and server settings. Damage and healing use health points: two health points equal one heart. Damage is per normal hit or pulse; descriptions explain final multipliers. Travel time and release sequences occur after the cast bar. Ordinary spells have up to five ranks; Doom and cataclysms have one Legendary rank.
 
@@ -17,28 +17,28 @@ Cataclysm windups use a large seal at the caster’s feet, with dense native par
 | [Projectiles](#projectile) | 24 |
 | [Beams & Channels](#beam) | 11 |
 | [Area Magic](#area) | 36 |
-| [Control](#control) | 18 |
-| [Movement](#mobility) | 11 |
-| [Support & Defense](#support) | 22 |
-| [Summons & Constructs](#summon) | 10 |
+| [Control](#control) | 25 |
+| [Movement](#mobility) | 14 |
+| [Support & Defense](#support) | 30 |
+| [Summons & Constructs](#summon) | 12 |
 | [Strikes & Drains](#melee) | 20 |
-| [Boss Arts](#boss_art) | 12 |
-| [Cataclysms](#cataclysm) | 21 |
+| [Boss Arts](#boss_art) | 13 |
+| [Cataclysms](#cataclysm) | 22 |
 | [God-tier Magic](#god) | 20 |
 
 ## Schools
 
 | School | Spells |
 | --- | ---: |
-| Evocation | 22 |
-| Blood | 16 |
-| Fire | 21 |
-| Ender | 42 |
-| Lightning | 20 |
-| Eldritch | 16 |
-| Nature | 25 |
-| Holy | 18 |
-| Ice | 25 |
+| Evocation | 25 |
+| Blood | 17 |
+| Fire | 22 |
+| Ender | 46 |
+| Lightning | 22 |
+| Eldritch | 18 |
+| Nature | 29 |
+| Holy | 20 |
+| Ice | 28 |
 
 <a id="projectile"></a>
 ## Projectiles
@@ -1569,6 +1569,138 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:frostmint_hex`. Inspect ranks with `/resonantarcana spell frostmint_hex <rank>`.
 
+### Angel Scream
+
+Unleash a holy scream as a travelling golden shockwave. The wave reaches twelve blocks in roughly 0.7 seconds. Each enemy it reaches in the 120-degree forward cone is held for three seconds and receives Weakness II for five seconds at level I. Walls and allies are respected.
+
+**Holy** · Cast **1.5s** · Cooldown **20s** · Range **12 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 75 |
+| II | — | — | 83 |
+| III | — | — | 91 |
+| IV | — | — | 99 |
+| V | — | — | 107 |
+
+Base release / active phase: **3s**.
+
+Spell ID: `resonant_arcana:angel_scream`. Inspect ranks with `/resonantarcana spell angel_scream <rank>`.
+
+### Cinder Fuse
+
+Mark up to three nearby enemies with a burning fuse. After a two-second warning, each still-visible mark detonates once around itself. Breaking the visible connection or leaving range severs that mark.
+
+**Fire** · Cast **2s** · Cooldown **25s** · Range **24 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 24 | — | 85 |
+| II | 30 | — | 91 |
+| III | 36 | — | 97 |
+| IV | 42 | — | 103 |
+| V | 48 | — | 109 |
+
+Base release / active phase: **3s**.
+
+Spell ID: `resonant_arcana:cinder_fuse`. Inspect ranks with `/resonantarcana spell cinder_fuse <rank>`.
+
+### Orbit Exchange
+
+Mark an aimed enemy and its nearest eligible neighbor. After a one-second warning exchange their supported positions if both destinations and the connecting path remain safe. Bosses, mounted and leashed entities resist.
+
+**Ender** · Cast **1.25s** · Cooldown **20s** · Range **20 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 65 |
+| II | — | — | 71 |
+| III | — | — | 77 |
+| IV | — | — | 83 |
+| V | — | — | 89 |
+
+Base release / active phase: **1.25s**.
+
+Spell ID: `resonant_arcana:orbit_exchange`. Inspect ranks with `/resonantarcana spell orbit_exchange <rank>`.
+
+### Mirror Ice
+
+Raise a directional ice mirror for eight seconds. Capture up to four supported hostile projectiles approaching its front. Recast to release them along your aim for no extra mana. Captured shots expire with the mirror and cannot become free ammunition.
+
+**Ice** · Cast **1.25s** · Cooldown **20s** · Range **16 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 65 |
+| II | — | — | 71 |
+| III | — | — | 77 |
+| IV | — | — | 83 |
+| V | — | — | 89 |
+
+Base release / active phase: **8s**.
+
+Spell ID: `resonant_arcana:mirror_ice`. Inspect ranks with `/resonantarcana spell mirror_ice <rank>`.
+
+### Lodestone Snare
+
+Raise red and blue magnetic pylons around an eight-block trap. Their arcing field drags enemies toward the centre, applies Slowness IV and discharges 5 base damage per second for eight seconds. Bosses resist the pull. Walls block the field.
+
+**Lightning** · Cast **1.75s** · Cooldown **25s** · Range **16 blocks** · Radius / half-width **2.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 80 |
+| II | 6.25 | — | 86 |
+| III | 7.5 | — | 92 |
+| IV | 8.75 | — | 98 |
+| V | 10 | — | 104 |
+
+Base release / active phase: **8s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:lodestone_snare`. Inspect ranks with `/resonantarcana spell lodestone_snare <rank>`.
+
+### Stolen Shadow
+
+Rip a visible enemy's shadow into a dark humanoid double. The victim suffers Weakness and Slowness II. Its next damaging attack on an ally triggers a delayed shadow slash for 12 plus 75% of the attack damage, up to 30 base damage; bosses take half. If it refuses to attack, the shadow lashes for 16 base damage after three seconds. Triggers once.
+
+**Ender** · Cast **1.75s** · Cooldown **25s** · Range **20 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 85 |
+| II | — | — | 91 |
+| III | — | — | 97 |
+| IV | — | — | 103 |
+| V | — | — | 109 |
+
+Base release / active phase: **8s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:stolen_shadow`. Inspect ranks with `/resonantarcana spell stolen_shadow <rank>`.
+
+### Whiteout Hunt
+
+Summon a sweeping eight-second hunting blizzard. Allies in the storm gain Speed II and Resistance I. Visible enemies suffer Slowness III, glow through the snow and take 4 base frost damage every 1.5 seconds. Ordinary mobs lose locks on sheltered allies; bosses retain their targeting.
+
+**Ice** · Cast **2s** · Cooldown **30s** · Range **20 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 95 |
+| II | 5 | — | 101 |
+| III | 6 | — | 107 |
+| IV | 7 | — | 113 |
+| V | 8 | — | 119 |
+
+Base release / active phase: **8s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:whiteout_hunt`. Inspect ranks with `/resonantarcana spell whiteout_hunt <rank>`.
+
 
 <a id="mobility"></a>
 ## Movement
@@ -1752,6 +1884,62 @@ Burst forward along a clear path as a phoenix, leaving a burning silhouette. Aft
 Base release / active phase: **1.2s**.
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect ranks with `/resonantarcana spell ashen_rebirth <rank>`.
+
+### Folded Passage
+
+Open two filled violet gateways between your position and visible supported ground. Step into either gateway to cross; leave its arrival area before entering again. Each traveller has a two-second passage cooldown. Exits are rechecked for hazards, permissions and clearance on every crossing.
+
+**Ender** · Cast **2s** · Cooldown **30s** · Range **16 blocks** · Radius / half-width **1.3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 100 |
+| II | — | — | 106 |
+| III | — | — | 112 |
+| IV | — | — | 118 |
+| V | — | — | 124 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:folded_passage`. Inspect ranks with `/resonantarcana spell folded_passage <rank>`.
+
+### Storm Rail
+
+Lay an electrified route to a clear position. Each visible enemy crossing the rail receives one shock. Recast within eight seconds to dash safely to its end for no extra mana; new cover blocks the dash.
+
+**Lightning** · Cast **1.5s** · Cooldown **25s** · Range **16 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 80 |
+| II | 15 | — | 86 |
+| III | 18 | — | 92 |
+| IV | 21 | — | 98 |
+| V | 24 | — | 104 |
+
+Base release / active phase: **8s**.
+
+Spell ID: `resonant_arcana:storm_rail`. Inspect ranks with `/resonantarcana spell storm_rail <rank>`.
+
+### Caramel Catapult
+
+Unroll a caramel launch pad for eight seconds. Allies on the pad wind up for 0.4 seconds, then launch high along your original horizontal aim with six seconds of Slow Falling. Head clearance is checked before launch. Each ally launches once per pad; enemies crossing it suffer Slowness IV.
+
+**Nature** · Cast **1s** · Cooldown **15s** · Range **16 blocks** · Radius / half-width **2.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 45 |
+| II | — | — | 51 |
+| III | — | — | 57 |
+| IV | — | — | 63 |
+| V | — | — | 69 |
+
+Base release / active phase: **8s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Adept**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:caramel_catapult`. Inspect ranks with `/resonantarcana spell caramel_catapult <rank>`.
 
 
 <a id="support"></a>
@@ -2155,6 +2343,154 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:tectonic_stampede`. Inspect ranks with `/resonantarcana spell tectonic_stampede <rank>`.
 
+### Arcane Hand
+
+Draw up to 32 nearby loose drops toward you for four seconds. Pickup delays, pickup ownership and walls are respected; inventories are never accessed.
+
+**Evocation** · Cast **0s** · Cooldown **10s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 20 |
+| II | — | — | 26 |
+| III | — | — | 32 |
+| IV | — | — | 38 |
+| V | — | — | 44 |
+
+Base release / active phase: **4s**.
+
+Spell ID: `resonant_arcana:arcane_hand`. Inspect ranks with `/resonantarcana spell arcane_hand <rank>`.
+
+### Blood Price
+
+Donate up to four health to shield one visible aimed ally for six seconds. The shield is 150% of donated health at level I and scales with spell power. The donation cannot kill you; shields refresh rather than stack.
+
+**Blood** · Cast **0.75s** · Cooldown **12s** · Range **16 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 35 |
+| II | — | — | 41 |
+| III | — | — | 47 |
+| IV | — | — | 53 |
+| V | — | — | 59 |
+
+Base release / active phase: **6s**.
+
+Spell ID: `resonant_arcana:blood_price`. Inspect ranks with `/resonantarcana spell blood_price <rank>`.
+
+### Mycelial Relay
+
+Grow two linked mushroom nodes for ten seconds. Half of effective healing received by an ally near either node can heal allies at the other. At most twelve health is relayed per cast at level I; relayed healing cannot repeat itself.
+
+**Nature** · Cast **1.5s** · Cooldown **25s** · Range **16 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 65 |
+| II | — | — | 71 |
+| III | — | — | 77 |
+| IV | — | — | 83 |
+| V | — | — | 89 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:mycelial_relay`. Inspect ranks with `/resonantarcana spell mycelial_relay <rank>`.
+
+### Martyr’s Aegis
+
+Guard one visible aimed ally for five seconds. Intercept 35% of eligible incoming damage, up to twenty health across the cast at level I. Transferred damage cannot kill you, and intercepted damage cannot trigger another aegis.
+
+**Holy** · Cast **1.5s** · Cooldown **30s** · Range **16 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 90 |
+| II | — | — | 96 |
+| III | — | — | 102 |
+| IV | — | — | 108 |
+| V | — | — | 114 |
+
+Base release / active phase: **5s**.
+
+Spell ID: `resonant_arcana:martyrs_aegis`. Inspect ranks with `/resonantarcana spell martyrs_aegis <rank>`.
+
+### Amber Stasis
+
+Encapsulate yourself in amber for two seconds. Eligible incoming damage is blocked while movement and Iron’s casting are suppressed. On release, push visible nearby enemies away. Void and other invulnerability-bypassing damage are not blocked.
+
+**Nature** · Cast **1s** · Cooldown **30s** · Range **0 blocks** · Radius / half-width **4 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 90 |
+| II | — | — | 96 |
+| III | — | — | 102 |
+| IV | — | — | 108 |
+| V | — | — | 114 |
+
+Base release / active phase: **2s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:amber_stasis`. Inspect ranks with `/resonantarcana spell amber_stasis <rank>`.
+
+### Fallout Bloom
+
+Cleanse up to eight Poison or Wither afflictions from nearby eligible allies. After a one-second warning release a radioactive bloom, adding four base damage per affliction removed. The burst damages only visible enemies and preserves terrain.
+
+**Nature** · Cast **2s** · Cooldown **30s** · Range **0 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 95 |
+| II | 15 | — | 101 |
+| III | 18 | — | 107 |
+| IV | 21 | — | 113 |
+| V | 24 | — | 119 |
+
+Base release / active phase: **1.5s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Toxic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:fallout_bloom`. Inspect ranks with `/resonantarcana spell fallout_bloom <rank>`.
+
+### Pressure Bell
+
+Raise a pressure dome for ten seconds. Allies receive Resistance II, Water Breathing and replenished air. The shell absorbs up to twelve hostile projectiles, storing 2 base collapse damage per shot. It repels ordinary enemies and slows intruders. Recast or wait for expiry to collapse it for 36–60 base damage and an outward pressure wave.
+
+**Ice** · Cast **2s** · Cooldown **30s** · Range **20 blocks** · Radius / half-width **5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 36 | — | 95 |
+| II | 45 | — | 101 |
+| III | 54 | — | 107 |
+| IV | 63 | — | 113 |
+| V | 72 | — | 119 |
+
+Base release / active phase: **10s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Abyssal Chasm · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:pressure_bell`. Inspect ranks with `/resonantarcana spell pressure_bell <rank>`.
+
+### Rho Aias
+
+Instantly unfold a giant purple flower, then three separate violet shield discs in front of it. Fully negates hostile attacks and projectiles crossing the barrier, regardless of damage strength. Drains 20 mana per second with no fixed duration or cooldown. Stay still: walking, jumping, knockback or teleporting cancels it; looking around turns the shield. Eligible allies within twelve blocks behind it share its protection. Friendly projectiles pass through. Attacks from behind or outside the barrier and environmental damage remain unprotected. Needs open space ahead.
+
+**Evocation** · Cast **0s** · Cooldown **0s** · Range **12 blocks** · Radius / half-width **6 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 0 |
+| II | — | — | 0 |
+| III | — | — | 0 |
+| IV | — | — | 0 |
+| V | — | — | 0 |
+
+Spell ID: `resonant_arcana:rho_aias`. Inspect ranks with `/resonantarcana spell rho_aias <rank>`.
+
 
 <a id="summon"></a>
 ## Summons & Constructs
@@ -2338,6 +2674,42 @@ Base release / active phase: **2.25s**.
 Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Primordial Caves · Novice**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
 
 Spell ID: `resonant_arcana:amber_talon`. Inspect ranks with `/resonantarcana spell amber_talon <rank>`.
+
+### Spell Prism
+
+Raise two floating prisms. Your next supported, caster-owned projectile bends through both toward the enemy marked at release. It redirects once without increasing its damage.
+
+**Evocation** · Cast **1.5s** · Cooldown **25s** · Range **20 blocks** · Radius / half-width **2 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 90 |
+| II | — | — | 96 |
+| III | — | — | 102 |
+| IV | — | — | 108 |
+| V | — | — | 114 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:spell_prism`. Inspect ranks with `/resonantarcana spell spell_prism <rank>`.
+
+### Echo Decoy
+
+Create a translucent echo of your own appearance with luminous sculk ribs and sonar ripples. Ordinary visible hostile mobs attack it instead of allies. It stores up to 48 incoming hostile damage, then bursts in a sonic echo for its base damage plus half the stored damage. Bosses retain their targeting.
+
+**Eldritch** · Cast **1s** · Cooldown **18s** · Range **16 blocks** · Radius / half-width **5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 50 |
+| II | 15 | — | 56 |
+| III | 18 | — | 62 |
+| IV | 21 | — | 68 |
+| V | 24 | — | 74 |
+
+Base release / active phase: **6s**.
+
+Spell ID: `resonant_arcana:echo_decoy`. Inspect ranks with `/resonantarcana spell echo_decoy <rank>`.
 
 
 <a id="melee"></a>
@@ -2907,6 +3279,26 @@ Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its i
 
 Spell ID: `resonant_arcana:dragons_pyre`. Inspect ranks with `/resonantarcana spell dragons_pyre <rank>`.
 
+### Oathbreaker Chains
+
+Anchor a compact spectral Helvar sword and bind up to three visible enemies with ember chains. Allied melee strikes against the anchor transmit 75% of their damage, up to 20 base damage per target per strike and a 60-health total budget. Each attacker can trigger once per half second.
+
+**Ender** · Cast **2.25s** · Cooldown **40s** · Range **20 blocks** · Radius / half-width **10 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 110 |
+| II | — | — | 116 |
+| III | — | — | 122 |
+| IV | — | — | 128 |
+| V | — | — | 134 |
+
+Base release / active phase: **8s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:oathbreaker_chains`. Inspect ranks with `/resonantarcana spell oathbreaker_chains <rank>`.
+
 
 <a id="cataclysm"></a>
 ## Cataclysms
@@ -3119,7 +3511,7 @@ Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spe
 
 ### Doom Beam
 
-Compress a black singularity that turns emerald halfway through the charge. Release a green plasma beam that follows your movement and aim. Each enemy entering its path takes one hit; solid cover stops it.
+Weave four open emerald focusing arcs, then unleash a rushing particle stream that follows your movement and aim. Each enemy entering its path takes one hit; solid cover stops it.
 
 **Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
 
@@ -3240,6 +3632,20 @@ Gather violet magic into a compact orb for 15 seconds. Send it skyward over four
 Base release / active phase: **12s**.
 
 Spell ID: `resonant_arcana:orbital_ray`. Inspect ranks with `/resonantarcana spell orbital_ray <rank>`.
+
+### Choir of the Lost
+
+Gather up to eight temporary souls from your nearby combat kills for twelve seconds. Recast to send staggered soul strikes at a marked enemy, or sneak-recast to heal injured allies instead. Each soul is spent once; no permanent mobs are summoned.
+
+**Eldritch** · Cast **6s** · Cooldown **90s** · Range **24 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 180 |
+
+Base release / active phase: **12s**.
+
+Spell ID: `resonant_arcana:choir_of_the_lost`. Inspect ranks with `/resonantarcana spell choir_of_the_lost <rank>`.
 
 
 <a id="god"></a>

@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Summons & Constructs
 
-## Summons & Constructs
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Evoker's Edict
 
@@ -182,4 +182,43 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:amber_talon`. Inspect ranks with `/resonantarcana spell amber_talon <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+### Spell Prism
+
+Raise two floating prisms. Your next supported, caster-owned projectile bends through both toward the enemy marked at release. It redirects once without increasing its damage.
+
+**Evocation** · Cast **1.5s** · Cooldown **25s** · Range **20 blocks** · Radius / half-width **2 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 90 |
+| II | — | — | 96 |
+| III | — | — | 102 |
+| IV | — | — | 108 |
+| V | — | — | 114 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:spell_prism`. Inspect ranks with `/resonantarcana spell spell_prism <rank>`.
+
+### Echo Decoy
+
+Create a translucent echo of your own appearance with luminous sculk ribs and sonar ripples. Ordinary visible hostile mobs attack it instead of allies. It stores up to 48 incoming hostile damage, then bursts in a sonic echo for its base damage plus half the stored damage. Bosses retain their targeting.
+
+**Eldritch** · Cast **1s** · Cooldown **18s** · Range **16 blocks** · Radius / half-width **5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 50 |
+| II | 15 | — | 56 |
+| III | 18 | — | 62 |
+| IV | 21 | — | 68 |
+| V | 24 | — | 74 |
+
+Base release / active phase: **6s**.
+
+Spell ID: `resonant_arcana:echo_decoy`. Inspect ranks with `/resonantarcana spell echo_decoy <rank>`.
+
+
+<a id="melee"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

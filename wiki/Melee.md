@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Strikes & Drains
 
-## Strikes & Drains
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Arcane Strike
 
@@ -334,4 +334,7 @@ Weapon contribution: add half the melee attack attribute at release before spell
 
 Spell ID: `resonant_arcana:spellbreaker`. Inspect ranks with `/resonantarcana spell spellbreaker <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+
+<a id="boss_art"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

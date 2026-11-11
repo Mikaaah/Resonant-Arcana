@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Boss Arts
 
-## Boss Arts
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Kraken’s Grasp
 
@@ -230,4 +230,27 @@ Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its i
 
 Spell ID: `resonant_arcana:dragons_pyre`. Inspect ranks with `/resonantarcana spell dragons_pyre <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+### Oathbreaker Chains
+
+Anchor a compact spectral Helvar sword and bind up to three visible enemies with ember chains. Allied melee strikes against the anchor transmit 75% of their damage, up to 20 base damage per target per strike and a 60-health total budget. Each attacker can trigger once per half second.
+
+**Ender** · Cast **2.25s** · Cooldown **40s** · Range **20 blocks** · Radius / half-width **10 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 110 |
+| II | — | — | 116 |
+| III | — | — | 122 |
+| IV | — | — | 128 |
+| V | — | — | 134 |
+
+Base release / active phase: **8s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:oathbreaker_chains`. Inspect ranks with `/resonantarcana spell oathbreaker_chains <rank>`.
+
+
+<a id="cataclysm"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

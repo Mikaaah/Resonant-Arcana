@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Area Magic
 
-## Area Magic
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Blood Wave
 
@@ -608,4 +608,7 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:hullbreaker_surge`. Inspect ranks with `/resonantarcana spell hullbreaker_surge <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+
+<a id="control"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

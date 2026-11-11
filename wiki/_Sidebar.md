@@ -19,3 +19,5 @@
 - [All mod projects](https://mikaaah.github.io/TownsAndKingdoms/projects/)
 - [Join Discord](https://discord.gg/CRYk3uDPVt)
 - [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)
+
+- [1.0.1 spell presentation](https://github.com/Mikaaah/Resonant-Arcana/wiki/Spell-Presentation)

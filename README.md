@@ -8,7 +8,16 @@
 
 <p align="center"><img src="https://img.shields.io/badge/Minecraft-1.21.1-5b8731?style=flat-square" alt="Minecraft 1.21.1"> <img src="https://img.shields.io/badge/NeoForge-d77828?style=flat-square" alt="NeoForge"> <a href="https://mikaaah.github.io/TownsAndKingdoms/projects/"><img src="https://img.shields.io/badge/Towns_%26_Kingdoms-Modding_Hub-7f384a?style=flat-square" alt="Towns & Kingdoms Modding Hub"></a></p>
 
-**Source guide: 0.3.1.** Use the guide matching the edition you install.
+**Guide version: 1.0.1**, following the supplied release build. The Java source currently on `main` is the earlier 0.3.1 snapshot; this documentation refresh does not replace that source.
+
+## What's new in 1.0.1
+
+- Distinct vanilla and Iron's particle choreography for all twenty God-tier rituals.
+- Soul Ascendancy's soul procession and Helvar's Final Edict's sword-landing impact.
+- A particle-only emerald Doom Beam, with an open charging focus.
+- Correct inventory lighting for all nine books, school-themed icon colours and extra vanilla glints on Rho Aias.
+
+[Spell presentation](https://github.com/Mikaaah/Resonant-Arcana/wiki/Spell-Presentation) · [Release notes](CHANGELOG.md)
 
 ## Magic worth building around
 
@@ -17,7 +26,7 @@
 - **Faster Cataclysms**: 6-second base casts for spells without supplied recordings.
 - **Twenty God-tier rituals**: nine school spells, six cave arts and five boss arts. Base cast time: 10 seconds; mana: 600.
 - **Thunder of the Heavens** marks a vast battlefield and rains down 200 violet lightning strikes.
-- **Three legendary spellbooks** with distinct equipment perks, plus a searchable debug wand for creative testing.
+- **Nine legendary spellbooks** with distinct equipment perks and 3D models, plus a searchable debug wand for creative testing. [Grimoire stats and recipes](docs/GRIMOIRES.md).
 - **Native Tremorzilla breath** with green, purple and orange variants; following torso-level beams and themed boss effects.
 - **Fifty themed scroll recipes** for addon and God-tier magic, using the appropriate cave or boss materials.
 
@@ -33,9 +42,9 @@ Install the same Resonant Arcana version on **client and server**. Equip an insc
 
 | Optional addon | Unlocks |
 | --- | --- |
-| Bosses’Rise 2.1.2 | 17 boss arts for Kraken, Yeti, Helvar, Sandworm and Dragon |
-| Alex’s Caves 2.0.10 + Citadel | 24 cave arts across all six cave areas |
-| AAAParticles | Selected ritual seals and Doom effects |
+| Bosses’Rise 2.1.2 | 19 boss arts for Kraken, Yeti, Helvar, Sandworm and Dragon |
+| Alex’s Caves 2.0.10 + Citadel | 30 cave arts across all six cave areas |
+| AAAParticles | Optional effects for selected other spells; God-tier spells and Doom Beam use native particle routes |
 
 **Both gameplay addons are optional.** The core mod works without them; unsupported addon versions leave the corresponding adapter disabled.
 

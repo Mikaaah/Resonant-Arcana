@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Cataclysms
 
-## Cataclysms
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### DOOM
 
@@ -210,7 +210,7 @@ Spell ID: `resonant_arcana:i_am_atomic`. Inspect ranks with `/resonantarcana spe
 
 ### Doom Beam
 
-Compress a black singularity that turns emerald halfway through the charge. Release a green plasma beam that follows your movement and aim. Each enemy entering its path takes one hit; solid cover stops it.
+Weave four open emerald focusing arcs, then unleash a rushing particle stream that follows your movement and aim. Each enemy entering its path takes one hit; solid cover stops it.
 
 **Ender** · Cast **13s** · Cooldown **150s** · Range **64 blocks** · Radius / half-width **3 blocks**.
 
@@ -332,4 +332,21 @@ Base release / active phase: **12s**.
 
 Spell ID: `resonant_arcana:orbital_ray`. Inspect ranks with `/resonantarcana spell orbital_ray <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+### Choir of the Lost
+
+Gather up to eight temporary souls from your nearby combat kills for twelve seconds. Recast to send staggered soul strikes at a marked enemy, or sneak-recast to heal injured allies instead. Each soul is spent once; no permanent mobs are summoned.
+
+**Eldritch** · Cast **6s** · Cooldown **90s** · Range **24 blocks** · Radius / half-width **16 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 180 |
+
+Base release / active phase: **12s**.
+
+Spell ID: `resonant_arcana:choir_of_the_lost`. Inspect ranks with `/resonantarcana spell choir_of_the_lost <rank>`.
+
+
+<a id="god"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

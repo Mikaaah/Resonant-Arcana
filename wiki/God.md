@@ -1,6 +1,8 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# God-tier Magic
 
-## God-tier Magic
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
+
+[Current particle presentation for all twenty rituals](https://github.com/Mikaaah/Resonant-Arcana/wiki/Spell-Presentation)
 
 ### Thunder of the Heavens
 
@@ -304,4 +306,4 @@ Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its i
 
 Spell ID: `resonant_arcana:dragon_primordial_inferno`. Inspect ranks with `/resonantarcana spell dragon_primordial_inferno <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

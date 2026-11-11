@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Control
 
-## Control
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Mind Haze
 
@@ -314,4 +314,139 @@ Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and serv
 
 Spell ID: `resonant_arcana:frostmint_hex`. Inspect ranks with `/resonantarcana spell frostmint_hex <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+### Angel Scream
+
+Unleash a holy scream as a travelling golden shockwave. The wave reaches twelve blocks in roughly 0.7 seconds. Each enemy it reaches in the 120-degree forward cone is held for three seconds and receives Weakness II for five seconds at level I. Walls and allies are respected.
+
+**Holy** · Cast **1.5s** · Cooldown **20s** · Range **12 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 75 |
+| II | — | — | 83 |
+| III | — | — | 91 |
+| IV | — | — | 99 |
+| V | — | — | 107 |
+
+Base release / active phase: **3s**.
+
+Spell ID: `resonant_arcana:angel_scream`. Inspect ranks with `/resonantarcana spell angel_scream <rank>`.
+
+### Cinder Fuse
+
+Mark up to three nearby enemies with a burning fuse. After a two-second warning, each still-visible mark detonates once around itself. Breaking the visible connection or leaving range severs that mark.
+
+**Fire** · Cast **2s** · Cooldown **25s** · Range **24 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 24 | — | 85 |
+| II | 30 | — | 91 |
+| III | 36 | — | 97 |
+| IV | 42 | — | 103 |
+| V | 48 | — | 109 |
+
+Base release / active phase: **3s**.
+
+Spell ID: `resonant_arcana:cinder_fuse`. Inspect ranks with `/resonantarcana spell cinder_fuse <rank>`.
+
+### Orbit Exchange
+
+Mark an aimed enemy and its nearest eligible neighbor. After a one-second warning exchange their supported positions if both destinations and the connecting path remain safe. Bosses, mounted and leashed entities resist.
+
+**Ender** · Cast **1.25s** · Cooldown **20s** · Range **20 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 65 |
+| II | — | — | 71 |
+| III | — | — | 77 |
+| IV | — | — | 83 |
+| V | — | — | 89 |
+
+Base release / active phase: **1.25s**.
+
+Spell ID: `resonant_arcana:orbit_exchange`. Inspect ranks with `/resonantarcana spell orbit_exchange <rank>`.
+
+### Mirror Ice
+
+Raise a directional ice mirror for eight seconds. Capture up to four supported hostile projectiles approaching its front. Recast to release them along your aim for no extra mana. Captured shots expire with the mirror and cannot become free ammunition.
+
+**Ice** · Cast **1.25s** · Cooldown **20s** · Range **16 blocks** · Radius / half-width **3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 65 |
+| II | — | — | 71 |
+| III | — | — | 77 |
+| IV | — | — | 83 |
+| V | — | — | 89 |
+
+Base release / active phase: **8s**.
+
+Spell ID: `resonant_arcana:mirror_ice`. Inspect ranks with `/resonantarcana spell mirror_ice <rank>`.
+
+### Lodestone Snare
+
+Raise red and blue magnetic pylons around an eight-block trap. Their arcing field drags enemies toward the centre, applies Slowness IV and discharges 5 base damage per second for eight seconds. Bosses resist the pull. Walls block the field.
+
+**Lightning** · Cast **1.75s** · Cooldown **25s** · Range **16 blocks** · Radius / half-width **2.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 5 | — | 80 |
+| II | 6.25 | — | 86 |
+| III | 7.5 | — | 92 |
+| IV | 8.75 | — | 98 |
+| V | 10 | — | 104 |
+
+Base release / active phase: **8s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Magnetic Caves · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:lodestone_snare`. Inspect ranks with `/resonantarcana spell lodestone_snare <rank>`.
+
+### Stolen Shadow
+
+Rip a visible enemy's shadow into a dark humanoid double. The victim suffers Weakness and Slowness II. Its next damaging attack on an ally triggers a delayed shadow slash for 12 plus 75% of the attack damage, up to 30 base damage; bosses take half. If it refuses to attack, the shadow lashes for 16 base damage after three seconds. Triggers once.
+
+**Ender** · Cast **1.75s** · Cooldown **25s** · Range **20 blocks** · Radius / half-width **0 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 85 |
+| II | — | — | 91 |
+| III | — | — | 97 |
+| IV | — | — | 103 |
+| V | — | — | 109 |
+
+Base release / active phase: **8s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Forlorn Hollows · Master**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:stolen_shadow`. Inspect ranks with `/resonantarcana spell stolen_shadow <rank>`.
+
+### Whiteout Hunt
+
+Summon a sweeping eight-second hunting blizzard. Allies in the storm gain Speed II and Resistance I. Visible enemies suffer Slowness III, glow through the snow and take 4 base frost damage every 1.5 seconds. Ordinary mobs lose locks on sheltered allies; bosses retain their targeting.
+
+**Ice** · Cast **2s** · Cooldown **30s** · Range **20 blocks** · Radius / half-width **8 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 4 | — | 95 |
+| II | 5 | — | 101 |
+| III | 6 | — | 107 |
+| IV | 7 | — | 113 |
+| V | 8 | — | 119 |
+
+Base release / active phase: **8s**.
+
+Requires **Bosses’Rise 2.1.2** on client and server. Visual adapters use its installed models and textures; original boss AI and attack routines do not run.
+
+Spell ID: `resonant_arcana:whiteout_hunt`. Inspect ranks with `/resonantarcana spell whiteout_hunt <rank>`.
+
+
+<a id="mobility"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

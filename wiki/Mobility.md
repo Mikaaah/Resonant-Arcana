@@ -1,6 +1,6 @@
-[← Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Project](https://github.com/Mikaaah/Resonant-Arcana) · [Get help](https://github.com/Mikaaah/Resonant-Arcana/issues)
+# Movement
 
-## Movement
+**Guide version 1.0.1.** Values are defaults before equipment, resistance and server settings. Two health points equal one heart.
 
 ### Leap
 
@@ -182,4 +182,63 @@ Base release / active phase: **1.2s**.
 
 Spell ID: `resonant_arcana:ashen_rebirth`. Inspect ranks with `/resonantarcana spell ashen_rebirth <rank>`.
 
-[← Home](https://github.com/Mikaaah/Resonant-Arcana/wiki/Home)
+### Folded Passage
+
+Open two filled violet gateways between your position and visible supported ground. Step into either gateway to cross; leave its arrival area before entering again. Each traveller has a two-second passage cooldown. Exits are rechecked for hazards, permissions and clearance on every crossing.
+
+**Ender** · Cast **2s** · Cooldown **30s** · Range **16 blocks** · Radius / half-width **1.3 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 100 |
+| II | — | — | 106 |
+| III | — | — | 112 |
+| IV | — | — | 118 |
+| V | — | — | 124 |
+
+Base release / active phase: **10s**.
+
+Spell ID: `resonant_arcana:folded_passage`. Inspect ranks with `/resonantarcana spell folded_passage <rank>`.
+
+### Storm Rail
+
+Lay an electrified route to a clear position. Each visible enemy crossing the rail receives one shock. Recast within eight seconds to dash safely to its end for no extra mana; new cover blocks the dash.
+
+**Lightning** · Cast **1.5s** · Cooldown **25s** · Range **16 blocks** · Radius / half-width **1 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | 12 | — | 80 |
+| II | 15 | — | 86 |
+| III | 18 | — | 92 |
+| IV | 21 | — | 98 |
+| V | 24 | — | 104 |
+
+Base release / active phase: **8s**.
+
+Spell ID: `resonant_arcana:storm_rail`. Inspect ranks with `/resonantarcana spell storm_rail <rank>`.
+
+### Caramel Catapult
+
+Unroll a caramel launch pad for eight seconds. Allies on the pad wind up for 0.4 seconds, then launch high along your original horizontal aim with six seconds of Slow Falling. Head clearance is checked before launch. Each ally launches once per pad; enemies crossing it suffer Slowness IV.
+
+**Nature** · Cast **1s** · Cooldown **15s** · Range **16 blocks** · Radius / half-width **2.5 blocks**.
+
+| Rank | Base damage | Base healing | Mana |
+| --- | ---: | ---: | ---: |
+| I | — | — | 45 |
+| II | — | — | 51 |
+| III | — | — | 57 |
+| IV | — | — | 63 |
+| V | — | — | 69 |
+
+Base release / active phase: **8s**.
+
+Requires **Alex’s Caves 2.0.10** and its Citadel dependency on client and server. **Candy Cavity · Adept**. Native visuals are provided by the installed mod; no boss AI or terrain destruction runs.
+
+Spell ID: `resonant_arcana:caramel_catapult`. Inspect ranks with `/resonantarcana spell caramel_catapult <rank>`.
+
+
+<a id="support"></a>
+
+[Guide home](https://github.com/Mikaaah/Resonant-Arcana/wiki) · [Report an issue](https://github.com/Mikaaah/Resonant-Arcana/issues)

@@ -2,7 +2,7 @@
 
 # Spell catalogue
 
-**205 spells with all supported addons · 164 core · 17 Bosses’Rise · 24 Alex’s Caves.**
+**Guide version 1.0.1 · 227 spells with all supported addons: 178 core, 19 Bosses’Rise and 30 Alex’s Caves.**
 
 All scrolls share one Spells creative tab. Browse by school, role or keywords in the debug archive.
 
