@@ -24,7 +24,6 @@ final class IronsCompat {
     static void register(IEventBus bus){
         for(Spell spell:Spell.enabledValues())SPELLS.register(spell.bookId(),()->new ArcanaSpell(spell));
         SPELLS.register(bus);
-        ResonantArcana.LOG.info("Registering {} Resonant Arcana spells with Iron's Spellbooks",Spell.enabledValues().length);
     }
     static net.minecraft.world.item.ItemStack scroll(Spell spell){return scroll(spell,1);}
     static net.minecraft.world.item.ItemStack scroll(Spell spell,int level){
@@ -144,7 +143,7 @@ final class IronsCompat {
                 if(spell==Spell.EXPLOSION)ExplosionRitual.lock(player,data);
                 else {if(spell==Spell.I_AM_ATOMIC)AtomicRitual.lock(player,data);if(RecordedSpells.handles(spell))RecordedSpells.start(player,spell);}
             }
-            if(castTime>0&&!RecordedSpells.handles(spell)&&!(spell==Spell.CRIMSON_REVERSAL&&data.getPlayerRecasts().hasRecastForSpell(getSpellId()))&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
+            if(castTime>0&&!RecordedSpells.handles(spell)&&(spell!=Spell.CRIMSON_REVERSAL||!data.getPlayerRecasts().hasRecastForSpell(getSpellId()))&&entity instanceof ServerPlayer player)SpellAudio.charge(player,spell);
         }
         @Override public void onServerCastComplete(Level level,int spellLevel,LivingEntity entity,MagicData data,boolean cancelled){
             if(entity instanceof ServerPlayer player){

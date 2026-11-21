@@ -160,8 +160,8 @@ public final class IntegrationChecks {
                 };
                 check(visuals.stream().anyMatch(v->v.stage()==expectedStage.ordinal()),spell+" has "+expectedStage+" visuals");
                 for(var visual:visuals){
-                    var emitted=Spell.values()[visual.spell()];var shape=SpellVisuals.shape(emitted,SpellVisuals.Stage.values()[visual.stage()]);
-                    var stage=SpellVisuals.Stage.values()[visual.stage()];
+                    var emitted=Spell.values()[visual.spell()];
+                    SpellVisuals.shape(emitted,SpellVisuals.Stage.values()[visual.stage()]);
                     check(emitted.category()!=null,emitted+" has a functional category");
                 }
                 results.add(Map.of("spell",spell.name(),"targetHealth",zombie.getHealth(),"observed",true));

@@ -145,7 +145,6 @@ final class DoomBeamEffects {
                     NativeSpellEffects.tinted(l,i%3==0?ParticleRegistry.ELECTRICITY_PARTICLE.get():ParticleRegistry.WISP_PARTICLE.get(),q.add(off),off.scale(.015),6,arcane?(arm==0?0xffd12e:0x9c4dff):0x35ff05,.65f);
                 }
             }
-            // Jagged branching lightning hugs the outer plasma envelope.
             for(int branch=0;branch<4;branch++){
                 Vec3 previous=p;
                 for(int i=1;i<=36;i++){

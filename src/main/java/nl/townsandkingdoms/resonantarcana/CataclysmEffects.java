@@ -150,7 +150,6 @@ final class CataclysmEffects {
                 Vec3 off=side.scale(Math.cos(a)*radius).add(up.scale(Math.sin(a)*radius));
                 point(l,ring%2==0?red:amber,center.add(off),Vec3.ZERO,12);
             }
-            // Counter-rotating ember ribbons feed each seal, then tighten into the beam.
             for(int arm=0;arm<2;arm++)for(int j=0;j<24;j++){
                 double t=j/24.0,a=arm*Math.PI+time*(ring%2==0?1.6:-1.6)+t*6.5;
                 double r=radius*(1.65-t*.9);
@@ -167,7 +166,6 @@ final class CataclysmEffects {
         SingularityEffects.refresh(l,p,core*.88);
         // Gold photon rim and a flattened, co-centred accretion disc match the reference.
         var gold=new DustColorTransitionOptions(new Vector3f(1,.85f,.4f),new Vector3f(1,.19f,.015f),1.1f);
-        // Vertical photon ring, then bright lensing arcs over the horizontal disc.
         for(int layer=0;layer<2;layer++)for(int i=0;i<128;i++){
             double a=i*Math.PI/64,r=core*(1+layer*.09);
             point(l,gold,p.add(Math.cos(a)*r,Math.sin(a)*r,0),Vec3.ZERO,12);

@@ -11,10 +11,12 @@ final class CavesCompat {
     static boolean optional(Spell spell){return "alexscaves".equals(spell.definition.integration());}
     static boolean available(){return ModList.get().getModContainerById(MOD).map(m->m.getModInfo().getVersion().toString().equals("2.0.10")).orElse(false);}
     static boolean cataclysm(Spell s){return optional(s)&&"CATACLYSM".equals(s.definition.tier());}
-    static void register(IEventBus bus){if(available()){
-        CaveVisual.register(bus);
-        if(net.neoforged.fml.loading.FMLEnvironment.dist==net.neoforged.api.distmarker.Dist.CLIENT)CavesClient.register(bus);
-    }}
+    static void register(IEventBus bus){
+        if(available()){
+            CaveVisual.register(bus);
+            if(net.neoforged.fml.loading.FMLEnvironment.dist==net.neoforged.api.distmarker.Dist.CLIENT)CavesClient.register(bus);
+        }
+    }
     static int beamVariant(net.minecraft.world.entity.player.Player player){var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getOffhandItem().getItem()).getPath();return id.equals("amber_curiosity")?1:id.equals("tectonic_shard")?2:0;}
     static String chargeSound(Spell s){return MOD+":"+switch(s){
         case POLARITY_BOLT,MAGNETAR_ANNIHILATION -> "raygun_start";case EMP_SURGE -> "magnetron_assemble";

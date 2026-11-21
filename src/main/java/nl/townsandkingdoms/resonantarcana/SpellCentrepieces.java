@@ -49,9 +49,11 @@ final class SpellCentrepieces {
         moveAtomicFocus(c);c.level.addFreshEntity(sword);
     }
     static void moveAtomicFocus(SpellEngine.Cast c){for(var entity:c.centrepieces)if(entity instanceof HolySword sword){sword.setYRot(c.caster.getYRot());sword.setPos(atomicTip(c.caster).add(0,-.9,0));}}
-    static void moveHolySword(SpellEngine.Cast c){for(var entity:c.centrepieces)if(entity instanceof HolySword sword){
-        double progress=Math.clamp(c.age/(double)(c.duration-8),0,1);sword.setPos(sword.origin.add(0,sword.baseHeight+(sword.startHeight-sword.baseHeight)*(1-progress)*(1-progress),0));
-    }}
+    static void moveHolySword(SpellEngine.Cast c){
+        for(var entity:c.centrepieces)if(entity instanceof HolySword sword){
+            double progress=Math.clamp(c.age/(double)(c.duration-8),0,1);sword.setPos(sword.origin.add(0,sword.baseHeight+(sword.startHeight-sword.baseHeight)*(1-progress)*(1-progress),0));
+        }
+    }
     private SpellCentrepieces(){}
     static void register(IEventBus bus){TYPES.register(bus);}
     static void place(SpellEngine.Cast c){

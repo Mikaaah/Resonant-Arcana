@@ -118,13 +118,15 @@ final class CataclysmSpells {
     }
     private static void pulse(Cast c,Vec3 center,double radius,double multiplier){
         c.hit.clear();float old=c.weaponBonus;c.weaponBonus=c.spell.damage*(float)(multiplier-1);
-        try{for(var v:near(c.caster,center,radius))if(v.getBoundingBox().getCenter().distanceToSqr(center)<=radius*radius&&visible(c,center,v.getBoundingBox().getCenter())){
-            float before=v.getHealth();hit(c,v,center,true);
-            if(c.spell==Spell.CRIMSON_ECLIPSE){
-                float healing=Math.min(20-c.drained,Math.max(0,before-v.getHealth())*.08f);
-                if(healing>0){c.drained+=healing;c.caster.heal((float)(healing*ArcanaConfig.HEALING.get()));}
+        try{
+            for(var v:near(c.caster,center,radius))if(v.getBoundingBox().getCenter().distanceToSqr(center)<=radius*radius&&visible(c,center,v.getBoundingBox().getCenter())){
+                float before=v.getHealth();hit(c,v,center,true);
+                if(c.spell==Spell.CRIMSON_ECLIPSE){
+                    float healing=Math.min(20-c.drained,Math.max(0,before-v.getHealth())*.08f);
+                    if(healing>0){c.drained+=healing;c.caster.heal((float)(healing*ArcanaConfig.HEALING.get()));}
+                }
             }
-        }}finally{c.weaponBonus=old;}
+        }finally{c.weaponBonus=old;}
         SpellVisuals.send(c.level,c.spell,SpellVisuals.Stage.IMPACT,center,center,radius);
         if(!RecordedSpells.handles(c.spell))SpellAudio.world(c.level,center,SpellAudio.impactId(c.spell.theme),1.4f,.65f);
     }

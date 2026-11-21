@@ -41,7 +41,7 @@ final class SpellCatalogue {
     static void validateRegistry(){
         var ids=new HashSet<String>();
         for(var school:SCHOOLS.values())for(String id:school.spells()){
-            var spell=Spell.valueOf(id);
+            Spell.valueOf(id);
             if(!ids.add(id))throw new IllegalStateException("Invalid school home for "+id);
         }
         if(ids.size()!=Spell.values().length||SPELLS.size()!=ids.size())throw new IllegalStateException("Catalogue and spell registry differ");

@@ -131,14 +131,20 @@ final class GodEffects {
     private static ParticleOptions accent(Spell s){return switch(s){case VERDANT_AWAKENING,PRIMORDIAL_SOVEREIGN->new BlockParticleOption(ParticleTypes.BLOCK,net.minecraft.world.level.block.Blocks.FLOWERING_AZALEA_LEAVES.defaultBlockState());case SOLAR_SUPERNOVA,DRAGON_PRIMORDIAL_INFERNO,HELVAR_FINAL_EDICT->ParticleTypes.FLAME;case ABSOLUTE_GLACIATION,YETI_WORLD_HEART->ParticleTypes.SNOWFLAKE;case SOUL_ASCENDANCY->ParticleTypes.SOUL_FIRE_FLAME;case ABYSSAL_WORLD_TIDE,KRAKEN_WORLD_DROWN->ParticleTypes.SPLASH;default->ParticleTypes.END_ROD;};}
     @SubscribeEvent public static void render(RenderLevelStageEvent event){
         if(event.getStage()!=RenderLevelStageEvent.Stage.AFTER_PARTICLES||LIGHTNING.isEmpty())return;var mc=Minecraft.getInstance();if(mc.level!=world)return;var buffers=mc.renderBuffers().bufferSource();var type=RenderType.lightning();var out=buffers.getBuffer(type);Vec3 camera=event.getCamera().getPosition();var pose=new PoseStack();
-        for(var bolt:LIGHTNING){var random=new Random(bolt.seed());Vec3 previous=bolt.top().subtract(camera);for(int i=1;i<=12;i++){double t=i/12.0;Vec3 next=bolt.top().lerp(bolt.ground(),t).add(i==12?0:(random.nextDouble()-.5)*3,0,i==12?0:(random.nextDouble()-.5)*3).subtract(camera);
-            Vec3 axis=next.subtract(previous).normalize(),side=axis.cross(new Vec3(0,1,0)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);Vec3 up=side.cross(axis);
-            for(int layer=0;layer<3;layer++){double width=layer==0?.3:layer==1?.12:.035;int alpha=layer==0?65:layer==1?155:255;
-                for(int face=0;face<4;face++){double a=face*Math.PI/2,b=(face+1)*Math.PI/2;Vec3 o=side.scale(Math.cos(a)*width).add(up.scale(Math.sin(a)*width)),n=side.scale(Math.cos(b)*width).add(up.scale(Math.sin(b)*width));
-                    for(Vec3 v:new Vec3[]{previous.add(o),next.add(o),next.add(n),previous.add(n)})out.addVertex(pose.last().pose(),(float)v.x,(float)v.y,(float)v.z).setColor(layer==2?245:170,layer==2?220:65,255,alpha);
+        for(var bolt:LIGHTNING){
+            var random=new Random(bolt.seed());Vec3 previous=bolt.top().subtract(camera);
+            for(int i=1;i<=12;i++){
+                double t=i/12.0;Vec3 next=bolt.top().lerp(bolt.ground(),t).add(i==12?0:(random.nextDouble()-.5)*3,0,i==12?0:(random.nextDouble()-.5)*3).subtract(camera);
+                Vec3 axis=next.subtract(previous).normalize(),side=axis.cross(new Vec3(0,1,0)).normalize();if(side.lengthSqr()<.01)side=new Vec3(1,0,0);Vec3 up=side.cross(axis);
+                for(int layer=0;layer<3;layer++){double width=layer==0?.3:layer==1?.12:.035;int alpha=layer==0?65:layer==1?155:255;
+                    for(int face=0;face<4;face++){double a=face*Math.PI/2,b=(face+1)*Math.PI/2;Vec3 o=side.scale(Math.cos(a)*width).add(up.scale(Math.sin(a)*width)),n=side.scale(Math.cos(b)*width).add(up.scale(Math.sin(b)*width));
+                        for(Vec3 v:new Vec3[]{previous.add(o),next.add(o),next.add(n),previous.add(n)})out.addVertex(pose.last().pose(),(float)v.x,(float)v.y,(float)v.z).setColor(layer==2?245:170,layer==2?220:65,255,alpha);
+                    }
                 }
-            }previous=next;}
-        }buffers.endBatch(type);
+                previous=next;
+            }
+        }
+        buffers.endBatch(type);
     }
     private GodEffects(){}
 }
